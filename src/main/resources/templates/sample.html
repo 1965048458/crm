@@ -1,0 +1,42 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>test</title>
+    <style>
+        .center-box {
+            text-align: center;
+        }
+        .center-el {
+            display: inline-block;
+        }
+        #searchVue table * {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="center-box">
+    <h1 th:text="${welcomeMsg}" class="center-el"></h1><br>
+    <div id="searchVue" class="center-el">
+        <h1 v-if="errMsg">{{errMsg}}</h1>
+        <h2>用户搜索</h2>
+        <input type="text" placeholder="输入姓名" v-model="keyword"><button @click="searchUser" id="searchBtn">搜索</button>
+        <table>
+            <thead>
+            <tr>
+                <th style="width: 30%">姓名</th><th style="width: 30%">手机号</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="user in userList">
+                <td>{{user.realName}}</td>
+                <td>{{user.tel}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+<script src="http://47.96.188.208/static/js/jquery-2.1.1.js"></script>
+<script src="/vue.v2.5.13.js"></script>
+<script src="/sample.js"></script>
+</html>
