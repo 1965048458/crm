@@ -1,4 +1,4 @@
-package com.xuebei.crm.mapper;
+package com.xuebei.crm.sample;
 
 import com.xuebei.crm.user.User;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,4 +12,6 @@ import java.util.List;
 @Mapper
 public interface SampleMapper {
     List<User> searchUser(@Param("keyword") String keyword);
+
+    void insertUser(User user);
 }

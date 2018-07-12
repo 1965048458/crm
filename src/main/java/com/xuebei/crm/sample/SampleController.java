@@ -1,7 +1,6 @@
 package com.xuebei.crm.sample;
 
 import com.xuebei.crm.dto.GsonView;
-import com.xuebei.crm.mapper.SampleMapper;
 import com.xuebei.crm.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
