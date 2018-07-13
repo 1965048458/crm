@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	<property name="log.path" value="/logs/crm" />
+	<property name="log.level.main" value="INFO" />
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%date|%level|%thread|%X{invokeNo}|%logger{50}|%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="mainAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.path}/crm.log</file>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>DENY</onMatch>
+			<onMismatch>ACCEPT</onMismatch>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.path}/crm.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%date|%level|%thread|%logger{0}|%msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="mainErrorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+		<file>${log.path}/error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.path}/error.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%date|%level|%X{invokeNo}|%logger{0}|%msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<logger name="com.xuebei.crm" level="${log.level.main}" additivity="false">
+		<appender-ref ref="mainAppender" />
+		<appender-ref ref="mainErrorAppender" />
+	</logger>
+
+    <logger name="org.apache.ibatis" level="${log.level.main}" additivity="false">
+        <appender-ref ref="console" />
+    </logger>
+
+	<root>
+		<level value="INFO" />
+		<!--<appender-ref ref="mainAppender" />-->
+		<appender-ref ref="console" />
+	</root>
+</configuration>
