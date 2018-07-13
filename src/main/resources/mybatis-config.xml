@@ -17,5 +17,6 @@
 <configuration>
     <mappers>
         <mapper resource="mybatis/mapper/SampleMapper.xml"/>
+        <mapper resource="mybatis/mapper/JournalMapper.xml"/>
     </mappers>
 </configuration>

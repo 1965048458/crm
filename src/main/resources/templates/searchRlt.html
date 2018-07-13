@@ -1,0 +1,36 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>test</title>
+    <style>
+        .center-box {
+            text-align: center;
+        }
+        .center-el {
+            display: inline-block;
+        }
+        #searchVue table * {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="center-box">
+    <div id="searchVue" class="center-el">
+        <h2>结果</h2>
+        <table>
+            <thead>
+            <tr>
+                <th style="width: 30%">姓名</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="journal:${journalList}">
+                <td th:text="${journal.realName}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+
+</html>

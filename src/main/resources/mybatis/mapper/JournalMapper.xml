@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuebei.crm.journal.JournalMapper">
+
+    <resultMap id="journalMap" type="com.xuebei.crm.journal.Journal">
+        <id column="userId" property="userId"/>
+        <result column="real_nm" property="realName"/>
+        <result column="userLog" property="userLog"/>
+        <result column="numRead" property="numRead"/>
+        <result column="imgSrc" property="imgSrc"/>
+        <result column="dateTime" property="dateTime"/>
+    </resultMap>
+
+    <select id="searchJournal" parameterType="string" resultMap="journalMap">
+        select * from crm_user
+        WHERE real_nm LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+    <!--
+    <insert id="insertJournal" parameterType="com.xuebei.crm.journal.Journal">
+        INSERT INTO  crm_user (user_id, tel, user_type, pwd, company_id) VALUES (#{userId}, #{tel}, "idel_type", "123456", "mycompany")
+    </insert>
+    -->
+</mapper>
