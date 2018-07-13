@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>WeUI</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css"/>
+    <script src="http://47.96.188.208/static/js/jquery-2.1.1.js"></script>
+
+    <script type="text/javascript">
+        //window.onbeforeunload = onbeforeunloadHandler;
+        //var submitted = false;
+
+        //function onbeforeunloadHandler() {
+        //   $('#draftDiv').css('display', 'block');
+        //    return "您还未保存草稿";
+        //}
+
+        function setHasSubmitted() {
+            $('#hasSubmitted').val('true');
+        }
+
+        function sendAjax() {
+            var postData = {
+                "type": "DAILY",
+                "summary": "今天做了什么",
+                "plan": "明日计划",
+                "hasSubmitted": false,
+                "visitRecords": [{
+                    "visitName": "今日拜访1",
+                    "contactsIds": ["001c52e79ee0484ca8158e926b5c05a3"],
+                    "visitType": "PHONE",
+                    "visitResult": "拜访结果"
+                }],
+                "receivers": [
+                    {"userId": "001"},
+                    {"userId": "002"}
+                ]
+            };
+            $.ajax({
+                url: "/journal/testJson",
+                cache: false,
+                data: JSON.stringify(postData),
+                contentType: "application/json; charset=utf-8",
+                type: "POST"
+            }).done(function (res) {
+                console.log(res);
+            });
+        }
+
+    </script>
+
+
+</head>
+
+<body>
+
+
+<form id="journalForm" action="/journal/add" method="GET">
+
+    <input style="display:none;" id="hasSubmitted" name="hasSubmitted" value="false"></input>
+
+    <!-- /journal/add -->
+    <input th:if="${newJournal}" style="display:none;" id="type" name="type" th:value="${journalType}"></input>
+
+    <!-- /journal/save -->
+    <input th:if="not ${newJournal}" style="display:none;" id="journalId" name="journalId" th:value="${journalId}"></input>
+
+
+    <div class="weui-cells__title"><p th:text="${summaryLabel}">今日总结</p></div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <textarea class="weui-textarea" th:placeholder="${summaryLabel}" rows="4" id="summary" name="summary"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title"><p th:text="${planLabel}">明日计划</p></div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <textarea class="weui-textarea" th:placeholder="${planLabel}" rows="4" id="plan" name="plan"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell weui-cell_vcode">
+            <div class="weui-cell__bd">
+                <label>今日拜访（选填）</label>
+            </div>
+            <div class="weui-cell__ft">
+                <a href="javascript:;"></a>
+                <img href="https://baidu.com" class="weui-vcode-img" src="./plus.jpg"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">发给谁</div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <textarea class="weui-textarea" placeholder="" rows="3"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="weui-panel weui-panel_access">
+        <div class="weui-panel__hd">发给谁</div>
+        <div class="weui-panel__bd">
+            <br><br><br>
+        </div>
+    </div>
+    -->
+
+    <br>
+
+    <button type="submit" class="weui-btn weui-btn_primary">保存草稿</button>
+
+    <br>
+
+    <button type="submit" onClick="javascript: setHasSubmitted()" class="weui-btn weui-btn_primary">提交</button>
+
+</form>
+
+<button onClick="sendAjax()">提交</button>
+
+<div style="display:none" id="draftDiv">
+    <div class="weui-mask" id="iosMask" style="opacity: 1;"></div>
+    <div class="weui-actionsheet weui-actionsheet_toggle" id="iosActionsheet">
+        <div class="weui-actionsheet__title">
+            <p class="weui-actionsheet__title-text">是否要保存草稿？</p>
+        </div>
+        <div class="weui-actionsheet__menu">
+            <div class="weui-actionsheet__cell">保存</div>
+            <div class="weui-actionsheet__cell" style="color:#FF0000;">不保存</div>
+        </div>
+        <div class="weui-actionsheet__action">
+            <div class="weui-actionsheet__cell" id="iosActionsheetCancel">取消</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

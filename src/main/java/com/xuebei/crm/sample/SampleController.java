@@ -34,4 +34,10 @@ public class SampleController {
         gsonView.addStaticAttribute("userList", userList);
         return gsonView;
     }
+
+    @RequestMapping("insert")
+    public String insertUser() {
+        return "insert";
+    }
+
 }
