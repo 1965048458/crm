@@ -9,4 +9,6 @@ public interface SampleService
 	List<User> searchUser(String keyword);
 
 	void insertUser(User user);
+
+	void editUser(User user);
 }

@@ -34,4 +34,12 @@ public class SampleController {
         gsonView.addStaticAttribute("userList", userList);
         return gsonView;
     }
+
+    @RequestMapping("/edit")
+    public GsonView edit(User user) {
+        sampleMapper.editUser(user);
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("success", true);
+        return gsonView;
+    }
 }
