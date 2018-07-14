@@ -10,12 +10,8 @@ public interface JournalService {
 
     void modifyJournal(Journal journal) throws InformationNotCompleteException, AuthenticationException;
 
-    void createJournal(String userId, String type, String summary, String plan, boolean hasSubmitted);
+    void deleteJournalById(String userId, String journalId) throws AuthenticationException;
 
-    Journal queryJournalById(String journalId);
-
-    void modifyJournal(String journalId, String newSummary, String newPlan, boolean hasSubmitted);
-
-    Integer deleteJournalById(String userId, String journalId);
+    Journal queryJournalById(String userId, String journalId) throws AuthenticationException;
 
 }

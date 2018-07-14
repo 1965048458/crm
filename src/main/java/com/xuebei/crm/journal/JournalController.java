@@ -29,7 +29,7 @@ public class JournalController {
         try {
             if (journal.getJournalId() != null) {
                 // 更新日志内容
-
+                journalService.modifyJournal(journal);
             } else {
                 // 插入新日志
                 journalService.createJournal(journal);
@@ -41,15 +41,22 @@ public class JournalController {
             return failedView;
         }
 
-        return null;
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
     }
 
-    @RequestMapping("/add")
-    public GsonView createJournal(@RequestParam("type") String type,
-                                  @RequestParam("summary") String summary,
-                                  @RequestParam("plan") String plan,
-                                  @RequestParam("hasSubmitted") boolean hasSubmitted) {
-        journalService.createJournal(acquireUserId(), type, summary, plan, hasSubmitted);
+    @RequestMapping("/delete")
+    public GsonView deleteJournal(@RequestParam("journalId") String journalId) {
+        try {
+            journalService.deleteJournalById(acquireUserId(), journalId);
+        } catch (AuthenticationException e) {
+            GsonView failedView = new GsonView();
+            failedView.addStaticAttribute("successFlg", false);
+            failedView.addStaticAttribute("errMsg", e.getMessage());
+            return failedView;
+        }
+
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
@@ -75,18 +82,6 @@ public class JournalController {
         modelMap.addAttribute("planLabel", journalType.getPlanName());
 
         return "editJournal";
-    }
-
-    @RequestMapping("/delete")
-    public GsonView deleteJournal(@RequestParam("journalId") String journalId) {
-        Integer deleteRows = journalService.deleteJournalById(acquireUserId(), journalId);
-        GsonView gsonView = new GsonView();
-        if (deleteRows == 1) {
-            gsonView.addStaticAttribute("successFlg", true);
-        } else {
-            gsonView.addStaticAttribute("successFlg", false);
-        }
-        return gsonView;
     }
 
 }

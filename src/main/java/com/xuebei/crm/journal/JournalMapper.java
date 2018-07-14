@@ -26,8 +26,7 @@ public interface JournalMapper {
     // functions for table visit_log
     Integer deleteVisitLog(@Param("journalId") String journalId);
 
-    Integer insertVisitLogs(@Param("journalId") String journalId,
-                            @Param("visitRecords") List<VisitRecord> visitRecords);
+    Integer insertVisitLog(VisitRecord visitRecord);
 
     List<VisitRecord> queryVisitLogs(@Param("journalId") String journalId);
 
@@ -38,7 +37,7 @@ public interface JournalMapper {
     Integer insertVisitContacts(@Param("visitId") String visitId,
                                 @Param("contactsIds") List<String> contactsIds);
 
-    List<String> queryVistContacts(@Param("visitId") String visitId);
+    List<String> queryVisitContacts(@Param("visitId") String visitId);
 
     // functions for table journal_receiver
     Integer deleteJournalReceiver(@Param("journalId") String journalId);

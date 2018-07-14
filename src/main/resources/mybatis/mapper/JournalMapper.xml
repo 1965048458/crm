@@ -82,13 +82,11 @@
         WHERE journal_id = #{journalId}
     </delete>
 
-    <insert id="insertVisitLogs" parameterType="map" useGeneratedKeys="true" keyColumn="visit_id" keyProperty="visitId">
+    <insert id="insertVisitLog" parameterType="com.xuebei.crm.journal.VisitRecord" useGeneratedKeys="true" keyColumn="visit_log_id" keyProperty="visitId">
         INSERT INTO visit_log
         (visit_result, visit_type, journal_id)
         VALUES
-        <foreach collection="visitRecords" item="item" index="index" separator=",">
-            (#{item.visitResult}, #{item.visitType}, #{journalId})
-        </foreach>
+            (#{visitResult}, #{visitType}, #{journalId})
     </insert>
 
     <select id="queryVisitLogs" resultMap="visitMap">
@@ -135,7 +133,7 @@
         WHERE journal_id = #{journalId}
     </select>
 
-    <select id="isJournalSameCompany" resultType="java.lang.Boolean">
+    <select id="isUserSameCompany" resultType="java.lang.Boolean">
         SELECT COUNT(A.user_id)
         FROM user_view AS A, user_view AS B
         WHERE A.user_id = #{userIdA} AND B.user_id = #{userIdB} AND A.company_id = B.company_id

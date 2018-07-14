@@ -46,33 +46,33 @@ public class JournalServiceImpl implements JournalService {
         deleteVisitRecords(journal.getJournalId());
         insertVisitRecords(journal.getJournalId(), journal.getVisitRecords());
         journalMapper.deleteJournalReceiver(journal.getJournalId());
-        
+        insertReceivers(journal.getJournalId(), journal.getReceivers());
     }
 
     @Override
-    public void createJournal(String userId, String type, String summary, String plan, boolean hasSubmitted) {
-        Journal journal = new Journal();
-        journal.setType(JournalTypeEnum.valueOf(type));
-        journal.setSummary(summary);
-        journal.setPlan(plan);
-        journal.setHasSubmitted(hasSubmitted);
-        journal.setUserId(userId);
-        journalMapper.createJournal(journal);
+    public void deleteJournalById(String userId, String journalId) throws AuthenticationException {
+        if (journalMapper.userHasJournal(userId, journalId)) {
+            throw new AuthenticationException("用户不拥有此日志");
+        }
+
+        deleteVisitRecords(journalId);
+        journalMapper.deleteJournalReceiver(journalId);
+        journalMapper.deleteJournal(userId, journalId);
     }
 
     @Override
-    public Journal queryJournalById(String journalId) {
-        return null;
-    }
+    public Journal queryJournalById(String userId, String journalId) throws AuthenticationException {
+        if (journalMapper.userHasJournal(userId, journalId))
+            throw new AuthenticationException("用户不拥有此日志");
 
-    @Override
-    public void modifyJournal(String journalId, String newSummary, String newPlan, boolean hasSubmitted) {
+        Journal journal = journalMapper.queryJournalById(journalId);
+        journal.setVisitRecords(journalMapper.queryVisitLogs(journalId));
+        for (VisitRecord visitRecord: journal.getVisitRecords()) {
+            visitRecord.setContactsIds(journalMapper.queryVisitContacts(visitRecord.getVisitId()));
+        }
+        journal.setReceivers(journalMapper.queryJournalReceiver(journal.getJournalId()));
 
-    }
-
-    @Override
-    public Integer deleteJournalById(String userId, String journalId) {
-        return journalMapper.deleteJournal(userId, journalId);
+        return journal;
     }
 
     /**
@@ -107,7 +107,7 @@ public class JournalServiceImpl implements JournalService {
             if (visitRecord.getVisitResult() == null)
                 throw new InformationNotCompleteException("visitResult 不能为空");
             if (visitRecord.getContactsIds() == null)
-                return;
+                continue;
 //            for (String contactsId: visitRecord.getContactsIds()) {
 //                // TODO: contactsId 联系人是否为公司所有(权限)
 //            }
@@ -139,7 +139,8 @@ public class JournalServiceImpl implements JournalService {
         if (visitRecords == null)
             return;
         for (VisitRecord visitRecord: visitRecords) {
-            journalMapper.insertVisitLogs(journalId, visitRecords);
+            visitRecord.setJournalId(journalId);
+            journalMapper.insertVisitLog(visitRecord);
             if (visitRecord.getContactsIds() == null)
                 continue;
             journalMapper.insertVisitContacts(visitRecord.getVisitId(), visitRecord.getContactsIds());
