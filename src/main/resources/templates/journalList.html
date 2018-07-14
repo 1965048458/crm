@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>工作日志</title>
+    <link rel="stylesheet" href="/weui.css">
+    <style>
+        .center-box {
+            text-align: center;
+        }
+        .center-ele {
+            display: inline-block;
+        }
+        .pull-right {
+            float: right!important;
+        }
+    </style>
+</head>
+<body id="journalPage">
+    <div class="top-bar center-box">
+        <div class="title-bar">
+            <span class="center-ele">工作日志</span>
+            <span class="pull-right">+</span>
+        </div>
+        <div class="select-bar">
+            <span>全部</span>
+            <span>未读(<span v-text="">1</span>)</span>
+            <span>我发出的</span>
+            <span>日报</span>
+            <span>周报</span>
+            <span>月报</span>
+        </div>
+    </div>
+
+    <div class="journal-list">
+        <div class="journal-box">
+            <div class="journal-title">
+                <div class="pull-left">
+                    <span>战三的日报</span><br>
+                    <span>2017-03-03 22:22:22</span>
+                </div>
+                <span>...</span>
+            </div>
+            <div class="journal-content">
+                <p><span>今日总结:</span>今天干了什么</p>
+                <p><span>明日计划:</span>明天干什么</p>
+                <p><span>今日拜访1:</span>李四</p>
+            </div>
+            <p><span><i class="weui-icon-success"></i>全部已读</span></p>
+        </div>
+    </div>
+</body>
+</html>

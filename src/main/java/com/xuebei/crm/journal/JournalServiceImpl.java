@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class JournalServiceImpl implements JournalService {
@@ -175,5 +175,18 @@ public class JournalServiceImpl implements JournalService {
         allJournalList.addAll(receivedJournal);
         allJournalList.sort((journal1, journal2)-> journal1.getCreateTs().before(journal2.getCreateTs())?1:-1);
         return allJournalList;
+    }
+
+    @Override
+    public  List searchDatail(String journalId){
+        Journal myJournal = journalMapper.searchJournal(journalId);
+        List<User> journalUnread = journalMapper.searchUnread(journalId);
+        List<User> journalRead = journalMapper.searchRead(journalId);
+        List result = new ArrayList();
+        result.add(myJournal);
+        result.add(journalUnread);
+        result.add(journalRead);
+        return result;
+
     }
 }

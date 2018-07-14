@@ -3,7 +3,7 @@ package com.xuebei.crm.journal;
 import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
 
-import java.util.List;
+import java.util.*;
 
 public interface JournalService {
 
@@ -16,4 +16,6 @@ public interface JournalService {
     Journal queryJournalById(String userId, String journalId) throws AuthenticationException;
 
     List<Journal> searchJournal(JournalSearchParam param);
+
+    List  searchDatail(String journalId);
 }

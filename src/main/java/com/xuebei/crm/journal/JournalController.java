@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -90,6 +92,7 @@ public class JournalController {
             try {
                 Journal journal = journalService.queryJournalById(acquireUserId(), journalId);
                 modelMap.addAttribute("newJournal", false);
+                modelMap.addAttribute("journal", journal);
                 modelMap.addAttribute("journalType", journal.getType());
                 modelMap.addAttribute("journalId", journal.getJournalId());
                 modelMap.addAttribute("summaryLabel", journal.getType().getSummaryName());
@@ -104,11 +107,29 @@ public class JournalController {
         return "editJournal";
     }
 
+    @RequestMapping("/toList")
+    public String toJournalList(HttpServletRequest request) {
+        return "journalList";
+    }
+
     @RequestMapping("/list")
-    public GsonView list(JournalSearchParam param){
+    public GsonView list(JournalSearchParam param, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String userId = (String)session.getAttribute("userId");
+        param.setUserId(userId);
         List<Journal> journals =journalService.searchJournal(param);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("journalList", journals);
+        return gsonView;
+    }
+
+    @RequestMapping("/detail")
+    public GsonView detail(String journalId){
+        List journal = journalService.searchDatail(journalId);
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("journal", journal.get(0));
+        gsonView.addStaticAttribute("unread", journal.get(1));
+        gsonView.addStaticAttribute("read", journal.get(2));
         return gsonView;
     }
 
