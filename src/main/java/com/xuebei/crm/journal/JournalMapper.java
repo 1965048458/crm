@@ -53,4 +53,10 @@ public interface JournalMapper {
     List<Journal> searchMyJournal(JournalSearchParam param);
 
     List<Journal> searchReceivedJournal(JournalSearchParam param);
+
+    Journal searchJournal(@Param("journalId") String journalId);
+
+    List<User> searchUnread(@Param("journalId") String journalId);
+
+    List<User> searchRead(@Param("journalId") String journalId);
 }
