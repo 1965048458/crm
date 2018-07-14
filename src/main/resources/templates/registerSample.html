@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>WeUI</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="/weui.css"/>
+</head>
+<body>
+
+    <div class="weui-cells__title">注册</div>
+    <form class="weui-cells weui-cells_form" action="/sample/insertUser" method="GET">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">用户名</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" name="userId" placeholder="请输入用户名"/>
+            </div>
+        </div>
+        <div class="weui-cell weui-cell_vcode">
+            <div class="weui-cell__hd">
+                <label class="weui-label">真实姓名</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" name="realName" placeholder="真实姓名">
+            </div>
+        </div>
+        <div class="weui-cell weui-cell_vcode">
+            <div class="weui-cell__hd">
+                <label class="weui-label">电话号</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" name="tel" type="password" placeholder="请输入手机号">
+            </div>
+        </div>
+
+        <button type="submit" class="weui-btn weui-btn_primary"> 注册 </button>
+
+    </form>
+
+</body>
+
+</html>

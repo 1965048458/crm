@@ -20,4 +20,9 @@ public class SampleServiceImpl implements SampleService {
     public void insertUser(User user) {
         sampleMapper.insertUser(user);
     }
+
+    @Override
+    public void editUser(User user) {
+        sampleMapper.editUser(user);
+    }
 }
