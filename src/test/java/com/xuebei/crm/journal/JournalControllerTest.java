@@ -36,17 +36,17 @@ public class JournalControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(journalController).build();
     }
 
-    @Test
-    public void testSearchJournal() throws Exception {
-        String keyword = "day";
-        String isRead = "on";
-        mockMvc.perform(get("/journal/search")
-                .param("keyword", keyword)
-                .param("isRead", isRead))
-                .andExpect(view().name("searchRlt"))
-                .andExpect(model().attributeExists("journalList"));
-
-        verify(journalService).searchJournal(keyword);
-    }
+//    @Test
+//    public void testSearchJournal() throws Exception {
+//        String keyword = "day";
+//        String isRead = "on";
+//        mockMvc.perform(get("/journal/search")
+//                .param("keyword", keyword)
+//                .param("isRead", isRead))
+//                .andExpect(view().name("searchRlt"))
+//                .andExpect(model().attributeExists("journalList"));
+//
+//        verify(journalService).searchJournal(keyword);
+//    }
 
 }
