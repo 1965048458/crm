@@ -3,7 +3,6 @@ package com.xuebei.crm.journal;
 import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
