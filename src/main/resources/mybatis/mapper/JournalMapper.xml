@@ -153,6 +153,29 @@
         </if>
     </select>
 
+    <select id="searchJournal" resultMap="journalMap">
+        SELECT j.*, u.real_nm FROM journal j
+        INNER JOIN user_view u ON j.user_id = u.user_id
+        WHERE j.journal_id = #{journalId}
+    </select>
+
+    <select id="searchUnread"  resultMap="userMap">
+        SELECT  * FROM user_view u
+        WHERE u.crm_user_id IN (
+        SELECT j.receiver_id FROM  journal_receiver j
+        WHERE j.journal_id = #{journalId} AND j.has_read = 0
+        )
+    </select>
+
+    <select id="searchRead" resultMap="userMap">
+        SELECT  * FROM user_view u
+        WHERE u.crm_user_id IN (
+        SELECT j.receiver_id FROM  journal_receiver j
+        WHERE j.journal_id = #{journalId} AND j.has_read = 1
+        )
+    </select>
+
+
     <select id="searchReceivedJournal" resultMap="journalMap">
         SELECT j.*, u.real_nm FROM journal j
         INNER JOIN user_view u ON j.user_id = u.user_id
