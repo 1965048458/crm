@@ -54,6 +54,7 @@
 <body >
 <div id="editJournalVue">
     <input id="journalType" type="hidden" th:value="${journalType}">
+    <input id="journalId" type="hidden" th:value="${journalId}">
     <div v-show="showPage === 'journalPage'" id="journalPage">
         <div class="top-bar">
             <span @click="backToList" class="pull-left"><</span>
@@ -64,16 +65,18 @@
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
                 <div class="weui-cell__bd">
-                    <textarea class="weui-textarea" rows="4" v-model="summary"></textarea>
+                    <textarea class="weui-textarea" rows="4" v-model="summary"
+                              :placeholder="summaryPlaceHolder"></textarea>
                 </div>
             </div>
         </div>
 
-        <div class="weui-cells__title"><p>明日计划</p></div>
+        <div class="weui-cells__title"><p v-text="planLabel">明日计划</p></div>
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
                 <div class="weui-cell__bd">
-                    <textarea class="weui-textarea" rows="4" v-model="plan"></textarea>
+                    <textarea class="weui-textarea" rows="4" v-model="plan"
+                              :placeholder="planPlaceHolder"></textarea>
                 </div>
             </div>
         </div>

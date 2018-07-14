@@ -9,20 +9,30 @@ var summaryLabels = {
     'WEEKLY': '本周总结',
     'MONTHLY': '本月总结'
 };
+var planLabels = {
+    'DAILY': '明日计划',
+    'WEEKLY': '下周总结',
+    'MONTHLY': '下月总结'
+};
+
 jQuery(document).ready(function () {
+
+    var journalId = jQuery('#journalId').val();
     var journalType = jQuery('#journalType').val();
+
    var editJournalVue = new Vue({
        el: "#editJournalVue",
        data: {
            showErrMsg: false,
            errMsg: '',
            journalType: journalType,
+           journalId: journalId,
            showPage: 'journalPage',
            summary: '',
            plan: '',
            visits: [],
            curVisit: {},
-           receivers: [],
+           receivers: '',
            receiversTmp: [],
            customers: [{name: '浙江大学', contactsFold: true, contactsGroup:[{realName: '李四'}]},
                {name: '浙江工商大学', contactsFold: true}],
@@ -39,10 +49,10 @@ jQuery(document).ready(function () {
                jQuery('#draftDiv').hide();
            },
            'saveDraft': function () {
-               var postData = {
-                   //todo
-               };
-               this.doSaveJournal(postData);
+               var result = this.prepareData();
+               result.hasSubmitted = false;
+               // this.doSaveJournal(postData);
+               this.doSaveJournal(result);
            },
            'doSaveJournal': function (postData) {
                var thisVue = this;
@@ -89,10 +99,9 @@ jQuery(document).ready(function () {
                this.showPage='selectReceiver';
            },
            'submitJournal': function () {
-               var postData = {
-                   //todo
-               };
-               this.doSaveJournal(postData);
+               var result = this.prepareData();
+               result.hasSubmitted = true;
+               this.doSaveJournal(result);
            },
            'cancelSelectContacts': function () {
                this.$set(this, 'chosenContactsTmp', []);
@@ -118,6 +127,20 @@ jQuery(document).ready(function () {
            'confirmSelectReceiver': function () {
                this.receivers = this.receiversTmp;
                this.showPage = 'journalPage';
+           },
+           'prepareData': function () {
+               var result = {
+                   type: this.journalType,
+                   summary: this.summary,
+                   plan: this.plan,
+                   hasSubmitted: false,
+                   visitRecords: this.visits,
+                   receivers: this.receivers
+               };
+               if (this.journalId !== '0') {
+                   result['journalId'] = this.journalId;
+               }
+               return result;
            }
        },
        computed: {
@@ -126,9 +149,42 @@ jQuery(document).ready(function () {
            },
            'summaryLabel': function () {
                return summaryLabels[this.journalType];
+           },
+           'planLabel': function () {
+               return planLabels[this.journalType];
+           },
+           'summaryPlaceHolder': function () {
+               return "请输入" + summaryLabels[this.journalType];
+           },
+           'planPlaceHolder': function () {
+               return "请输入" + planLabels[this.journalType];
            }
        }
    });
+
+
+    jQuery.ajax({
+        type: 'get',
+        url: '/journal/query?journalId='+journalId,
+        dataType: 'json',
+        cache: false,
+        success: function(result) {
+            editJournalVue.$set(editJournalVue, 'summary', result.journal.summary);
+            editJournalVue.$set(editJournalVue, 'plan', result.journal.plan);
+            editJournalVue.$set(editJournalVue, 'receivers', result.journal.receivers);
+        }
+    });
+
+    jQuery.ajax({
+        type: 'get',
+        url: '/journal/action/getColleagueList',
+        dataType: 'json',
+        cache: false,
+        success: function(result) {
+            editJournalVue.$set(editJournalVue, 'colleagues', result.colleagues);
+        }
+    });
+
 });
 
 function setHasSubmitted() {

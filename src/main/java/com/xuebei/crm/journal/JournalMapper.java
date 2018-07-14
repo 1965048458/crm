@@ -50,6 +50,8 @@ public interface JournalMapper {
     Boolean isUserSameCompany(@Param("userIdA") String userIdA,
                               @Param("userIdB") String userIdB);
 
+    List<User> queryColleagues(@Param("userId") String userId);
+
     List<Journal> searchMyJournal(JournalSearchParam param);
 
     List<Journal> searchReceivedJournal(JournalSearchParam param);

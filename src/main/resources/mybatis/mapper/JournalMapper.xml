@@ -138,6 +138,12 @@
         WHERE A.user_id = #{userIdA} AND B.user_id = #{userIdB} AND A.company_id = B.company_id
     </select>
 
+    <select id="queryColleagues" resultMap="userMap">
+        SELECT B.user_id, B.real_nm, B.avatar_url
+        FROM user_view AS A, user_view AS B
+        WHERE A.company_id = B.company_id AND A.user_id = #{userId} AND B.user_id != #{userId}
+    </select>
+
     <select id="searchMyJournal" resultMap="journalMap">
         SELECT j.*, u.real_nm FROM journal j
         INNER JOIN user_view u ON j.user_id = u.user_id

@@ -3,6 +3,7 @@ package com.xuebei.crm.journal;
 import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
+import com.xuebei.crm.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,6 +21,9 @@ public class JournalController {
 
     @Autowired
     private JournalService journalService;
+
+    @Autowired
+    private JournalMapper journalMapper;
 
     // TODO:
     private String acquireUserId() {
@@ -66,18 +70,30 @@ public class JournalController {
         return gsonView;
     }
 
-    @RequestMapping("/testJson")
-    public GsonView testJson(@RequestParam("journalId") String journalId) throws AuthenticationException {
+    @RequestMapping("/query")
+    public GsonView getJournalInfoById(@RequestParam("journalId") String journalId) throws AuthenticationException {
         GsonView gsonView = new GsonView();
         Journal journal = journalService.queryJournalById(acquireUserId(), journalId);
         gsonView.addStaticAttribute("journal", journal);
         return gsonView;
     }
 
+    @RequestMapping("/action/getColleagueList")
+    public GsonView getColleagueList() {
+        List<User> colleagues = journalMapper.queryColleagues(acquireUserId());
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("colleagues", colleagues);
+        return gsonView;
+    }
+
     @RequestMapping("/edit")
-    public String editJournalPage(@RequestParam("type") String type,
+    public String editJournalPage(@RequestParam(value="type", required = false) String type,
                               @RequestParam(value="journalId", required = false) String journalId,
                               ModelMap modelMap) {
+
+        if (journalId == null && type == null) {
+            return "error/500";
+        }
 
         if (journalId == null) {
             JournalTypeEnum journalType = JournalTypeEnum.valueOf(type);
