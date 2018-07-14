@@ -11,6 +11,7 @@
         <result property="plan" column="plan"/>
         <result property="createTs" column="create_ts"/>
         <result property="hasSubmitted" column="has_submitted"/>
+        <result property="readNum" javaType="java.lang.Integer" column="read_num"/>
         <association property="user" javaType="com.xuebei.crm.user.User">
             <id property="userId" column="user_id"/>
             <result column="real_nm" property="realName"/>
@@ -32,46 +33,47 @@
         <result property="tel" column="TEL"/>
         <result property="avatarUrl" column="avatar_url"/>
     </resultMap>
-    
-    <insert id="createJournal" parameterType="com.xuebei.crm.journal.Journal" useGeneratedKeys="true" keyColumn="journal_id" keyProperty="journalId">
-      INSERT INTO journal (
-        user_id,
-        type_cd,
-        plan,
-        summary,
-        create_ts,
-        update_ts,
-        has_submitted
-      )
-      VALUES (
-        #{userId},
-        #{type},
-        #{plan},
-        #{summary},
-        NOW(),
-        NOW(),
-        #{hasSubmitted}
-      );
+
+    <insert id="createJournal" parameterType="com.xuebei.crm.journal.Journal" useGeneratedKeys="true"
+            keyColumn="journal_id" keyProperty="journalId">
+        INSERT INTO journal (
+            user_id,
+            type_cd,
+            plan,
+            summary,
+            create_ts,
+            update_ts,
+            has_submitted
+        )
+        VALUES (
+            #{userId},
+            #{type},
+            #{plan},
+            #{summary},
+            NOW(),
+            NOW(),
+            #{hasSubmitted}
+        );
     </insert>
 
     <select id="queryJournalById" parameterType="java.lang.String" resultMap="journalMap">
-      SELECT *
-      FROM journal
-      WHERE journal_id = #{journalId}
+        SELECT *
+        FROM journal
+        WHERE journal_id = #{journalId}
     </select>
 
     <select id="userHasJournal" resultType="java.lang.Boolean">
-      SELECT COUNT(journal_id)
-      FROM journal
-      WHERE journal_id = #{journalId} AND user_id = #{userId}
+        SELECT COUNT(journal_id)
+        FROM journal
+        WHERE journal_id = #{journalId} AND user_id = #{userId}
     </select>
 
     <update id="updateJournal" parameterType="com.xuebei.crm.journal.Journal">
         UPDATE journal
-        SET plan = #{plan},
-          summary = #{summary},
-          has_submitted = #{hasSubmitted},
-          update_ts = NOW()
+        SET plan          = #{plan},
+            summary       = #{summary},
+            has_submitted = #{hasSubmitted},
+            update_ts     = NOW()
         WHERE journal_id = #{journalId} AND user_id = #{userId}
     </update>
 
@@ -85,7 +87,8 @@
         WHERE journal_id = #{journalId}
     </delete>
 
-    <insert id="insertVisitLog" parameterType="com.xuebei.crm.journal.VisitRecord" useGeneratedKeys="true" keyColumn="visit_log_id" keyProperty="visitId">
+    <insert id="insertVisitLog" parameterType="com.xuebei.crm.journal.VisitRecord" useGeneratedKeys="true"
+            keyColumn="visit_log_id" keyProperty="visitId">
         INSERT INTO visit_log
         (visit_result, visit_type, journal_id)
         VALUES
@@ -93,7 +96,8 @@
     </insert>
 
     <select id="queryVisitLogs" resultMap="visitMap">
-        SELECT * FROM visit_log
+        SELECT *
+        FROM visit_log
         WHERE journal_id = #{journalId}
     </select>
 
@@ -112,7 +116,8 @@
     </insert>
 
     <select id="queryVisitContacts">
-        SELECT contacts_id FROM visit_contacts
+        SELECT contacts_id
+        FROM visit_contacts
         WHERE visit_log_id = #{visitId}
     </select>
 
@@ -132,7 +137,8 @@
 
     <select id="queryJournalReceiver" resultMap="userMap">
         SELECT *
-        FROM journal_receiver LEFT JOIN user_view ON journal_receiver.receiver_id = user_view.user_id
+        FROM journal_receiver
+            LEFT JOIN user_view ON journal_receiver.receiver_id = user_view.user_id
         WHERE journal_id = #{journalId}
     </select>
 
@@ -143,9 +149,15 @@
     </select>
 
     <select id="searchMyJournal" resultMap="journalMap">
-        SELECT j.*, u.real_nm FROM journal j
+        SELECT j.*, u.real_nm, count(r.*) as read_num FROM journal j
         INNER JOIN user_view u ON j.user_id = u.user_id
+        INNER JOIN journal_receiver r on j.journal_id = r.journal_id
         WHERE j.user_id = #{userId}
+        and r.has_read = 1
+        <foreach collection="sdId" item="item" index="index" separator=" ">
+            and j.user_id = #{ item }
+        </foreach>
+
         <if test="journalType != null">
             AND j.type_cd = #{journalType}
         </if>
@@ -158,10 +170,17 @@
     </select>
 
     <select id="searchReceivedJournal" resultMap="journalMap">
-        SELECT j.*, u.real_nm FROM journal j
+        SELECT j.*, u.real_nm, count(r.*) as read_num FROM journal j
         INNER JOIN user_view u ON j.user_id = u.user_id
         INNER JOIN journal_receiver r ON j.journal_id = r.journal_id
         WHERE r.receiver_id = #{userId}
+        and r.has_read = 1
+        <if test="param != null">
+            <foreach collection="sdId" item="item" index="index" separator=" ">
+                and j.user_id = #{ item }
+            </foreach>
+        </if>
+
         <if test="journalType != null">
             AND j.type_cd = #{journalType}
         </if>

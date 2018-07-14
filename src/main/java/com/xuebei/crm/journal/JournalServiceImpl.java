@@ -164,11 +164,20 @@ public class JournalServiceImpl implements JournalService {
 
     @Override
     public List<Journal> searchJournal(JournalSearchParam param) {
+        ///分解发送人字符串
+        if (param.getSenderIds() != "" && param.getSenderIds() != null){
+            param.setSdId(param.getSenderIds().trim().split(","));
+        }
+
         List<Journal> myJournal = journalMapper.searchMyJournal(param);
         List<Journal> receivedJournal = journalMapper.searchReceivedJournal(param);
         List<Journal> allJournalList = new ArrayList<>();
-        allJournalList.addAll(myJournal);
-        allJournalList.addAll(receivedJournal);
+
+        if (((param.getSenderIds() == "") || (param.getSenderIds() == null)) && !param.getRead() ){///没有选择发送人且未读
+            allJournalList.addAll(myJournal);
+        }else{///按发送人来选择已读/未读
+            allJournalList.addAll(receivedJournal);
+        }
         allJournalList.sort((journal1, journal2)-> journal1.getCreateTs().before(journal2.getCreateTs())?1:-1);
         return allJournalList;
     }

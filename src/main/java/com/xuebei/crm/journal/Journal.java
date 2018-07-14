@@ -34,6 +34,9 @@ public class Journal {
     @Expose
     private User user;
 
+    @Expose
+    private Integer readNum;
+
     public User getUser() {
         return user;
     }
@@ -122,4 +125,11 @@ public class Journal {
         this.receivers = receivers;
     }
 
+    public Integer getReadNum() {
+        return readNum;
+    }
+
+    public void setReadNum(Integer readNum) {
+        this.readNum = readNum;
+    }
 }

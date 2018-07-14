@@ -94,4 +94,9 @@ public class JournalController {
         return gsonView;
     }
 
+    @RequestMapping("/detail")
+    public GsonView journalDetail(String journal_id){
+        return null;
+    }
+
 }
