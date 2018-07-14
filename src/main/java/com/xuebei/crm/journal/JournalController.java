@@ -3,6 +3,7 @@ package com.xuebei.crm.journal;
 import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -65,8 +66,9 @@ public class JournalController {
     }
 
     @RequestMapping("/testJson")
-    public GsonView testJson(@RequestBody Journal journal) {
+    public GsonView testJson(@RequestParam("journalId") String journalId) throws AuthenticationException {
         GsonView gsonView = new GsonView();
+        Journal journal = journalService.queryJournalById(acquireUserId(), journalId);
         gsonView.addStaticAttribute("journal", journal);
         return gsonView;
     }
@@ -75,13 +77,30 @@ public class JournalController {
     public String editJournalPage(@RequestParam("type") String type,
                               @RequestParam(value="journalId", required = false) String journalId,
                               ModelMap modelMap) {
-        JournalTypeEnum journalType = JournalTypeEnum.valueOf(type);
 
-        modelMap.addAttribute("newJournal", true);
-        modelMap.addAttribute("journalType", type);
-        modelMap.addAttribute("journalId", 0);
-        modelMap.addAttribute("summaryLabel", journalType.getSummaryName());
-        modelMap.addAttribute("planLabel", journalType.getPlanName());
+        if (journalId == null) {
+            JournalTypeEnum journalType = JournalTypeEnum.valueOf(type);
+            modelMap.addAttribute("newJournal", true);
+            modelMap.addAttribute("journalType", type);
+            modelMap.addAttribute("journalId", 0);
+            modelMap.addAttribute("summaryLabel", journalType.getSummaryName());
+            modelMap.addAttribute("planLabel", journalType.getPlanName());
+            modelMap.addAttribute("summary","");
+            modelMap.addAttribute("plan", "");
+        } else {
+            try {
+                Journal journal = journalService.queryJournalById(acquireUserId(), journalId);
+                modelMap.addAttribute("newJournal", false);
+                modelMap.addAttribute("journalType", journal.getType());
+                modelMap.addAttribute("journalId", journal.getJournalId());
+                modelMap.addAttribute("summaryLabel", journal.getType().getSummaryName());
+                modelMap.addAttribute("planLabel", journal.getType().getPlanName());
+                modelMap.addAttribute("summary", journal.getSummary());
+                modelMap.addAttribute("plan", journal.getPlan());
+            } catch (AuthenticationException e) {
+                return "error/500";
+            }
+        }
 
         return "editJournal";
     }

@@ -54,7 +54,7 @@
       );
     </insert>
 
-    <select id="queryJournalById" parameterType="java.lang.String" resultMap="journalMap">
+    <select id="queryJournalById" resultMap="journalMap">
       SELECT *
       FROM journal
       WHERE journal_id = #{journalId}
@@ -102,16 +102,14 @@
         WHERE visit_log_id = #{visitId}
     </delete>
 
-    <insert id="insertVisitContacts" parameterType="map">
+    <insert id="insertVisitContacts">
         INSERT INTO visit_contacts
         (visit_log_id, contacts_id)
         VALUES
-        <foreach collection="contactsIds" item="item" index="index" separator=",">
-            (#{visitId}, #{index})
-        </foreach>
+            (#{visitId}, #{contactsId})
     </insert>
 
-    <select id="queryVisitContacts">
+    <select id="queryVisitContacts" resultType="java.lang.String">
         SELECT contacts_id FROM visit_contacts
         WHERE visit_log_id = #{visitId}
     </select>
@@ -125,9 +123,7 @@
         INSERT INTO journal_receiver
         (journal_id, receiver_id)
         VALUES
-        <foreach collection="receivers" item="item" index="index" separator=",">
-            (#{journalId}, #{index.userId})
-        </foreach>
+            (#{journalId}, #{receiverId})
     </insert>
 
     <select id="queryJournalReceiver" resultMap="userMap">

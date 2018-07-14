@@ -35,7 +35,7 @@ public class JournalServiceImpl implements JournalService {
     public void modifyJournal(Journal journal) throws InformationNotCompleteException, AuthenticationException {
         checkBasicInfo(journal);
         Journal oldJournal = journalMapper.queryJournalById(journal.getJournalId());
-        if (oldJournal == null || oldJournal.getUserId().equals(journal.getUserId())) {
+        if (oldJournal == null || !oldJournal.getUserId().equals(journal.getUserId())) {
             throw new AuthenticationException("用户不拥有此日志");
         } else if (oldJournal.getHasSubmitted()) {
             throw new AuthenticationException("日志已提交");
@@ -52,7 +52,7 @@ public class JournalServiceImpl implements JournalService {
 
     @Override
     public void deleteJournalById(String userId, String journalId) throws AuthenticationException {
-        if (journalMapper.userHasJournal(userId, journalId)) {
+        if (!journalMapper.userHasJournal(userId, journalId)) {
             throw new AuthenticationException("用户不拥有此日志");
         }
 
@@ -63,7 +63,7 @@ public class JournalServiceImpl implements JournalService {
 
     @Override
     public Journal queryJournalById(String userId, String journalId) throws AuthenticationException {
-        if (journalMapper.userHasJournal(userId, journalId))
+        if (!journalMapper.userHasJournal(userId, journalId))
             throw new AuthenticationException("用户不拥有此日志");
 
         Journal journal = journalMapper.queryJournalById(journalId);
@@ -144,14 +144,18 @@ public class JournalServiceImpl implements JournalService {
             journalMapper.insertVisitLog(visitRecord);
             if (visitRecord.getContactsIds() == null)
                 continue;
-            journalMapper.insertVisitContacts(visitRecord.getVisitId(), visitRecord.getContactsIds());
+            for (String contactsId: visitRecord.getContactsIds()) {
+                journalMapper.insertVisitContacts(visitRecord.getVisitId(), contactsId);
+            }
         }
     }
 
     private void insertReceivers(String journalId, List<User> receivers) {
         if (receivers == null)
             return;
-        journalMapper.insertJournalReceiver(journalId, receivers);
+        for (User receiver: receivers) {
+            journalMapper.insertJournalReceiver(journalId, receiver.getUserId());
+        }
     }
 
     private void deleteVisitRecords(String journalId) {

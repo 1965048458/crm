@@ -10,13 +10,6 @@
     <script src="http://47.96.188.208/static/js/jquery-2.1.1.js"></script>
 
     <script type="text/javascript">
-        //window.onbeforeunload = onbeforeunloadHandler;
-        //var submitted = false;
-
-        //function onbeforeunloadHandler() {
-        //   $('#draftDiv').css('display', 'block');
-        //    return "您还未保存草稿";
-        //}
 
         function setHasSubmitted() {
             $('#hasSubmitted').val('true');
@@ -58,22 +51,22 @@
 <body>
 
 
-<form id="journalForm" action="/journal/add" method="GET">
+<form id="journalForm" action="/journal/editSubmit" method="GET">
 
-    <input style="display:none;" id="hasSubmitted" name="hasSubmitted" value="false"></input>
+    <input style="display:none;" id="hasSubmitted" name="hasSubmitted" value="false"/>
 
     <!-- /journal/add -->
-    <input th:if="${newJournal}" style="display:none;" id="type" name="type" th:value="${journalType}"></input>
+    <input th:if="${newJournal}" style="display:none;" id="type" name="type" th:value="${journalType}"/>
 
     <!-- /journal/save -->
-    <input th:if="not ${newJournal}" style="display:none;" id="journalId" name="journalId" th:value="${journalId}"></input>
+    <input th:if="not ${newJournal}" style="display:none;" id="journalId" name="journalId" th:value="${journalId}"/>
 
 
     <div class="weui-cells__title"><p th:text="${summaryLabel}">今日总结</p></div>
     <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
             <div class="weui-cell__bd">
-                <textarea class="weui-textarea" th:placeholder="${summaryLabel}" rows="4" id="summary" name="summary"></textarea>
+                <textarea class="weui-textarea" th:placeholder="${summaryLabel}" th:text="${summary}" rows="4" id="summary" name="summary"></textarea>
             </div>
         </div>
     </div>
@@ -82,7 +75,7 @@
     <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
             <div class="weui-cell__bd">
-                <textarea class="weui-textarea" th:placeholder="${planLabel}" rows="4" id="plan" name="plan"></textarea>
+                <textarea class="weui-textarea" th:placeholder="${planLabel}" th:text="${plan} "rows="4" id="plan" name="plan"></textarea>
             </div>
         </div>
     </div>
@@ -108,41 +101,9 @@
         </div>
     </div>
 
-    <!--<div class="weui-panel weui-panel_access">
-        <div class="weui-panel__hd">发给谁</div>
-        <div class="weui-panel__bd">
-            <br><br><br>
-        </div>
-    </div>
-    -->
-
-    <br>
-
-    <button type="submit" class="weui-btn weui-btn_primary">保存草稿</button>
-
-    <br>
-
     <button type="submit" onClick="javascript: setHasSubmitted()" class="weui-btn weui-btn_primary">提交</button>
 
 </form>
-
-<button onClick="sendAjax()">提交</button>
-
-<div style="display:none" id="draftDiv">
-    <div class="weui-mask" id="iosMask" style="opacity: 1;"></div>
-    <div class="weui-actionsheet weui-actionsheet_toggle" id="iosActionsheet">
-        <div class="weui-actionsheet__title">
-            <p class="weui-actionsheet__title-text">是否要保存草稿？</p>
-        </div>
-        <div class="weui-actionsheet__menu">
-            <div class="weui-actionsheet__cell">保存</div>
-            <div class="weui-actionsheet__cell" style="color:#FF0000;">不保存</div>
-        </div>
-        <div class="weui-actionsheet__action">
-            <div class="weui-actionsheet__cell" id="iosActionsheetCancel">取消</div>
-        </div>
-    </div>
-</div>
 
 </body>
 </html>
