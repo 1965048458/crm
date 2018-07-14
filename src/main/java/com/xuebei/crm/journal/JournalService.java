@@ -2,7 +2,8 @@ package com.xuebei.crm.journal;
 
 import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
-import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 public interface JournalService {
 
@@ -14,4 +15,5 @@ public interface JournalService {
 
     Journal queryJournalById(String userId, String journalId) throws AuthenticationException;
 
+    List<Journal> searchJournal(JournalSearchParam param);
 }

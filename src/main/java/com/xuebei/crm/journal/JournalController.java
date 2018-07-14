@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/journal")
 public class JournalController {
@@ -82,6 +84,14 @@ public class JournalController {
         modelMap.addAttribute("planLabel", journalType.getPlanName());
 
         return "editJournal";
+    }
+
+    @RequestMapping("/list")
+    public GsonView list(JournalSearchParam param){
+        List<Journal> journals =journalService.searchJournal(param);
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("journalList", journals);
+        return gsonView;
     }
 
 }

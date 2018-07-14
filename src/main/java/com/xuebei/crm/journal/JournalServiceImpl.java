@@ -6,6 +6,7 @@ import com.xuebei.crm.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -161,4 +162,14 @@ public class JournalServiceImpl implements JournalService {
         journalMapper.deleteVisitLog(journalId);
     }
 
+    @Override
+    public List<Journal> searchJournal(JournalSearchParam param) {
+        List<Journal> myJournal = journalMapper.searchMyJournal(param);
+        List<Journal> receivedJournal = journalMapper.searchReceivedJournal(param);
+        List<Journal> allJournalList = new ArrayList<>();
+        allJournalList.addAll(myJournal);
+        allJournalList.addAll(receivedJournal);
+        allJournalList.sort((journal1, journal2)-> journal1.getCreateTs().before(journal2.getCreateTs())?1:-1);
+        return allJournalList;
+    }
 }

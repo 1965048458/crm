@@ -10,8 +10,11 @@
         <result property="summary" column="summary"/>
         <result property="plan" column="plan"/>
         <result property="createTs" column="create_ts"/>
-        <result property="updateTs" column="update_ts"/>
         <result property="hasSubmitted" column="has_submitted"/>
+        <association property="user" javaType="com.xuebei.crm.user.User">
+            <id property="userId" column="user_id"/>
+            <result column="real_nm" property="realName"/>
+        </association>
     </resultMap>
 
     <resultMap id="visitMap" type="com.xuebei.crm.journal.VisitRecord">
@@ -67,7 +70,7 @@
         UPDATE journal
         SET plan = #{plan},
           summary = #{summary},
-          has_submitted = #{hasSubmitted}
+          has_submitted = #{hasSubmitted},
           update_ts = NOW()
         WHERE journal_id = #{journalId} AND user_id = #{userId}
     </update>
@@ -137,5 +140,36 @@
         SELECT COUNT(A.user_id)
         FROM user_view AS A, user_view AS B
         WHERE A.user_id = #{userIdA} AND B.user_id = #{userIdB} AND A.company_id = B.company_id
+    </select>
+
+    <select id="searchMyJournal" resultMap="journalMap">
+        SELECT j.*, u.real_nm FROM journal j
+        INNER JOIN user_view u ON j.user_id = u.user_id
+        WHERE j.user_id = #{userId}
+        <if test="journalType != null">
+            AND j.type_cd = #{journalType}
+        </if>
+        <if test="startTime != null">
+            AND j.create_ts &gt; #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND j.create_ts &lt; #{endTime}
+        </if>
+    </select>
+
+    <select id="searchReceivedJournal" resultMap="journalMap">
+        SELECT j.*, u.real_nm FROM journal j
+        INNER JOIN user_view u ON j.user_id = u.user_id
+        INNER JOIN journal_receiver r ON j.journal_id = r.journal_id
+        WHERE r.receiver_id = #{userId}
+        <if test="journalType != null">
+            AND j.type_cd = #{journalType}
+        </if>
+        <if test="startTime != null">
+            AND j.create_ts &gt; #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND j.create_ts &lt; #{endTime}
+        </if>
     </select>
 </mapper>

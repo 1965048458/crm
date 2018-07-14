@@ -1,6 +1,5 @@
 package com.xuebei.crm.journal;
 
-import com.google.gson.annotations.Expose;
 import com.xuebei.crm.user.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -50,4 +49,8 @@ public interface JournalMapper {
     // other functions
     Boolean isUserSameCompany(@Param("userIdA") String userIdA,
                               @Param("userIdB") String userIdB);
+
+    List<Journal> searchMyJournal(JournalSearchParam param);
+
+    List<Journal> searchReceivedJournal(JournalSearchParam param);
 }
