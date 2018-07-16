@@ -11,6 +11,8 @@ public class JournalSearchParam {
     private String userId;
     private JournalTypeEnum journalType;
     private String senderIds;
+    private String[] sdId;
+
     private String customer;
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date startTime;
@@ -72,5 +74,13 @@ public class JournalSearchParam {
 
     public void setRead(Boolean read) {
         isRead = read;
+    }
+
+    public String[] getSdId() {
+        return sdId;
+    }
+
+    public void setSdId(String[] sdId) {
+        this.sdId = sdId;
     }
 }

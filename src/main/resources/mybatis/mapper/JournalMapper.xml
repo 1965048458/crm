@@ -11,6 +11,7 @@
         <result property="plan" column="plan"/>
         <result property="createTs" column="create_ts"/>
         <result property="hasSubmitted" column="has_submitted"/>
+        <result property="readNum" javaType="java.lang.Integer" column="read_num"/>
         <association property="user" javaType="com.xuebei.crm.user.User">
             <id property="userId" column="user_id"/>
             <result column="real_nm" property="realName"/>
@@ -157,6 +158,7 @@
         <if test="endTime != null">
             AND j.create_ts &lt; #{endTime}
         </if>
+
     </select>
 
     <select id="searchJournal" resultMap="journalMap">
@@ -183,10 +185,18 @@
 
 
     <select id="searchReceivedJournal" resultMap="journalMap">
-        SELECT j.*, u.real_nm FROM journal j
+        SELECT j.*, u.real_nm  FROM journal j
         INNER JOIN user_view u ON j.user_id = u.user_id
         INNER JOIN journal_receiver r ON j.journal_id = r.journal_id
         WHERE r.receiver_id = #{userId}
+        AND #{ isRead }
+
+        <if test="senderIds != null">
+            <foreach collection="sdId" item="item" index="index" separator=" ">
+                OR j.user_id = #{item}
+            </foreach>
+        </if>
+
         <if test="journalType != null">
             AND j.type_cd = #{journalType}
         </if>
@@ -196,5 +206,6 @@
         <if test="endTime != null">
             AND j.create_ts &lt; #{endTime}
         </if>
+
     </select>
 </mapper>
