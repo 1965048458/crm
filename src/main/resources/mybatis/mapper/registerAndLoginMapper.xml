@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuebei.crm.registerAndLogin.registerAndLoginMapper">
+
+    <resultMap id="userMap" type="com.xuebei.crm.user.User">
+        <id column="user_id" property="userId"/>
+        <result column="tel" property="tel"/>
+        <result column="real_nm" property="realName"/>
+        <result column="pwd" property="pwd"/>
+    </resultMap>
+
+    <select id="searchTel" parameterType="string" resultMap="userMap">
+        select * from crm_user
+        WHERE tel=(#{tel})
+    </select>
+
+    <select id="changePwd" parameterType="string" resultMap="userMap">
+        UPDATE crm_user SET  pwd = (#{pwd})
+        WHERE tel=(#{tel})
+    </select>
+
+
+    <insert id="insertUser" parameterType="com.xuebei.crm.user.User">
+        INSERT INTO  crm_user ( crm_user_id,tel,pwd, real_nm) VALUES ( #{userId},#{tel},  #{pwd}, #{realName})
+    </insert>
+</mapper>

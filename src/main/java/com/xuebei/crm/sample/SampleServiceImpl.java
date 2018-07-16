@@ -1,6 +1,7 @@
 package com.xuebei.crm.sample;
 
 import com.xuebei.crm.user.User;
+import com.xuebei.crm.utils.UUIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +18,7 @@ public class SampleServiceImpl implements SampleService {
     }
 
     @Override
-    public void insertUser(User user) {
-        sampleMapper.insertUser(user);
+    public void insertUser(User user) { sampleMapper.insertUser(user);
     }
 
     @Override
