@@ -21,10 +21,10 @@ function confirm() {
     isRead = $("input[name=isReadSwitch]:checked").val();
     if (typeof isRead == 'undefined') isRead = "off";
     window.location = "/journal/search?keyword=" + type
-        //+"&client="+client
-        //+"&project="+project
-        //+"&startTime="+startTime
-        //+"&endTime="+endTime
+        +"&client="+client
+        +"&project="+project
+        +"&startTime="+startTime
+        +"&endTime="+endTime
         + "&isRead=" + isRead;
 
 
