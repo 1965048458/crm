@@ -12,10 +12,10 @@ public interface JournalMapper {
     // functions for table journal
     Integer createJournal(Journal journal);
 
-    Journal queryJournalById(String journalId);
+    Journal queryJournalById(@Param("journalId") String journalId);
 
-    Boolean userHasJournal(@Param("userId")String userId,
-                           @Param("journalId")String journalId);
+    Boolean userHasJournal(@Param("userId") String userId,
+                           @Param("journalId") String journalId);
 
     Integer updateJournal(Journal journal);
 
@@ -34,7 +34,7 @@ public interface JournalMapper {
     Integer deleteVisitContacts(@Param("visitId") String visitId);
 
     Integer insertVisitContacts(@Param("visitId") String visitId,
-                                @Param("contactsIds") List<String> contactsIds);
+                                @Param("contactsId") String contactsId);
 
     List<String> queryVisitContacts(@Param("visitId") String visitId);
 
@@ -42,7 +42,7 @@ public interface JournalMapper {
     Integer deleteJournalReceiver(@Param("journalId") String journalId);
 
     Integer insertJournalReceiver(@Param("journalId") String journalId,
-                                  @Param("receivers") List<User> receivers);
+                                  @Param("receiverId") String receiverId);
 
     List<User> queryJournalReceiver(@Param("journalId") String journalId);
 
@@ -50,7 +50,15 @@ public interface JournalMapper {
     Boolean isUserSameCompany(@Param("userIdA") String userIdA,
                               @Param("userIdB") String userIdB);
 
+    List<User> queryColleagues(@Param("userId") String userId);
+
     List<Journal> searchMyJournal(JournalSearchParam param);
 
     List<Journal> searchReceivedJournal(JournalSearchParam param);
+
+    Journal searchJournal(@Param("journalId") String journalId);
+
+    List<User> searchUnread(@Param("journalId") String journalId);
+
+    List<User> searchRead(@Param("journalId") String journalId);
 }

@@ -7,142 +7,270 @@
     <!-- 引入 WeUI -->
     <link rel="stylesheet" href="/weui.css"/>
     <link rel="stylesheet" href="/example.css"/>
-    <script src="http://47.96.188.208/static/js/jquery-2.1.1.js"></script>
-
-    <script type="text/javascript">
-        //window.onbeforeunload = onbeforeunloadHandler;
-        //var submitted = false;
-
-        //function onbeforeunloadHandler() {
-        //   $('#draftDiv').css('display', 'block');
-        //    return "您还未保存草稿";
-        //}
-
-        function setHasSubmitted() {
-            $('#hasSubmitted').val('true');
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/journal/editJournal.js"></script>
+    <style>
+        .plan-title {
+            background-color: #FFFFFF;
+            line-height: 1.47058824;
+            font-size: 17px;
+            overflow: hidden;
+            position: relative;
         }
-
-        function sendAjax() {
-            var postData = {
-                "type": "DAILY",
-                "summary": "今天做了什么",
-                "plan": "明日计划",
-                "hasSubmitted": false,
-                "visitRecords": [{
-                    "visitName": "今日拜访1",
-                    "contactsIds": [""],
-                    "visitType": "PHONE",
-                    "visitResult": "拜访结果"
-                }],
-                "receivers": [
-                    {"userId": "001c52e79ee0484ca8158e926b5c05a3"},
-                    {"userId": "0022287b3f7a404d8fcca44aa76842c2"}
-                ]
-            };
-            $.ajax({
-                url: "/journal/testJson",
-                cache: false,
-                data: JSON.stringify(postData),
-                contentType: "application/json; charset=utf-8",
-                type: "POST"
-            }).done(function (res) {
-                console.log(res);
-            });
+        .weui-cells:before,.receiver-box:after, .receiver-box:before {
+            border: none;
         }
-
-    </script>
-
-
+        .top-bar {
+            background: #ffffff;
+            text-align: center;
+            padding: 10px 15px;
+        }
+        .pull-left {
+            float: left!important;
+        }
+        .pull-right {
+            float: right!important;
+        }
+        .visit-type-sel{
+            background: #ffffff;
+            border-top: solid 2px #DDDDDD;
+        }
+        .receiver-box {
+            width: auto;
+            padding: 5px 15px;
+        }
+        .receiver-name {
+            font-size: 12px;
+        }
+        .addVisit-img {
+            padding: 8px 15px;
+            width: 25px;
+            height: 25px;
+        }
+    </style>
 </head>
 
-<body>
+<body >
+<div id="editJournalVue">
+    <input id="journalType" type="hidden" th:value="${journalType}">
+    <input id="journalId" type="hidden" th:value="${journalId}">
+    <div v-show="showPage === 'journalPage'" id="journalPage">
+        <div class="top-bar">
+            <span @click="backToList" class="pull-left"><</span>
+            <span class="center" v-text="editTitle"></span>
+        </div>
 
-
-<form id="journalForm" action="/journal/add" method="GET">
-
-    <input style="display:none;" id="hasSubmitted" name="hasSubmitted" value="false"></input>
-
-    <!-- /journal/add -->
-    <input th:if="${newJournal}" style="display:none;" id="type" name="type" th:value="${journalType}"></input>
-
-    <!-- /journal/save -->
-    <input th:if="not ${newJournal}" style="display:none;" id="journalId" name="journalId" th:value="${journalId}"></input>
-
-
-    <div class="weui-cells__title"><p th:text="${summaryLabel}">今日总结</p></div>
-    <div class="weui-cells weui-cells_form">
-        <div class="weui-cell">
-            <div class="weui-cell__bd">
-                <textarea class="weui-textarea" th:placeholder="${summaryLabel}" rows="4" id="summary" name="summary"></textarea>
+        <div class="weui-cells__title"><p v-text="summaryLabel">今日总结</p></div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" rows="4" v-model="summary"
+                              :placeholder="summaryPlaceHolder"></textarea>
+                </div>
             </div>
+        </div>
+
+        <div class="weui-cells__title"><p v-text="planLabel">明日计划</p></div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" rows="4" v-model="plan"
+                              :placeholder="planPlaceHolder"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div v-for="(visit, index) in visits" :key="'visits_' + index" class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <label>今日拜访&nbsp;{{index+1}}</label>
+                </div>
+                <div @click="deleteVisit(index)">
+                    <span class="red-text">删除</span>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <label>拜访客户</label>
+                </div>
+                <div @click="addVisitContacts(index)">
+                    <span>》</span>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <label>拜访类型</label>
+                </div>
+                <div @click="choseVisitType(index)">
+                    <span>》</span>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="plan-title"><p>拜访结果</p></div>
+            </div>
+            <div class="weui-cells weui-cells_form" style="margin-top: 0;">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <textarea class="weui-textarea" rows="4" v-model="visit.result"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell weui-cell_vcode">
+                <div class="weui-cell__bd">
+                    <label>今日拜访（选填）</label>
+                </div>
+                <div class="weui-cell__ft" @click="addVisit">
+                    <span>
+                        <img class="weui-vcode-img addVisit-img" src="/images/journal/plus.png"/>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="weui-cells__title">发给谁</div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <div v-for="(receiver, index) in receivers" :key="'receivers_' + index" class="weui-grid receiver-box">
+                        <div class="weui-grid__icon">
+                            <img :src="receiver.avatarUrl" alt="">
+                        </div>
+                        <span class="receiver-name" v-text="receiver.realName"></span>
+                    </div>
+                    <div class="weui-grid receiver-box" @click="editReceivers">
+                        <div class="weui-grid__icon">
+                            <img src="/images/journal/plus.png" alt="">
+                        </div>
+                        <span class="receiver-name">修改</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button @click="submitJournal" class="weui-btn weui-btn_primary">提交</button>
+    </div>
+
+    <div v-show="showPage === 'selectContacts'" id="selectContacts">
+        <div class="top-bar">
+            <span @click="cancelSelectContacts" class="pull-left">取消</span>
+            <span>选择拜访客户</span>
+            <span @click="confirmSelectContacts" class="pull-right">完成</span>
+        </div>
+
+        <div class="weui-cells weui-cells_form">
+            <div v-for="(customer, index) in customers" :key="'customers_' + index">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <label v-text="customer.name"></label>
+                    </div>
+                    <div @click="changeContactsFold(index)">
+                        <span>V</span>
+                    </div>
+                </div>
+                <div v-show="!customer.contactsFold" class="weui-cells_checkbox">
+                    <label v-for="(contacts, index) in customer.contactsGroup"
+                           class="weui-cell weui-check__label" :for="'contacts_' + index">
+                        <div class="weui-cell__bd">
+                            <p v-text="contacts.realName"></p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="checkbox" class="weui-check"
+                                   v-model="chosenContactsTmp"
+                                   :value="contacts"
+                                   :id="'contacts_' + index">
+                            <i class="weui-icon-checked"></i>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div v-show="showPage === 'selectVisitType'" id="selectVisitType">
+        <div class="top-bar">
+            <span @click="cancelSelectVisitType" class="pull-left">取消</span>
+            <span>选择拜访类型</span>
+            <span @click="confirmSelectVisitType" class="pull-right">完成</span>
+        </div>
+
+        <div class="weui-cells_radio visit-type-sel" style="background:#ffffff;">
+            <label class="weui-cell weui-check__label" for="visit">
+                <div class="weui-cell__bd">
+                    <p>拜访</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check" id="visit" :value="'VISIT'" v-model="visitTypeTmp">
+                    <i class="weui-icon-checked"></i>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label" for="phone">
+                <div class="weui-cell__bd">
+                    <p>电话</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check" :value="'PHONE'" v-model="visitTypeTmp" id="phone">
+                    <i class="weui-icon-checked"></i>
+                </div>
+            </label>
         </div>
     </div>
 
-    <div class="weui-cells__title"><p th:text="${planLabel}">明日计划</p></div>
-    <div class="weui-cells weui-cells_form">
-        <div class="weui-cell">
-            <div class="weui-cell__bd">
-                <textarea class="weui-textarea" th:placeholder="${planLabel}" rows="4" id="plan" name="plan"></textarea>
+    <div v-show="showPage === 'selectReceiver'" id="selectReceiver">
+        <div class="top-bar">
+            <span @click="cancelSelectReceiver" class="pull-left">取消</span>
+            <span>选择日志接收人</span>
+            <span @click="confirmSelectReceiver" class="pull-right">完成</span>
+        </div>
+        <div id="receiverList">
+            <div class="weui-cells__title"><span>公司同事</span><span>(已选择{{receivers.length}}人)</span></div>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cells_checkbox">
+                    <label v-for="(colleague, index) in colleagues" class="weui-cell weui-check__label"
+                           :for="'colleague' + colleague.userId">
+                        <div class="weui-cell__bd">
+                            <p v-text="colleague.realName">
+                                张三
+                            </p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="checkbox" class="weui-check"
+                                   v-model="receiversTmp" :value="colleague"
+                                   :id="'colleague' + colleague.userId">
+                            <i class="weui-icon-checked"></i>
+                        </div>
+                    </label>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="weui-cells weui-cells_form">
-        <div class="weui-cell weui-cell_vcode">
-            <div class="weui-cell__bd">
-                <label>今日拜访（选填）</label>
+    <div style="display:none" id="draftDiv">
+        <div class="weui-mask" id="iosMask" style="opacity: 1;"></div>
+        <div class="weui-actionsheet weui-actionsheet_toggle" id="iosActionsheet">
+            <div class="weui-actionsheet__title">
+                <p class="weui-actionsheet__title-text">是否要保存草稿？</p>
             </div>
-            <div class="weui-cell__ft">
-                <a href="javascript:;"></a>
-                <img href="https://baidu.com" class="weui-vcode-img" src="./plus.jpg"/>
+            <div class="weui-actionsheet__menu">
+                <div class="weui-actionsheet__cell" @click="saveDraft">保存</div>
+                <div class="weui-actionsheet__cell" style="color:#FF0000;" @click="doToList">不保存</div>
             </div>
-        </div>
-    </div>
-
-    <div class="weui-cells__title">发给谁</div>
-    <div class="weui-cells weui-cells_form">
-        <div class="weui-cell">
-            <div class="weui-cell__bd">
-                <textarea class="weui-textarea" placeholder="" rows="3"></textarea>
+            <div class="weui-actionsheet__action">
+                <div class="weui-actionsheet__cell" id="iosActionsheetCancel" @click="cancelBackToList">取消</div>
             </div>
         </div>
     </div>
-
-    <!--<div class="weui-panel weui-panel_access">
-        <div class="weui-panel__hd">发给谁</div>
-        <div class="weui-panel__bd">
-            <br><br><br>
-        </div>
-    </div>
-    -->
-
-    <br>
-
-    <button type="submit" class="weui-btn weui-btn_primary">保存草稿</button>
-
-    <br>
-
-    <button type="submit" onClick="javascript: setHasSubmitted()" class="weui-btn weui-btn_primary">提交</button>
-
-</form>
-
-<button onClick="sendAjax()">提交</button>
-
-<div style="display:none" id="draftDiv">
-    <div class="weui-mask" id="iosMask" style="opacity: 1;"></div>
-    <div class="weui-actionsheet weui-actionsheet_toggle" id="iosActionsheet">
-        <div class="weui-actionsheet__title">
-            <p class="weui-actionsheet__title-text">是否要保存草稿？</p>
-        </div>
-        <div class="weui-actionsheet__menu">
-            <div class="weui-actionsheet__cell">保存</div>
-            <div class="weui-actionsheet__cell" style="color:#FF0000;">不保存</div>
-        </div>
-        <div class="weui-actionsheet__action">
-            <div class="weui-actionsheet__cell" id="iosActionsheetCancel">取消</div>
+    <div class="js_dialog" id="iosDialog2" style="opacity: 1;" v-show="showErrMsg">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__bd" v-text="errMsg"></div>
+            <div class="weui-dialog__ft">
+                <a @click="showErrMsg = false" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
+            </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>

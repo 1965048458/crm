@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class JournalServiceImpl implements JournalService {
@@ -35,7 +35,7 @@ public class JournalServiceImpl implements JournalService {
     public void modifyJournal(Journal journal) throws InformationNotCompleteException, AuthenticationException {
         checkBasicInfo(journal);
         Journal oldJournal = journalMapper.queryJournalById(journal.getJournalId());
-        if (oldJournal == null || oldJournal.getUserId().equals(journal.getUserId())) {
+        if (oldJournal == null || !oldJournal.getUserId().equals(journal.getUserId())) {
             throw new AuthenticationException("用户不拥有此日志");
         } else if (oldJournal.getHasSubmitted()) {
             throw new AuthenticationException("日志已提交");
@@ -52,7 +52,7 @@ public class JournalServiceImpl implements JournalService {
 
     @Override
     public void deleteJournalById(String userId, String journalId) throws AuthenticationException {
-        if (journalMapper.userHasJournal(userId, journalId)) {
+        if (!journalMapper.userHasJournal(userId, journalId)) {
             throw new AuthenticationException("用户不拥有此日志");
         }
 
@@ -63,7 +63,7 @@ public class JournalServiceImpl implements JournalService {
 
     @Override
     public Journal queryJournalById(String userId, String journalId) throws AuthenticationException {
-        if (journalMapper.userHasJournal(userId, journalId))
+        if (!journalMapper.userHasJournal(userId, journalId))
             throw new AuthenticationException("用户不拥有此日志");
 
         Journal journal = journalMapper.queryJournalById(journalId);
@@ -144,14 +144,18 @@ public class JournalServiceImpl implements JournalService {
             journalMapper.insertVisitLog(visitRecord);
             if (visitRecord.getContactsIds() == null)
                 continue;
-            journalMapper.insertVisitContacts(visitRecord.getVisitId(), visitRecord.getContactsIds());
+            for (String contactsId: visitRecord.getContactsIds()) {
+                journalMapper.insertVisitContacts(visitRecord.getVisitId(), contactsId);
+            }
         }
     }
 
     private void insertReceivers(String journalId, List<User> receivers) {
         if (receivers == null)
             return;
-        journalMapper.insertJournalReceiver(journalId, receivers);
+        for (User receiver: receivers) {
+            journalMapper.insertJournalReceiver(journalId, receiver.getUserId());
+        }
     }
 
     private void deleteVisitRecords(String journalId) {
@@ -180,5 +184,18 @@ public class JournalServiceImpl implements JournalService {
         }
         allJournalList.sort((journal1, journal2)-> journal1.getCreateTs().before(journal2.getCreateTs())?1:-1);
         return allJournalList;
+    }
+
+    @Override
+    public  List searchDatail(String journalId){
+        Journal myJournal = journalMapper.searchJournal(journalId);
+        List<User> journalUnread = journalMapper.searchUnread(journalId);
+        List<User> journalRead = journalMapper.searchRead(journalId);
+        List result = new ArrayList();
+        result.add(myJournal);
+        result.add(journalUnread);
+        result.add(journalRead);
+        return result;
+
     }
 }

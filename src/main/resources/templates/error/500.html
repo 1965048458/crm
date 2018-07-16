@@ -1,8 +1,10 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>error</title>
 </head>
-<body>
-<label>500错误</label>
+<body style="text-align: center">
+<h1>系统异常</h1>
+<p th:text="${message}"></p>
+<button>回到首页</button>
 </body>
 </html>
