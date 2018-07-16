@@ -20,18 +20,16 @@ jQuery(document).ready(function () {
                     type: 'post',
                     url: '/login/login',
                     data: {
-
                         tel: thisVue.tel,
                         pwd: thisVue.pwd
-
                     },
                     dataType: 'json',
                     cache: false
                 }).done(function (result){
-                    if (result.tel& result.pwd) {
+                    if (result.successFlg) {
                         window.location.href="/sample";
                     } else {
-                        alert("用户名和密码不正确");
+                        alert("用户名或密码不正确");
                     }
                 });
             },
