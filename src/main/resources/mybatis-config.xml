@@ -18,6 +18,6 @@
     <mappers>
         <mapper resource="mybatis/mapper/SampleMapper.xml"/>
         <mapper resource="mybatis/mapper/JournalMapper.xml"/>
-        <mapper resource="mybatis/mapper/registerAndLoginMapper.xml"/>
+        <mapper resource="mybatis/mapper/RegisterAndLoginMapper.xml"/>
     </mappers>
 </configuration>

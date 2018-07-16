@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Rong Weicheng on 2018/7/10.
  */
 @Mapper
-public interface registerAndLoginMapper {
+public interface RegisterAndLoginMapper {
 
     void insertUser(User user);
 

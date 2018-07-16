@@ -4,7 +4,7 @@ import com.xuebei.crm.user.User;
 
 import java.util.List;
 
-public interface registerAndLoginService
+public interface RegisterAndLoginService
 {
 	void insertUser(User user);
 
