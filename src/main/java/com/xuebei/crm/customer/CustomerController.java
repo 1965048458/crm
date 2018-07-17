@@ -43,5 +43,10 @@ public class CustomerController {
         return null;
     }
 
+    @RequestMapping("/organization")
+    public String showOrganization() {
+        return "./customer/organization";
+    }
+
 
 }
