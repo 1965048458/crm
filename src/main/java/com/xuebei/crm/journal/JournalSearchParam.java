@@ -20,6 +20,16 @@ public class JournalSearchParam {
     private Date endTime;
     private Boolean isRead;
 
+    public Boolean getMy() {
+        return isMy;
+    }
+
+    public void setMy(Boolean my) {
+        isMy = my;
+    }
+
+    private Boolean isMy;
+
     public String getUserId() {
         return userId;
     }

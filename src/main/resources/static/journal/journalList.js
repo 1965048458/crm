@@ -39,7 +39,9 @@ jQuery(document).ready(function () {
             project:"",
             startTime:"",
             endTime:"",
-            isRead:""
+            isRead:"",
+            isReadTo0_1:""
+
 
         },
         methods: {
@@ -71,13 +73,15 @@ jQuery(document).ready(function () {
             },
             'searchUnRead':function () {
                 var data = {
-                    isRead:"false"
+                    isRead:0
                 };
                 this.searchList(data);
 
             },
             'searchMine':function () {
-                var data = {};
+                var data = {
+                    isMy:1
+                };
                 this.searchList(data);
 
             },
@@ -102,16 +106,20 @@ jQuery(document).ready(function () {
                 this.searchList(data);
             },
             'searchFilter':function () {
-                var thisVue = this;
+                //this.isReadTo0_1 = this.bool2Digit(!this.isRead),
                 var data = {
                     journalType:this.journalType,
                     client:this.client,
                     project:this.project,
                     startTime:this.startTime,
                     endTime:this.endTime,
-                    isRead:this.isRead
+                    isRead:Number(!this.isRead)
                 };
                 this.searchList(data);
+            },
+            'bool2Digit':function (bool) {
+                if(bool==false)this.isReadTo0_1=0;
+                if(bool==true)this.isReadTo0_1=1;
             },
 
             'loadDetail': function (journalId) {
