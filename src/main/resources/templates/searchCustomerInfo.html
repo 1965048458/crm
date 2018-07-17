@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>搜索客户信息</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css">
+
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/customer/searchCustomerInfo.js"></script>
+    <style>
+        .center-box {
+            text-align: center;
+        }
+        .center-ele {
+            display: inline-block;
+        }
+        .pull-left {
+            float: left!important;
+        }
+        .pull-right {
+            float: right!important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="weui-search-bar" id="searchBar">
+        <form class="weui-search-bar__form">
+            <div class="weui-search-bar__box">
+                <i class="weui-icon-search"></i>
+                <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
+                <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+            </div>
+            <label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                <i class="weui-icon-search"></i>
+                <span>搜索</span>
+            </label>
+        </form>
+        <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+    </div>
+
+    <div class="weui-cells searchbar-result" id="searchResult" style="display: none;">
+        <div class="weui-cell weui-cell_access" v-for="cust in custList">
+            <div class="weui-cell__bd weui-cell_primary">
+                <p v-text="cust"></p>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+</html>

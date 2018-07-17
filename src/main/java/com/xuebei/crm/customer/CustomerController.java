@@ -1,6 +1,7 @@
 package com.xuebei.crm.customer;
 
 import com.xuebei.crm.dto.GsonView;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.xuebei.crm.dto.UUIDGenerator;
 import com.xuebei.crm.exception.DepartmentNameDuplicatedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,14 @@ import org.thymeleaf.util.StringUtils;
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
+
+    @Autowired
+    private CustomerMapper customerMapper;
+
+    @RequestMapping("searchCustInfo")
+    public String searchInfo(){
+        return "searchCustomerInfo";
+    }
 
     @Autowired
     private CustomerServiceImpl customerService;
@@ -91,6 +100,11 @@ public class CustomerController {
         }
 
         return GsonView.createSuccessView();
+    }
+
+    @RequestMapping("/organization")
+    public String showOrganization() {
+        return "./customer/organization";
     }
 
 
