@@ -2,27 +2,6 @@ var TYPE_NAMES = {
     'DAILY': '日报',
     'WEEKLY': '月报'
 };
-var journalList = [
-    {
-        journalId: 1,
-        createTs: '2018-07-09 12:11:11',
-        type: 'DAILY',
-        summary: '今日总结',
-        plan: '明日计划',
-        user: {
-            realName: '李明'
-        }
-    },
-    {
-        journalId: 2,
-        createTs: '2018-02-22 12:22:22',
-        type: 'WEEKLY',
-        summary: '今天做了什么',
-        plan: '明日计划',
-        user: {
-            realName: '吴凡'
-        }
-    }];
 
 jQuery(document).ready(function () {
     var journalListVue = new Vue({
@@ -40,9 +19,8 @@ jQuery(document).ready(function () {
             startTime:"",
             endTime:"",
             isRead:"",
-            isReadTo0_1:""
-
-
+            errMsg:"",
+            showErrMsg:false
         },
         methods: {
             'searchList': function (data) {
@@ -56,42 +34,38 @@ jQuery(document).ready(function () {
                     dataType:'json',
                     cache:false
                 }).done(function(result){
-                    //var journalList = result;
-                    //journal.unread = result.unread;
-                    //journal.read = result.read;
-
-                    thisVue.$set(thisVue, 'journalList', result.journalList);
-                    thisVue.showPage = 'journalList';
-                })
-                //this.$set(this, 'journalList', journalList);
-                //this.showPage = 'journalList';
+                    if (result.successFlg) {
+                        thisVue.$set(thisVue, 'journalList', result.journalList);
+                        thisVue.showPage = 'journalList';
+                    } else {
+                        thisVue.errMsg = result.errMsg;
+                        thisVue.showErrMsg = true;
+                    }
+                });
             },
             'searchAll':function () {
                 var data = {
-                    userId:"00284bca325c4e77b9f30c5671ec1c44",
+                    //userId:"00284bca325c4e77b9f30c5671ec1c44",
                 };
                 this.searchList(data);
-
             },
             'searchUnRead':function () {
                 var data = {
-                    userId:"00284bca325c4e77b9f30c5671ec1c44",
+                    //userId:"00284bca325c4e77b9f30c5671ec1c44",
                     isRead:0
                 };
                 this.searchList(data);
-
             },
             'searchMine':function () {
                 var data = {
-                    userId:"00284bca325c4e77b9f30c5671ec1c44",
+                    //userId:"00284bca325c4e77b9f30c5671ec1c44",
                     isMine:1
                 };
                 this.searchList(data);
-
             },
             'searchDay':function () {
                 var data = {
-                    userId:"00284bca325c4e77b9f30c5671ec1c44",
+                    //userId:"00284bca325c4e77b9f30c5671ec1c44",
                     journalType:'DAILY'
                 };
                 this.searchList(data);
@@ -99,14 +73,14 @@ jQuery(document).ready(function () {
             },
             'searchWeek':function () {
                 var data = {
-                    userId:"00284bca325c4e77b9f30c5671ec1c44",
+                    //userId:"00284bca325c4e77b9f30c5671ec1c44",
                     journalType:'WEEKLY'
                 };
                 this.searchList(data);
             },
             'searchMonth':function () {
                 var data = {
-                    userId:"00284bca325c4e77b9f30c5671ec1c44",
+                    //userId:"00284bca325c4e77b9f30c5671ec1c44",
                     journalType:'month'
                 };
                 this.searchList(data);
@@ -114,6 +88,7 @@ jQuery(document).ready(function () {
             'searchFilter':function () {
                 //this.isReadTo0_1 = this.bool2Digit(!this.isRead),
                 var data = {
+                    //userId:"00284bca325c4e77b9f30c5671ec1c44",
                     journalType:this.journalType,
                     client:this.client,
                     project:this.project,
@@ -123,11 +98,6 @@ jQuery(document).ready(function () {
                 };
                 this.searchList(data);
             },
-            'bool2Digit':function (bool) {
-                if(bool==false)this.isReadTo0_1=0;
-                if(bool==true)this.isReadTo0_1=1;
-            },
-
             'loadDetail': function (journalId) {
                 var thisVue = this;
                 jQuery.ajax({
@@ -157,8 +127,7 @@ jQuery(document).ready(function () {
             },
             'quit':function () {
                 this.showPage = 'journalList';
-
-            }
+            },
         }
     });
     journalListVue.searchList();
