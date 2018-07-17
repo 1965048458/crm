@@ -18,7 +18,10 @@ public class JournalSearchParam {
     private Date startTime;
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date endTime;
-    private Boolean isRead;
+
+    private Integer isRead;
+
+    private Integer isMine;
 
     public Boolean getMy() {
         return isMy;
@@ -78,12 +81,20 @@ public class JournalSearchParam {
         this.endTime = endTime;
     }
 
-    public Boolean getRead() {
+    public Integer getIsRead() {
         return isRead;
     }
 
-    public void setRead(Boolean read) {
-        isRead = read;
+    public void setIsRead(Integer isRead) {
+        this.isRead = isRead;
+    }
+
+    public Integer getIsMine() {
+        return isMine;
+    }
+
+    public void setIsMine(Integer isMine) {
+        this.isMine = isMine;
     }
 
     public String[] getSdId() {

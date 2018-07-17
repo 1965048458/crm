@@ -149,6 +149,9 @@
         SELECT j.*, u.real_nm FROM journal j
         INNER JOIN user_view u ON j.user_id = u.user_id
         WHERE j.user_id = #{userId}
+        <if test="isRead != null">
+            AND 1 = 0
+        </if>
         <if test="journalType != null">
             AND j.type_cd = #{journalType}
         </if>
@@ -189,7 +192,14 @@
         INNER JOIN user_view u ON j.user_id = u.user_id
         INNER JOIN journal_receiver r ON j.journal_id = r.journal_id
         WHERE r.receiver_id = #{userId}
-        AND #{ isRead }
+        <if test="isRead != null">
+            <if test="isRead == 1">
+                AND r.has_read = 1
+            </if>
+            <if test="isRead == 0 " >
+                AND r.has_read = 0
+            </if>
+        </if>
 
         <if test="senderIds != null">
             <foreach collection="sdId" item="item" index="index" separator=" ">

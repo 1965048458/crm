@@ -32,7 +32,7 @@ jQuery(document).ready(function () {
            plan: '',
            visits: [],
            curVisit: {},
-           receivers: '',
+           receivers: [],
            receiversTmp: [],
            customers: [{name: '浙江大学', contactsFold: true, contactsGroup:[{realName: '李四'}]},
                {name: '浙江工商大学', contactsFold: true}],
@@ -171,17 +171,16 @@ jQuery(document).ready(function () {
         success: function(result) {
             editJournalVue.$set(editJournalVue, 'summary', result.journal.summary);
             editJournalVue.$set(editJournalVue, 'plan', result.journal.plan);
-            editJournalVue.$set(editJournalVue, 'receivers', result.journal.receivers);
-        }
-    });
-
-    jQuery.ajax({
-        type: 'get',
-        url: '/journal/action/getColleagueList',
-        dataType: 'json',
-        cache: false,
-        success: function(result) {
             editJournalVue.$set(editJournalVue, 'colleagues', result.colleagues);
+            console.log(result.journal.receivers);
+            console.log(result.colleagues);
+            for (var revId in result.journal.receivers) {
+                for (var colId in result.colleagues) {
+                    if (result.journal.receivers[revId].userId === result.colleagues[colId].userId) {
+                        editJournalVue.receivers.push(result.colleagues[colId]);
+                    }
+                }
+            }
         }
     });
 

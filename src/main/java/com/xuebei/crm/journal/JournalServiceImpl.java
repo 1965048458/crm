@@ -179,6 +179,9 @@ public class JournalServiceImpl implements JournalService {
 
         allJournalList.addAll(myJournal);
         allJournalList.addAll(receivedJournal);
+        if (param.getIsMine() != null && param.getIsMine() == 1 ){
+            allJournalList.removeAll(receivedJournal);
+        }
         allJournalList.sort((journal1, journal2)-> journal1.getCreateTs().before(journal2.getCreateTs())?1:-1);
         //统计日志有多少人已读
         for (Journal jn : allJournalList  ) {
