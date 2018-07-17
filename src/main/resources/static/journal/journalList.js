@@ -80,7 +80,7 @@ jQuery(document).ready(function () {
             },
             'searchMine':function () {
                 var data = {
-                    isMy:1
+                    isMine:1
                 };
                 this.searchList(data);
 
