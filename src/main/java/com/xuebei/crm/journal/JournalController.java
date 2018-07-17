@@ -74,7 +74,9 @@ public class JournalController {
     public GsonView getJournalInfoById(@RequestParam("journalId") String journalId) throws AuthenticationException {
         GsonView gsonView = new GsonView();
         Journal journal = journalService.queryJournalById(acquireUserId(), journalId);
+        List<User> colleagues = journalMapper.queryColleagues(acquireUserId());
         gsonView.addStaticAttribute("journal", journal);
+        gsonView.addStaticAttribute("colleagues", colleagues);
         return gsonView;
     }
 
