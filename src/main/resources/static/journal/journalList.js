@@ -67,12 +67,15 @@ jQuery(document).ready(function () {
                 //this.showPage = 'journalList';
             },
             'searchAll':function () {
-                var data = {};
+                var data = {
+                    userId:"00284bca325c4e77b9f30c5671ec1c44",
+                };
                 this.searchList(data);
 
             },
             'searchUnRead':function () {
                 var data = {
+                    userId:"00284bca325c4e77b9f30c5671ec1c44",
                     isRead:0
                 };
                 this.searchList(data);
@@ -80,6 +83,7 @@ jQuery(document).ready(function () {
             },
             'searchMine':function () {
                 var data = {
+                    userId:"00284bca325c4e77b9f30c5671ec1c44",
                     isMine:1
                 };
                 this.searchList(data);
@@ -95,12 +99,14 @@ jQuery(document).ready(function () {
             },
             'searchWeek':function () {
                 var data = {
-                    journalType:'week'
+                    userId:"00284bca325c4e77b9f30c5671ec1c44",
+                    journalType:'WEEKLY'
                 };
                 this.searchList(data);
             },
             'searchMonth':function () {
                 var data = {
+                    userId:"00284bca325c4e77b9f30c5671ec1c44",
                     journalType:'month'
                 };
                 this.searchList(data);
