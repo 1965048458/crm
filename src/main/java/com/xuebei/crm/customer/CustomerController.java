@@ -1,17 +1,36 @@
 package com.xuebei.crm.customer;
 
 import com.xuebei.crm.dto.GsonView;
+import com.xuebei.crm.dto.UUIDGenerator;
+import com.xuebei.crm.exception.AuthenticationException;
+import com.xuebei.crm.exception.DepartmentNameDuplicatedException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.thymeleaf.util.StringUtils;
 
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
 
-    @RequestMapping("/addOrganizationPage")
-    public String addOrganizationPage() {
-        return "addTopOrg";
+    @Autowired
+    private CustomerServiceImpl customerService;
+
+    public static String AUTHENTICATION_ERROR_MSG = "用户没有改操作权限";
+    public static String DEPT_NAME_BLANK_ERROR_MSG = "部门名称不能为空";
+
+    private String acquireUserId() {
+        return "00284bca325c4e77b9f30c5671ec1c44";
+    }
+
+    @RequestMapping("/addDepartmentPage")
+    public String addOrganizationPage(@RequestParam("customerId") String customerId,
+                                      ModelMap modelMap) {
+        modelMap.addAttribute("customerId", customerId);
+        return "addTopDepartment";
     }
 
     /**
@@ -26,16 +45,38 @@ public class CustomerController {
      * successFlg(Bool): 操作成功与否
      * errMsg(String): 当successFlg==false时含有此字段，表示错误信息
      */
-    @RequestMapping("/action/addTopOrgnization")
+    @RequestMapping("/action/addTopDepartment")
     public GsonView addTopDepartment(@RequestParam("customerId") String customerId,
                                       @RequestParam("deptName") String deptName,
-                                      @RequestParam("website") String website,
-                                      @RequestParam("profile") String profile) {
+                                      @RequestParam(value = "website", required = false) String website,
+                                      @RequestParam(value = "profile", required = false) String profile) {
+        if (!customerService.isUserHasCustomer(acquireUserId(), customerId)) {
+            return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
+        }
+
+        if (StringUtils.isEmptyOrWhitespace(deptName)) {
+            return GsonView.createErrorView(DEPT_NAME_BLANK_ERROR_MSG);
+        }
+
+        Customer customer = new Customer();
+        customer.setCustomerId(customerId);
+
         Department dept = new Department();
+        dept.setDeptId(UUIDGenerator.genId());
         dept.setDeptName(deptName);
         dept.setWebsite(website);
         dept.setProfile(profile);
-        return null;
+        dept.setEnclosureStatus(EnclosureStatusEnum.NORMAL);
+        dept.setCustomer(customer);
+        dept.setParent(new Department());
+
+        try {
+            customerService.addTopDepartment(dept);
+        } catch (DepartmentNameDuplicatedException e) {
+            return GsonView.createErrorView(e.getMessage());
+        }
+
+        return GsonView.createSuccessView();
     }
 
 

@@ -12,6 +12,10 @@ public class Department {
     private String profile;
     @Expose
     private String website;
+    @Expose
+    private EnclosureStatusEnum enclosureStatus;
+    @Expose
+    private Customer customer;
 
     private Department parent;
 
@@ -53,6 +57,22 @@ public class Department {
 
     public void setWebsite(String website) {
         this.website = website;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public EnclosureStatusEnum getEnclosureStatus() {
+        return enclosureStatus;
+    }
+
+    public void setEnclosureStatus(EnclosureStatusEnum enclosureStatus) {
+        this.enclosureStatus = enclosureStatus;
     }
 
 }

@@ -121,4 +121,17 @@ public class GsonView extends AbstractView {
     public void addTypeAdapter(Class clz, Object typeAdapter){
         typeAdapterMap.put(clz, typeAdapter);
     }
+
+    public static GsonView createErrorView(String errMsg) {
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("successFlg", false);
+        gsonView.addStaticAttribute("errMsg", errMsg);
+        return gsonView;
+    }
+
+    public static GsonView createSuccessView() {
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
 }

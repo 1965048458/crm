@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>添加部门</title>
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css"/>
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/addTopDepartment.js"></script>
+
+    <style>
+        .weui-cells:before {
+            border: none;
+        }
+        .top-bar {
+            background: #ffffff;
+            text-align: center;
+            padding: 10px 15px;
+        }
+        .pull-left {
+            float: left!important;
+        }
+        .pull-right {
+            float: right!important;
+        }
+    </style>
+</head>
+<body>
+
+<div id="addTopDepartmentVue">
+
+    <input id="customerId" type="hidden" th:value="${customerId}">
+
+    <div class="top-bar">
+        <span class="pull-left" @Click="cancelAddTopDepartment">取消</span>
+        <span>添加二级学院</span>
+        <span class="pull-right" @Click="confirmAddTopDepartment">完成</span>
+    </div>
+
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                学院/部门名称
+            </div>
+            <div class="weui-cell__bd">
+                <input  class="weui-input" placeholder="请输入学院或部门全称" v-model="deptName">
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell" style="padding-bottom: 0">
+            <div class="plan-title"><p>部门/学院简介(选填)</p></div>
+        </div>
+        <div class="weui-cells weui-cells_form" style="margin-top: 0;">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" rows="5" style="font-size: 15px" placeholder="请输入部门/学院简介"
+                              v-model="profile"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell" style="padding-bottom: 0">
+            <div class="plan-title"><p>部门/学院官方网站</p></div>
+        </div>
+        <div class="weui-cells weui-cells_form" style="margin-top: 0;">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" rows="2" style="font-size: 15px" placeholder="请输入部门/学院官网"
+                              v-model="website"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="js_dialog" id="iosDialog2" style="opacity: 1;" v-show="showErrMsg">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__bd" v-text="errMsg"></div>
+            <div class="weui-dialog__ft">
+                <a @click="showErrMsg = false" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+</html>
