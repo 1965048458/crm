@@ -34,8 +34,9 @@ public class RegisterAndLoginController {
 
         GsonView gsonView = new GsonView();
         List<User> userList = registerAndLoginService.searchTel(tel);
-        if (userList.isEmpty())
+        if (userList.isEmpty()) {
             gsonView.addStaticAttribute(SUCCESS_FLG, false);
+        }
         else {
             if (userList.get(0).getPwd().equals(pwd)) {
                 request.getSession().setAttribute("userId", userList.get(0).getUserId());
@@ -58,9 +59,9 @@ public class RegisterAndLoginController {
 
         GsonView gsonView = new GsonView();
         List<User> userList = registerAndLoginService.searchTel(tel);
-
-        if (userList.isEmpty())
+        if (userList.isEmpty()) {
             gsonView.addStaticAttribute(SUCCESS_FLG, false);
+        }
         else {
             if (pwd.length() < 6) {
                 gsonView.addStaticAttribute(SUCCESS_FLG, false);
@@ -83,14 +84,16 @@ public class RegisterAndLoginController {
                                 @RequestParam("realName") String realName,
                                 @RequestParam("pwd") String pwd) {
         User user = new User();
-
         GsonView gsonView = new GsonView();
-        if (tel.equals("") || realName.equals("") || pwd.equals("") || pwd.length() < 6) {
-            gsonView.addStaticAttribute("success", false);
+        if (tel.equals("") || realName.equals("") || pwd.length() < 6) {
+            gsonView.addStaticAttribute(SUCCESS_FLG, false);
+            gsonView.addStaticAttribute("errMsg", "注册手机号、姓名或密码不能为空，且密码至少6位");
         } else {
             List<User> userList = registerAndLoginService.searchTel(tel);
-            if (userList.size() != 0)
-                gsonView.addStaticAttribute("tel", false);
+            if (!userList.isEmpty()) {
+                gsonView.addStaticAttribute(SUCCESS_FLG, false);
+                gsonView.addStaticAttribute("errMsg", "用户已存在");
+            }
             else {
                 String userId = UUIDGenerator.genUUID();
                 user.setUserId(userId);
@@ -98,7 +101,7 @@ public class RegisterAndLoginController {
                 user.setRealName(realName);
                 user.setPwd(pwd);
                 registerAndLoginService.insertUser(user);
-                gsonView.addStaticAttribute("success", true);
+                gsonView.addStaticAttribute(SUCCESS_FLG, true);
             }
         }
         return gsonView;
