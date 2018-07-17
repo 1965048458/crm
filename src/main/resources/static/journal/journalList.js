@@ -81,7 +81,7 @@ jQuery(document).ready(function () {
             'searchMonth':function () {
                 var data = {
                     //userId:"00284bca325c4e77b9f30c5671ec1c44",
-                    journalType:'month'
+                    journalType:'MONTHLY'
                 };
                 this.searchList(data);
             },
@@ -127,7 +127,7 @@ jQuery(document).ready(function () {
             },
             'quit':function () {
                 this.showPage = 'journalList';
-            },
+            }
         }
     });
     journalListVue.searchList();
