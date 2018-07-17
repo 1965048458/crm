@@ -1,4 +1,9 @@
 package com.xuebei.crm.customer;
 
-public class CustomerMapper {
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface CustomerMapper {
+
+
 }

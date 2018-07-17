@@ -1,6 +1,7 @@
 package com.xuebei.crm.customer;
 
 import com.xuebei.crm.dto.GsonView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,6 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
+
+    @Autowired
+    private CustomerMapper customerMapper;
+
+    @RequestMapping("searchCustInfo")
+    public String searchInfo(){
+        return "searchCustomerInfo";
+    }
 
     @RequestMapping("")
     public String addCustomer() { return "addCustomer"; }
