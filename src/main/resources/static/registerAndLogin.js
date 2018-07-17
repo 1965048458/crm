@@ -50,7 +50,7 @@ jQuery(document).ready(function () {
                     if (result.successFlg) {
                         window.location.href="/login";
                     } else {
-                        alert("无效的用户名或密码");
+                        alert("无效的用户名或密码,密码至少6位");
                     }
                 });
             },
@@ -71,7 +71,7 @@ jQuery(document).ready(function () {
                     if (result.successFlg) {
                         window.location.href="/login";
                     } else {
-                        alert("无效的手机号、姓名或密码");
+                        alert("无效的手机号、姓名或密码，密码至少6位");
                     }
                 });
             }

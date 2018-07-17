@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>添加客户信息</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css">
+
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/customer/addCustomer.js"></script>
+    <style>
+        .center-box {
+            text-align: center;
+        }
+        .center-ele {
+            display: inline-block;
+        }
+        .pull-left {
+            float: left!important;
+        }
+        .pull-right {
+            float: right!important;
+        }
+    </style>
+</head>
+<body>
+<div id="addCustomer">
+    <div class="weui-flex" style="background-color: white;height: 45px;" >
+            <div><div class="placeholder" style="color: dodgerblue;height: 40px;margin-top: 20%;" >&nbsp; 取消 </div></div>
+            <div class="weui-flex__item"><div class="placeholder" align="center" style="margin-top: 2%;font-size: large ;height: 40px">新建学校/企业</div></div>
+            <div><div class="placeholder" style="color: dodgerblue;height: 40px;margin-top: 20%" align="center"> 提交&nbsp; </div></div>
+    </div>
+
+    <div class="weui-cells">
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__bd">
+                <p>选择客户类型</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__bd">
+                <p>选择学校类型</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__bd">
+                <p>企业/学校名称</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>
+    </div>
+
+    <div class="weui-cells__title">简介</div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <textarea class="weui-textarea" placeholder="请输入企业/学校的简介(选填)" rows="3"></textarea>
+                <div class="weui-textarea-counter"><span>0</span>/200</div>
+            </div>
+        </div>
+    </div>
+    <div class="weui-cells__title">官方网站</div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <textarea class="weui-textarea" placeholder="请输入企业/学校官网(选填)" rows="3"></textarea>
+                <div class="weui-textarea-counter"><span>0</span>/200</div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+
+</body>
+</html>
