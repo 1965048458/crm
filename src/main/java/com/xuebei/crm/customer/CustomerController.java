@@ -17,8 +17,8 @@ public class CustomerController {
     @Autowired
     private CustomerServiceImpl customerService;
 
-    public static String AUTHENTICATION_ERROR_MSG = "用户没有改操作权限";
-    public static String DEPT_NAME_BLANK_ERROR_MSG = "部门名称不能为空";
+    private static String AUTHENTICATION_ERROR_MSG = "用户没有改操作权限";
+    private static String DEPT_NAME_BLANK_ERROR_MSG = "部门名称不能为空";
 
     // TODO: 最终完善登录功能并去掉
     private String acquireUserId() {
