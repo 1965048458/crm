@@ -23,6 +23,16 @@ public class JournalSearchParam {
 
     private Integer isMine;
 
+    public Boolean getMy() {
+        return isMy;
+    }
+
+    public void setMy(Boolean my) {
+        isMy = my;
+    }
+
+    private Boolean isMy;
+
     public String getUserId() {
         return userId;
     }

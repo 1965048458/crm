@@ -153,4 +153,10 @@ public class JournalController {
         return gsonView;
     }
 
+    @RequestMapping("/searchLog")
+    public String searchJournal(){
+
+        return "selectLog";
+    }
+
 }

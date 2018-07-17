@@ -1,6 +1,5 @@
 package com.xuebei.crm.journal;
 
-import com.xuebei.crm.user.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,9 +27,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class JournalControllerTest {
 
     @InjectMocks
+    //创建一个实例，其它用@Mock注解创建的Mock将会被注入到该实例当中
     private JournalController journalController;
 
     @Mock
+    //创建一个Mock
     private JournalService journalService;
 
 
