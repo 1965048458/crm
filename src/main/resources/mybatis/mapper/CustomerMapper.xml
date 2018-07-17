@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuebei.crm.customer.CustomerMapper">
+
+    <resultMap id="deptMap" type="com.xuebei.crm.customer.Department">
+        <id property="deptId" column="customer_dept_id"/>
+        <result property="deptName" column="department_nm"/>
+        <result property="profile" column="profile"/>
+        <result property="website" column="website"/>
+    </resultMap>
+
+    <select id="isUserHasCustomer" resultType="java.lang.Boolean">
+        SELECT COUNT(company_customer.customer_id)
+        FROM company_user INNER JOIN company_customer ON company_user.company_id = company_customer.company_id
+        WHERE company_user.user_id = #{userId} and company_customer.customer_id = #{customerId};
+    </select>
+
+    <select id="isTopDepartNameExist" resultType="java.lang.Boolean">
+        SELECT COUNT(customer_id)
+        FROM customer_dept
+        WHERE customer_id = #{customerId} AND prt_id is null AND department_nm = #{departmentName};
+    </select>
+
+    <insert id="insertTopDepartment" parameterType="com.xuebei.crm.customer.Department">
+        INSERT INTO customer_dept (
+            customer_dept_id,
+            prt_id,
+            department_nm,
+            customer_id,
+            enclosure_status,
+            website,
+            PROFILE
+        )
+        VALUES
+            (
+                #{deptId},
+                #{parent.deptId},
+                #{deptName},
+                #{customer.customerId},
+                #{enclosureStatus},
+                #{website},
+                #{profile}
+            );
+    </insert>
+
+</mapper>
