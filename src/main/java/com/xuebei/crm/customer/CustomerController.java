@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/customer")
 public class CustomerController {
 
+    @RequestMapping("")
+    public String addCustomer() { return "addCustomer"; }
+
+
+
     @RequestMapping("/addOrganizationPage")
     public String addOrganizationPage() {
         return "addTopOrg";
