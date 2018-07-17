@@ -47,7 +47,7 @@ jQuery(document).ready(function () {
                     dataType: 'json',
                     cache: false
                 }).done(function (result){
-                    if (result.tel& result.pwd) {
+                    if (result.successFlg) {
                         window.location.href="/login";
                     } else {
                         alert("无效的用户名或密码");
@@ -68,7 +68,7 @@ jQuery(document).ready(function () {
                     dataType: 'json',
                     cache: false
                 }).done(function (result){
-                    if (result.success) {
+                    if (result.successFlg) {
                         window.location.href="/login";
                     } else {
                         alert("无效的手机号、姓名或密码");
