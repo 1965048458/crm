@@ -24,9 +24,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class JournalControllerTest {
 
     @InjectMocks
+    //创建一个实例，其它用@Mock注解创建的Mock将会被注入到该实例当中
     private JournalController journalController;
 
     @Mock
+    //创建一个Mock
     private JournalService journalService;
 
     private MockMvc mockMvc;
@@ -36,17 +38,27 @@ public class JournalControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(journalController).build();
     }
 
+    @Test
+    public void testSearchJournal() throws Exception {
+        String keyword = "day";
+        String isRead = "on";
+        mockMvc.perform(get("/journal/search")
+                .param("keyword", keyword)
+                .param("isRead", isRead))
+                .andExpect(view().name("searchRlt"))
+                .andExpect(model().attributeExists("journalList"));
+
+        //verify(journalService).searchJournal(keyword);
+    }
+
 //    @Test
-//    public void testSearchJournal() throws Exception {
-//        String keyword = "day";
-//        String isRead = "on";
-//        mockMvc.perform(get("/journal/search")
-//                .param("keyword", keyword)
-//                .param("isRead", isRead))
-//                .andExpect(view().name("searchRlt"))
+//    public void testList() throws Exception{
+//        String journalType = "DAILY";
+//        String isRead = "false";
+//        mockMvc.perform(get("/journal/list"))
+//                .param("journalType", journalType)
+//                .param("isRead",isRead)
 //                .andExpect(model().attributeExists("journalList"));
-//
-//        verify(journalService).searchJournal(keyword);
 //    }
 
 }
