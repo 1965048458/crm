@@ -138,6 +138,7 @@ public class JournalController {
         List<Journal> journals =journalService.searchJournal(param);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("journalList", journals);
+        gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }
 
@@ -145,10 +146,17 @@ public class JournalController {
     public GsonView detail(String journalId){
         List journal = journalService.searchDatail(journalId);
         GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("successFlg", true);
         gsonView.addStaticAttribute("journal", journal.get(0));
         gsonView.addStaticAttribute("unread", journal.get(1));
         gsonView.addStaticAttribute("read", journal.get(2));
         return gsonView;
+    }
+
+    @RequestMapping("/searchLog")
+    public String searchJournal(){
+
+        return "selectLog";
     }
 
 }

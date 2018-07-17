@@ -2,11 +2,9 @@ package com.xuebei.crm.customer;
 
 import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.dto.UUIDGenerator;
-import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.DepartmentNameDuplicatedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,15 +20,26 @@ public class CustomerController {
     public static String AUTHENTICATION_ERROR_MSG = "用户没有改操作权限";
     public static String DEPT_NAME_BLANK_ERROR_MSG = "部门名称不能为空";
 
+    // TODO: 最终完善登录功能并去掉
     private String acquireUserId() {
         return "00284bca325c4e77b9f30c5671ec1c44";
     }
+
+    @RequestMapping("")
+    public String addCustomer() { return "addCustomer"; }
+
 
     @RequestMapping("/addDepartmentPage")
     public String addOrganizationPage(@RequestParam("customerId") String customerId,
                                       ModelMap modelMap) {
         modelMap.addAttribute("customerId", customerId);
         return "addTopDepartment";
+    }
+
+
+    @RequestMapping("/addOrganizationPage")
+    public String addOrganizationPage() {
+        return "addTopOrg";
     }
 
     /**
