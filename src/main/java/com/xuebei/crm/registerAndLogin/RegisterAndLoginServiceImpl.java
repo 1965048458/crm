@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service("registerAndLoginService")
+@Service
 public class RegisterAndLoginServiceImpl implements RegisterAndLoginService {
     @Autowired
     private RegisterAndLoginMapper registerAndLoginMapper;
