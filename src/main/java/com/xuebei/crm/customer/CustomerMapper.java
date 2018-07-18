@@ -2,9 +2,9 @@ package com.xuebei.crm.customer;
 
 import org.apache.ibatis.annotations.Mapper;
 
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface CustomerMapper {
@@ -17,4 +17,5 @@ public interface CustomerMapper {
 
     void insertTopDepartment(Department department);
 
+    List<Customer> queryCustomerInfo(@Param("searchWord") String searchWord);
 }

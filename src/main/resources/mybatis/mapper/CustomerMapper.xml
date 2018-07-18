@@ -12,6 +12,14 @@
         <result property="website" column="website"/>
     </resultMap>
 
+    <resultMap id="customerMap" type="com.xuebei.crm.customer.Customer">
+        <id property="customerId" column="customer_id"/>
+        <result property="customerName" column="customer_nm"/>
+        <result property="customerType" column="type_cd"/>
+        <result property="profile" column="profile"/>
+        <result property="website" column="website"/>
+    </resultMap>
+
     <select id="isUserHasCustomer" resultType="java.lang.Boolean">
         SELECT COUNT(company_customer.customer_id)
         FROM company_user INNER JOIN company_customer ON company_user.company_id = company_customer.company_id
@@ -45,5 +53,11 @@
                 #{profile}
             );
     </insert>
+
+    <select id="queryCustomerInfo" resultMap="customerMap">
+        SELECT * FROM crm_customer WHERE
+            customer_nm LIKE CONCAT('%', #{searchWord}, '%')
+    </select>
+
 
 </mapper>

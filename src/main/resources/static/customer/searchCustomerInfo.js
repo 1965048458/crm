@@ -1,11 +1,43 @@
 /**
  * Created by Administrator on 2018/7/17.
  */
-var custList = ['浙江大学',
-    '浙江理工大学','浙江工商大学'];
 
+function filterList(customer) {
+    return customer.customerName.indexOf($('#searchInput').val()) != -1;
+}
 
 $(function(){
+
+    var searchCustInfoVue = new Vue({
+        el:'#searchResult',
+        data:{
+            searchWord: '',
+            errMsg: undefined,
+            customerList: []
+        },
+        methods:{
+            'showResult':function () {
+                var thisVue = this;
+                $.ajax({
+                    type:'get',
+                    url:'/customer/queryCustomer',
+                    data:{
+                        searchWord: ''
+                    },
+                    dataType:'json',
+                    cache:false
+                }).done(function (result) {
+                    if (result.successFlg){
+                        thisVue.$set(thisVue, 'customerList', result.customerList);
+                    }else {
+                        thisVue.errMsg = result.errMsg;
+                    }
+                })
+            }
+        }
+    });
+
+
     var $searchBar = $('#searchBar'),
         $searchResult = $('#searchResult'),
         $searchText = $('#searchText'),
@@ -28,35 +60,35 @@ $(function(){
         $searchInput.focus();
     });
     $searchInput
+        .on('keydown', function () {
+            $searchResult.show();
+            searchCustInfoVue.showResult();
+        })
         .on('blur', function () {
             if(!this.value.length) cancelSearch();
         })
-        .on('input', function(){
-            if(this.value.length) {
+        .on('click', function(){
+            $searchResult.show();
+            searchCustInfoVue.showResult();
+        })
+        .bind('keypress', function (event) {
+            if (event.keyCode == 13){
 
-                $searchResult.show();
-                var searchCustInfoVue = new Vue({
-                    el:'#searchResult',
+                $.ajax({
+                    type:'get',
+                    url:'/customer/queryCustomer',
                     data:{
-                        custList: custList
+                        searchWord: $searchInput.val()
                     },
-                    methods:{
-                        'searchResult':function (data) {
-                            var thisVue = this;
-                            // $.ajax({
-                            //     type:'get',
-                            //     url:'',
-                            //     data:data,
-                            //     cache:false
-                            // }).done(function (result) {
-                            thisVue.$set(thisVue, 'custList', custList);
-                            //})
-                        }
+                    dataType:'json',
+                    cache:false
+                }).done(function (result) {
+                    if (result.successFlg){
+                        //$searchResult.customerList = result.customerList;   跳转显示客户信息页面
+                    }else {
+                        this.errMsg = result.errMsg;
                     }
-                });
-                searchCustInfoVue.searchResult();
-            } else {
-                $searchResult.hide();
+                })
             }
         });
     $searchClear.on('click', function(){

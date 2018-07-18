@@ -4,12 +4,13 @@ import com.xuebei.crm.dto.GsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.xuebei.crm.dto.UUIDGenerator;
 import com.xuebei.crm.exception.DepartmentNameDuplicatedException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/customer")
@@ -18,13 +19,13 @@ public class CustomerController {
     @Autowired
     private CustomerMapper customerMapper;
 
-    @RequestMapping("searchCustInfo")
+    @RequestMapping("searchCustomerInfo")
     public String searchInfo(){
         return "searchCustomerInfo";
     }
 
     @Autowired
-    private CustomerServiceImpl customerService;
+    private CustomerService customerService;
 
     private static String AUTHENTICATION_ERROR_MSG = "用户没有改操作权限";
     private static String DEPT_NAME_BLANK_ERROR_MSG = "部门名称不能为空";
@@ -107,5 +108,13 @@ public class CustomerController {
         return "./customer/organization";
     }
 
+    @RequestMapping("/queryCustomer")
+    public GsonView queryCustomerInfo(@RequestParam("searchWord") String keyword){
+        List<Customer> customerList = customerService.queryCustomerInfo(keyword);
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("customerList", customerList);
+        return gsonView;
+    }
 
 }
