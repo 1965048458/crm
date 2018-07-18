@@ -18,7 +18,7 @@ public class CustomerController {
     @Autowired
     private CustomerMapper customerMapper;
 
-    @RequestMapping("searchCustInfo")
+    @RequestMapping("/searchCustInfo")
     public String searchInfo(){
         return "searchCustomerInfo";
     }
