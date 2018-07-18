@@ -39,10 +39,15 @@ public class CustomerController {
 
 
     @RequestMapping("/addDepartmentPage")
-    public String addOrganizationPage(@RequestParam("customerId") String customerId,
+    public String addDepartmentPage(@RequestParam("customerId") String customerId,
                                       ModelMap modelMap) {
         modelMap.addAttribute("customerId", customerId);
         return "addTopDepartment";
+    }
+
+    @RequestMapping("addContactsPage")
+    public String addContactsPage() {
+        return "addContacts";
     }
 
 
@@ -95,6 +100,11 @@ public class CustomerController {
         }
 
         return GsonView.createSuccessView();
+    }
+
+    @RequestMapping("/organization")
+    public String showOrganization() {
+        return "./customer/organization";
     }
 
 

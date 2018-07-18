@@ -40,6 +40,7 @@ public class SampleControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(sampleController).build();
     }
 
+
     @Test
     public void testSearchUser() throws Exception {
         String keyword = "keyword";

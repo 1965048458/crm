@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Organization</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="/weui.css">
+    <link rel="stylesheet" href="/example.css"/>
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/organization/showOrganization"></script>
+    <style>
+        .pull-left{
+            float: left!important;
+        }
+        .pull-right{
+            float: right!important;
+        }
+        .top-bar{
+            font-size: 18px;
+            text-align: center;
+            background: #ffffff;
+            border-bottom: solid 1px #DDDDDD ;
+        }
+        .center-box{
+            text-align: center;
+        }
+        .select-bar{
+            position: relative;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .customer-item{
+            background-color: #FFFFFF;
+            line-height: 1.47058824;
+            font-size: 17px;
+            overflow: hidden;
+            position: relative;
+        }
+        .weui-cells{
+            margin-top: 0;
+            padding: 5px;
+        }
+        .usr-img{
+            position: relative;
+            margin-right: 10px;
+            padding-left: 30px;
+            width: 25px;
+            display: block;
+
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="top-bar center-box">
+        <div>
+            <span class="pull-left">   <</span>
+            <span class="center-ele">浙江大学</span>
+            <span class="pull-right">编辑   </span>
+        </div>
+        <div class="select-bar">
+            <span @click="customerInfo" >客户信息</span>
+            <span @click="organizationInfo">组织机构</span>
+        </div>
+    </div>
+
+    <div class="weui-search-bar" id="searchBar">
+        <form class="weui-search-bar__form">
+            <div class="weui-search-bar__box">
+                <i class="weui-icon-search"></i>
+                <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
+                <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+            </div>
+            <label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                <i class="weui-icon-search"></i>
+                <span>搜索</span>
+            </label>
+        </form>
+        <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+    </div>
+
+    <div class="customer-list">
+        <div class="customer-item">
+            <div class="weui-cells">
+                <div class="weui-cell">
+                    <span class="pull-left" style="padding-right: 10px;"> > </span>
+                    <span class="pull-left">校长(<span>0</span>)</span>
+                </div>
+            </div>
+            <div class="weui-cells">
+                <div class="weui-cell">
+                    <span class="pull-left" style="padding-right: 10px;"> > </span>
+                    <span class="pull-left">副校长(<span>3</span>)</span>
+                </div>
+                <div class="weui-cell" >
+                    <div class="weui-cell__hd" >
+                        <img src="/images/customer/defaultUserIcon.png" class="usr-img">
+                    </div>
+                    <div class="weui-cell__bd">
+                        <span>李炳华</span>
+                    </div>
+                </div>
+                <div class="weui-cell" >
+                    <div class="weui-cell__hd" >
+                        <img src="/images/customer/defaultUserIcon.png" class="usr-img">
+                    </div>
+                    <div class="weui-cell__bd">
+                        <span>刘建业</span>
+                    </div>
+                </div>
+                <div class="weui-cell" >
+                    <div class="weui-cell__hd" >
+                        <img src="/images/customer/defaultUserIcon.png" class="usr-img">
+                    </div>
+                    <div class="weui-cell__bd">
+                        <span>赵姗姗</span>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-cells">
+                <div class="weui-cell">
+                    <span class="pull-left" style="padding-right: 10px;"> > </span>
+                    <span class="pull-left">书记(<span>0</span>)</span>
+                </div>
+            </div>
+            <div class="weui-cells">
+                <div class="weui-cell">
+                    <span class="pull-left" style="padding-right: 10px;"> > </span>
+                    <span class="pull-left">教务处(<span>0</span>)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>
