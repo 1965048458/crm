@@ -17,22 +17,22 @@ import java.util.List;
 public class CustomerController {
 
     @Autowired
-    private CustomerMapper customerMapper;
-
-    @RequestMapping("searchCustomerInfo")
-    public String searchInfo(){
-        return "searchCustomerInfo";
-    }
+    private CustomerServiceImpl customerService;
 
     @Autowired
-    private CustomerService customerService;
+    private CustomerMapper customerMapper;
 
     private static String AUTHENTICATION_ERROR_MSG = "用户没有改操作权限";
-    private static String DEPT_NAME_BLANK_ERROR_MSG = "部门名称不能为空";
+
 
     // TODO: 最终完善登录功能并去掉
     private String acquireUserId() {
         return "00284bca325c4e77b9f30c5671ec1c44";
+    }
+
+    @RequestMapping("searchCustomerInfo")
+    public String searchInfo(){
+        return "searchCustomerInfo";
     }
 
     @RequestMapping("")
@@ -45,12 +45,6 @@ public class CustomerController {
         modelMap.addAttribute("customerId", customerId);
         return "addTopDepartment";
     }
-
-    @RequestMapping("addContactsPage")
-    public String addContactsPage() {
-        return "addContacts";
-    }
-
 
     @RequestMapping("/addOrganizationPage")
     public String addOrganizationPage() {
@@ -74,6 +68,8 @@ public class CustomerController {
                                       @RequestParam("deptName") String deptName,
                                       @RequestParam(value = "website", required = false) String website,
                                       @RequestParam(value = "profile", required = false) String profile) {
+        final String DEPT_NAME_BLANK_ERROR_MSG = "部门名称不能为空";
+
         if (!customerService.isUserHasCustomer(acquireUserId(), customerId)) {
             return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
         }
@@ -99,6 +95,75 @@ public class CustomerController {
         } catch (DepartmentNameDuplicatedException e) {
             return GsonView.createErrorView(e.getMessage());
         }
+
+        return GsonView.createSuccessView();
+    }
+
+    @RequestMapping("addContactsPage")
+    public String addContactsPage(@RequestParam("deptId") String deptId,
+                                  ModelMap modelMap) {
+        modelMap.addAttribute("deptId", deptId);
+        return "addContacts";
+    }
+
+    /**
+     * 添加联系人信息
+     * 1. 检查参数中的 deptId 对应的客户(公司学校)是否为用户所有 --权限检查
+     * 2. 直属于顶级机构(二级学院)的联系人contactsTypeId应为空。不直属的不能为空，且要检查ID是否属于该客户
+     * 3. 联系人姓名不能为空，手机号/座机号 至少填一个
+     * 4. 手机号、邮箱号 格式检查
+     * @param deptId 添加联系人的部门 ID (把联系人加入到哪个部门中)
+     * @param contactsTypeId 添加联系人的类型 (注意：顶级机构必为空，不顶级的必须不空)
+     * @param contacts 添加联系人信息
+     * @return 返回操作状态的JSON
+     */
+    @RequestMapping("/action/addContacts")
+    public GsonView addContacts(@RequestParam("deptId") String deptId,
+                                @RequestParam(value = "contactsTypeId", required = false) String contactsTypeId,
+                                Contacts contacts) {
+        final String TOP_DEPT_CONTACTS_TYPE_NOT_NULL_ERROR_MSG = "顶级机构中联系人不允许有职位";
+        final String SUB_DEPT_CONTACTS_NULL_ERROR_MSG = "子机构中联系人需要有职位信息";
+        final String REAL_NAME_BLANK_ERROR_MSG = "联系人姓名不能为空";
+        final String TEL_AND_PHONE_BLANK_ERROR_MSG ="联系人手机号和座机号不能同时为空";
+
+        // 权限检查
+        Department dept = customerMapper.queryDepartmentById(deptId);
+        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(), dept.getCustomer().getCustomerId())) {
+            return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
+        }
+
+        // 联系人类型检查
+        if (dept.getParent() == null || dept.getParent().getDeptId() == null) {
+            if (contactsTypeId != null) {
+                return GsonView.createErrorView(TOP_DEPT_CONTACTS_TYPE_NOT_NULL_ERROR_MSG);
+            }
+        } else {
+            if (contactsTypeId == null) {
+                return GsonView.createErrorView(SUB_DEPT_CONTACTS_NULL_ERROR_MSG);
+            }
+            ContactsType type = customerMapper.queryContactsTypeById(contactsTypeId);
+            if (type == null || !type.getCustomerId().equals(dept.getCustomer().getCustomerId())) {
+                return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG + ", 机构类型错误");
+            }
+        }
+
+        // 联系人信息
+        if (contacts.getRealName() == null || StringUtils.isEmptyOrWhitespace(contacts.getRealName())) {
+            return GsonView.createErrorView(REAL_NAME_BLANK_ERROR_MSG);
+        }
+        if ((contacts.getTel() == null || StringUtils.isEmptyOrWhitespace(contacts.getTel())) &&
+                (contacts.getPhone() == null || StringUtils.isEmptyOrWhitespace(contacts.getPhone()))) {
+            return GsonView.createErrorView(TEL_AND_PHONE_BLANK_ERROR_MSG);
+        }
+
+        // 添加联系人
+        ContactsType contactsType = new ContactsType();
+        contactsType.setContactsTypeId(contactsTypeId);
+
+        contacts.setContactsId(UUIDGenerator.genId());
+        contacts.setDepartment(dept);
+        contacts.setContactsType(contactsType);
+        customerMapper.insertContacts(contacts);
 
         return GsonView.createSuccessView();
     }
