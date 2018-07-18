@@ -79,7 +79,7 @@ jQuery(document).ready(function () {
                this.visits.splice(index, 1);
            },
            'addVisit': function () {
-               this.visits.push({result: '', visitType: 'VISIT'});
+               this.visits.push({visitResult: '', visitType: 'VISIT'});
            },
            'addVisitContacts': function (index) {
                this.curVisit = this.visits[index];
@@ -162,27 +162,40 @@ jQuery(document).ready(function () {
        }
    });
 
-
-    jQuery.ajax({
-        type: 'get',
-        url: '/journal/query?journalId='+journalId,
-        dataType: 'json',
-        cache: false,
-        success: function(result) {
-            editJournalVue.$set(editJournalVue, 'summary', result.journal.summary);
-            editJournalVue.$set(editJournalVue, 'plan', result.journal.plan);
-            editJournalVue.$set(editJournalVue, 'colleagues', result.colleagues);
-            console.log(result.journal.receivers);
-            console.log(result.colleagues);
-            for (var revId in result.journal.receivers) {
-                for (var colId in result.colleagues) {
-                    if (result.journal.receivers[revId].userId === result.colleagues[colId].userId) {
-                        editJournalVue.receivers.push(result.colleagues[colId]);
+    if (journalId === '0') {
+        jQuery.ajax({
+            type: 'get',
+            url: '/journal/action/getColleagueList',
+            dataType: 'json',
+            cache: false,
+            success: function(result) {
+                editJournalVue.$set(editJournalVue, 'colleagues', result.colleagues);
+            }
+        });
+    } else {
+        jQuery.ajax({
+            type: 'get',
+            url: '/journal/query?journalId='+journalId,
+            dataType: 'json',
+            cache: false,
+            success: function(result) {
+                editJournalVue.$set(editJournalVue, 'summary', result.journal.summary);
+                editJournalVue.$set(editJournalVue, 'plan', result.journal.plan);
+                editJournalVue.$set(editJournalVue, 'visits', result.journal.visitRecords);
+                editJournalVue.$set(editJournalVue, 'colleagues', result.colleagues);
+                console.log(result.journal.receivers);
+                console.log(result.colleagues);
+                for (var revId in result.journal.receivers) {
+                    for (var colId in result.colleagues) {
+                        if (result.journal.receivers[revId].userId === result.colleagues[colId].userId) {
+                            editJournalVue.receivers.push(result.colleagues[colId]);
+                        }
                     }
                 }
             }
-        }
-    });
+        });
+    }
+
 
 });
 
