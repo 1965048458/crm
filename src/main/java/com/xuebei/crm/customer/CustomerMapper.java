@@ -2,8 +2,6 @@ package com.xuebei.crm.customer;
 
 import org.apache.ibatis.annotations.Mapper;
 
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
@@ -16,5 +14,11 @@ public interface CustomerMapper {
                                  @Param("departmentName") String departmentName);
 
     void insertTopDepartment(Department department);
+
+    Department queryDepartmentById(@Param("deptId") String deptId);
+
+    ContactsType queryContactsTypeById(@Param("contactsTypeId") String contactsTypeId);
+
+    void insertContacts(Contacts contacts);
 
 }

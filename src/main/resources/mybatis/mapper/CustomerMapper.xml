@@ -10,6 +10,19 @@
         <result property="deptName" column="department_nm"/>
         <result property="profile" column="profile"/>
         <result property="website" column="website"/>
+        <result property="enclosureStatus" column="enclosure_status"/>
+        <association property="customer" javaType="com.xuebei.crm.customer.Customer">
+            <id property="customerId" column="customer_id"/>
+        </association>
+        <association property="parent" javaType="com.xuebei.crm.customer.Department">
+            <id property="deptId" column="prt_id"/>
+    </association>
+    </resultMap>
+
+    <resultMap id="contactsTypeMap" type="com.xuebei.crm.customer.ContactsType">
+        <id property="contactsTypeId" column="contacts_type_id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="typeName" column="type_name"/>
     </resultMap>
 
     <select id="isUserHasCustomer" resultType="java.lang.Boolean">
@@ -45,5 +58,51 @@
                 #{profile}
             );
     </insert>
+
+    <select id="queryDepartmentById" resultMap="deptMap">
+        SELECT *
+        FROM customer_dept
+        WHERE customer_dept_id = #{deptId};
+    </select>
+
+    <insert id="insertContacts" parameterType="com.xuebei.crm.customer.Contacts">
+        INSERT INTO `crmdb`.`contacts` (
+			`contacts_id`,
+			`customer_dept_id`,
+			`real_nm`,
+			`gender`,
+			`phone`,
+			`wechat`,
+			`tel`,
+			`QQ`,
+			`email`,
+			`office_address`,
+			`profile`,
+			`special_relationship`,
+			`contacts_type_id`
+		)
+		VALUES
+			(
+				#{contactsId},
+				#{department.deptId},
+				#{realName},
+				#{gender},
+				#{phone},
+				#{wechat},
+				#{tel},
+				#{QQ},
+				#{email},
+				#{officeAddr},
+				#{profile},
+				#{specialRelationship},
+				#{contactsType.contactsTypeId}
+			);
+    </insert>
+
+    <select id="queryContactsTypeById" resultMap="contactsTypeMap">
+        SELECT *
+        FROM contacts_type
+        WHERE contacts_type_id = #{contactsTypeId};
+    </select>
 
 </mapper>
