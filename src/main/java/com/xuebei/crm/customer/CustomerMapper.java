@@ -24,4 +24,6 @@ public interface CustomerMapper {
     void insertContacts(Contacts contacts);
 
     List<Customer> queryCustomerInfo(@Param("searchWord") String searchWord);
+
+    List<ContactsType> queryContactsTypes(@Param("customerId") String customerId);
 }

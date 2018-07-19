@@ -1,5 +1,6 @@
 package com.xuebei.crm.customer;
 
+import com.google.gson.Gson;
 import com.xuebei.crm.dto.GsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.xuebei.crm.dto.UUIDGenerator;
@@ -103,6 +104,20 @@ public class CustomerController {
     public String addContactsPage(@RequestParam("deptId") String deptId,
                                   ModelMap modelMap) {
         modelMap.addAttribute("deptId", deptId);
+
+        // 部门ID空 或 用户不能修改该部门（因为客户不属于用户的公司）
+        Department dept = customerMapper.queryDepartmentById(deptId);
+        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(), dept.getCustomer().getCustomerId())) {
+            return "error/404";
+        }
+
+        // 判断部门是顶级部门
+        if (dept.getParent() == null || dept.getParent().getDeptId() == null) {
+            modelMap.addAttribute("isTopDept", true);
+        } else {
+            modelMap.addAttribute("isTopDept", false);
+        }
+
         return "addContacts";
     }
 
@@ -166,6 +181,20 @@ public class CustomerController {
         customerMapper.insertContacts(contacts);
 
         return GsonView.createSuccessView();
+    }
+
+    @RequestMapping("/action/getContactsTypeList")
+    public GsonView getContactsTypeList(@RequestParam("deptId") String deptId) {
+        Department dept = customerMapper.queryDepartmentById(deptId);
+        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(), dept.getCustomer().getCustomerId())) {
+            return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
+        }
+        String customerId = dept.getCustomer().getCustomerId();
+        List<ContactsType> contactsTypes = customerMapper.queryContactsTypes(customerId);
+
+        GsonView gson = GsonView.createSuccessView();
+        gson.addStaticAttribute("contactsTypes", contactsTypes);
+        return gson;
     }
 
     @RequestMapping("/organization")

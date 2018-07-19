@@ -119,4 +119,10 @@
         WHERE contacts_type_id = #{contactsTypeId};
     </select>
 
+    <select id="queryContactsTypes" resultMap="contactsTypeMap">
+        SELECT contacts_type_id, type_name
+        FROM contacts_type
+        WHERE customer_id = #{customerId};
+    </select>
+
 </mapper>
