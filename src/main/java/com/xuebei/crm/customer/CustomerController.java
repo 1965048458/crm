@@ -3,13 +3,14 @@ package com.xuebei.crm.customer;
 import com.google.gson.Gson;
 import com.xuebei.crm.dto.GsonView;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.xuebei.crm.dto.UUIDGenerator;
+import com.xuebei.crm.utils.UUIDGenerator;
 import com.xuebei.crm.exception.DepartmentNameDuplicatedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
+import javax.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -18,10 +19,18 @@ import java.util.List;
 public class CustomerController {
 
     @Autowired
-    private CustomerServiceImpl customerService;
+    private CustomerMapper customerMapper;
+
+
+
+    @RequestMapping("searchCustInfo")
+    public String searchInfo(){
+        return "searchCustomerInfo";
+    }
 
     @Autowired
-    private CustomerMapper customerMapper;
+    private CustomerServiceImpl customerService;
+
 
     private static String AUTHENTICATION_ERROR_MSG = "用户没有改操作权限";
 
@@ -31,13 +40,50 @@ public class CustomerController {
         return "00284bca325c4e77b9f30c5671ec1c44";
     }
 
-    @RequestMapping("searchCustomerInfo")
-    public String searchInfo(){
-        return "searchCustomerInfo";
-    }
 
     @RequestMapping("")
     public String addCustomer() { return "addCustomer"; }
+
+    @RequestMapping("add")
+    public GsonView newCustomer(@RequestParam("schoolType") String schoolType,
+                                @RequestParam("name") String name,
+                                @RequestParam("profile") String profile,
+                                @RequestParam("website") String website,
+                                HttpServletRequest request) {
+        GsonView gsonView = new GsonView();
+
+        String customer_id = UUIDGenerator.genUUID();
+        String creator_id = (String)request.getSession().getAttribute("crmUserId") ;
+        String create_ts = "";
+        String updater_id = creator_id;
+        String update_ts = "";
+
+
+        if(profile.equals("") && website.equals("")){
+            customerService.newSchool(customer_id, name, schoolType, null,
+                    null, creator_id, create_ts, updater_id, update_ts);
+        }else if(profile.equals("")){
+            customerService.newSchool(customer_id, name, schoolType, null, website,
+                    creator_id, create_ts, updater_id, update_ts);
+        }else if(website.equals("")){
+            customerService.newSchool(customer_id, name, schoolType, profile,
+                    null, creator_id, create_ts, updater_id, update_ts);
+        }else{
+            customerService.newSchool(customer_id, name, schoolType, profile, website, creator_id, create_ts, updater_id, update_ts);
+        }
+        gsonView.addStaticAttribute("successFlg",true);
+        return gsonView;
+    }
+
+    @RequestMapping("searchSchool")
+    public GsonView searchSchool(@RequestParam("keyword") String keyword) {
+        GsonView gsonView = new GsonView();
+        List<String> schList = customerMapper.searchSchool(keyword);
+        gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("schList", schList);
+        return gsonView;
+    }
+
 
 
     @RequestMapping("/addDepartmentPage")
@@ -83,7 +129,7 @@ public class CustomerController {
         customer.setCustomerId(customerId);
 
         Department dept = new Department();
-        dept.setDeptId(UUIDGenerator.genId());
+        dept.setDeptId(UUIDGenerator.genUUID());
         dept.setDeptName(deptName);
         dept.setWebsite(website);
         dept.setProfile(profile);
@@ -175,7 +221,7 @@ public class CustomerController {
         ContactsType contactsType = new ContactsType();
         contactsType.setContactsTypeId(contactsTypeId);
 
-        contacts.setContactsId(UUIDGenerator.genId());
+        contacts.setContactsId(UUIDGenerator.genUUID());
         contacts.setDepartment(dept);
         contacts.setContactsType(contactsType);
         customerMapper.insertContacts(contacts);
