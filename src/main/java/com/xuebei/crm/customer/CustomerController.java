@@ -243,6 +243,11 @@ public class CustomerController {
         return "./customer/organization";
     }
 
+    @RequestMapping("/customerList")
+    public String customerList(){
+        return "customerList";
+    }
+
     @RequestMapping("/queryCustomer")
     public GsonView queryCustomerInfo(@RequestParam("searchWord") String keyword){
         List<Customer> customerList = customerService.queryCustomerInfo(keyword);
