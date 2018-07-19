@@ -43,10 +43,10 @@
         <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
     </div>
 
-    <div class="weui-cells searchbar-result" id="searchResult" style="display: none;">
-        <div class="weui-cell weui-cell_access" v-for="cust in custList">
+    <div class="weui-cells searchbar-result" id="searchResult" >
+        <div class="weui-cell weui-cell_access" v-for="customer in customerList.filter(filterList)">
             <div class="weui-cell__bd weui-cell_primary">
-                <p v-text="cust"></p>
+                <p v-text="customer.customerName"></p>
             </div>
         </div>
 

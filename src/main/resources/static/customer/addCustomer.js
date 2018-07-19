@@ -3,83 +3,88 @@ jQuery(document).ready(function () {
         el: '#addCustomerVue',
         data: {
             showPage: 'addCustomer',
-            customerType:'',
             schoolType: '',
             name:'',
+            profile:'',
+            website:'',
+            userList: [],
         },
         methods: {
-            'selectCus': function (data) {
-                this.showPage = 'selCusType';
-            },
             'selectSch':function () {
                 this.showPage = 'selSchType';
             },
             'selectNam':function () {
                 this.showPage = 'selName';
+                this.searchUser();
             },
             'cancel':function () {
                 this.showPage = 'addCustomer';
+                this.name ='';
             },
             'submit':function () {
+                if(this.name ==''){
+                    alert("请填写学校名称！");
+                }else{
+                    this.showPage = 'addCustomer';
+                };
+            },
+            'subMit':function () {
+                if(this.name ==''|| this.schoolType ==''){
+                    alert("请填写学校类型或学校名称！");
+                }else{
+                    var thisVue = this;
+                    jQuery.ajax({
+                        type: 'post',
+                        url: '/customer/add',
+                        data: {
+                            schoolType:thisVue.schoolType,
+                            name:thisVue.name,
+                            profile:thisVue.profile,
+                            website:thisVue.website,
+                        },
+                        dataType: 'json',
+                        cache: false
+                    }).done(function (result){
+                        if (result.successFlg) {
+                            alert("提交成功");
+                        } else {
+                            alert("请填写正确的信息");
+                        }
+                    });
+                };
+            },
+            'selectType':function () {
                 this.showPage = 'addCustomer';
             },
-            'searchWeek':function () {
-                var data = {
-                    //userId:"00284bca325c4e77b9f30c5671ec1c44",
-                    journalType:'WEEKLY'
-                };
-                this.searchList(data);
+            'selectSchool':function () {
+                this.showPage = 'addCustomer';
             },
-            'searchMonth':function () {
-                var data = {
-                    //userId:"00284bca325c4e77b9f30c5671ec1c44",
-                    journalType:'month'
-                };
-                this.searchList(data);
+            'selectName':function () {
+                this.showPage = 'addCustomer';
             },
-            'searchFilter':function () {
-                //this.isReadTo0_1 = this.bool2Digit(!this.isRead),
-                var data = {
-                    //userId:"00284bca325c4e77b9f30c5671ec1c44",
-                    journalType:this.journalType,
-                    client:this.client,
-                    project:this.project,
-                    startTime:this.startTime,
-                    endTime:this.endTime,
-                    isRead:Number(!this.isRead)
-                };
-                this.searchList(data);
-            },
-            'loadDetail': function (journalId) {
+            'searchUser': function () {
                 var thisVue = this;
                 jQuery.ajax({
                     type: 'get',
-                    url: '/journal/detail',
+                    url: '/sample/searchUser',
                     data: {
-                        journalId: journalId
+                        keyword:thisVue.name,
                     },
                     dataType: 'json',
                     cache: false
-                }).done(function (result) {
-                    var journal = result.journal;
-                    journal.unread = result.unread;
-                    journal.read = result.read;
-                    thisVue.$set(thisVue, 'curJournal', journal);
-                    thisVue.showPage = 'journalDetail';
+                }).done(function (result){
+                    if (result.successFlg) {
+                        thisVue.$set(thisVue, 'userList', result.userList);
+                    } else {
+                        thisVue.errMsg = result.errMsg;
+                    }
                 });
             },
-            'backToList': function () {
-                this.showPage = 'journalList';
-            },
-            'journalName': function (journal) {
-                return journal.user.realName + '的' + TYPE_NAMES[journal.type];
-            },
-            'toFilter':function () {
-                this.showPage = 'filterDiv';
-            },
-            'quit':function () {
-                this.showPage = 'journalList';
-            },
+        },
+        watch: {
+            'name': function () {
+                this.searchUser();
+            }
         }
     });
 });

@@ -1,7 +1,7 @@
 package com.xuebei.crm.journal;
 
 public enum VisitTypeEnum {
-    OFFLINE("拜访"), PHONE("电话");
+    VISIT("拜访"), OFFLINE("拜访"), PHONE("电话");
 
     private String name;
 
