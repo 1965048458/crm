@@ -1,6 +1,7 @@
 package com.xuebei.crm.customer;
 
 import com.google.gson.annotations.Expose;
+import com.xuebei.crm.user.GenderEnum;
 
 public class Contacts {
 
@@ -9,7 +10,7 @@ public class Contacts {
     @Expose
     private String realName;
     @Expose
-    private String gender;
+    private GenderEnum gender;
     @Expose
     private String phone;
     @Expose
@@ -26,6 +27,8 @@ public class Contacts {
     private String profile;
     @Expose
     private String specialRelationship;
+    @Expose
+    private ContactsType contactsType;
     @Expose
     private Department department;
 
@@ -45,11 +48,11 @@ public class Contacts {
         this.realName = realName;
     }
 
-    public String getGender() {
+    public GenderEnum getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(GenderEnum gender) {
         this.gender = gender;
     }
 
@@ -123,6 +126,14 @@ public class Contacts {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public ContactsType getContactsType() {
+        return contactsType;
+    }
+
+    public void setContactsType(ContactsType contactsType) {
+        this.contactsType = contactsType;
     }
 
 }
