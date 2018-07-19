@@ -2,14 +2,14 @@ package com.xuebei.crm.customer;
 
 import com.xuebei.crm.dto.GsonView;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.xuebei.crm.dto.UUIDGenerator;
+import com.xuebei.crm.utils.UUIDGenerator;
 import com.xuebei.crm.exception.DepartmentNameDuplicatedException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/customer")
@@ -17,6 +17,8 @@ public class CustomerController {
 
     @Autowired
     private CustomerMapper customerMapper;
+
+
 
     @RequestMapping("searchCustInfo")
     public String searchInfo(){
@@ -37,6 +39,36 @@ public class CustomerController {
     @RequestMapping("")
     public String addCustomer() { return "addCustomer"; }
 
+    @RequestMapping("add")
+    public GsonView newCustomer(@RequestParam("schoolType") String schoolType,
+                                @RequestParam("name") String name,
+                                @RequestParam("profile") String profile,
+                                @RequestParam("website") String website,
+                                HttpServletRequest request) {
+        GsonView gsonView = new GsonView();
+
+        String customer_id = UUIDGenerator.genUUID();
+        String creator_id = (String)request.getSession().getAttribute("crmUserId") ;
+        String create_ts = "";
+        String updater_id = creator_id;
+        String update_ts = "";
+
+
+        if(profile.equals("") && website.equals("")){
+            customerService.newSchool(customer_id, name, schoolType, null,
+                    null, creator_id, create_ts, updater_id, update_ts);
+        }else if(profile.equals("")){
+            customerService.newSchool(customer_id, name, schoolType, null, website,
+                    creator_id, create_ts, updater_id, update_ts);
+        }else if(website.equals("")){
+            customerService.newSchool(customer_id, name, schoolType, profile,
+                    null, creator_id, create_ts, updater_id, update_ts);
+        }else{
+            customerService.newSchool(customer_id, name, schoolType, profile, website, creator_id, create_ts, updater_id, update_ts);
+        }
+        gsonView.addStaticAttribute("successFlg",true);
+        return gsonView;
+    }
 
     @RequestMapping("/addDepartmentPage")
     public String addOrganizationPage(@RequestParam("customerId") String customerId,
@@ -80,7 +112,7 @@ public class CustomerController {
         customer.setCustomerId(customerId);
 
         Department dept = new Department();
-        dept.setDeptId(UUIDGenerator.genId());
+        dept.setDeptId(UUIDGenerator.genUUID());
         dept.setDeptName(deptName);
         dept.setWebsite(website);
         dept.setProfile(profile);

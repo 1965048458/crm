@@ -46,4 +46,30 @@
             );
     </insert>
 
+    <insert id="newSchool" parameterType="java.lang.String">
+        INSERT INTO crm_customer (
+        customer_id,
+        customer_nm,
+        type_cd,
+        profile,
+        website,
+        creator_id,
+        create_ts,
+        updater_id,
+        update_ts
+        )
+        VALUES
+        (
+        #{customer_id},
+        #{name},
+        #{schoolType},
+        #{profile},
+        #{website},
+        #{creator_id},
+        NOW(),
+        #{updater_id},
+        NOW()
+        );
+    </insert>
+
 </mapper>

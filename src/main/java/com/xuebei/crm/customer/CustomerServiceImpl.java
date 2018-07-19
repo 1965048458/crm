@@ -27,4 +27,13 @@ public class CustomerServiceImpl implements CustomerService {
         customerMapper.insertTopDepartment(department);
     }
 
+    /**
+     * 新建学校
+     */
+    public void newSchool( String customer_id,String name,String schoolType,String profile,
+                           String website,String creator_id,String create_ts,String updater_id,String update_ts){
+        customerMapper.newSchool(customer_id, name, schoolType, profile,
+                                 website, creator_id, create_ts, updater_id, update_ts);
+    }
+
 }

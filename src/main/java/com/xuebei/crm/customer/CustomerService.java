@@ -8,4 +8,7 @@ public interface CustomerService {
 
     void addTopDepartment(Department department) throws DepartmentNameDuplicatedException;
 
+    void newSchool(String customer_id,String name,String schoolType,String profile,
+                   String website,String creator_id,String create_ts,String updater_id,String update_ts);
+
 }
