@@ -45,4 +45,10 @@ public class CustomerServiceImpl implements CustomerService {
 
         return customerList;
     }
+
+    @Override
+    public List<String> searchSchool(String keyword){
+        return customerMapper.searchSchool(keyword);
+    }
+
 }

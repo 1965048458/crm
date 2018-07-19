@@ -30,8 +30,6 @@ public class CustomerController {
     @Autowired
     private CustomerServiceImpl customerService;
 
-    @Autowired
-    private CustomerMapper customerMapper;
 
     private static String AUTHENTICATION_ERROR_MSG = "用户没有改操作权限";
 
@@ -41,10 +39,6 @@ public class CustomerController {
         return "00284bca325c4e77b9f30c5671ec1c44";
     }
 
-    @RequestMapping("searchCustomerInfo")
-    public String searchInfo(){
-        return "searchCustomerInfo";
-    }
 
     @RequestMapping("")
     public String addCustomer() { return "addCustomer"; }
@@ -79,6 +73,17 @@ public class CustomerController {
         gsonView.addStaticAttribute("successFlg",true);
         return gsonView;
     }
+
+    @RequestMapping("searchSchool")
+    public GsonView searchSchool(@RequestParam("keyword") String keyword) {
+        GsonView gsonView = new GsonView();
+        List<String> schList = customerMapper.searchSchool(keyword);
+        gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("schList", schList);
+        return gsonView;
+    }
+
+
 
     @RequestMapping("/addDepartmentPage")
     public String addDepartmentPage(@RequestParam("customerId") String customerId,
@@ -201,7 +206,7 @@ public class CustomerController {
         ContactsType contactsType = new ContactsType();
         contactsType.setContactsTypeId(contactsTypeId);
 
-        contacts.setContactsId(UUIDGenerator.genId());
+        contacts.setContactsId(UUIDGenerator.genUUID());
         contacts.setDepartment(dept);
         contacts.setContactsType(contactsType);
         customerMapper.insertContacts(contacts);

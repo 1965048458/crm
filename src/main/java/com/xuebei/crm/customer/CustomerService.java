@@ -14,4 +14,6 @@ public interface CustomerService {
                    String website,String creator_id,String create_ts,String updater_id,String update_ts);
 
     List<Customer> queryCustomerInfo(String searchWord);
+
+    List<String> searchSchool(String keyword);
 }

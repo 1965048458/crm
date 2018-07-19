@@ -145,4 +145,9 @@
         WHERE contacts_type_id = #{contactsTypeId};
     </select>
 
+    <select id="searchSchool" parameterType="java.lang.String"  resultType="java.lang.String">
+        select c.customer_nm from crm_customer c
+        WHERE c.customer_nm LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
 </mapper>

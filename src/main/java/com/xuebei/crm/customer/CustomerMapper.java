@@ -33,4 +33,6 @@ public interface CustomerMapper {
     void insertContacts(Contacts contacts);
 
     List<Customer> queryCustomerInfo(@Param("searchWord") String searchWord);
+
+    List<String> searchSchool(@Param("keyword")String keyword);
 }
