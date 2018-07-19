@@ -49,17 +49,21 @@
             display: block;
 
         }
+        .page__bd_spacing{
+            padding-top: 10px;
+        }
+
     </style>
 </head>
 <body>
 
 <div id="organizationVue" >
-    <div v-show="showPage === showCustomerOrganization">
+    <div v-show="showPage === 'showCustomerOrganization'">
         <div class="top-bar center-box">
             <div>
                 <span class="pull-left">   <</span>
                 <span class="center-ele">浙江大学</span>
-                <span class="pull-right" @click="apply()">编辑   </span>
+                <span class="pull-right">编辑   </span>
             </div>
             <div class="select-bar">
                 <span @click="showCustomerInfo=true" >客户信息</span>
@@ -93,9 +97,9 @@
             <div class="weui-dialog">
                 <div class="weui-dialog__bd" >
                     <h1>提示</h1>
-                </div>p
+                </div>
                 <div class="weui-dialog__bd">
-                    <p>是否申请</p>
+                    <p>是否申请"{{applyOrganization}}"</p>
                 </div>
                 <div class="weui-dialog__ft">
                     <a @click="dialogCheck()" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
@@ -105,101 +109,112 @@
         </div>
     </div>
 
-    <div v-show="showPage === showApply">
-        <div id="applyVue" >
-            <div class="top-bar center-box">
-                <span class="pull-left" @click="applyQuit()">取消</span>
-                <span class="center-ele">申请管理学院</span>
-                <span class="pull-right" @click="applySubmit()">提交</span>
+    <div v-show="showPage === 'showApply'">
+        <div class="top-bar center-box">
+            <span class="pull-left" @click="applyQuit()">取消</span>
+            <span class="center-ele">申请{{applyOrganization}}</span>
+            <span class="pull-right" @click="applySubmit()">提交</span>
+        </div>
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <p>申请理由</p>
             </div>
-            <div class="weui-cells">
-                <div class="weui-cell">
-                    <p>申请理由</p>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder="请输入文本" rows="4"></textarea>
+                    <div class="weui-textarea-counter"><span>0</span>/200</div>
                 </div>
-                <div class="weui-cell">
-                    <div class="weui-cell__bd">
-                        <textarea class="weui-textarea" placeholder="请输入文本" rows="4"></textarea>
-                        <div class="weui-textarea-counter"><span>0</span>/200</div>
-                    </div>
+            </div>
+        </div>
+        <div class="js_dialog" id="submitDialog" style="opacity: 1;" v-show="showSubmitDialog">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__bd" >
+                    <h1>提示</h1>
+                </div>
+                <div class="weui-dialog__bd">
+                    <p>"{{applyOrganization}}"申请成功</p>
+                </div>
+                <div class="weui-dialog__ft">
+                    <a @click="submitDialogCheck()" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div v-show="showPage === showOpenSeaWarning ">
+    <div v-show="showPage === 'showOpenSeaWarning' ">
         <div class="top-bar center-box">
             <span class="pull-left" @click="openSea2Organization()"><</span>
             <span class="center-ele">客户进入公海警告</span>
             <span class="pull-right">@@</span>
         </div>
         <div class="page__bd page__bd_spacing">
-            <div class="weui-cell">
-                <div class="weui-cell__hd">
-                    <img src="">
-                </div>
-                <div class="weui-cell_bd">
-                    <span>***小时后，***将自动进入公海</span>
-                </div>
-            </div>
             <div class="weui-cells">
-                <ul>
-                    <li>
-                        <div class="weui-cell">
-                            <span>浙江大学-机械学院</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="weui-cell">
-                            <div class="weui-cell__hd">
-                                <span>创建时间</span>
-                            </div>
-                            <div class="weui-cell__bd">
-                                 <span>某年某月某日</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="weui-cell">
-                            <div class="weui-cell__hd">
-                                <span>跟进次数</span>
-                            </div>
-                            <div class="weui-cell__bd">
-                                <span>几次</span>
-                            </div>
-
-                        </div>
-                    </li>
-                    <li>
-                        <div class="weui-cell">
-                            <div class="weui-cell__hd">
-                                <span>最后跟进</span>
-                            </div>
-                            <div class="weui-cell__bd">
-                                <span>某年某月某日</span>
-                            </div>
-
-                        </div>
-                    </li>
-                    <li>
-                        <div class="weui-cells">
-                            <div class="weui-cell">
-                                <span>调入公海的原因</span>
-                            </div>
-                            <div class="weui-cell">
-                                <p>*****原因</p>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <img src="">
+                    </div>
+                    <div class="weui-cell_bd">
+                        <span>{{warningDetails.leftTime}}小时后，{{warningDetails.warnedOrganization}}将自动进入公海</span>
+                    </div>
+                </div>
             </div>
+
+            <div class="weui-cells" style="margin-top: 20px">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <span>{{warningDetails.warnedOrganization}}</span>
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <span>创建时间 : </span>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <span>{{warningDetails.createdTime}}</span>
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <span>跟进次数 : </span>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <span>{{warningDetails.times}}</span>
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <span>最后跟进 : </span>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <span>{{warningDetails.lastTime}}</span>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="weui-cells" style="margin-top: 20px">
+                <div class="weui-cell">
+                    <div class="weui-cells">
+                        <span>调入公海的原因</span>
+
+                        <ul>
+                            <li><span>原因一</span></li>
+                            <li><span>原因二</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <a href="javascript:;" class="weui-btn weui-btn_primary" style="margin-top: 30px">申请延期</a>
+
+
         </div>
     </div>
 
 </div>
-
-
-
-
 
 </body>
 
@@ -211,6 +226,7 @@
                 <span class="pull-left" @click="changeSubFold" style="padding-right: 5px;" v-text="customer.name"></span>
                 <span class="pull-left"  v-text="addBrackets(customer.number)"></span>
                 <span class="pull-left" v-text="addSquareBrackets(customer.isCircle)"></span>
+                <span class="pull-left" v-text="addOpenSeaWarning(customer.Warning)" @click="openSeaWarning(customer.Warning)"></span>
             </div>
 
             <div class="weui-cell__ft">

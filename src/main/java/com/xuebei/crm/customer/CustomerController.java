@@ -21,9 +21,6 @@ public class CustomerController {
     @Autowired
     private CustomerMapper customerMapper;
 
-    @RequestMapping("/searchCustInfo")
-
-
     @RequestMapping("searchCustInfo")
     public String searchInfo(){
         return "searchCustomerInfo";
@@ -32,8 +29,6 @@ public class CustomerController {
     @Autowired
     private CustomerServiceImpl customerService;
 
-    @Autowired
-    private CustomerMapper customerMapper;
 
     private static String AUTHENTICATION_ERROR_MSG = "用户没有改操作权限";
 
@@ -41,11 +36,6 @@ public class CustomerController {
     // TODO: 最终完善登录功能并去掉
     private String acquireUserId() {
         return "00284bca325c4e77b9f30c5671ec1c44";
-    }
-
-    @RequestMapping("searchCustomerInfo")
-    public String searchInfo(){
-        return "searchCustomerInfo";
     }
 
     @RequestMapping("")
@@ -126,7 +116,7 @@ public class CustomerController {
         customer.setCustomerId(customerId);
 
         Department dept = new Department();
-        dept.setDeptId(UUIDGenerator.genId());
+        dept.setDeptId(UUIDGenerator.genUUID());
         dept.setDeptName(deptName);
         dept.setWebsite(website);
         dept.setProfile(profile);
@@ -204,7 +194,7 @@ public class CustomerController {
         ContactsType contactsType = new ContactsType();
         contactsType.setContactsTypeId(contactsTypeId);
 
-        contacts.setContactsId(UUIDGenerator.genId());
+        contacts.setContactsId(UUIDGenerator.genUUID());
         contacts.setDepartment(dept);
         contacts.setContactsType(contactsType);
         customerMapper.insertContacts(contacts);

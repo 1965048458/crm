@@ -4,19 +4,30 @@
 
 var customerList = [
     {
-        'name': '校长',
-        'number': '1',
+        name: '校长',
+        number: '1',
+        Warning:{},
         isCircle:"未圈",
         contacts: [{'name': '李某人'}]
     },
     {
-        'name': '副校长',
-        'number': '1',
+        name: '副校长',
+        number: '1',
+        Warning:{openSeaWarning:'1',
+            leftTime:'7天10小时后',
+            warnedOrganization:'机械学院',
+            createdTime:'2018-01-30',
+            times:'1',
+            lastTime:'2018-03-01'
+                    },
+        isCircle:"已圈",
         contacts: [{'name': '李副校长'}]
     },
     {
         name:'书记',
         number:'2',
+        Warning:{},
+        isCircle:"未圈",
         customerList:[],
         contacts:[{name:'张书记'},
             {name:'赵书记'}]
@@ -24,13 +35,17 @@ var customerList = [
     },
 
     {
-        'name': '机械学院',
-        'number': '2',
-        'customerList': [
+        name: '机械学院',
+        number: '2',
+        Warning:{},
+        isCircle:"未圈",
+        customerList: [
             {
-                'name': '机械制造及自动化',
-                'number': '1',
-                'customerList': [],
+                name: '机械制造及自动化',
+                number: '1',
+                Warning:{},
+                isCircle:"",
+                customerList: [],
                 contacts: [{'name': '李机械制造及自动化长', 'number': '0'}]
             }
         ],
@@ -38,14 +53,25 @@ var customerList = [
     }
 ];
 jQuery(document).ready(function () {
-    new Vue({
+
+    var organizationVue = new Vue({
         el: '#organizationVue',
         data: {
-            showCustomerOrganization:true,
+            showPage:'showCustomerOrganization',
             showOrganization: false,
             showApplyDialog: false,
-            showApply: false,
-            customerList: ''
+            customerList: '',
+            applyOrganization:'',
+            applyReasons:'',
+            showSubmitDialog:false,
+            warningDetails:{
+                openSeaWarning:'',
+                leftTime:'',
+                warnedOrganization:'',
+                createdTime:'',
+                times:'',
+                lastTime:''
+            }
             //data: ''
         },
         methods: {
@@ -62,25 +88,51 @@ jQuery(document).ready(function () {
                     thisVue.$set(thisVue, 'customerList', customerList);
                 });
             },
-            'apply':function () {
+            'apply':function (name) {
+                this.applyOrganization = name;
                 this.showApplyDialog=true
             },
             'dialogCheck': function () {
                 this.showApplyDialog = false;
-                this.showCustomerOrganization = false;
-                this.showApply = true
+                this.showPage = 'showApply';
             },
             'dialogQuit': function () {
                 this.showApplyDialog = false;
             },
             'applySubmit':function () {
-                this.showApply=false;
-                this.showCustomerOrganization=true;
+                var thisVue = this;
+                jQuery.ajax({
+                    type:'get',
+                    url:'/journal/list',
+                    data:'',
+                    dataType:'json',
+                    cache:false
+                }).done(function(){
+                    thisVue.showSubmitDialog = true;
+                });
+
             },
             'applyQuit':function () {
-                this.showApply=false;
-                this.showCustomerOrganization=true;
+                this.showPage= 'showCustomerOrganization';
+            },
+            'submitDialogCheck':function () {
+                this.showSubmitDialog = false;
+            },
+            'openSea2Organization':function () {
+                this.showPage = 'showCustomerOrganization';
+            },
+            'openSeaWarningDetail':function (warning) {
+
+                this.warningDetails.leftTime = warning.leftTime;
+                this.warningDetails.warnedOrganization = warning.warnedOrganization;
+                this.warningDetails.createdTime = warning.createdTime;
+                this.warningDetails.times = warning.times;
+                this.warningDetails.lastTime = warning.lastTime;
+                this.showPage = 'showOpenSeaWarning';
+
             }
+
+
         }
     });
     Vue.component('customer', {
@@ -111,14 +163,30 @@ jQuery(document).ready(function () {
                 if (isCircle == "未圈"){
                     return "["+isCircle+"]";
                 }
+                else if(isCircle == "已圈"){
+                    return "["+isCircle+"]";
+                }
                 else{
                     return "";
                 }
             },
+            'addOpenSeaWarning':function (Warning) {
+                if(Warning.openSeaWarning == '1'){
+                    return "!!即将进入公海";
+                }
+                else {
+                    return '';
+                }
+            },
             'apply':function (name) {
-                this.showApplyDialog = true;
+                organizationVue.apply(name);
                 console.log(name);
             },
+            'openSeaWarning':function (warning) {
+                console.log("component.warning")
+                organizationVue.openSeaWarningDetail(warning);
+            }
+
 
         }
     });
