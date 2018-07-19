@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xuebei.crm.registerAndLogin.RegisterAndLoginMapper">
+<mapper namespace="com.xuebei.crm.login.LoginRegisterMapper">
 
     <resultMap id="userMap" type="com.xuebei.crm.user.User">
-        <id column="user_id" property="userId"/>
+        <id column="crm_user_id" property="CRMUserId"/>
         <result column="tel" property="tel"/>
         <result column="real_nm" property="realName"/>
         <result column="pwd" property="pwd"/>

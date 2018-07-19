@@ -18,7 +18,7 @@ jQuery(document).ready(function () {
                 var thisVue = this;
                 jQuery.ajax({
                     type: 'post',
-                    url: '/login/login',
+                    url: '/login',
                     data: {
                         tel: thisVue.tel,
                         pwd: thisVue.pwd
@@ -27,7 +27,7 @@ jQuery(document).ready(function () {
                     cache: false
                 }).done(function (result){
                     if (result.successFlg) {
-                        window.location.href="/sample";
+                        window.location.href="/customer";
                     } else {
                         alert("用户名或密码不正确");
                     }
@@ -37,7 +37,7 @@ jQuery(document).ready(function () {
                 var thisVue = this;
                 jQuery.ajax({
                     type: 'post',
-                    url: '/login/findPwd',
+                    url: '/findPwd',
                     data: {
 
                         tel: thisVue.tel,
@@ -48,7 +48,7 @@ jQuery(document).ready(function () {
                     cache: false
                 }).done(function (result){
                     if (result.successFlg) {
-                        window.location.href="/login";
+                        window.location.href="/";
                     } else {
                         alert("无效的用户名或密码,密码至少6位");
                     }
@@ -58,7 +58,7 @@ jQuery(document).ready(function () {
                 var thisVue = this;
                 jQuery.ajax({
                     type: 'post',
-                    url: '/login/telRegister',
+                    url: '/telRegister',
                     data: {
                         realName: thisVue.realName,
                         tel: thisVue.tel,
@@ -69,7 +69,7 @@ jQuery(document).ready(function () {
                     cache: false
                 }).done(function (result){
                     if (result.successFlg) {
-                        window.location.href="/login";
+                        window.location.href="/";
                     } else {
                         alert("无效的手机号、姓名或密码，密码至少6位");
                     }

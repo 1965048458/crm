@@ -67,6 +67,32 @@
             );
     </insert>
 
+    <insert id="newSchool" parameterType="java.lang.String">
+        INSERT INTO crm_customer (
+        customer_id,
+        customer_nm,
+        type_cd,
+        profile,
+        website,
+        creator_id,
+        create_ts,
+        updater_id,
+        update_ts
+        )
+        VALUES
+        (
+        #{customer_id},
+        #{name},
+        #{schoolType},
+        #{profile},
+        #{website},
+        #{creator_id},
+        NOW(),
+        #{updater_id},
+        NOW()
+        );
+    </insert>
+
     <select id="queryCustomerInfo" resultMap="customerMap">
         SELECT * FROM crm_customer WHERE
             customer_nm LIKE CONCAT('%', #{searchWord}, '%')
@@ -117,6 +143,17 @@
         SELECT *
         FROM contacts_type
         WHERE contacts_type_id = #{contactsTypeId};
+    </select>
+
+    <select id="searchSchool" parameterType="java.lang.String"  resultType="java.lang.String">
+        select c.customer_nm from crm_customer c
+        WHERE c.customer_nm LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+    <select id="queryContactsTypes" resultMap="contactsTypeMap">
+        SELECT contacts_type_id, type_name
+        FROM contacts_type
+        WHERE customer_id = #{customerId};
     </select>
 
 </mapper>
