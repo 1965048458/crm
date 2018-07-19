@@ -4,6 +4,7 @@ import com.xuebei.crm.exception.DepartmentNameDuplicatedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,5 +45,11 @@ public class CustomerServiceImpl implements CustomerService {
         List<Customer> customerList = customerMapper.queryCustomerInfo(searchWord);
 
         return customerList;
+    }
+
+    @Override
+    public List<Department> queryDepartment(String customerId){
+        List<Department> departmentList = customerMapper.queryDepartmentList(customerId);
+        return departmentList;
     }
 }

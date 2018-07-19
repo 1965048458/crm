@@ -16,7 +16,12 @@
         </association>
         <association property="parent" javaType="com.xuebei.crm.customer.Department">
             <id property="deptId" column="prt_id"/>
-    </association>
+        </association>
+        <association property="contacts" javaType="com.xuebei.crm.customer.Contacts">
+            <id property="contactId" column="contacts_id"/>
+            <result property="realName" column="real_nm"/>
+            <result property="gender" column="gender"/>
+        </association>
     </resultMap>
 
     <resultMap id="contactsTypeMap" type="com.xuebei.crm.customer.ContactsType">
@@ -144,5 +149,17 @@
         FROM contacts_type
         WHERE contacts_type_id = #{contactsTypeId};
     </select>
+
+    <select id="queryDepartment" resultMap="deptMap">
+        SELECT cd.customer_dept_id,cd.department_nm,cd.prt_id FROM customer_dept cd
+        WHERE cd.customer_id = #{customerId}
+    </select>
+
+    <select id="queryContacts" resultMap="deptMap">
+        SELECT c.* FROM contacts c
+        INNER JOIN customer_dept cd ON c.customer_dept_id = cd.customer_dept_id
+        WHERE cd.customer_id = #{customerId}
+    </select>
+
 
 </mapper>

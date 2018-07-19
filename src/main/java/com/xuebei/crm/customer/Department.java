@@ -2,6 +2,8 @@ package com.xuebei.crm.customer;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.List;
+
 public class Department {
 
     @Expose
@@ -16,8 +18,40 @@ public class Department {
     private EnclosureStatusEnum enclosureStatus;
     @Expose
     private Customer customer;
-
+    @Expose
     private Department parent;
+    @Expose
+    private List<Contacts> contactsList;
+    @Expose
+    private List<Department> departmentList;
+    @Expose
+    private OpenSeaWarning openSeaWarning;
+
+    public List<Contacts> getContactsList() {
+        return contactsList;
+    }
+
+    public void setContactsList(List<Contacts> contactsList) {
+        this.contactsList = contactsList;
+    }
+
+    public List<Department> getDepartmentList() {
+        return departmentList;
+    }
+
+    public void setDepartmentList(List<Department> departmentList) {
+        this.departmentList = departmentList;
+    }
+
+    public OpenSeaWarning getOpenSeaWarning() {
+        return openSeaWarning;
+    }
+
+    public void setOpenSeaWarning(OpenSeaWarning openSeaWarning) {
+        this.openSeaWarning = openSeaWarning;
+    }
+
+
 
     public String getDeptId() {
         return deptId;

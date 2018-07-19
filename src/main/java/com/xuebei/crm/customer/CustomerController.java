@@ -1,6 +1,7 @@
 package com.xuebei.crm.customer;
 
 import com.xuebei.crm.dto.GsonView;
+import com.xuebei.crm.sample.SampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.xuebei.crm.utils.UUIDGenerator;
 import com.xuebei.crm.exception.DepartmentNameDuplicatedException;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -203,8 +205,15 @@ public class CustomerController {
     }
 
     @RequestMapping("/organization")
-    public String showOrganization() {
-        return "./customer/organization";
+    public String organization(){return "customer/organization";}
+
+    @RequestMapping("/organization/show")
+    public GsonView queryOrganization(@RequestParam("customerId") String customerId) {
+        List<Department> departmentList = customerService.queryDepartment(customerId);
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("successFlg",true);
+        gsonView.addStaticAttribute("customerList", departmentList);
+        return gsonView;
     }
 
     @RequestMapping("/queryCustomer")

@@ -2,6 +2,8 @@ package com.xuebei.crm.customer;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.List;
+
 public class Customer {
 
     @Expose
@@ -14,6 +16,36 @@ public class Customer {
     private String profile;
     @Expose
     private String website;
+    @Expose
+    private List warningDetails;
+    @Expose
+    private List contacts;
+    @Expose
+    private List customer;
+
+    public List getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(List customer) {
+        this.customer = customer;
+    }
+
+    public List getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List contacts) {
+        this.contacts = contacts;
+    }
+    public List getWarningDetails() {
+        return warningDetails;
+    }
+
+    public void setWarningDetails(List warningDetails) {
+        this.warningDetails = warningDetails;
+    }
+
 
     public String getCustomerId() {
         return customerId;
