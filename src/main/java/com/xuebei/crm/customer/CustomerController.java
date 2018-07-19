@@ -117,4 +117,9 @@ public class CustomerController {
         return gsonView;
     }
 
+    @RequestMapping("/customerInfo")
+    public String customerInfo(){
+        return "customerInfo";
+    }
+
 }
