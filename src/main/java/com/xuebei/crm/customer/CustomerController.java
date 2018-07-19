@@ -23,11 +23,6 @@ public class CustomerController {
 
 
 
-    @RequestMapping("searchCustInfo")
-    public String searchInfo(){
-        return "searchCustomerInfo";
-    }
-
     @Autowired
     private CustomerServiceImpl customerService;
 
