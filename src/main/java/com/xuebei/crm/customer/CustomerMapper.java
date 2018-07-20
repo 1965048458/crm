@@ -1,6 +1,7 @@
 package com.xuebei.crm.customer;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Mapper;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -33,6 +34,8 @@ public interface CustomerMapper {
     void insertContacts(Contacts contacts);
 
     List<Customer> queryCustomerInfo(@Param("searchWord") String searchWord);
+
+    List<Department> queryDepartment(@Param("customerId") String customerId);
 
     List<String> searchSchool(@Param("keyword")String keyword);
 

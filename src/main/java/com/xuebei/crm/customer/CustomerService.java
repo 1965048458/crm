@@ -15,5 +15,7 @@ public interface CustomerService {
 
     List<Customer> queryCustomerInfo(String searchWord);
 
+    List<Department> queryDepartment(String customerId);
+
     List<String> searchSchool(String keyword);
 }

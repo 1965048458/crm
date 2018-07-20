@@ -2,9 +2,11 @@ package com.xuebei.crm.customer;
 
 import com.google.gson.Gson;
 import com.xuebei.crm.dto.GsonView;
+import com.xuebei.crm.sample.SampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.xuebei.crm.utils.UUIDGenerator;
 import com.xuebei.crm.exception.DepartmentNameDuplicatedException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -21,11 +24,18 @@ public class CustomerController {
     @Autowired
     private CustomerMapper customerMapper;
 
+    @RequestMapping("searchCustInfo")
+    public String searchInfo(){
+        return "searchCustomerInfo";
+    }
+
 
 
     @Autowired
     private CustomerServiceImpl customerService;
 
+    @Autowired
+    private CustomerMapper customerMapper;
 
     private static String AUTHENTICATION_ERROR_MSG = "用户没有改操作权限";
 
@@ -34,7 +44,6 @@ public class CustomerController {
     private String acquireUserId() {
         return "00284bca325c4e77b9f30c5671ec1c44";
     }
-
 
     @RequestMapping("")
     public String addCustomer() { return "addCustomer"; }
@@ -216,7 +225,7 @@ public class CustomerController {
         ContactsType contactsType = new ContactsType();
         contactsType.setContactsTypeId(contactsTypeId);
 
-        contacts.setContactsId(UUIDGenerator.genUUID());
+        contacts.setContactsId(UUIDGenerator.genId());
         contacts.setDepartment(dept);
         contacts.setContactsType(contactsType);
         customerMapper.insertContacts(contacts);
@@ -239,8 +248,15 @@ public class CustomerController {
     }
 
     @RequestMapping("/organization")
-    public String showOrganization() {
-        return "./customer/organization";
+    public String organization(){return "customer/organization";}
+
+    @RequestMapping("/organization/show")
+    public GsonView queryDepartment(@RequestParam("customerId") String customerId) {
+        List<Department> departmentList = customerService.queryDepartment(customerId);
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("successFlg",true);
+        gsonView.addStaticAttribute("customerList", departmentList);
+        return gsonView;
     }
 
     @RequestMapping("/customerList")

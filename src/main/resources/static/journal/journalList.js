@@ -130,5 +130,5 @@ jQuery(document).ready(function () {
             }
         }
     });
-    journalListVue.searchList();
+    journalListVue.searchAll();
 });
