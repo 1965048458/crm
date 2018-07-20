@@ -7,7 +7,7 @@ jQuery(document).ready(function () {
             name:'',
             profile:'',
             website:'',
-            userList: [],
+            schList: [],
         },
         methods: {
             'selectSch':function () {
@@ -15,7 +15,7 @@ jQuery(document).ready(function () {
             },
             'selectNam':function () {
                 this.showPage = 'selName';
-                this.searchUser();
+                this.searchSchool();
             },
             'cancel':function () {
                 this.showPage = 'addCustomer';
@@ -62,11 +62,11 @@ jQuery(document).ready(function () {
             'selectName':function () {
                 this.showPage = 'addCustomer';
             },
-            'searchUser': function () {
+            'searchSchool': function () {
                 var thisVue = this;
                 jQuery.ajax({
                     type: 'get',
-                    url: '/sample/searchUser',
+                    url: '/customer/searchSchool',
                     data: {
                         keyword:thisVue.name,
                     },
@@ -74,7 +74,7 @@ jQuery(document).ready(function () {
                     cache: false
                 }).done(function (result){
                     if (result.successFlg) {
-                        thisVue.$set(thisVue, 'userList', result.userList);
+                        thisVue.$set(thisVue, 'schList', result.schList);
                     } else {
                         thisVue.errMsg = result.errMsg;
                     }
@@ -83,7 +83,7 @@ jQuery(document).ready(function () {
         },
         watch: {
             'name': function () {
-                this.searchUser();
+                this.searchSchool();
             }
         }
     });

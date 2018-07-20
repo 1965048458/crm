@@ -134,12 +134,12 @@
             <div class="weui-cells__title">以下用户已经创建，不能重复创建</div>
 
             <div class="weui-cells weui-cells_radio" id="schList" >
-                <label class="weui-cell weui-check__label"  v-for="user in userList" >
+                <label class="weui-cell weui-check__label"  v-for="school in schList" >
                     <div class="weui-cell__bd">
-                        <p>{{user.realName}}</p>
+                        <p>{{school}}</p>
                     </div>
                     <div class="weui-cell__ft">
-                        <input type="radio" class="weui-check"  v-bind:value ="user.realName" v-model="name" >
+                        <input type="radio" class="weui-check"  v-bind:value ="school" v-model="name" >
                         <span class="weui-icon-checked"></span>
                     </div>
                 </label>

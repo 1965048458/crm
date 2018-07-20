@@ -32,12 +32,24 @@
 <div id="addContactsVue">
 
     <input id="deptId" type="hidden" th:value="${deptId}">
+    <input id="isTopDept" type="hidden" th:value="${isTopDept}">
 
     <div v-show="showPage === 'addContactsPage'" id="addContactsPage">
         <div class="top-bar">
             <span class="pull-left" @Click="cancelAddContacts">取消</span>
             <span>添加联系人</span>
             <span class="pull-right" @Click="confirmAddContacts">完成</span>
+        </div>
+
+        <div class="weui-cells weui-cells_form" v-show="isTopDept === 'false'">
+            <div class="weui-cell">
+                <div class="weui-cell__bd" @click="chooseContactsType">
+                    <label>选择联系人职位</label>
+                </div>
+                <div>
+                    <span>></span>
+                </div>
+            </div>
         </div>
 
         <div class="weui-cells weui-cells_form">
@@ -152,6 +164,7 @@
             <span>输入性别</span>
             <span @click="confirmGender" class="pull-right">确定</span>
         </div>
+        <br>
         <div class="weui-cells_radio visit-type-sel" style="background:#ffffff;">
             <label class="weui-cell weui-check__label" for="male">
                 <div class="weui-cell__bd">
@@ -168,6 +181,29 @@
                 </div>
                 <div class="weui-cell__ft">
                     <input type="radio" class="weui-check" id="female" :value="'FEMALE'" v-model="gender"/>
+                    <i class="weui-icon-checked"></i>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <div v-show="showPage === 'selectContactsTypePage'" id="selectContactsTypePage">
+        <div class="top-bar">
+            <span>选择联系人职位</span>
+            <span @click="confirmContactsType" class="pull-right">确定</span>
+        </div>
+        <br>
+        <div class="weui-cells_radio visit-type-sel" style="background:#ffffff;" >
+            <label v-for="(contactsType, index) in contactsTypeList" class="weui-cell weui-check__label"
+                   :for="'type' + contactsType.contactsTypeId">
+                <div class="weui-cell__bd">
+                    <p v-text="contactsType.typeName">
+                        张三
+                    </p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check" :id="'type' + contactsType.contactsTypeId"
+                           :value="contactsType.contactsTypeId" v-model="contactsTypeId">
                     <i class="weui-icon-checked"></i>
                 </div>
             </label>

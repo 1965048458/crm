@@ -68,4 +68,10 @@ public class CustomerServiceImpl implements CustomerService {
         }
         return rltList;
     }
+
+    @Override
+    public List<String> searchSchool(String keyword){
+        return customerMapper.searchSchool(keyword);
+    }
+
 }

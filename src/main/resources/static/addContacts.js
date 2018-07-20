@@ -7,6 +7,7 @@ jQuery(document).ready(function () {
             showErrMsg: false,
             errMsg: '',
             showPage: 'addContactsPage',
+            isTopDept: jQuery('#isTopDept').val(),
             contactsTypeId: null,
             realName: '',
             gender: null,
@@ -18,7 +19,8 @@ jQuery(document).ready(function () {
             officeAddr: '',
             profile: '',
             specialRelationship: '',
-            destLocation: "/customer/organization"
+            destLocation: "/customer/organization",
+            contactsTypeList: []
         },
         methods: {
             'cancelAddContacts': function () {
@@ -27,24 +29,30 @@ jQuery(document).ready(function () {
             'confirmAddContacts': function () {
 
                 var thisVue = this;
+                var uploadData = {
+                    deptId: jQuery('#deptId').val(),
+                    realName: thisVue.realName,
+                    gender: thisVue.gender,
+                    tel: thisVue.tel,
+                    phone: thisVue.phone,
+                    wechat: thisVue.wechat,
+                    QQ: thisVue.qq,
+                    email: thisVue.email,
+                    officeAddr: thisVue.officeAddr,
+                    profile: thisVue.profile,
+                    specialRelationship: thisVue.specialRelationship
+                };
+
+                if (jQuery('#isTopDept').val() === 'true') {
+                    //doNoting
+                } else {
+                    uploadData['contactsTypeId'] = this.contactsTypeId;
+                }
 
                 jQuery.ajax({
                     type: 'post',
                     url: '/customer/action/addContacts',
-                    data: {
-                        deptId: jQuery('#deptId').val(),
-                        contactsTypeId: thisVue.contactsTypeId,
-                        realName: thisVue.realName,
-                        gender: thisVue.gender,
-                        tel: thisVue.tel,
-                        phone: thisVue.phone,
-                        wechat: thisVue.wechat,
-                        QQ: thisVue.qq,
-                        email: thisVue.email,
-                        officeAddr: thisVue.officeAddr,
-                        profile: thisVue.profile,
-                        specialRelationship: thisVue.specialRelationship
-                    },
+                    data: uploadData,
                     dataType: 'json',
                     cache: false
                 }).done(function (result){
@@ -61,8 +69,27 @@ jQuery(document).ready(function () {
             },
             'confirmGender': function () {
                 this.showPage = 'addContactsPage';
+            },
+            'chooseContactsType': function () {
+                this.showPage = 'selectContactsTypePage';
+            },
+            'confirmContactsType': function () {
+                this.showPage = 'addContactsPage';
             }
+        }
+    });
 
+    jQuery.ajax({
+        type: 'get',
+        url: '/customer/action/getContactsTypeList',
+        data: {
+            deptId: jQuery('#deptId').val()
+        },
+        dataType: 'json',
+        success: function (result) {
+            if (result.successFlg) {
+                addContactsVue.$set(addContactsVue, 'contactsTypeList', result.contactsTypes);
+            }
         }
     });
 });

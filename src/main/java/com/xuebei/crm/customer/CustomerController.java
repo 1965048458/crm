@@ -1,5 +1,6 @@
 package com.xuebei.crm.customer;
 
+import com.google.gson.Gson;
 import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.sample.SampleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,13 @@ public class CustomerController {
         return "searchCustomerInfo";
     }
 
+
+
     @Autowired
     private CustomerServiceImpl customerService;
 
+    @Autowired
+    private CustomerMapper customerMapper;
 
     private static String AUTHENTICATION_ERROR_MSG = "用户没有改操作权限";
 
@@ -74,13 +79,23 @@ public class CustomerController {
         return gsonView;
     }
 
+    @RequestMapping("searchSchool")
+    public GsonView searchSchool(@RequestParam("keyword") String keyword) {
+        GsonView gsonView = new GsonView();
+        List<String> schList = customerMapper.searchSchool(keyword);
+        gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("schList", schList);
+        return gsonView;
+    }
+
+
+
     @RequestMapping("/addDepartmentPage")
     public String addDepartmentPage(@RequestParam("customerId") String customerId,
                                       ModelMap modelMap) {
         modelMap.addAttribute("customerId", customerId);
         return "addTopDepartment";
     }
-
 
     @RequestMapping("/addOrganizationPage")
     public String addOrganizationPage() {
@@ -139,6 +154,20 @@ public class CustomerController {
     public String addContactsPage(@RequestParam("deptId") String deptId,
                                   ModelMap modelMap) {
         modelMap.addAttribute("deptId", deptId);
+
+        // 部门ID空 或 用户不能修改该部门（因为客户不属于用户的公司）
+        Department dept = customerMapper.queryDepartmentById(deptId);
+        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(), dept.getCustomer().getCustomerId())) {
+            return "error/404";
+        }
+
+        // 判断部门是顶级部门
+        if (dept.getParent() == null || dept.getParent().getDeptId() == null) {
+            modelMap.addAttribute("isTopDept", true);
+        } else {
+            modelMap.addAttribute("isTopDept", false);
+        }
+
         return "addContacts";
     }
 
@@ -196,12 +225,26 @@ public class CustomerController {
         ContactsType contactsType = new ContactsType();
         contactsType.setContactsTypeId(contactsTypeId);
 
-        contacts.setContactsId(UUIDGenerator.genUUID());
+        contacts.setContactsId(UUIDGenerator.genId());
         contacts.setDepartment(dept);
         contacts.setContactsType(contactsType);
         customerMapper.insertContacts(contacts);
 
         return GsonView.createSuccessView();
+    }
+
+    @RequestMapping("/action/getContactsTypeList")
+    public GsonView getContactsTypeList(@RequestParam("deptId") String deptId) {
+        Department dept = customerMapper.queryDepartmentById(deptId);
+        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(), dept.getCustomer().getCustomerId())) {
+            return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
+        }
+        String customerId = dept.getCustomer().getCustomerId();
+        List<ContactsType> contactsTypes = customerMapper.queryContactsTypes(customerId);
+
+        GsonView gson = GsonView.createSuccessView();
+        gson.addStaticAttribute("contactsTypes", contactsTypes);
+        return gson;
     }
 
     @RequestMapping("/organization")
@@ -216,6 +259,11 @@ public class CustomerController {
         return gsonView;
     }
 
+    @RequestMapping("/customerList")
+    public String customerList(){
+        return "customerList";
+    }
+
     @RequestMapping("/queryCustomer")
     public GsonView queryCustomerInfo(@RequestParam("searchWord") String keyword){
         List<Customer> customerList = customerService.queryCustomerInfo(keyword);
@@ -223,6 +271,11 @@ public class CustomerController {
         gsonView.addStaticAttribute("successFlg", true);
         gsonView.addStaticAttribute("customerList", customerList);
         return gsonView;
+    }
+
+    @RequestMapping("/customerInfo")
+    public String customerInfo(){
+        return "customerInfo";
     }
 
 }
