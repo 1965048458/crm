@@ -2,6 +2,7 @@ package com.xuebei.crm.customer;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Department {
@@ -109,4 +110,10 @@ public class Department {
         this.enclosureStatus = enclosureStatus;
     }
 
+    public void addSubDept(Department department) {
+        if (departmentList == null) {
+            departmentList = new ArrayList<>();
+        }
+        departmentList.add(department);
+    }
 }

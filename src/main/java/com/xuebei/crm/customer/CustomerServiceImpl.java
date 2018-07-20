@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -49,7 +51,21 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Department> queryDepartment(String customerId){
-        List<Department> departmentList = customerMapper.queryDepartmentList(customerId);
-        return departmentList;
+        List<Department> departmentList = customerMapper.queryDepartment(customerId);
+        Map<String, Department> departmentMap = new HashMap<>();
+        for (Department department : departmentList) {
+            departmentMap.put(department.getDeptId(), department);
+        }
+        List<Department> rltList = new ArrayList<>();
+        for (Department department: departmentList) {
+            if (department.getParent() == null) {
+                rltList.add(department);
+            } else {
+                String prtId = department.getParent().getDeptId();
+                Department prtDept = departmentMap.get(prtId);
+                prtDept.addSubDept(department);
+            }
+        }
+        return rltList;
     }
 }

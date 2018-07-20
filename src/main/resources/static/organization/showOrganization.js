@@ -79,11 +79,14 @@ jQuery(document).ready(function () {
                 var thisVue = this;
                 jQuery.ajax({
                     type: 'get',
-                    url: '/journal/list',
-                    data: '',
+                    url: '/customer/organization/show',
+                    data: {
+                        customerId:'customerzju',
+                    },
                     dataType: 'json',
                     cache: false
-                }).done(function () {
+                }).done(function (result) {
+                    console.log(result);
                     thisVue.showOrganization = true;
                     thisVue.$set(thisVue, 'customerList', customerList);
                 });

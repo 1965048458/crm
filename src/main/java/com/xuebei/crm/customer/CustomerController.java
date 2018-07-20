@@ -208,7 +208,7 @@ public class CustomerController {
     public String organization(){return "customer/organization";}
 
     @RequestMapping("/organization/show")
-    public GsonView queryOrganization(@RequestParam("customerId") String customerId) {
+    public GsonView queryDepartment(@RequestParam("customerId") String customerId) {
         List<Department> departmentList = customerService.queryDepartment(customerId);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg",true);

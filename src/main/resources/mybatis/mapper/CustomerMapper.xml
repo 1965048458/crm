@@ -17,7 +17,7 @@
         <association property="parent" javaType="com.xuebei.crm.customer.Department">
             <id property="deptId" column="prt_id"/>
         </association>
-        <association property="contacts" javaType="com.xuebei.crm.customer.Contacts">
+        <association property="contactsList" javaType="com.xuebei.crm.customer.Contacts">
             <id property="contactId" column="contacts_id"/>
             <result property="realName" column="real_nm"/>
             <result property="gender" column="gender"/>
@@ -151,7 +151,8 @@
     </select>
 
     <select id="queryDepartment" resultMap="deptMap">
-        SELECT cd.customer_dept_id,cd.department_nm,cd.prt_id FROM customer_dept cd
+        SELECT cd.* FROM customer_dept cd
+        LEFT JOIN contacts c ON c.customer_dept_id = cd.customer_dept_id
         WHERE cd.customer_id = #{customerId}
     </select>
 
