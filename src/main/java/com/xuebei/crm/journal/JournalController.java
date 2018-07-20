@@ -25,14 +25,22 @@ public class JournalController {
     @Autowired
     private JournalMapper journalMapper;
 
-    // TODO:
-    private String acquireUserId() {
-        return "00284bca325c4e77b9f30c5671ec1c44";
+    private String acquireUserId(HttpServletRequest request) throws AuthenticationException {
+        String userId = (String) request.getSession().getAttribute("userId");
+        if (userId == null) {
+            throw new AuthenticationException("会话已过期");
+        }
+        return userId;
     }
 
     @RequestMapping("/action/editSubmit")
-    public GsonView editJournal(@RequestBody Journal journal) {
-        journal.setUserId(acquireUserId());
+    public GsonView editJournal(@RequestBody Journal journal,
+                                HttpServletRequest request) {
+        try {
+            journal.setUserId(acquireUserId(request));
+        } catch (AuthenticationException e) {
+            return GsonView.createErrorView(e.getMessage());
+        }
 
         try {
             if (journal.getJournalId() != null) {
@@ -55,9 +63,10 @@ public class JournalController {
     }
 
     @RequestMapping("/delete")
-    public GsonView deleteJournal(@RequestParam("journalId") String journalId) {
+    public GsonView deleteJournal(@RequestParam("journalId") String journalId,
+                                  HttpServletRequest request) {
         try {
-            journalService.deleteJournalById(acquireUserId(), journalId);
+            journalService.deleteJournalById(acquireUserId(request), journalId);
         } catch (AuthenticationException e) {
             GsonView failedView = new GsonView();
             failedView.addStaticAttribute("successFlg", false);
@@ -71,18 +80,25 @@ public class JournalController {
     }
 
     @RequestMapping("/query")
-    public GsonView getJournalInfoById(@RequestParam("journalId") String journalId) throws AuthenticationException {
+    public GsonView getJournalInfoById(@RequestParam("journalId") String journalId,
+                                       HttpServletRequest request) throws AuthenticationException {
         GsonView gsonView = new GsonView();
-        Journal journal = journalService.queryJournalById(acquireUserId(), journalId);
-        List<User> colleagues = journalMapper.queryColleagues(acquireUserId());
+        Journal journal = journalService.queryJournalById(acquireUserId(request), journalId);
+        List<User> colleagues = journalMapper.queryColleagues(acquireUserId(request));
         gsonView.addStaticAttribute("journal", journal);
         gsonView.addStaticAttribute("colleagues", colleagues);
         return gsonView;
     }
 
     @RequestMapping("/action/getColleagueList")
-    public GsonView getColleagueList() {
-        List<User> colleagues = journalMapper.queryColleagues(acquireUserId());
+    public GsonView getColleagueList(HttpServletRequest request) {
+
+        List<User> colleagues;
+        try {
+            colleagues = journalMapper.queryColleagues(acquireUserId(request));
+        } catch (AuthenticationException e) {
+            return GsonView.createErrorView(e.getMessage());
+        }
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("colleagues", colleagues);
         return gsonView;
@@ -91,7 +107,7 @@ public class JournalController {
     @RequestMapping("/edit")
     public String editJournalPage(@RequestParam(value="type", required = false) String type,
                               @RequestParam(value="journalId", required = false) String journalId,
-                              ModelMap modelMap) {
+                              ModelMap modelMap, HttpServletRequest request) {
 
         if (journalId == null && type == null) {
             return "error/500";
@@ -108,7 +124,7 @@ public class JournalController {
             modelMap.addAttribute("plan", "");
         } else {
             try {
-                Journal journal = journalService.queryJournalById(acquireUserId(), journalId);
+                Journal journal = journalService.queryJournalById(acquireUserId(request), journalId);
                 modelMap.addAttribute("newJournal", false);
                 modelMap.addAttribute("journal", journal);
                 modelMap.addAttribute("journalType", journal.getType());

@@ -27,7 +27,7 @@ jQuery(document).ready(function () {
                     cache: false
                 }).done(function (result){
                     if (result.successFlg) {
-                        window.location.href="/customer";
+                        window.location = '/company/chooseCompany';
                     } else {
                         alert("用户名或密码不正确");
                     }
