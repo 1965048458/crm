@@ -23,11 +23,6 @@ public class CustomerController {
 
 
 
-    @RequestMapping("searchCustInfo")
-    public String searchInfo(){
-        return "searchCustomerInfo";
-    }
-
     @Autowired
     private CustomerServiceImpl customerService;
 
@@ -248,6 +243,11 @@ public class CustomerController {
         return "./customer/organization";
     }
 
+    @RequestMapping("/customerList")
+    public String customerList(){
+        return "customerList";
+    }
+
     @RequestMapping("/queryCustomer")
     public GsonView queryCustomerInfo(@RequestParam("searchWord") String keyword){
         List<Customer> customerList = customerService.queryCustomerInfo(keyword);
@@ -255,6 +255,11 @@ public class CustomerController {
         gsonView.addStaticAttribute("successFlg", true);
         gsonView.addStaticAttribute("customerList", customerList);
         return gsonView;
+    }
+
+    @RequestMapping("/customerInfo")
+    public String customerInfo(){
+        return "customerInfo";
     }
 
 }
