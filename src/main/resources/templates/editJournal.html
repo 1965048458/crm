@@ -90,19 +90,27 @@
                     <span class="red-text">删除</span>
                 </div>
             </div>
-            <div class="weui-cell">
+            <div class="weui-cell" @click="addVisitContacts(index)">
                 <div class="weui-cell__bd">
                     <label>拜访客户</label>
                 </div>
-                <div @click="addVisitContacts(index)">
+                <div>
                     <span>》</span>
                 </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
+                    <label>拜访项目（还没有做）</label>
+                </div>
+                <div>
+                    <span>》</span>
+                </div>
+            </div>
+            <div class="weui-cell"  @click="choseVisitType(index)">
+                <div class="weui-cell__bd">
                     <label>拜访类型</label>
                 </div>
-                <div @click="choseVisitType(index)">
+                <div>
                     <span>》</span>
                 </div>
             </div>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>我的公司</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css"/>
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/chooseCompany.js"></script>
+    <style>
+        .top-bar {
+            background: #ffffff;
+            text-align: center;
+            padding: 10px 15px;
+        }
+        .pull-left {
+            float: left!important;
+        }
+        .pull-right {
+            float: right!important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="chooseCompanyVue">
+        <div class="top-bar">
+            <span class="pull-left"><</span>
+            <span class="center">我的公司</span>
+            <span class="pull-right">新建</span>
+        </div>
+
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell" v-for="(company, index) in companys" :key="'company' + company.companyId">
+                <div class="weui-cell__bd" @click="confirmCompany(company.companyId)">
+                    <label v-text="company.companyName">wo shi gongsi</label>
+                </div>
+                <div>
+                    <span>》</span>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</body>
+</html>

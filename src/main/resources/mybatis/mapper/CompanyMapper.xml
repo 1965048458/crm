@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuebei.crm.company.CompanyMapper">
+
+    <resultMap id="companyMap" type="com.xuebei.crm.company.Company">
+        <id property="companyId" column="company_id"/>
+        <result property="companyName" column="com_nm"/>
+    </resultMap>
+
+    <select id="queryCompanyListByCrmUserId" resultMap="companyMap">
+        SELECT company.company_id, com_nm
+        FROM user_view LEFT JOIN company ON user_view.company_id = company.company_id
+        WHERE user_view.crm_user_id = #{crmUserId};
+    </select>
+
+    <select id="queryUserId" resultType="java.lang.String">
+        SELECT user_id
+        FROM user_view
+        WHERE crm_user_id = #{crmUserId} AND company_id = #{companyId};
+    </select>
+
+</mapper>
