@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>搜索客户信息</title>
+    <title>客户</title>
     <!-- 引入 WeUI -->
     <link rel="stylesheet" href="/weui.css"/>
     <link rel="stylesheet" href="/example.css">
@@ -15,45 +15,110 @@
         .center-box {
             text-align: center;
         }
-        /*.center-ele {*/
-            /*display: inline-block;*/
-        /*}*/
-        .pull-left {
-            float: left!important;
+
+        .center-ele {
+            display: inline-block;
         }
+
+        .pull-left {
+            float: left !important;
+        }
+
         .pull-right {
-            float: right!important;
+            float: right !important;
         }
     </style>
 </head>
 <body>
 
-<div class="center-box">
-    <div class="center-ele">
-        <div class="weui-search-bar" id="searchBar">
-            <form class="weui-search-bar__form">
-                <div class="weui-search-bar__box">
-                    <i class="weui-icon-search"></i>
-                    <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
-                    <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-                </div>
-                <label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                    <i class="weui-icon-search"></i>
-                    <span>搜索</span>
-                </label>
-            </form>
-            <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
-        </div>
-
-        <div class="weui-cells searchbar-result" id="searchResult" >
-            <div class="weui-cell weui-cell_access" v-for="customer in customerList.filter(filterList)">
-                <div class="weui-cell__bd weui-cell_primary">
-                    <p v-text="customer.customerName"></p>
-                </div>
-            </div>
-
+<div id="customerVue">
+    <div id="titleBar" class="top-bar center-box" v-show="showPage.indexOf('titleBar') === 0">
+        <div class="title-bar">
+            <span class="center-ele" style="font-size: 20px">客户</span>
+            <span class="pull-right" style="font-size: 20px; color: #00FFFF; padding-right: 10px">+ &nbsp;</span>
         </div>
     </div>
+
+    <div id="searchCustomer" v-show="showPage.indexOf('searchCustomer') === 1 ">
+        <div class="center-box">
+            <div class="weui-search-bar" id="searchBar">
+                <form class="weui-search-bar__form">
+                    <div class="weui-search-bar__box">
+                        <i class="weui-icon-search"></i>
+                        <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索"
+                               v-model="searchWord" required="">
+                        <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+                    </div>
+                    <label class="weui-search-bar__label" id="searchText"
+                           style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                        <i class="weui-icon-search"></i>
+                        <span>搜索</span>
+                    </label>
+                </form>
+                <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+            </div>
+
+            <div class="weui-cells searchbar-result" id="searchResult" style="display: none;">
+                <div class="weui-cells weui-cells_radio" v-for="customer in customerList.filter(filterList)">
+                    <label class="weui-cell weui-check__label" for="x11">
+                        <div class="weui-cell__bd weui-cell_primary">
+                            <p v-text="customer.customerName"></p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="radio" class="weui-check" id="x11" v-bind:value ="customer.customerName" v-model="name">
+                            <span class="weui-icon-checked"></span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="customers" v-show="showPage.indexOf('customers'）=== 2">
+        <div class="myCustomerList">
+            <div class="weui-panel__bd">
+                <div class="weui-media-box weui-media-box_text">
+                    <h1 class="weui-media-box__title">我的客户</h1>
+                    <div class="myCustomers">
+                        <div class="weui-panel__bd">
+                            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+                                <div class="weui-media-box__hd">
+                                    <img class="weui-media-box__thumb" src="/images/icon_nav_layout.png" alt="">
+                                </div>
+                                <div class="weui-media-box__bd">
+                                    <h4 class="weui-media-box__title">浙江大学</h4>
+                                    <p class="weui-media-box__desc">最后跟进: 20180421</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="allCustomerList">
+            <div class="weui-panel__bd">
+                <div class="weui-media-box weui-media-box_text">
+                    <h1 class="weui-media-box__title">全部客户</h1>
+                    <div class="myCustomers" v-for="customer in customerList">
+                        <div class="weui-panel__bd">
+                            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+                                <div class="weui-media-box__hd">
+                                    <img class="weui-media-box__thumb" src="/images/icon_nav_layout.png" alt="">
+                                </div>
+                                <div class="weui-media-box__bd">
+                                    <h1 class="weui-media-box__title" v-text="customer.customerName"></h1>
+                                    <p class="weui-media-box__desc">最后跟进: 20180421</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </div>
 
 </body>
