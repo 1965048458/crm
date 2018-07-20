@@ -34,9 +34,6 @@ public class CustomerController {
     @Autowired
     private CustomerServiceImpl customerService;
 
-    @Autowired
-    private CustomerMapper customerMapper;
-
     private static String AUTHENTICATION_ERROR_MSG = "用户没有改操作权限";
 
 
@@ -225,7 +222,7 @@ public class CustomerController {
         ContactsType contactsType = new ContactsType();
         contactsType.setContactsTypeId(contactsTypeId);
 
-        contacts.setContactsId(UUIDGenerator.genId());
+        contacts.setContactsId(UUIDGenerator.genUUID());
         contacts.setDepartment(dept);
         contacts.setContactsType(contactsType);
         customerMapper.insertContacts(contacts);
