@@ -1,12 +1,9 @@
 package com.xuebei.crm.customer;
 
-import com.google.gson.Gson;
 import com.xuebei.crm.dto.GsonView;
-import com.xuebei.crm.sample.SampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.xuebei.crm.utils.UUIDGenerator;
 import com.xuebei.crm.exception.DepartmentNameDuplicatedException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,19 +20,17 @@ public class CustomerController {
 
     @Autowired
     private CustomerMapper customerMapper;
+    private String searchCustomerInfo;
 
     @RequestMapping("searchCustInfo")
     public String searchInfo(){
-        return "searchCustomerInfo";
+        return searchCustomerInfo;
     }
 
 
 
     @Autowired
     private CustomerServiceImpl customerService;
-
-    @Autowired
-    private CustomerMapper customerMapper;
 
     private static String AUTHENTICATION_ERROR_MSG = "用户没有改操作权限";
 
@@ -225,7 +220,7 @@ public class CustomerController {
         ContactsType contactsType = new ContactsType();
         contactsType.setContactsTypeId(contactsTypeId);
 
-        contacts.setContactsId(UUIDGenerator.genId());
+        contacts.setContactsId(UUIDGenerator.genUUID());
         contacts.setDepartment(dept);
         contacts.setContactsType(contactsType);
         customerMapper.insertContacts(contacts);
