@@ -36,6 +36,17 @@
             text-align: left;
             padding:5px 15px;
         }
+        .add-journal {
+            position: absolute;
+            top: 30px;
+            right: 20px;
+            z-index: 99999;
+        }
+        .add-journal-item {
+            padding: 10px 10px;
+            font-size: 15px;
+            color: #0D0D0D;
+        }
     </style>
 </head>
 <body>
@@ -45,9 +56,23 @@
         <div class="top-bar center-box">
             <div class="title-bar">
                 <span class="center-ele">工作日志</span>
-                <a href="/journal/edit?type=DAILY">
-                    <span class="pull-right">+</span>
-                </a>
+                <span class="pull-right" @click="clickAddJournalButton">+</span>
+                <div id="addJournalChosenDialog" v-show="showAddJournalDialog">
+                    <div class="weui-mask" @click="cancelAddJournalEvent"></div>
+                    <div class="add-journal">
+                        <div class="weui-actionsheet__menu" style="border-radius: 0.33em">
+                            <a href="/journal/edit?type=DAILY">
+                                <div class="weui-actionsheet__cell add-journal-item">填写日报</div>
+                            </a>
+                            <a href="/journal/edit?type=WEEKLY">
+                                <div class="weui-actionsheet__cell add-journal-item" style="border-top: 1px solid #e5e5e5;">填写周报</div>
+                            </a>
+                            <a href="/journal/edit?type=MONTHLY">
+                                <div class="weui-actionsheet__cell add-journal-item" style="border-top: 1px solid #e5e5e5;">填写月报</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="select-bar">
                 <span @click="searchAll">全部</span>
