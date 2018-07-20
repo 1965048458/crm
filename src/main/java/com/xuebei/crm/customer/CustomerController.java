@@ -20,11 +20,10 @@ public class CustomerController {
 
     @Autowired
     private CustomerMapper customerMapper;
-    private String searchCustomerInfo;
 
     @RequestMapping("searchCustInfo")
     public String searchInfo(){
-        return searchCustomerInfo;
+        return "searchCustomerInfo";
     }
 
 

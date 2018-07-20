@@ -34,8 +34,8 @@ jQuery(document).ready(function () {
            curVisit: {},
            receivers: [],
            receiversTmp: [],
-           customers: [{name: '浙江大学', contactsFold: true, contactsGroup:[{realName: '李四'}]},
-               {name: '浙江工商大学', contactsFold: true}],
+           customers: [{name: '浙江大学', contactsFold: true, contactsGroup:[{realName: '李四'}, {realName: '李五'}, {realName: '李六'}]},
+               {name: '浙江工商大学', contactsFold: true, contactsGroup:[{realName:'张三'}, {realName: '张斯'}, {realName: '张武'}]}],
            chosenContactsTmp: [],
            visitTypeTmp: 'VISIT',
            colleagues: [{userId: "userId1", realName: '用户1',avatarUrl: '/images/journal/defaultUserIcon.png'},
@@ -79,7 +79,7 @@ jQuery(document).ready(function () {
                this.visits.splice(index, 1);
            },
            'addVisit': function () {
-               this.visits.push({visitResult: '', visitType: 'VISIT'});
+               this.visits.push({visitResult: '', visitType: 'VISIT',chosenContacts:[]});
            },
            'addVisitContacts': function (index) {
                this.curVisit = this.visits[index];
@@ -141,6 +141,29 @@ jQuery(document).ready(function () {
                    result['journalId'] = this.journalId;
                }
                return result;
+           },
+           'getVisitTypeName': function (visitType) {
+               if (visitType === 'VISIT') {
+                   return "拜访";
+               } else if (visitType === 'PHONE') {
+                   return "电话";
+               } else {
+                   return "未定义";
+               }
+           },
+           'calcVisitCustomerName': function (visit) {
+               var contacts = visit.chosenContacts;
+               if (contacts.length === 0) {
+                   return "无";
+               }
+               var str = contacts[0].realName;
+               for (var i = 1; i < contacts.length && i < 3; i=i+1) {
+                   str = str + "、" + contacts[i].realName;
+               }
+               if (contacts.length > 3) {
+                   str = str + "等";
+               }
+               return str;
            }
        },
        computed: {

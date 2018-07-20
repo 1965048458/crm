@@ -8,6 +8,7 @@ jQuery(document).ready(function () {
         el: '#journalVue',
         data: {
             showPage: 'journalList',
+            showAddJournalDialog: false,
             journalList:'',
             curJournal: {
                 user: {}
@@ -121,6 +122,12 @@ jQuery(document).ready(function () {
             },
             'journalName': function (journal) {
                 return journal.user.realName + '的' + TYPE_NAMES[journal.type];
+            },
+            'clickAddJournalButton': function () {
+                this.showAddJournalDialog = true;
+            },
+            'cancelAddJournalEvent': function () {
+                this.showAddJournalDialog = false;
             },
             'toFilter':function () {
                 this.showPage = 'filterDiv';
