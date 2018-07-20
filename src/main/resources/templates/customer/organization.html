@@ -223,14 +223,14 @@
         <div class="weui-cell">
             <div class="weui-cell__bd">
                 <span class="pull-left" style="padding-right: 10px;"> > </span>
-                <span class="pull-left" @click="changeSubFold" style="padding-right: 5px;" v-text="customer.name"></span>
-                <span class="pull-left"  v-text="addBrackets(customer.number)"></span>
-                <span class="pull-left" v-text="addSquareBrackets(customer.isCircle)"></span>
-                <span class="pull-left" v-text="addOpenSeaWarning(customer.Warning)" @click="openSeaWarning(customer.Warning)"></span>
+                <span class="pull-left" @click="changeSubFold" style="padding-right: 5px;" v-text="customer.deptName"></span>
+                <!--<span class="pull-left"  v-text="addBrackets(customer.number)"></span>-->
+                <!--<span class="pull-left" v-text="addSquareBrackets(customer.isCircle)"></span>-->
+                <!--<span class="pull-left" v-text="addOpenSeaWarning(customer.Warning)" @click="openSeaWarning(customer.Warning)"></span>-->
             </div>
 
             <div class="weui-cell__ft">
-                <span @click="apply(customer.name)" style="font-size: larger"> + </span>
+                <span @click="apply(customer.deptName)" style="font-size: larger"> + </span>
             </div>
 
         </div>

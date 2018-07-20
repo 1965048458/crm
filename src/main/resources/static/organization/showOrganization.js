@@ -88,7 +88,7 @@ jQuery(document).ready(function () {
                 }).done(function (result) {
                     console.log(result);
                     thisVue.showOrganization = true;
-                    thisVue.$set(thisVue, 'customerList', customerList);
+                    thisVue.$set(thisVue, 'customerList', result.customerList);
                 });
             },
             'apply':function (name) {
