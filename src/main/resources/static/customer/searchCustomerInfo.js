@@ -2,10 +2,6 @@
  * Created by Administrator on 2018/7/17.
  */
 
-function filterList(customer) {
-    return customer.customerName.indexOf($('#searchInput').val()) != -1;
-}
-
 $(document).ready(function () {
 
     var searchCustInfoVue = new Vue({
@@ -25,7 +21,7 @@ $(document).ready(function () {
                     type: 'get',
                     url: '/customer/queryCustomer',
                     data: {
-                        searchWord: thisVue.searchWord
+                        searchWord: thisVue.searchWord,
                     },
                     dataType: 'json',
                     cache: false
@@ -37,61 +33,46 @@ $(document).ready(function () {
                     }
                 })
             },
-            'submit': function (e) {
-                var keyCode = window.event? e.keyCode:e.which;
+            'search': function () {
 
-                if(keyCode == 13 ) {  //&& this.input
-                    this.showResult();
-                    if (this.customerList.length != 0){
-                        this.customers = true;
-                        cancelSearch();
-                    }else{
-                        this.searchCustomer = false;
-                    }
-                    this.titleBar = true;
-                    alert("enter事件触发");
-                }
+                this.showResult();
+                this.customers = true;
+                this.cancelSearch();
+                this.titleBar = true;
             },
-            'loadDetail':function (customerId) {
+            'text': function () {
+                $('#searchBar').addClass('weui-search-bar_focusing');
+                $('#searchText').focus();
+                $('#searchResult').show();
+                this.titleBar = false;
+                this.customers = false;
+            },
+            'filterList': function (customer) {
+                return customer.customerName.indexOf(this.searchWord) != -1;
+            },
+            'hideSearchResult': function () {
+                $('#searchResult').hide();
+                this.searchWord = "";
+            },
+            'cancelSearch': function () {
+                this.hideSearchResult();
+                $('#searchBar').removeClass('weui-search-bar_focusing');
+                $('#searchText').show();
+            },
+            'clear': function () {
+                this.searchWord = "";
+                $('#searchInput').focus();
+            },
+            'cancel': function () {
+                this.cancelSearch();
+                this.titleBar = true;
+                this.customers = true;
+                $('#searchInput').blur();
+            },
+            'loadDetail': function (customerId) {
                 //
             }
         }
     });
     searchCustInfoVue.showResult();
-
-    var $searchBar = $('#searchBar'),
-        $searchResult = $('#searchResult'),
-        $searchText = $('#searchText'),
-        $searchInput = $('#searchInput'),
-        $searchClear = $('#searchClear'),
-        $searchCancel = $('#searchCancel');
-
-    function hideSearchResult() {
-        $searchResult.hide();
-        $searchInput.val('');
-    }
-
-    function cancelSearch() {
-        hideSearchResult();
-        $searchBar.removeClass('weui-search-bar_focusing');
-        $searchText.show();
-    }
-
-    $searchText.on('click', function () {
-        $searchBar.addClass('weui-search-bar_focusing');
-        $searchInput.focus();
-        $searchResult.show();
-        searchCustInfoVue.titleBar = false;
-        searchCustInfoVue.customers = false;
-    });
-    $searchClear.on('click', function () {
-        hideSearchResult();
-        $searchInput.focus();
-    });
-    $searchCancel.on('click', function () {
-        cancelSearch();
-        searchCustInfoVue.titleBar = true;
-        searchCustInfoVue.customers = true;
-        $searchInput.blur();
-    });
 });
