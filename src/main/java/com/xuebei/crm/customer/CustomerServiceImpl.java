@@ -52,9 +52,15 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Department> queryDepartment(String customerId){
         List<Department> departmentList = customerMapper.queryDepartment(customerId);
+        List<Contacts> contactsList = customerMapper.queryContacts(customerId);
         Map<String, Department> departmentMap = new HashMap<>();
         for (Department department : departmentList) {
             departmentMap.put(department.getDeptId(), department);
+        }
+        for (Contacts contacts: contactsList ){
+            String departmentId = contacts.getDepartmentId();
+            Department department = departmentMap.get(departmentId);
+            department.addSubContact(contacts);
         }
         List<Department> rltList = new ArrayList<>();
         for (Department department: departmentList) {
@@ -66,6 +72,7 @@ public class CustomerServiceImpl implements CustomerService {
                 prtDept.addSubDept(department);
             }
         }
+
         return rltList;
     }
 

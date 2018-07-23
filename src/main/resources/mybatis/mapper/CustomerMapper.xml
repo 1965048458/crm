@@ -17,11 +17,11 @@
         <association property="parent" javaType="com.xuebei.crm.customer.Department">
             <id property="deptId" column="prt_id"/>
         </association>
-        <association property="contactsList" javaType="com.xuebei.crm.customer.Contacts">
-            <id property="contactId" column="contacts_id"/>
-            <result property="realName" column="real_nm"/>
-            <result property="gender" column="gender"/>
-        </association>
+        <!--<association property="contactsList" javaType="com.xuebei.crm.customer.Contacts">-->
+            <!--<id property="contactsId" column="contacts_id"/>-->
+            <!--<result property="realName" column="real_nm"/>-->
+            <!--<result property="gender" column="gender"/>-->
+        <!--</association>-->
     </resultMap>
 
     <resultMap id="contactsTypeMap" type="com.xuebei.crm.customer.ContactsType">
@@ -36,6 +36,13 @@
         <result property="customerType" column="type_cd"/>
         <result property="profile" column="profile"/>
         <result property="website" column="website"/>
+    </resultMap>
+
+    <resultMap id="contactsMap" type="com.xuebei.crm.customer.Contacts">
+        <id property="contactsId" column="contacts_id"/>
+        <result property="departmentId" column="customer_dept_id"/>
+        <result property="realName" column="real_nm"/>
+        <result property="gender" column="gender"/>
     </resultMap>
 
     <select id="isUserHasCustomer" resultType="java.lang.Boolean">
@@ -156,11 +163,39 @@
         WHERE cd.customer_id = #{customerId}
     </select>
 
-    <select id="queryContacts" resultMap="deptMap">
+    <select id="queryContacts" resultMap="contactsMap">
         SELECT c.* FROM contacts c
         INNER JOIN customer_dept cd ON c.customer_dept_id = cd.customer_dept_id
         WHERE cd.customer_id = #{customerId}
     </select>
+
+    <insert id="insertEnclosureApply" parameterType="com.xuebei.crm.customer.EnclosureApply">
+        INSERT INTO enclosure_apply(
+            enclosure_apply_id,
+            apply_ts,
+            customer_dept_id,
+            user_id,
+            apply_reason,
+            apply_start_ts,
+            apply_end_ts,
+            status_cd,
+            updater_id,
+            update_ts
+        )
+        VALUES (
+                #{enclosureApplyId},
+                NOW(),
+                #{deptId},
+                #{userId},
+                #{reasons},
+                NOW(),
+                #{endTime},
+                #{statusCd},
+                #{updaterId},
+                #{updateTime}
+        );
+
+    </insert>
 
 
     <select id="searchSchool" parameterType="java.lang.String"  resultType="java.lang.String">

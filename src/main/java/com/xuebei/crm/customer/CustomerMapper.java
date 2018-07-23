@@ -37,6 +37,10 @@ public interface CustomerMapper {
 
     List<Department> queryDepartment(@Param("customerId") String customerId);
 
+    List<Contacts> queryContacts(@Param("customerId") String customerId);
+
+    void insertEnclosureApply(EnclosureApply enclosureApply);
+
     List<String> searchSchool(@Param("keyword")String keyword);
 
     List<ContactsType> queryContactsTypes(@Param("customerId") String customerId);

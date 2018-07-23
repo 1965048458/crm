@@ -116,4 +116,11 @@ public class Department {
         }
         departmentList.add(department);
     }
+
+    public void addSubContact(Contacts contacts){
+        if(contactsList == null){
+            contactsList = new ArrayList<>();
+        }
+        contactsList.add(contacts);
+    }
 }

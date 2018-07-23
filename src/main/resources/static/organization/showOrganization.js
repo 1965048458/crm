@@ -61,9 +61,12 @@ jQuery(document).ready(function () {
             showOrganization: false,
             showApplyDialog: false,
             customerList: '',
-            applyOrganization:'',
+            departmentList:'',
+            applyDeptName:'',
+            applyDeptId:'',
             applyReasons:'',
             showSubmitDialog:false,
+            submitReasons:'',
             warningDetails:{
                 openSeaWarning:'',
                 leftTime:'',
@@ -87,12 +90,19 @@ jQuery(document).ready(function () {
                     cache: false
                 }).done(function (result) {
                     console.log(result);
-                    thisVue.showOrganization = true;
-                    thisVue.$set(thisVue, 'customerList', result.customerList);
+                    if (result.successFlg) {
+                        thisVue.showOrganization = true;
+                        thisVue.$set(thisVue, 'customerList', result.customerList);
+                    } else {
+                        thisVue.errMsg = result.errMsg;
+                        thisVue.showErrMsg = true;
+                    }
+
                 });
             },
-            'apply':function (name) {
-                this.applyOrganization = name;
+            'apply':function (name,id) {
+                this.applyDeptName = name;
+                this.applyDeptId = id;
                 this.showApplyDialog=true
             },
             'dialogCheck': function () {
@@ -105,17 +115,29 @@ jQuery(document).ready(function () {
             'applySubmit':function () {
                 var thisVue = this;
                 jQuery.ajax({
-                    type:'get',
-                    url:'/journal/list',
-                    data:'',
+                    type:'post',
+                    url:'/customer/organization/apply',
+                    data:{
+                        submitReasons:this.submitReasons,
+                        //applyDeptName:this.applyDeptName,
+                        applyDeptId:this.applyDeptId,
+                    },
                     dataType:'json',
                     cache:false
-                }).done(function(){
-                    thisVue.showSubmitDialog = true;
+                }).done(function(result){
+                    console.log(result);
+                    if (result.successFlg) {
+                        thisVue.showSubmitDialog = true;
+                    } else {
+                        thisVue.errMsg = result.errMsg;
+                        thisVue.showErrMsg = true;
+                    }
+
                 });
 
             },
             'applyQuit':function () {
+                this.submitReasons='',
                 this.showPage= 'showCustomerOrganization';
             },
             'submitDialogCheck':function () {
@@ -162,15 +184,15 @@ jQuery(document).ready(function () {
                     return " ( " + number + " )";
                 }
             },
-            'addSquareBrackets':function (isCircle) {
-                if (isCircle == "未圈"){
-                    return "["+isCircle+"]";
+            'addSquareBrackets':function (status) {
+                if (status == 'NORMAL'){
+                    return "[未圈]";
                 }
-                else if(isCircle == "已圈"){
-                    return "["+isCircle+"]";
+                else if(status == 'ENCLOSURE'){
+                    return "[已圈]";
                 }
                 else{
-                    return "";
+                    return '';
                 }
             },
             'addOpenSeaWarning':function (Warning) {
@@ -181,9 +203,9 @@ jQuery(document).ready(function () {
                     return '';
                 }
             },
-            'apply':function (name) {
-                organizationVue.apply(name);
-                console.log(name);
+            'apply':function (name,id) {
+                organizationVue.apply(name,id);
+                console.log(name,id);
             },
             'openSeaWarning':function (warning) {
                 console.log("component.warning")

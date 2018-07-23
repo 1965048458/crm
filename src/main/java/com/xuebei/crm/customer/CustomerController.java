@@ -1,12 +1,9 @@
 package com.xuebei.crm.customer;
 
-import com.google.gson.Gson;
 import com.xuebei.crm.dto.GsonView;
-import com.xuebei.crm.sample.SampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.xuebei.crm.utils.UUIDGenerator;
 import com.xuebei.crm.exception.DepartmentNameDuplicatedException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -33,9 +30,6 @@ public class CustomerController {
 
     @Autowired
     private CustomerServiceImpl customerService;
-
-    @Autowired
-    private CustomerMapper customerMapper;
 
     private static String AUTHENTICATION_ERROR_MSG = "用户没有改操作权限";
 
@@ -225,7 +219,7 @@ public class CustomerController {
         ContactsType contactsType = new ContactsType();
         contactsType.setContactsTypeId(contactsTypeId);
 
-        contacts.setContactsId(UUIDGenerator.genId());
+        contacts.setContactsId(UUIDGenerator.genUUID());
         contacts.setDepartment(dept);
         contacts.setContactsType(contactsType);
         customerMapper.insertContacts(contacts);
@@ -256,6 +250,30 @@ public class CustomerController {
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg",true);
         gsonView.addStaticAttribute("customerList", departmentList);
+        return gsonView;
+    }
+
+    @RequestMapping("/organization/apply")
+    public GsonView applyDepartment(@RequestParam("submitReasons") String submitReasons,
+                                    @RequestParam("applyDeptId") String applyDeptId,
+                                    EnclosureApply enclosureApply,
+                                    HttpServletRequest request) {
+//        System.out.println(applyTime);
+        final String EMPTY_REASONS_ERROR = "申请理由不能为空";
+        if(submitReasons == null)
+            return GsonView.createErrorView(EMPTY_REASONS_ERROR);
+
+        String userId = (String) request.getSession().getAttribute("crmUserId");
+        enclosureApply.setEnclosureApplyId(11);
+        enclosureApply.setReasons(submitReasons);
+        enclosureApply.setDeptId(applyDeptId);
+        enclosureApply.setUserId(userId);
+//        enclosureApply.setApplyTime(Date);
+
+        customerMapper.insertEnclosureApply(enclosureApply);
+
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }
 

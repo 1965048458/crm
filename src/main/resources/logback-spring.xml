@@ -43,8 +43,8 @@
 	</appender>
 
 	<logger name="com.xuebei.crm" level="${log.level.main}" additivity="false">
-		<appender-ref ref="mainAppender" />
-		<appender-ref ref="mainErrorAppender" />
+		<appender-ref ref="console" />
+		<!--<appender-ref ref="mainErrorAppender" />-->
 	</logger>
 
     <logger name="org.apache.ibatis" level="${log.level.main}" additivity="false">

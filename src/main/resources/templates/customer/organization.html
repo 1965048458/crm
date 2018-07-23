@@ -99,7 +99,7 @@
                     <h1>提示</h1>
                 </div>
                 <div class="weui-dialog__bd">
-                    <p>是否申请"{{applyOrganization}}"</p>
+                    <p>是否申请"{{applyDeptName}}"</p>
                 </div>
                 <div class="weui-dialog__ft">
                     <a @click="dialogCheck()" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
@@ -112,7 +112,7 @@
     <div v-show="showPage === 'showApply'">
         <div class="top-bar center-box">
             <span class="pull-left" @click="applyQuit()">取消</span>
-            <span class="center-ele">申请{{applyOrganization}}</span>
+            <span class="center-ele">申请{{applyDeptName}}</span>
             <span class="pull-right" @click="applySubmit()">提交</span>
         </div>
         <div class="weui-cells">
@@ -121,8 +121,7 @@
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
-                    <textarea class="weui-textarea" placeholder="请输入文本" rows="4"></textarea>
-                    <div class="weui-textarea-counter"><span>0</span>/200</div>
+                    <textarea class="weui-textarea" placeholder="请输入文本" rows="5" v-model="submitReasons"></textarea>
                 </div>
             </div>
         </div>
@@ -133,7 +132,7 @@
                     <h1>提示</h1>
                 </div>
                 <div class="weui-dialog__bd">
-                    <p>"{{applyOrganization}}"申请成功</p>
+                    <p>"{{applyDeptName}}"申请成功</p>
                 </div>
                 <div class="weui-dialog__ft">
                     <a @click="submitDialogCheck()" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
@@ -225,26 +224,26 @@
                 <span class="pull-left" style="padding-right: 10px;"> > </span>
                 <span class="pull-left" @click="changeSubFold" style="padding-right: 5px;" v-text="customer.deptName"></span>
                 <!--<span class="pull-left"  v-text="addBrackets(customer.number)"></span>-->
-                <!--<span class="pull-left" v-text="addSquareBrackets(customer.isCircle)"></span>-->
+                <span class="pull-left" v-text="addSquareBrackets(customer.enclosureStatus)"></span>
                 <!--<span class="pull-left" v-text="addOpenSeaWarning(customer.Warning)" @click="openSeaWarning(customer.Warning)"></span>-->
             </div>
 
             <div class="weui-cell__ft">
-                <span @click="apply(customer.deptName)" style="font-size: larger"> + </span>
+                <span @click="apply(customer.deptName, customer.deptId)" style="font-size: larger"> + </span>
             </div>
 
         </div>
         <div class="weui-cells" v-show="showSub">
-            <div class="weui-cell" v-for="contact in customer.contacts">
+            <div class="weui-cell" v-for="contact in customer.contactsList">
                 <div class="weui-cell__hd">
                     <img src="/images/customer/defaultUserIcon.png" class="usr-img">
                 </div>
                 <div class="weui-cell__bd">
-                    <span v-text="contact.name"></span>
+                    <span v-text="contact.realName"></span>
                 </div>
             </div>
             <div class="weui-cells" style="padding-left: 30px">
-                <customer v-for="subCustomer in customer.customerList" :customer="subCustomer"></customer>
+                <customer v-for="subCustomer in customer.departmentList" :customer="subCustomer"></customer>
             </div>
         </div>
     </div>

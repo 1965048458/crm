@@ -149,8 +149,8 @@ public class JournalController {
     @RequestMapping("/list")
     public GsonView list(JournalSearchParam param, HttpServletRequest request){
         HttpSession session = request.getSession();
-        String userId = (String)session.getAttribute("userId");
-        param.setUserId(userId);
+        String userId = (String)session.getAttribute("crmUserId");
+        param.setUserId("00284bca325c4e77b9f30c5671ec1c44");
         List<Journal> journals =journalService.searchJournal(param);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("journalList", journals);
