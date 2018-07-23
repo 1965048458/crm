@@ -39,16 +39,21 @@ $(document).ready(function () {
             },
             'submit': function (e) {
                 var keyCode = window.event? e.keyCode:e.which;
-                alert("enter事件触发");
-                if(keyCode == 13 && this.input) {
+
+                if(keyCode == 13 ) {  //&& this.input
                     this.showResult();
                     if (this.customerList.length != 0){
                         this.customers = true;
+                        cancelSearch();
                     }else{
                         this.searchCustomer = false;
                     }
                     this.titleBar = true;
+                    alert("enter事件触发");
                 }
+            },
+            'loadDetail':function (customerId) {
+                //
             }
         }
     });
@@ -68,8 +73,6 @@ $(document).ready(function () {
 
     function cancelSearch() {
         hideSearchResult();
-        searchCustInfoVue.titleBar = true;
-        searchCustInfoVue.customers = true;
         $searchBar.removeClass('weui-search-bar_focusing');
         $searchText.show();
     }
@@ -87,6 +90,8 @@ $(document).ready(function () {
     });
     $searchCancel.on('click', function () {
         cancelSearch();
+        searchCustInfoVue.titleBar = true;
+        searchCustInfoVue.customers = true;
         $searchInput.blur();
     });
 });

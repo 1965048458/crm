@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
@@ -59,10 +59,13 @@
             </div>
 
             <div class="weui-cells searchbar-result" id="searchResult" style="display: none;">
-                <div class="weui-cells weui-cells_radio" v-for="customer in customerList.filter(filterList)">
-                    <label class="weui-cell weui-check__label">
-                        <div class="weui-cell__bd weui-cell_primary">
+                <div class="weui-cells weui-cells_radio">
+                    <label class="weui-cell weui-check__label"  v-for="customer in customerList.filter(filterList)">
+                        <div class="weui-cell__bd">
                             <p v-text="customer.customerName"></p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="radio" class="weui-check"  v-bind:value ="customer.customerName" v-model="searchWord">
                         </div>
                     </label>
                 </div>
@@ -97,8 +100,8 @@
                 <div class="weui-media-box weui-media-box_text">
                     <h1 class="weui-media-box__title">全部客户</h1>
                     <div class="allCustomers" v-for="customer in customerList">
-                        <div class="weui-panel__bd">
-                            <a @click="" class="weui-media-box weui-media-box_appmsg">
+                        <div class="weui-panel__bd"  @click="loadDetail(customer.customerId)">
+                            <a class="weui-media-box weui-media-box_appmsg">
                                 <div class="weui-media-box__hd">
                                     <img class="weui-media-box__thumb" src="/images/icon_nav_layout.png" alt="">
                                 </div>
