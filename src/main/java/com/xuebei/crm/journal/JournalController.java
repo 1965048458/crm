@@ -79,6 +79,28 @@ public class JournalController {
         return gsonView;
     }
 
+    /**
+     * 接收人删除日志
+     * 要检查：日志存在且日志不是草稿，日志的接收人有申请删除的用户
+     */
+    @RequestMapping("/receiverDelete")
+    public GsonView receiverDeleteJournal(@RequestParam("journalId") String journalId,
+                                          HttpServletRequest request) {
+        try {
+            Journal journal = journalMapper.queryJournalById(journalId);
+            if (journal == null || !journal.getHasSubmitted()) {
+                return GsonView.createErrorView("日志不存在,或草稿");
+            }
+            Integer line = journalMapper.receiverDeleteJournal(journalId, acquireUserId(request));
+            if (line != 1) {
+                return GsonView.createErrorView("该日志接收人没有改用户");
+            }
+        } catch (AuthenticationException e) {
+            return GsonView.createErrorView(e.getMessage());
+        }
+        return GsonView.createSuccessView();
+    }
+
     @RequestMapping("/query")
     public GsonView getJournalInfoById(@RequestParam("journalId") String journalId,
                                        HttpServletRequest request) throws AuthenticationException {
@@ -142,7 +164,7 @@ public class JournalController {
     }
 
     @RequestMapping("/toList")
-    public String toJournalList(HttpServletRequest request) {
+    public String toJournalList(HttpServletRequest request, ModelMap modelMap) {
         return "journalList";
     }
 

@@ -46,6 +46,9 @@ public interface JournalMapper {
 
     List<User> queryJournalReceiver(@Param("journalId") String journalId);
 
+    Integer receiverDeleteJournal(@Param("journalId") String journalId,
+                                  @Param("receiverId") String receiverId);
+
     // other functions
     Boolean isUserSameCompany(@Param("userIdA") String userIdA,
                               @Param("userIdB") String userIdB);
