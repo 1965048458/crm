@@ -53,5 +53,9 @@ public class ProjectController {
         return gsonView;
     }
 
+    @RequestMapping("apply")
+    public String projectSupport() {
+        return "applyProjectSupport";
+    }
 
 }
