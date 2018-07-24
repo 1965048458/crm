@@ -38,8 +38,9 @@
                 <div id="titleBar" class="top-bar center-box" v-show="titleBar">
                     <div class="title-bar">
                         <span class="center-ele" style="font-size: 20px">客户</span>
+                        <a href="javascript:addCustomer();">
                         <span class="pull-right"
-                              style="font-size: 20px; color: #00FFFF; padding-right: 10px">+ &nbsp;</span>
+                              style="font-size: 20px; color: #00FFFF; padding-right: 10px">+ &nbsp;</span></a>
                     </div>
                 </div>
                 <div id="searchCustomer" v-show="searchCustomer">
@@ -162,10 +163,12 @@
     });
 </script>
 <script>
+    function addCustomer() {
+        location.href = '/customer/add';
+    };
     function journal() {
         location.href = '/journal/toList';
-    }
-    ;
+    };
     function opportunity() {
         location.href = '/opportunity';
     }

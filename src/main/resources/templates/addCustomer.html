@@ -29,7 +29,9 @@
 <div id="addCustomerVue">
     <div id = "addCustomer" v-show ="showPage === 'addCustomer'" >
         <div class="weui-flex" style="background-color: white;height: 45px;" >
-                <div><div class="placeholder edgeButton"  >&nbsp; 取消 </div></div>
+                <div>
+                    <a href="javascript:customerList();">
+                    <div class="placeholder edgeButton" >&nbsp; 取消 </div></div></a>
                 <div class="weui-flex__item" align="center"><div class="placeholder center-box" align="center" >新建学校</div></div>
                 <div><div class="placeholder edgeButton" align="center" @click="subMit"> 提交 &nbsp; </div></div>
         </div>
@@ -149,8 +151,11 @@
     </div>
 
 </div>
-
-
+<script>
+    function customerList() {
+        location.href = '/customer/customerList';
+    };
+</script>
 </body>
 
 </html>

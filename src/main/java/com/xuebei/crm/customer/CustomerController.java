@@ -39,10 +39,10 @@ public class CustomerController {
         return "00284bca325c4e77b9f30c5671ec1c44";
     }
 
-    @RequestMapping("")
+    @RequestMapping("add")
     public String addCustomer() { return "addCustomer"; }
 
-    @RequestMapping("add")
+    @RequestMapping("new")
     public GsonView newCustomer(@RequestParam("schoolType") String schoolType,
                                 @RequestParam("name") String name,
                                 @RequestParam("profile") String profile,

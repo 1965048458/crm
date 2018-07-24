@@ -35,7 +35,7 @@ jQuery(document).ready(function () {
                     var thisVue = this;
                     jQuery.ajax({
                         type: 'post',
-                        url: '/customer/add',
+                        url: '/customer/new',
                         data: {
                             schoolType:thisVue.schoolType,
                             name:thisVue.name,
@@ -48,7 +48,7 @@ jQuery(document).ready(function () {
                         if (result.exist) {
                             alert("用户已经创建，请勿重复创建");
                         }else if(result.successFlg){
-                                alert("提交成功");
+                            window.location.href="/customer/customerList";
                         } else {
                             alert("请填写正确的信息");
                         }
