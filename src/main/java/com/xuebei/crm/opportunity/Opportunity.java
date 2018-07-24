@@ -77,7 +77,7 @@ public class Opportunity {
         return clinchDate;
     }
 
-    public void setClinckDate(Date clinchDate) {
+    public void setClinchDate(Date clinchDate) {
         this.clinchDate = clinchDate;
     }
 

@@ -1,5 +1,9 @@
 package com.xuebei.crm.project;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.utils.UUIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,16 @@ import static com.xuebei.crm.login.LoginController.SUCCESS_FLG;
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
+
+    //@Autowired
+    //private ProjectService projectService;
+
+    @RequestMapping("/projectDetail")
+    public String detail(){
+        return "projectDetail";
+    }
+
+
 
     @Autowired
     private ProjectMapper projectMapper;
