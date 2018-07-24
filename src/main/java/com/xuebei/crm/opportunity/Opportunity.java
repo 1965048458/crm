@@ -21,7 +21,7 @@ public class Opportunity {
     @Expose
     private Date checkDate;
     @Expose
-    private Date clinckDate;
+    private Date clinchDate;
     @Expose
     private double totalCoast;
 
@@ -73,12 +73,12 @@ public class Opportunity {
         this.checkDate = checkDate;
     }
 
-    public Date getClinckDate() {
-        return clinckDate;
+    public Date getClinchDate() {
+        return clinchDate;
     }
 
-    public void setClinckDate(Date clinckDate) {
-        this.clinckDate = clinckDate;
+    public void setClinckDate(Date clinchDate) {
+        this.clinchDate = clinchDate;
     }
 
     public double getTotalCoast() {
