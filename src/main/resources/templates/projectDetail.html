@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>项目详情</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css"/>
+    <link rel="stylesheet" href="/project/timelinr.css"/>
+
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/project/jquery.timelinr-0.9.7.js"></script>
+    <script src="/project/projectDetail.js"></script>
+    <style>
+        .edgeButton {
+            color: dodgerblue;
+            height: 40px;
+            margin-top: 20%;
+        }
+
+        .center-box {
+            margin-top: 1%;
+            font-size: large;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+<div>
+
+    <div class="weui-flex" style="background-color: white;height: 45px;">
+        <div>
+            <div class="placeholder edgeButton">&nbsp;<i>< </i></div>
+        </div>
+        <div class="weui-flex__item" align="center">
+            <div class="placeholder center-box" align="center">项目详情</div>
+        </div>
+        <div>
+            <div class="placeholder edgeButton" align="center" @click="apply"> *** &nbsp; </div>
+        </div>
+    </div>
+
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">项目名称</label></div>
+                <div class="weui-cell__bd">
+                    <p><span>安阳或任何负担.... </span></p>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">项目内容</label></div>
+                <div class="weui-cell__bd">
+                    <p><span>虚拟收到过水电费.... </span></p>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">客户信息</label></div>
+                <div class="weui-cell__bd">
+                    <p><span>韩主任 </span></p>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">代理商</label></div>
+                <div class="weui-cell__bd">
+                    <p><span>河南幻境数字科技有限公司 </span></p>
+                </div>
+            </div>
+        </div>
+        <div class="weui-panel__bd">
+            <div class="weui-media-box weui-media-box_text">
+                <h1 class="weui-media-box__title">项目备注</h1>
+                <p class="weui-media-box__desc">项目提前启动。。。 </p>
+            </div>
+        </div>
+
+        <div class="weui-media-box weui-media-box_text">
+            <div><label class="weui-label">项目记录</label></div>
+
+            <div id="timeline">
+                <ul id="dates">
+                    <li><a href="#r1">记录1</a></li>
+                    <li><a href="#r2">记录2</a></li>
+                </ul>
+                <ul id="issues">
+                    <li id="r1">
+                        <h1>2005 闪亮登场</h1>
+                        <p>2005年，呱呱坠地。界面清爽、。</p>
+                    </li>
+                    <li id="r2">
+                        <h1>2006 扬帆起航</h1>
+                        <p>2006年，咿呀学语。！</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
