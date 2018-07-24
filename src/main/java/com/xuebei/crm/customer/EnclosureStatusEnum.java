@@ -1,7 +1,7 @@
 package com.xuebei.crm.customer;
 
 public enum EnclosureStatusEnum {
-    NONE("不参与圈地"), NORMAL("未圈"), ENCLOSURE("已圈");
+    NONE("不参与圈地"), NORMAL("未圈"), ENCLOSURE("已圈"), MINE("我的");
 
     private String name;
 

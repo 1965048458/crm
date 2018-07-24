@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface CustomerMapper {
@@ -40,6 +41,8 @@ public interface CustomerMapper {
     List<Contacts> queryContacts(@Param("customerId") String customerId);
 
     void insertEnclosureApply(EnclosureApply enclosureApply);
+
+    List<EnclosureApply> queryEnclosureApply(String deptId);
 
     List<String> searchSchool(@Param("keyword")String keyword);
 

@@ -224,7 +224,7 @@
                 <span class="pull-left" style="padding-right: 10px;"> > </span>
                 <span class="pull-left" @click="changeSubFold" style="padding-right: 5px;" v-text="customer.deptName"></span>
                 <!--<span class="pull-left"  v-text="addBrackets(customer.number)"></span>-->
-                <span class="pull-left" v-text="addSquareBrackets(customer.enclosureStatus)"></span>
+                <span class="pull-left" v-text="addSquareBrackets(customer.enclosureStatus)" @click="apply(customer.deptName, customer.deptId)"></span>
                 <!--<span class="pull-left" v-text="addOpenSeaWarning(customer.Warning)" @click="openSeaWarning(customer.Warning)"></span>-->
             </div>
 

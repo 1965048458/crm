@@ -50,9 +50,26 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Department> queryDepartment(String customerId){
+    public List<Department> queryDepartment(String customerId,String userId){
         List<Department> departmentList = customerMapper.queryDepartment(customerId);
         List<Contacts> contactsList = customerMapper.queryContacts(customerId);
+        for (Department department:departmentList){
+            List<EnclosureApply> enclosureApplyList = customerMapper.queryEnclosureApply(department.getDeptId());
+            if(enclosureApplyList.size()==0)
+                department.setEnclosureStatus(EnclosureStatusEnum.NONE);
+            else{
+                for(EnclosureApply enclosureApply:enclosureApplyList){
+                    if(enclosureApply.getStatusCd() == "PERMITTED"){
+
+                        if(enclosureApply.getUserId() == userId)
+                            department.setEnclosureStatus(EnclosureStatusEnum.MINE);
+
+                        else
+                            department.setEnclosureStatus(EnclosureStatusEnum.ENCLOSURE);
+                    }
+                }
+            }
+        }
         Map<String, Department> departmentMap = new HashMap<>();
         for (Department department : departmentList) {
             departmentMap.put(department.getDeptId(), department);
@@ -74,6 +91,11 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         return rltList;
+    }
+
+    private Boolean isOpenSeaWarning(EnclosureApply enclosureApply){
+
+        return false;
     }
 
     @Override

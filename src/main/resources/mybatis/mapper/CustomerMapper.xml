@@ -17,11 +17,22 @@
         <association property="parent" javaType="com.xuebei.crm.customer.Department">
             <id property="deptId" column="prt_id"/>
         </association>
-        <!--<association property="contactsList" javaType="com.xuebei.crm.customer.Contacts">-->
-            <!--<id property="contactsId" column="contacts_id"/>-->
-            <!--<result property="realName" column="real_nm"/>-->
-            <!--<result property="gender" column="gender"/>-->
-        <!--</association>-->
+        <association property="contactsList" javaType="com.xuebei.crm.customer.Contacts">
+            <id property="contactsId" column="contacts_id"/>
+            <result property="realName" column="real_nm"/>
+            <result property="gender" column="gender"/>
+        </association>
+        <!--<collection property="enclosureApplyList" javaType="com.xuebei.crm.customer.EnclosureApply">-->
+            <!--<id property="enclosureApplyId" column="enclosure_apply_id"/>-->
+            <!--<result property="userId" column="user_id"/>-->
+            <!--<result property="statusCd" column="status_cd"/>-->
+        <!--</collection>-->
+    </resultMap>
+
+    <resultMap id="enclosureApplyMap" type="com.xuebei.crm.customer.EnclosureApply">
+        <id property="enclosureApplyId" column="enclosure_apply_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="statusCd" column="status_cd"/>
     </resultMap>
 
     <resultMap id="contactsTypeMap" type="com.xuebei.crm.customer.ContactsType">
@@ -197,6 +208,49 @@
 
     </insert>
 
+    <select id="queryEnclosureApply" resultMap="enclosureApplyMap">
+        SELECT ea.user_id,ea.status_cd FROM enclosure_apply ea
+        WHERE ea.customer_dept_id = #{deptId}
+    </select>
+
+    <select id="queryNewEnclosureApply" resultMap="enclosureApplyMap">
+        SELECT *
+        FROM enclosure_apply as t
+        WHERE t.customer_dept_id = #{deptId} AND t.status_cd = 'PERMITTED'
+        ORDER BY t.apply_start_ts;
+    </select>
+
+    <select id="queryVisit" resultType="java.lang.String">
+        SELECT r1.create_ts,r1.user_id,r2.des_id
+        FROM
+            (
+                SELECT A.contacts_id, B.create_ts, B.user_id
+                FROM
+                    (SELECT visit_contacts.contacts_id, visit_log.journal_id
+                     FROM visit_contacts LEFT JOIN visit_log ON
+                     visit_contacts.visit_log_id = visit_log.visit_log_id)
+                    AS A LEFT JOIN journal AS B ON A.journal_id = B.journal_id
+            ) AS r1
+            LEFT JOIN
+            (
+                SELECT contacts.contacts_id, dept_dest_table.des_id
+                FROM contacts LEFT JOIN
+                    ((SELECT customer_dept_id, prt_id AS des_id
+                      FROM customer_dept
+                      WHERE prt_id is not null)
+                     UNION
+                     (SELECT customer_dept_id, customer_dept_id AS des_id
+                      from customer_dept
+                      WHERE prt_id is null))
+
+                        AS dept_dest_table
+                        ON contacts.customer_dept_id = dept_dest_table.customer_dept_id
+            ) AS r2 ON r1.contacts_id = r2.contacts_id
+        WHERE r2.des_id = #{deptId}
+        AND r1.create_ts &lt;= #{endTime}
+        ORDER BY r1.create_ts
+        ;
+    </select>
 
     <select id="searchSchool" parameterType="java.lang.String"  resultType="java.lang.String">
         select c.customer_nm from crm_customer c

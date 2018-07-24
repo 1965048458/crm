@@ -245,8 +245,10 @@ public class CustomerController {
     public String organization(){return "customer/organization";}
 
     @RequestMapping("/organization/show")
-    public GsonView queryDepartment(@RequestParam("customerId") String customerId) {
-        List<Department> departmentList = customerService.queryDepartment(customerId);
+    public GsonView queryDepartment(@RequestParam("customerId") String customerId,
+                                    HttpServletRequest request) {
+        String userId = (String) request.getSession().getAttribute("userId");
+        List<Department> departmentList = customerService.queryDepartment(customerId,userId);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg",true);
         gsonView.addStaticAttribute("customerList", departmentList);
@@ -263,8 +265,8 @@ public class CustomerController {
         if(submitReasons == null)
             return GsonView.createErrorView(EMPTY_REASONS_ERROR);
 
-        String userId = (String) request.getSession().getAttribute("crmUserId");
-        enclosureApply.setEnclosureApplyId(11);
+        String userId = (String) request.getSession().getAttribute("userId");
+        //enclosureApply.setEnclosureApplyId(11);
         enclosureApply.setReasons(submitReasons);
         enclosureApply.setDeptId(applyDeptId);
         enclosureApply.setUserId(userId);

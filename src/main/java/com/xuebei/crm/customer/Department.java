@@ -28,6 +28,16 @@ public class Department {
     @Expose
     private OpenSeaWarning openSeaWarning;
 
+    private List<EnclosureApply> enclosureApplyList;
+
+    public List<EnclosureApply> getEnclosureApplyList() {
+        return enclosureApplyList;
+    }
+
+    public void setEnclosureApplyList(List<EnclosureApply> enclosureApplyList) {
+        this.enclosureApplyList = enclosureApplyList;
+    }
+
     public List<Contacts> getContactsList() {
         return contactsList;
     }
@@ -122,5 +132,12 @@ public class Department {
             contactsList = new ArrayList<>();
         }
         contactsList.add(contacts);
+    }
+
+    public void addEnclosureApply(EnclosureApply enclosureApply){
+        if(enclosureApplyList == null){
+            enclosureApplyList = new ArrayList<>();
+        }
+        enclosureApplyList.add(enclosureApply);
     }
 }
