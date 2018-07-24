@@ -29,7 +29,7 @@ public class Project {
     @Expose
     private String opportunityId;
     @Expose
-    private String customerId;
+    private String contractId;
     @Expose
     private String userId;
 
@@ -41,12 +41,12 @@ public class Project {
         this.projectId = projectId;
     }
 
-    public String getCustomerId() {
-        return customerId;
+    public String getContractId() {
+        return contractId;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+    public void setContractId(String contractId) {
+        this.contractId = contractId;
     }
 
     public String getUserId() {

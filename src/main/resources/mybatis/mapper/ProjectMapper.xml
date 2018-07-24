@@ -12,7 +12,7 @@
         VALUES
         ( #{projectId},#{projectNo},  #{projectNm}, #{backGround}, #{projectContent},
         #{status}, #{deadLine},#{priority}, #{agent}, #{opportunityId},
-         #{customerId}, #{userId}
+         #{contractId}, #{userId}
         )
     </insert>
 

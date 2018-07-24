@@ -60,7 +60,7 @@ public class ProjectController {
         project.setPriority(1);
         project.setAgent(agent);
         project.setOpportunityId("123");
-        project.setCustomerId("123");
+        project.setContractId("123");
         project.setUserId("001c52e79ee0484ca8158e926b5c05a3");
         projectMapper.insertProject(project);
         gsonView.addStaticAttribute(SUCCESS_FLG, true);
