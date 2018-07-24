@@ -16,4 +16,11 @@ public interface OpportunityMapper {
     void insertUser(User user);
 
     void editUser(User user);
+
+    void insertProject(@Param("id") String id,
+                       @Param("name") String name,
+                       @Param("content") String content,
+                       @Param("agent") String agent,
+                       @Param("person") String person,
+                       @Param("background") String background);
 }

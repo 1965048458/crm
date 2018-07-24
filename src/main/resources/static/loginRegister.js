@@ -71,7 +71,7 @@ jQuery(document).ready(function () {
                     if (result.successFlg) {
                         window.location.href="/";
                     } else {
-                        alert("无效的手机号、姓名或密码，密码至少6位");
+                        alert("无效的手机号、姓名或密码，请填写有效的11位手机号码，且密码至少6位");
                     }
                 });
             }
