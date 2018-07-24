@@ -13,6 +13,8 @@ public class Project {
     @Expose
     private String projectNo;
     @Expose
+    private String projectNm;
+    @Expose
     private String backGround;
     @Expose
     private String status;
@@ -26,17 +28,7 @@ public class Project {
     private String agent;
     @Expose
     private String opportunityId;
-
-    public String getOpportunityId() {
-        return opportunityId;
-    }
-
-    public void setOpportunityId(String opportunityId) {
-        this.opportunityId = opportunityId;
-    }
-
     @Expose
-
     private String customerId;
     @Expose
     private String userId;
@@ -71,6 +63,14 @@ public class Project {
 
     public void setProjectNo(String projectNo) {
         this.projectNo = projectNo;
+    }
+
+    public String getProjectNm() {
+        return projectNm;
+    }
+
+    public void setProjectNm(String projectNm) {
+        this.projectNm = projectNm;
     }
 
     public String getBackGround() {
@@ -119,5 +119,13 @@ public class Project {
 
     public void setAgent(String agent) {
         this.agent = agent;
+    }
+
+    public String getOpportunityId() {
+        return opportunityId;
+    }
+
+    public void setOpportunityId(String opportunityId) {
+        this.opportunityId = opportunityId;
     }
 }

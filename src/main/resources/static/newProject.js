@@ -17,7 +17,7 @@ jQuery(document).ready(function () {
                     var thisVue = this;
                     jQuery.ajax({
                         type: 'post',
-                        url: '/opportunity/add',
+                        url: '/project/add',
                         data: {
                             name:thisVue.name,
                             content:thisVue.content,

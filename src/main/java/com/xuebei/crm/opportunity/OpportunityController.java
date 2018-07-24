@@ -25,26 +25,8 @@ public class OpportunityController {
     private OpportunityMapper opportunityMapper;
 
     @RequestMapping("")
-    public String oppo() {
+    public String opportunity() {
         return "opportunity";
-    }
-
-    @RequestMapping("new")
-    public String newProject() {
-        return "newProject";
-    }
-
-    @RequestMapping("add")
-    public GsonView addProject(@RequestParam("name") String name,
-                               @RequestParam("content") String content,
-                               @RequestParam("agent") String agent,
-                               @RequestParam("person") String person,
-                               @RequestParam("background") String background ) {
-        GsonView gsonView = new GsonView();
-        String id = UUIDGenerator.genUUID();
-        opportunityMapper.insertProject(id,name,content,agent,person,background);
-        gsonView.addStaticAttribute(SUCCESS_FLG, true);
-        return gsonView;
     }
 
 

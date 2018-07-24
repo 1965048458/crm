@@ -10,14 +10,5 @@
         <result property="companyName" column="com_nm"/>
     </resultMap>
 
-    <insert id="insertProject" parameterType="string">
-        INSERT INTO  project
-        ( project_id, project_no, project_nm, background, project_content,
-         status_cd, agent, contract_id, user_id)
-        VALUES
-        ( #{id},"123",  #{name}, #{background}, #{content},
-         "123", #{agent},"123","001c52e79ee0484ca8158e926b5c05a3")
-    </insert>
-
 
 </mapper>
