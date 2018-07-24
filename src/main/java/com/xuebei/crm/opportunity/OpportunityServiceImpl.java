@@ -11,17 +11,5 @@ public class OpportunityServiceImpl implements OpportunityService {
     @Autowired
     private OpportunityMapper opportunityMapper;
 
-    @Override
-    public List<User> searchUser(String keyword) {
-        return opportunityMapper.searchUser(keyword);
-    }
 
-    @Override
-    public void insertUser(User user) { opportunityMapper.insertUser(user);
-    }
-
-    @Override
-    public void editUser(User user) {
-        opportunityMapper.editUser(user);
-    }
 }

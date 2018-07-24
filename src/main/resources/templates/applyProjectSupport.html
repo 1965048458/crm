@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>申请支持</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css">
+
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/applyProjectSupport.js"></script>
+    <style>
+        .center-ele {
+            display: inline-block;
+        }
+
+        .pull-left {
+            float: left !important;
+        }
+    </style>
+</head>
+<body>
+<div id="newProject">
+    <div class="weui-flex">
+        <div class="weui-flex__item">
+            <div class="placeholder"></div>
+            <span class="pull-left"
+                  style="font-size: 20px; color:deepskyblue; padding-right: 10px">&nbsp; < </span>
+        </div>
+        <div class="weui-flex__item" align="center">
+            <div class="placeholder"></div>
+            <span class="center-ele" style="font-size: 20px;" align="center">申请项目支持</span>
+        </div>
+        <div class="weui-flex__item">
+            <div class="placeholder"></div>
+        </div>
+    </div>
+
+    <div class="weui-cells">
+        <a class="weui-cell weui-cell_access" @click="selectSch">
+            <label class="weui-label" style="white-space:nowrap">项目名称</label>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入项目名称" v-model="name"/>
+            </div>
+        </a>
+        <a class="weui-cell weui-cell_access" @click="selectNam">
+            <label class="weui-label" style="white-space:nowrap">支持类型</label>
+            <div class="weui-cell__bd">
+                {{name}}
+            </div>
+            <div class="weui-cell__ft">未选择</div>
+        </a>
+        <a class="weui-cell weui-cell_access" @click="selectNam">
+            <label class="weui-label" style="white-space:nowrap">执行者</label>
+            <div class="weui-cell__bd">
+                {{name}}
+            </div>
+            <div class="weui-cell__ft">未选择</div>
+        </a>
+        <a class="weui-cell weui-cell_access" @click="selectNam">
+            <label class="weui-label" style="white-space:nowrap">截止日期</label>
+            <div class="weui-cell__bd">
+                {{name}}
+            </div>
+            <div class="weui-cell__ft">未选择</div>
+        </a>
+        <a class="weui-cell" @click="selectNam">
+            <label class="weui-label" style="white-space:nowrap">优先级</label>
+            <div class="weui-cell__bd">
+                {{name}}
+            </div>
+            <div class="weui-cell__ft">未选择&nbsp; &nbsp; </div>
+        </a>
+    </div>
+
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <label class="weui-label" style="white-space:nowrap">支持描述</label>
+                <textarea class="weui-textarea" placeholder="请输入对项目支持的详细描述" rows="12" v-model="background"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells">
+        <a class="weui-cell weui-cell_access" @click="selectNam">
+            <label class="weui-label" style="white-space:nowrap">附件</label>
+            <div class="weui-cell__bd">
+                &nbsp; {{name}}
+            </div>
+            <div class="weui-cell__ft">可选</div>
+        </a>
+    </div>
+    <div class="weui-flex">
+        <div class="weui-flex__item">
+            <div class="placeholder" style="visibility:hidden">weui</div>
+        </div>
+    </div>
+
+    <div class="page__bd page__bd_spacing">
+        <div class="hb_mar_top_40">
+            <button class="weui-btn weui-btn_primary" id=submit_btn @click="submit">提交</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
