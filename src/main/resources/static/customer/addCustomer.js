@@ -45,8 +45,10 @@ jQuery(document).ready(function () {
                         dataType: 'json',
                         cache: false
                     }).done(function (result){
-                        if (result.successFlg) {
-                            alert("提交成功");
+                        if (result.exist) {
+                            alert("用户已经创建，请勿重复创建");
+                        }else if(result.successFlg){
+                                alert("提交成功");
                         } else {
                             alert("请填写正确的信息");
                         }

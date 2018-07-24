@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>客户</title>
+    <title>商机</title>
     <!-- 引入 WeUI -->
     <link rel="stylesheet" href="/weui.css"/>
     <link rel="stylesheet" href="/example.css">
 
     <script src="/lib/jquery-2.1.1.js"></script>
     <script src="/vue.v2.5.13.js"></script>
-    <script src="/customer/searchCustomerInfo.js"></script>
+    <script src="/opportunity/opportunity.js"></script>
     <style>
         .center-box {
             text-align: center;
@@ -37,28 +37,30 @@
             <div id="customerVue">
                 <div id="titleBar" class="top-bar center-box" v-show="titleBar">
                     <div class="title-bar">
-                        <span class="center-ele" style="font-size: 20px">客户</span>
+                        <span class="center-ele" style="font-size: 20px">商机</span>
                         <span class="pull-right"
                               style="font-size: 20px; color: #00FFFF; padding-right: 10px">+ &nbsp;</span>
                     </div>
                 </div>
+
                 <div id="searchCustomer" v-show="searchCustomer">
                     <div class="center-box">
                         <div class="weui-search-bar" id="searchBar">
-                            <div class="weui-search-bar__form">
+                            <form class="weui-search-bar__form">
                                 <div class="weui-search-bar__box">
                                     <i class="weui-icon-search"></i>
-                                    <input type="text" class="weui-search-bar__input" id="searchInput" placeholder="搜索"
-                                           @keyup.enter="search" v-model="searchWord" required="">
-                                    <a href="javascript:" class="weui-icon-clear" id="searchClear" @click="clear"></a>
+                                    <input type="search" class="weui-search-bar__input" id="searchInput"
+                                           placeholder="搜索"
+                                           @keyup.enter="submit" v-focus v-model="searchWord" required="">
+                                    <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
                                 </div>
-                                <label class="weui-search-bar__label" id="searchText" @click="text"
+                                <label class="weui-search-bar__label" id="searchText"
                                        style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
                                     <i class="weui-icon-search"></i>
                                     <span>搜索</span>
                                 </label>
-                            </div>
-                            <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel" @click="cancel">取消</a>
+                            </form>
+                            <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
                         </div>
 
                         <div class="weui-cells searchbar-result" id="searchResult" style="display: none;">
@@ -127,14 +129,16 @@
             </div>
 
 
+
+
         </div>
 
         <div class="weui-tabbar">
-            <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
+            <a href="javascript:customer();" class="weui-tabbar__item ">
                 <img src="/images/customer.png" alt="" class="weui-tabbar__icon">
                 <p class="weui-tabbar__label">客户</p>
             </a>
-            <a href="javascript:opportunity();" class="weui-tabbar__item">
+            <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
                 <img src="/images/saleOpportunity.png" alt="" class="weui-tabbar__icon">
                 <p class="weui-tabbar__label">销售机会</p>
             </a>
@@ -153,21 +157,19 @@
         </div>
     </div>
 </div>
-</div>
 <script type="text/javascript" class="tabbar js_show">
-    $(function () {
+    $(function(){
         $('.weui-tabbar__item').on('click', function () {
             $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
         });
     });
 </script>
 <script>
-    function journal() {
-        location.href = '/journal/toList';
-    }
-    ;
-    function opportunity() {
-        location.href = '/opportunity';
+    function journal(){
+        location.href='/journal/toList';
+    };
+    function customer() {
+        location.href='/customer/customerList';
     }
 </script>
 </body>

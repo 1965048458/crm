@@ -50,26 +50,33 @@ public class CustomerController {
                                 HttpServletRequest request) {
         GsonView gsonView = new GsonView();
 
-        String customer_id = UUIDGenerator.genUUID();
-        String creator_id = (String)request.getSession().getAttribute("crmUserId") ;
-        String create_ts = "";
-        String updater_id = creator_id;
-        String update_ts = "";
+        String nm = name.trim();
+        List<String> schList = customerMapper.searchSchool(nm);
+        if(schList.size() !=0){
+            gsonView.addStaticAttribute("exist",true);
+        }else {
+
+            String customer_id = UUIDGenerator.genUUID();
+            String creator_id = (String) request.getSession().getAttribute("crmUserId");
+            String create_ts = "";
+            String updater_id = creator_id;
+            String update_ts = "";
 
 
-        if(profile.equals("") && website.equals("")){
-            customerService.newSchool(customer_id, name, schoolType, null,
-                    null, creator_id, create_ts, updater_id, update_ts);
-        }else if(profile.equals("")){
-            customerService.newSchool(customer_id, name, schoolType, null, website,
-                    creator_id, create_ts, updater_id, update_ts);
-        }else if(website.equals("")){
-            customerService.newSchool(customer_id, name, schoolType, profile,
-                    null, creator_id, create_ts, updater_id, update_ts);
-        }else{
-            customerService.newSchool(customer_id, name, schoolType, profile, website, creator_id, create_ts, updater_id, update_ts);
+            if (profile.equals("") && website.equals("")) {
+                customerService.newSchool(customer_id, name, schoolType, null,
+                        null, creator_id, create_ts, updater_id, update_ts);
+            } else if (profile.equals("")) {
+                customerService.newSchool(customer_id, name, schoolType, null, website,
+                        creator_id, create_ts, updater_id, update_ts);
+            } else if (website.equals("")) {
+                customerService.newSchool(customer_id, name, schoolType, profile,
+                        null, creator_id, create_ts, updater_id, update_ts);
+            } else {
+                customerService.newSchool(customer_id, name, schoolType, profile, website, creator_id, create_ts, updater_id, update_ts);
+            }
+            gsonView.addStaticAttribute("successFlg", true);
         }
-        gsonView.addStaticAttribute("successFlg",true);
         return gsonView;
     }
 
