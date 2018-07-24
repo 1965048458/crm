@@ -34,119 +34,97 @@
 <div class="page tabbar js_show">
     <div class="weui-tab">
         <div class="weui-tab__panel">
-                <div id="customerVue">
-                    <div id="titleBar" class="top-bar center-box" v-show="titleBar">
-                        <div class="title-bar">
-                            <span class="center-ele" style="font-size: 20px">客户</span>
-                            <span class="pull-right"
-                                  style="font-size: 20px; color: #00FFFF; padding-right: 10px">+ &nbsp;</span>
-                        </div>
+            <div id="customerVue">
+                <div id="titleBar" class="top-bar center-box" v-show="titleBar">
+                    <div class="title-bar">
+                        <span class="center-ele" style="font-size: 20px">客户</span>
+                        <span class="pull-right"
+                              style="font-size: 20px; color: #00FFFF; padding-right: 10px">+ &nbsp;</span>
                     </div>
-
-                    <div id="searchCustomer" v-show="searchCustomer">
-                        <div class="center-box">
-                            <div class="weui-search-bar" id="searchBar">
-                                <form class="weui-search-bar__form">
-                                    <div class="weui-search-bar__box">
-                                        <i class="weui-icon-search"></i>
-                                        <input type="search" class="weui-search-bar__input" id="searchInput"
-                                               placeholder="搜索"
-                                               @keyup.enter="submit" v-focus v-model="searchWord" required="">
-                                        <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-                                    </div>
-                                    <label class="weui-search-bar__label" id="searchText"
-                                           style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                                        <i class="weui-icon-search"></i>
-                                        <span>搜索</span>
-                                    </label>
-                                </form>
-                                <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
-                            </div>
-    <div id="searchCustomer" v-show="searchCustomer">
-        <div class="center-box">
-            <div class="weui-search-bar" id="searchBar">
-                <div class="weui-search-bar__form">
-                    <div class="weui-search-bar__box">
-                        <i class="weui-icon-search"></i>
-                        <input type="text" class="weui-search-bar__input" id="searchInput" placeholder="搜索"
-                               @keyup.enter="search" v-model="searchWord" required="">
-                        <a href="javascript:" class="weui-icon-clear" id="searchClear" @click="clear"></a>
-                    </div>
-                    <label class="weui-search-bar__label" id="searchText" @click="text"
-                           style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                        <i class="weui-icon-search"></i>
-                        <span>搜索</span>
-                    </label>
                 </div>
-                <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel" @click="cancel">取消</a>
-            </div>
-
-                            <div class="weui-cells searchbar-result" id="searchResult" style="display: none;">
-                                <div class="weui-cells weui-cells_radio">
-                                    <label class="weui-cell weui-check__label"
-                                           v-for="customer in customerList.filter(filterList)">
-                                        <div class="weui-cell__bd">
-                                            <p v-text="customer.customerName"></p>
-                                        </div>
-                                        <div class="weui-cell__ft">
-                                            <input type="radio" class="weui-check" v-bind:value="customer.customerName"
-                                                   v-model="searchWord">
-                                        </div>
-                                    </label>
+                <div id="searchCustomer" v-show="searchCustomer">
+                    <div class="center-box">
+                        <div class="weui-search-bar" id="searchBar">
+                            <div class="weui-search-bar__form">
+                                <div class="weui-search-bar__box">
+                                    <i class="weui-icon-search"></i>
+                                    <input type="text" class="weui-search-bar__input" id="searchInput" placeholder="搜索"
+                                           @keyup.enter="search" v-model="searchWord" required="">
+                                    <a href="javascript:" class="weui-icon-clear" id="searchClear" @click="clear"></a>
                                 </div>
+                                <label class="weui-search-bar__label" id="searchText" @click="text"
+                                       style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                                    <i class="weui-icon-search"></i>
+                                    <span>搜索</span>
+                                </label>
+                            </div>
+                            <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel" @click="cancel">取消</a>
+                        </div>
+
+                        <div class="weui-cells searchbar-result" id="searchResult" style="display: none;">
+                            <div class="weui-cells weui-cells_radio">
+                                <label class="weui-cell weui-check__label"
+                                       v-for="customer in customerList.filter(filterList)">
+                                    <div class="weui-cell__bd">
+                                        <p v-text="customer.customerName"></p>
+                                    </div>
+                                    <div class="weui-cell__ft">
+                                        <input type="radio" class="weui-check" v-bind:value="customer.customerName"
+                                               v-model="searchWord">
+                                    </div>
+                                </label>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div id="customers" v-show="customers">
-                        <div class="myCustomerList">
-                            <div class="weui-panel__bd">
-                                <div class="weui-media-box weui-media-box_text">
-                                    <h1 class="weui-media-box__title">我的客户</h1>
-                                    <div class="myCustomers">
-                                        <div class="weui-panel__bd">
-                                            <a @click="" class="weui-media-box weui-media-box_appmsg">
-                                                <div class="weui-media-box__hd">
-                                                    <img class="weui-media-box__thumb" src="/images/icon_nav_layout.png"
-                                                         alt="">
-                                                </div>
-                                                <div class="weui-media-box__bd">
-                                                    <h4 class="weui-media-box__title">浙江大学</h4>
-                                                    <p class="weui-media-box__desc">最后跟进: 20180421</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="allCustomerList">
-                            <div class="weui-panel__bd">
-                                <div class="weui-media-box weui-media-box_text">
-                                    <h1 class="weui-media-box__title">全部客户</h1>
-                                    <div class="allCustomers" v-for="customer in customerList">
-                                        <div class="weui-panel__bd" @click="loadDetail(customer.customerId)">
-                                            <a class="weui-media-box weui-media-box_appmsg">
-                                                <div class="weui-media-box__hd">
-                                                    <img class="weui-media-box__thumb" src="/images/icon_nav_layout.png"
-                                                         alt="">
-                                                </div>
-                                                <div class="weui-media-box__bd">
-                                                    <h1 class="weui-media-box__title"
-                                                        v-text="customer.customerName"></h1>
-                                                    <p class="weui-media-box__desc">最后跟进: 20180421</p>
-                                                </div>
-                                            </a>
-                                        </div>
+                <div id="customers" v-show="customers">
+                    <div class="myCustomerList">
+                        <div class="weui-panel__bd">
+                            <div class="weui-media-box weui-media-box_text">
+                                <h1 class="weui-media-box__title">我的客户</h1>
+                                <div class="myCustomers">
+                                    <div class="weui-panel__bd">
+                                        <a @click="" class="weui-media-box weui-media-box_appmsg">
+                                            <div class="weui-media-box__hd">
+                                                <img class="weui-media-box__thumb" src="/images/icon_nav_layout.png"
+                                                     alt="">
+                                            </div>
+                                            <div class="weui-media-box__bd">
+                                                <h4 class="weui-media-box__title">浙江大学</h4>
+                                                <p class="weui-media-box__desc">最后跟进: 20180421</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="allCustomerList">
+                        <div class="weui-panel__bd">
+                            <div class="weui-media-box weui-media-box_text">
+                                <h1 class="weui-media-box__title">全部客户</h1>
+                                <div class="allCustomers" v-for="customer in customerList">
+                                    <div class="weui-panel__bd" @click="loadDetail(customer.customerId)">
+                                        <a class="weui-media-box weui-media-box_appmsg">
+                                            <div class="weui-media-box__hd">
+                                                <img class="weui-media-box__thumb" src="/images/icon_nav_layout.png"
+                                                     alt="">
+                                            </div>
+                                            <div class="weui-media-box__bd">
+                                                <h1 class="weui-media-box__title"
+                                                    v-text="customer.customerName"></h1>
+                                                <p class="weui-media-box__desc">最后跟进: 20180421</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-
 
 
         </div>
@@ -175,19 +153,21 @@
         </div>
     </div>
 </div>
+</div>
 <script type="text/javascript" class="tabbar js_show">
-    $(function(){
+    $(function () {
         $('.weui-tabbar__item').on('click', function () {
             $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
         });
     });
 </script>
 <script>
-    function journal(){
-        location.href='/journal/toList';
-    };
+    function journal() {
+        location.href = '/journal/toList';
+    }
+    ;
     function opportunity() {
-        location.href='/opportunity';
+        location.href = '/opportunity';
     }
 </script>
 </body>
