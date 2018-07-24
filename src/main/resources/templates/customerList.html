@@ -62,6 +62,24 @@
                                 </form>
                                 <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
                             </div>
+    <div id="searchCustomer" v-show="searchCustomer">
+        <div class="center-box">
+            <div class="weui-search-bar" id="searchBar">
+                <div class="weui-search-bar__form">
+                    <div class="weui-search-bar__box">
+                        <i class="weui-icon-search"></i>
+                        <input type="text" class="weui-search-bar__input" id="searchInput" placeholder="搜索"
+                               @keyup.enter="search" v-model="searchWord" required="">
+                        <a href="javascript:" class="weui-icon-clear" id="searchClear" @click="clear"></a>
+                    </div>
+                    <label class="weui-search-bar__label" id="searchText" @click="text"
+                           style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                        <i class="weui-icon-search"></i>
+                        <span>搜索</span>
+                    </label>
+                </div>
+                <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel" @click="cancel">取消</a>
+            </div>
 
                             <div class="weui-cells searchbar-result" id="searchResult" style="display: none;">
                                 <div class="weui-cells weui-cells_radio">
