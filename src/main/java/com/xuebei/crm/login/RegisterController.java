@@ -32,7 +32,7 @@ public class RegisterController {
                                 @RequestParam("pwd") String pwd) {
         User user = new User();
         GsonView gsonView = new GsonView();
-        if (tel.equals("") || realName.equals("") || pwd.length() < 6) {
+        if (tel.equals("") || tel.length()!= 11 || realName.equals("") || pwd.length() < 6) {
             gsonView.addStaticAttribute(SUCCESS_FLG, false);
             gsonView.addStaticAttribute("errMsg", "注册手机号、姓名或密码不能为空，且密码至少6位");
         } else {

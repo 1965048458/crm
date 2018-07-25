@@ -18,6 +18,7 @@
             height: 40px;
             margin-top: 20%;
         }
+
         .center-box {
             margin-top: 1%;
             font-size: large;
@@ -27,22 +28,29 @@
 </head>
 <body>
 <div id="addCustomerVue">
-    <div id = "addCustomer" v-show ="showPage === 'addCustomer'" >
-        <div class="weui-flex" style="background-color: white;height: 45px;" >
-                <div><div class="placeholder edgeButton"  >&nbsp; 取消 </div></div>
-                <div class="weui-flex__item" align="center"><div class="placeholder center-box" align="center" >新建学校</div></div>
-                <div><div class="placeholder edgeButton" align="center" @click="subMit"> 提交 &nbsp; </div></div>
+    <div id="addCustomer" v-show="showPage === 'addCustomer'">
+        <div class="weui-flex" style="background-color: white;height: 45px;">
+            <div>
+                <a href="javascript:customerList();">
+                    <div class="placeholder edgeButton">&nbsp; 取消</div>
+                </a></div>
+            <div class="weui-flex__item" align="center">
+                <div class="placeholder center-box" align="center">新建学校</div>
+            </div>
+            <div>
+                <div class="placeholder edgeButton" align="center" @click="subMit"> 提交 &nbsp; </div>
+            </div>
         </div>
 
         <div class="weui-cells">
-            <a class="weui-cell weui-cell_access" @click ="selectSch">
-                <label class="weui-label" >选择学校类型</label>
+            <a class="weui-cell weui-cell_access" @click="selectSch">
+                <label class="weui-label">选择学校类型</label>
                 <div class="weui-cell__bd" id="selSch">
                     &nbsp; {{schoolType}}
                 </div>
                 <div class="weui-cell__ft"></div>
             </a>
-            <a class="weui-cell weui-cell_access" @click = "selectNam">
+            <a class="weui-cell weui-cell_access" @click="selectNam">
                 <label class="weui-label" style="white-space:nowrap">学校名称</label>
                 <div class="weui-cell__bd" id="selNam">
                     &nbsp; {{name}}
@@ -71,11 +79,18 @@
         </div>
     </div>
 
-    <div id = "selSchType"  v-show ="showPage === 'selSchType'">
-        <div class="weui-flex" style="background-color: white;height: 45px;" >
-            <div><div class="placeholder edgeButton"  @click="cancel">&nbsp; 取消 </div></div>
-            <div class="weui-flex__item"><div class="placeholder center-box" align="center" >选择学校类型</div></div>
-            <div><div class="placeholder" style="color: dodgerblue;height: 40px;margin-top: 20%;visibility: hidden" align="center" > 提交 &nbsp; </div></div>
+    <div id="selSchType" v-show="showPage === 'selSchType'">
+        <div class="weui-flex" style="background-color: white;height: 45px;">
+            <div>
+                <div class="placeholder edgeButton" @click="cancel">&nbsp; 取消</div>
+            </div>
+            <div class="weui-flex__item">
+                <div class="placeholder center-box" align="center">选择学校类型</div>
+            </div>
+            <div>
+                <div class="placeholder" style="color: dodgerblue;height: 40px;margin-top: 20%;visibility: hidden"
+                     align="center"> 提交 &nbsp; </div>
+            </div>
         </div>
         <div class="weui-cells weui-cells_radio" @click="selectSchool">
             <label class="weui-cell weui-check__label" for="sch1">
@@ -117,40 +132,51 @@
         </div>
     </div>
 
-    <div id = "selName" v-show ="showPage === 'selName'" >
-        <div class="weui-flex" style="background-color: white;height: 45px;" >
-            <div><div class="placeholder edgeButton"  @click="cancel">&nbsp; 取消 </div></div>
-            <div class="weui-flex__item"><div class="placeholder center-box" align="center" >输入学校名称</div></div>
-            <div><div class="placeholder" style="color: dodgerblue;height: 40px;margin-top: 20%;" align="center" @click="submit"> 完成 &nbsp; </div></div>
+    <div id="selName" v-show="showPage === 'selName'">
+        <div class="weui-flex" style="background-color: white;height: 45px;">
+            <div>
+                <div class="placeholder edgeButton" @click="cancel">&nbsp; 取消</div>
+            </div>
+            <div class="weui-flex__item">
+                <div class="placeholder center-box" align="center">输入学校名称</div>
+            </div>
+            <div>
+                <div class="placeholder" style="color: dodgerblue;height: 40px;margin-top: 20%;" align="center"
+                     @click="submit"> 完成 &nbsp; </div>
+            </div>
         </div>
-        <div class="weui-cells" >
+        <div class="weui-cells">
             <div class="weui-cell">
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text" placeholder="" name="input" v-model="name" />
+                    <input class="weui-input" type="text" placeholder="" name="input" v-model="name"/>
                 </div>
             </div>
         </div>
-        <div class="weui-cells" >
+        <div class="weui-cells">
             <div class="weui-cells__title">以下用户已经创建，不能重复创建</div>
 
-            <div class="weui-cells weui-cells_radio" id="schList" >
-                <label class="weui-cell weui-check__label"  v-for="school in schList" >
+            <div class="weui-cells weui-cells_radio" id="schList">
+                <label class="weui-cell weui-check__label" v-for="school in schList">
                     <div class="weui-cell__bd">
                         <p>{{school}}</p>
                     </div>
                     <div class="weui-cell__ft">
-                        <input type="radio" class="weui-check"  v-bind:value ="school" v-model="name" >
+                        <input type="radio" class="weui-check" v-bind:value="school" v-model="name">
                         <span class="weui-icon-checked"></span>
                     </div>
                 </label>
             </div>
 
-         </div>
+        </div>
     </div>
 
 </div>
-
-
+<script>
+    function customerList() {
+        location.href = '/customer/customerList';
+    }
+    ;
+</script>
 </body>
 
 </html>

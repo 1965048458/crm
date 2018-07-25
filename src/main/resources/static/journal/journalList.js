@@ -1,6 +1,6 @@
 var TYPE_NAMES = {
     'DAILY': '日报',
-    'WEEKLY': '月报'
+    'WEEKLY': '周报'
 };
 
 jQuery(document).ready(function () {
@@ -36,6 +36,7 @@ jQuery(document).ready(function () {
                     cache:false
                 }).done(function(result){
                     if (result.successFlg) {
+                        console.log(result);
                         thisVue.$set(thisVue, 'journalList', result.journalList);
                         thisVue.showPage = 'journalList';
                     } else {

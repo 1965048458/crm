@@ -14,9 +14,9 @@ public class JournalSearchParam {
     private String[] sdId;
 
     private String customer;
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startTime;
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endTime;
 
     private Integer isRead;
