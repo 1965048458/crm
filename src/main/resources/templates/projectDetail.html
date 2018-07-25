@@ -27,17 +27,19 @@
     </style>
 </head>
 <body>
-<div>
+<div class="center-box">
 
     <div class="weui-flex" style="background-color: white;height: 45px;">
-        <div>
-            <div class="placeholder edgeButton">&nbsp;<i>< </i></div>
+        <div style="background: #ffffff;
+             text-align: center;
+             padding: 6px 15px;">
+            <span @click="backToList" class="pull-left"><img src="/images/back_icon.svg" style="margin-top:3px"/></span>
         </div>
         <div class="weui-flex__item" align="center">
             <div class="placeholder center-box" align="center">项目详情</div>
         </div>
         <div>
-            <div class="placeholder edgeButton" align="center" @click="apply"> *** &nbsp; </div>
+            <div class="placeholder edgeButton" align="center" @click="javascript: $('#draftDiv').show();"> *** &nbsp; </div>
         </div>
     </div>
 
@@ -95,7 +97,24 @@
                 </ul>
             </div>
         </div>
+    </div>
 
+    <div style="display:none" id="draftDiv">
+        <div class="weui-mask" id="iosMask" style="opacity: 1;"></div>
+        <div class="weui-actionsheet weui-actionsheet_toggle" id="iosActionsheet">
+            <div class="weui-actionsheet__title">
+                <p class="weui-actionsheet__title-text">这是一个标题，可以为一行或者两行。</p>
+            </div>
+            <div class="weui-actionsheet__menu">
+                <div class="weui-actionsheet__cell">示例菜单</div>
+                <div class="weui-actionsheet__cell">示例菜单</div>
+                <div class="weui-actionsheet__cell">示例菜单</div>
+                <div class="weui-actionsheet__cell">示例菜单</div>
+            </div>
+            <div class="weui-actionsheet__action">
+                <div class="weui-actionsheet__cell" id="iosActionsheetCancel">取消</div>
+            </div>
+        </div>
     </div>
 
 </div>
