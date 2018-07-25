@@ -193,8 +193,31 @@ public class JournalController {
 
     @RequestMapping("/searchLog")
     public String searchJournal(){
-
         return "selectLog";
+    }
+
+    /**
+     * 增加日志的补丁
+     * 做的事：检查该日志 ID 是否为该用户所有
+     * @param journalId 要增加补丁的日志ID
+     * @param content 增加的补丁内容
+     * @return
+     */
+    @RequestMapping("/action/journalAttachment")
+    public GsonView journalAttachment(@RequestParam("journalId") String journalId,
+                                      @RequestParam("content") String content,
+                                      HttpServletRequest request) {
+        try {
+            boolean auth = journalMapper.userHasJournal(acquireUserId(request), journalId);
+            if (!auth) {
+                return GsonView.createErrorView("用户不拥有此日志");
+            }
+            journalMapper.insertJournalPatch(journalId, content);
+        } catch (AuthenticationException e) {
+            return GsonView.createErrorView(e.getMessage());
+        }
+
+        return GsonView.createSuccessView();
     }
 
 }
