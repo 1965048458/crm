@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>客户</title>
+    <title>组织架构</title>
     <!-- 引入 WeUI -->
     <link rel="stylesheet" href="/weui.css"/>
     <link rel="stylesheet" href="/example.css">
@@ -35,15 +35,20 @@
     <div class="weui-tab">
         <div class="weui-tab__panel">
             <div id="customerVue">
-                    <div id="titleBar"  class="top-bar center-box" v-show="titleBar">
-                        <div class="title-bar">
-
-                        <span class="center-ele" style="font-size: 20px;">客户</span>
+                <div id="titleBar" class="top-bar center-box" v-show="titleBar">
+                    <div class="title-bar">
                         <a href="javascript:addCustomer();">
-                        <span class="pull-right"
-                              style="font-size: 20px; color: #00FFFF; padding-right: 10px">+ &nbsp;</span></a>
-                        </div>
+                           <image src="/images/back.png" class="pull-left" style="margin-top:3px; padding-right: 10px"></image>
+                        </a>
+                        <span class="center-ele" style="font-size: 20px">组织架构</span>
+                        <a href="javascript:addCustomer();">
+                            <image src="/images/menu.png" class="pull-right" style="margin-top:3px; padding-right: 10px"></image>
+                        <!--<span class="pull-right"-->
+                              <!--style="font-size: 20px; color: #00FFFF; padding-right: 10px">+ &nbsp;-->
+                        <!--</span>-->
+                        </a>
                     </div>
+                </div>
                 <div id="searchCustomer" v-show="searchCustomer">
                     <div class="center-box">
                         <div class="weui-search-bar" id="searchBar">
@@ -166,12 +171,10 @@
 <script>
     function addCustomer() {
         location.href = '/customer/add';
-    }
-    ;
+    };
     function journal() {
         location.href = '/journal/toList';
-    }
-    ;
+    };
     function opportunity() {
         location.href = '/opportunity';
     }
