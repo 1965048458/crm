@@ -4,10 +4,8 @@ import com.xuebei.crm.exception.DepartmentNameDuplicatedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -54,21 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
         List<Department> departmentList = customerMapper.queryDepartment(customerId);
         List<Contacts> contactsList = customerMapper.queryContacts(customerId);
         for (Department department:departmentList){
-            List<EnclosureApply> enclosureApplyList = customerMapper.queryEnclosureApply(department.getDeptId());
-            if(enclosureApplyList.size()==0)
-                department.setEnclosureStatus(EnclosureStatusEnum.NONE);
-            else{
-                for(EnclosureApply enclosureApply:enclosureApplyList){
-                    if(enclosureApply.getStatusCd() == "PERMITTED"){
-
-                        if(enclosureApply.getUserId() == userId)
-                            department.setEnclosureStatus(EnclosureStatusEnum.MINE);
-
-                        else
-                            department.setEnclosureStatus(EnclosureStatusEnum.ENCLOSURE);
-                    }
-                }
-            }
+            setEnclosureStatus(userId, department);
         }
         Map<String, Department> departmentMap = new HashMap<>();
         for (Department department : departmentList) {
@@ -93,9 +77,64 @@ public class CustomerServiceImpl implements CustomerService {
         return rltList;
     }
 
-    private Boolean isOpenSeaWarning(EnclosureApply enclosureApply){
+    private void setEnclosureStatus(String userId, Department department) {
+        //该部门收到的最新圈地请求
+        EnclosureApply enclosureApply = customerMapper.queryNewEnclosureApply(department.getDeptId());
+        if(enclosureApply==null){
+            return;
+        }
+        //是我的圈地
+        if(enclosureApply.getUserId().equals(userId)){
+            //获取圈地开始后所有的拜访记录
+            List<Visit> visitList= customerMapper.queryMyVisit(department.getDeptId(),enclosureApply.getStartTime(),userId);
+            //从未拜访
+            int diffDays;
+            int followTimes = 0;
+            if(visitList.isEmpty()){
+                //比较申请圈地时间与当前时间的间隔
+                 diffDays = diffDays(enclosureApply.getStartTime());
+            }
+            //拜访过
+            else {
+                Visit visit = visitList.get(0);
+                //比较最新的一次拜访时间与当前时间的间隔
+                diffDays = diffDays(visit.getVisitTime());
+                followTimes = visitList.size();
+            }
+            //申请圈地后未到83天
+            if(diffDays<83) department.setEnclosureStatus(EnclosureStatusEnum.MINE);
+                //距离申请圈地后83天 90天以内
+            else if (diffDays>=83 && diffDays<90){
+                OpenSeaWarning openSeaWarning = new OpenSeaWarning();
+                openSeaWarning.setFollowTimes(followTimes);
+                openSeaWarning.setLastTimeFollow(enclosureApply.getStartTime());
+                openSeaWarning.setDepartment(department);
+                department.setEnclosureStatus(EnclosureStatusEnum.MINE);
+            }
+            //距离申请圈地后超过90天
+            else {
+                department.setEnclosureStatus(EnclosureStatusEnum.NORMAL);
+            }
+        }
+        //不是我圈的地
+        else {
+            Visit visit = customerMapper.queryElseVisit(department.getDeptId(),enclosureApply.getStartTime(),userId);
+            int diffDays = diffDays(visit.getVisitTime());
+            if(diffDays<90) department.setEnclosureStatus(EnclosureStatusEnum.ENCLOSURE);
+            else department.setEnclosureStatus(EnclosureStatusEnum.NORMAL);
+        }
+    }
 
-        return false;
+    private static int diffDays(String visitTime) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        int days = Integer.MAX_VALUE;
+        try{
+            Date visitDate = format.parse(visitTime);
+            days = (int) ((System.currentTimeMillis()- visitDate.getTime()) / (1000*3600*24));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return days;
     }
 
     @Override

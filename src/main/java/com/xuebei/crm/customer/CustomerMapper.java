@@ -44,6 +44,18 @@ public interface CustomerMapper {
 
     List<EnclosureApply> queryEnclosureApply(String deptId);
 
+    EnclosureApply queryNewEnclosureApply(@Param("deptId")String deptId);
+
+    List<Visit> queryMyVisit(@Param("deptId") String deptId,
+                            @Param("startTime") String startTime,
+                           @Param("userId") String userId
+                            );
+
+    Visit queryElseVisit(@Param("deptId") String deptId,
+                       @Param("startTime") String startTime,
+                       @Param("userId") String userId
+    );
+
     List<String> searchSchool(@Param("keyword")String keyword);
 
     List<ContactsType> queryContactsTypes(@Param("customerId") String customerId);

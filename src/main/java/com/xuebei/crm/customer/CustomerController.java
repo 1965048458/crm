@@ -248,7 +248,7 @@ public class CustomerController {
     public GsonView queryDepartment(@RequestParam("customerId") String customerId,
                                     HttpServletRequest request) {
         String userId = (String) request.getSession().getAttribute("userId");
-        List<Department> departmentList = customerService.queryDepartment(customerId,userId);
+        List<Department> departmentList = customerService.queryDepartment(customerId, userId);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg",true);
         gsonView.addStaticAttribute("customerList", departmentList);
@@ -271,9 +271,7 @@ public class CustomerController {
         enclosureApply.setDeptId(applyDeptId);
         enclosureApply.setUserId(userId);
 //        enclosureApply.setApplyTime(Date);
-
         customerMapper.insertEnclosureApply(enclosureApply);
-
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
