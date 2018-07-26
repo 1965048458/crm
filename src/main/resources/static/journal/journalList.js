@@ -1,6 +1,6 @@
 var TYPE_NAMES = {
     'DAILY': '日报',
-    'WEEKLY': '月报'
+    'WEEKLY': '周报'
 };
 
 jQuery(document).ready(function () {
@@ -8,6 +8,7 @@ jQuery(document).ready(function () {
         el: '#journalVue',
         data: {
             showPage: 'journalList',
+            showAddJournalDialog: false,
             journalList:'',
             curJournal: {
                 user: {}
@@ -35,6 +36,7 @@ jQuery(document).ready(function () {
                     cache:false
                 }).done(function(result){
                     if (result.successFlg) {
+                        console.log(result);
                         thisVue.$set(thisVue, 'journalList', result.journalList);
                         thisVue.showPage = 'journalList';
                     } else {
@@ -121,6 +123,12 @@ jQuery(document).ready(function () {
             },
             'journalName': function (journal) {
                 return journal.user.realName + '的' + TYPE_NAMES[journal.type];
+            },
+            'clickAddJournalButton': function () {
+                this.showAddJournalDialog = true;
+            },
+            'cancelAddJournalEvent': function () {
+                this.showAddJournalDialog = false;
             },
             'toFilter':function () {
                 this.showPage = 'filterDiv';

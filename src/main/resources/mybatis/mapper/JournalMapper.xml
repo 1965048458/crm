@@ -218,4 +218,24 @@
         </if>
 
     </select>
+
+    <update id="receiverDeleteJournal">
+        UPDATE journal_receiver
+        SET has_delete = 1
+        WHERE receiver_id = #{receiverId} AND journal_id = #{journalId};
+    </update>
+
+    <insert id="insertJournalPatch">
+        INSERT INTO journal_patch (
+            journal_id,
+            content,
+            create_ts
+        )
+        VALUES
+            (
+                #{journalId},
+                #{content},
+                NOW()
+            );
+    </insert>
 </mapper>

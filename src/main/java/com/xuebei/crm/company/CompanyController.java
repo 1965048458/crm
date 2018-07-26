@@ -15,6 +15,9 @@ import java.util.List;
 public class CompanyController {
 
     @Autowired
+    private CompanyService companyService;
+
+    @Autowired
     private CompanyMapper companyMapper;
 
     private final String CRMUSER_LOGIN_OUT_OF_DATE_ERROR_MSG = "用户登录已失效，请重新登录";
@@ -54,6 +57,21 @@ public class CompanyController {
 
         request.getSession().setAttribute("userId", userId);
         return GsonView.createSuccessView();
+    }
+
+    @RequestMapping("/structure")
+    public String organizationStructure() {
+        return "organizationStructure";
+    }
+
+    @RequestMapping("/newCompany")
+    public String invite(){
+        return "newCompany";
+    }
+
+    @RequestMapping("/addMember")
+    public void insertMember(String name, String tel){
+        companyService.insertMember(name, tel);
     }
 
 }

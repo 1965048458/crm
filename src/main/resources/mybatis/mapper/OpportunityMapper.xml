@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuebei.crm.opportunity.OpportunityMapper">
+
+    <resultMap id="companyMap" type="com.xuebei.crm.company.Company">
+        <id property="companyId" column="company_id"/>
+        <result property="companyName" column="com_nm"/>
+    </resultMap>
+
+
+</mapper>

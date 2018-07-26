@@ -11,4 +11,7 @@ public interface CompanyMapper {
 
     String queryUserId(@Param("crmUserId") String crmUserId,
                        @Param("companyId") String companyId);
+
+    void insertMember(String name, String tel);
+
 }

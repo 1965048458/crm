@@ -79,6 +79,28 @@ public class JournalController {
         return gsonView;
     }
 
+    /**
+     * 接收人删除日志
+     * 要检查：日志存在且日志不是草稿，日志的接收人有申请删除的用户
+     */
+    @RequestMapping("/receiverDelete")
+    public GsonView receiverDeleteJournal(@RequestParam("journalId") String journalId,
+                                          HttpServletRequest request) {
+        try {
+            Journal journal = journalMapper.queryJournalById(journalId);
+            if (journal == null || !journal.getHasSubmitted()) {
+                return GsonView.createErrorView("日志不存在,或草稿");
+            }
+            Integer line = journalMapper.receiverDeleteJournal(journalId, acquireUserId(request));
+            if (line != 1) {
+                return GsonView.createErrorView("该日志接收人没有改用户");
+            }
+        } catch (AuthenticationException e) {
+            return GsonView.createErrorView(e.getMessage());
+        }
+        return GsonView.createSuccessView();
+    }
+
     @RequestMapping("/query")
     public GsonView getJournalInfoById(@RequestParam("journalId") String journalId,
                                        HttpServletRequest request) throws AuthenticationException {
@@ -142,7 +164,7 @@ public class JournalController {
     }
 
     @RequestMapping("/toList")
-    public String toJournalList(HttpServletRequest request) {
+    public String toJournalList(HttpServletRequest request, ModelMap modelMap) {
         return "journalList";
     }
 
@@ -151,6 +173,9 @@ public class JournalController {
         HttpSession session = request.getSession();
         String userId = (String)session.getAttribute("crmUserId");
         param.setUserId("00284bca325c4e77b9f30c5671ec1c44");
+        String userId ="00284bca325c4e77b9f30c5671ec1c44";
+                //(String)session.getAttribute("crmUserId");
+        param.setUserId(userId);
         List<Journal> journals =journalService.searchJournal(param);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("journalList", journals);
@@ -171,8 +196,31 @@ public class JournalController {
 
     @RequestMapping("/searchLog")
     public String searchJournal(){
-
         return "selectLog";
+    }
+
+    /**
+     * 增加日志的补丁
+     * 做的事：检查该日志 ID 是否为该用户所有
+     * @param journalId 要增加补丁的日志ID
+     * @param content 增加的补丁内容
+     * @return
+     */
+    @RequestMapping("/action/journalAttachment")
+    public GsonView journalAttachment(@RequestParam("journalId") String journalId,
+                                      @RequestParam("content") String content,
+                                      HttpServletRequest request) {
+        try {
+            boolean auth = journalMapper.userHasJournal(acquireUserId(request), journalId);
+            if (!auth) {
+                return GsonView.createErrorView("用户不拥有此日志");
+            }
+            journalMapper.insertJournalPatch(journalId, content);
+        } catch (AuthenticationException e) {
+            return GsonView.createErrorView(e.getMessage());
+        }
+
+        return GsonView.createSuccessView();
     }
 
 }
