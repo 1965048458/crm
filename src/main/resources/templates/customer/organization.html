@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Organization</title>
@@ -58,58 +58,78 @@
 <body>
 
 <div id="organizationVue" >
-    <div v-show="showPage === 'showCustomerOrganization'">
-        <div class="top-bar center-box">
-            <div>
-                <span class="pull-left">   <</span>
-                <span class="center-ele">浙江大学</span>
-                <span class="pull-right">编辑   </span>
-            </div>
-            <div class="select-bar">
-                <span @click="showCustomerInfo=true" >客户信息</span>
-                <span @click="searchOrganizations()">组织机构</span>
-            </div>
-        </div>
-
-        <div class="weui-search-bar" id="searchBar" >
-            <form class="weui-search-bar__form">
-                <div class="weui-search-bar__box">
-                    <i class="weui-icon-search"></i>
-                    <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
-                    <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+    <div class="page navbar js_show" v-show="showPage === 'showCustomerOrganization'">
+        <div class="page__bd" style="height: 100%;">
+            <div class="weui-tab">
+                <div class="weui-navbar">
+                    <div class="weui-navbar__item">
+                        客户信息
+                    </div>
+                    <div class="weui-navbar__item" @click="searchOrganizations()">
+                        组织机构
+                    </div>
                 </div>
-                <label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                    <i class="weui-icon-search"></i>
-                    <span>搜索</span>
-                </label>
-            </form>
-            <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
-        </div>
 
-        <div v-show="showOrganization">
-            <div class="customer-item">
-                <customer v-for="customer in customerList" :customer="customer"></customer>
-            </div>
-        </div>
+                <div class="weui-tab__panel">
 
-        <div class="js_dialog" id="iosDialog" style="opacity: 1;" v-show="showApplyDialog">
-            <div class="weui-mask"></div>
-            <div class="weui-dialog">
-                <div class="weui-dialog__bd" >
-                    <h1>提示</h1>
-                </div>
-                <div class="weui-dialog__bd">
-                    <p>是否申请"{{applyDeptName}}"</p>
-                </div>
-                <div class="weui-dialog__ft">
-                    <a @click="dialogCheck()" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
-                    <a @click="dialogQuit()" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
+                    <div class="weui-search-bar" id="searchBar" >
+                        <div class="weui-search-bar__form">
+                            <div class="weui-search-bar__box">
+                                <i class="weui-icon-search"></i>
+                                <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索"
+                                       @keyup.enter="search" v-model="searchWord" required="">
+                                <a href="javascript:" class="weui-icon-clear" id="searchClear" @click="clear"></a>
+                            </div>
+                            <label class="weui-search-bar__label" id="searchText" @click="text"
+                                   style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                                <i class="weui-icon-search"></i>
+                                <span>搜索</span>
+                            </label>
+                        </div>
+                        <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel" @click="cancel">取消</a>
+                    </div>
+
+                    <div class="weui-cells searchbar-result" id="searchResult" style="display: none">
+                        <div class="weui-cells weui-cells_radio">
+                            <label class="weui-cell weui-check__label" v-for="searchItem in searchList.filter(filterList)">
+                                <div class="weui-cell__bd">
+                                    <p v-text="searchItem.realName"></p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <input type="radio" class="weui-check" v-bind:value="searchItem.realName" v-model="searchWord">
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div v-show="showOrganization">
+                        <div class="customer-item">
+                            <customer v-for="customer in customerList" :customer="customer"></customer>
+                        </div>
+                    </div>
+
+                    <div class="js_dialog" id="iosDialog" style="opacity: 1;display: none" v-show="showApplyDialog">
+                        <div class="weui-mask"></div>
+                        <div class="weui-dialog">
+                            <div class="weui-dialog__bd" >
+                                <h1>提示</h1>
+                            </div>
+                            <div class="weui-dialog__bd">
+                                <p>是否申请"{{applyDeptName}}"</p>
+                            </div>
+                            <div class="weui-dialog__ft">
+                                <a @click="dialogCheck()" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+                                <a @click="dialogQuit()" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 
-    <div v-show="showPage === 'showApply'">
+    <div v-show="showPage === 'showApply'" style="display: none">
         <div class="top-bar center-box">
             <span class="pull-left" @click="applyQuit()">取消</span>
             <span class="center-ele">申请{{applyDeptName}}</span>
@@ -125,7 +145,7 @@
                 </div>
             </div>
         </div>
-        <div class="js_dialog" id="submitDialog" style="opacity: 1;" v-show="showSubmitDialog">
+        <div class="js_dialog" id="submitDialog" style="opacity: 1;display: none" v-show="showSubmitDialog">
             <div class="weui-mask"></div>
             <div class="weui-dialog">
                 <div class="weui-dialog__bd" >
@@ -139,7 +159,7 @@
                 </div>
             </div>
         </div>
-        <div class="js_dialog" id="iosDialog2" style="opacity: 1;" v-show="showSubmitErrDialog">
+        <div class="js_dialog" id="iosDialog2" style="opacity: 1;display: none" v-show="showSubmitErrDialog">
             <div class="weui-mask"></div>
             <div class="weui-dialog">
                 <div class="weui-dialog__bd" v-text="errMsg"></div>
@@ -150,7 +170,7 @@
         </div>
     </div>
 
-    <div v-show="showPage === 'showOpenSeaWarning' ">
+    <div v-show="showPage === 'showOpenSeaWarning'" style="display: none">
         <div class="top-bar center-box">
             <span class="pull-left" @click="openSea2Organization()"><</span>
             <span class="center-ele">客户进入公海警告</span>
@@ -229,16 +249,14 @@
 <script type="text/x-template" id="customer">
     <div class="weui-cells">
         <div class="weui-cell">
-            <div class="weui-cell__bd">
+            <div class="weui-cell__bd"  >
                 <span class="pull-left" style="padding-right: 10px;"> > </span>
                 <span class="pull-left" @click="changeSubFold" style="padding-right: 5px;" v-text="customer.deptName"></span>
-                <span class="pull-left"  v-text="addBrackets(customer.contactsList)"></span>
-                <span class="pull-left" v-text="addSquareBrackets(customer.enclosureStatus)" @click="apply(customer.deptName, customer.deptId)"></span>
+                <span class="pull-left" v-text="addNumBrackets(customer.contactNumber)"></span>
+                <span class="pull-left" v-text="addMineBrackets(customer.enclosureStatus)"></span>
+                <span class="pull-left" v-text="addEnclosureBrackets(customer.enclosureStatus)"></span>
+                <span class="pull-left" v-text="addNormalBrackets(customer.enclosureStatus)" @click="apply(customer.deptName, customer.deptId)"></span>
                 <!--<span class="pull-left" v-text="addOpenSeaWarning(customer.Warning)" @click="openSeaWarning(customer.Warning)"></span>-->
-            </div>
-
-            <div class="weui-cell__ft">
-                <span @click="apply(customer.deptName, customer.deptId)" style="font-size: larger"> + </span>
             </div>
 
         </div>

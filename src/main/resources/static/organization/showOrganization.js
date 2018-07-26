@@ -17,6 +17,7 @@ jQuery(document).ready(function () {
             applyReasons:'',
             showSubmitDialog:false,
             showSubmitErrDialog:false,
+            showSearchResult:false,
             submitReasons:'',
             warningDetails:{
                 openSeaWarning:'',
@@ -27,7 +28,10 @@ jQuery(document).ready(function () {
                 lastTime:''
             },
             deptList:'',
-            errMsg:''
+            errMsg:'',
+            searchList:[],
+            searchWord:'',
+
             //data: ''
         },
         methods: {
@@ -46,6 +50,7 @@ jQuery(document).ready(function () {
                     if (result.successFlg) {
                         thisVue.showOrganization = true;
                         thisVue.$set(thisVue, 'customerList',result.customerList);
+                        thisVue.$set(thisVue, 'searchList', result.searchList)
                     } else {
                         thisVue.errMsg = result.errMsg;
                         thisVue.showErrMsg = true;
@@ -108,9 +113,40 @@ jQuery(document).ready(function () {
                 this.warningDetails.lastTime = warning.lastTime;
                 this.showPage = 'showOpenSeaWarning';
 
+            },
+            search:function () {
+                console.log(this.searchWord);
+                this.showOrganization = true;
+                this.cancelSearch();
+            },
+            text:function () {
+                $('#searchBar').addClass('weui-search-bar_focusing');
+                $('#searchText').focus();
+                $('#searchResult').show();
+                this.showOrganization = false;
+            },
+            filterList:function (searchItem) {
+                return searchItem.realName.indexOf(this.searchWord) != -1;
+            },
+            hideSearchResult:function () {
+                $('#searchResult').hide();
+                this.searchWord = "";
+            },
+            cancelSearch:function () {
+                this.hideSearchResult();
+                $('#searchBar').removeClass('weui-search-bar_focusing');
+                $('#searchText').show();
+
+            },
+            clear:function () {
+                this.searchWord="";
+                $('#searchInput').focus();
+            },
+            cancel:function () {
+                this.cancelSearch();
+                this.showOrganization = true;
+                $('#searchInput').blur();
             }
-
-
         }
     });
     Vue.component('customer', {
@@ -129,23 +165,22 @@ jQuery(document).ready(function () {
             'changeSubFold' : function () {
                 this.showSub = !this.showSub;
             },
-            'addBrackets':function (number) {
-                if (number == "0") {
-                    return ""
-                }
-                else {
-                    return " ( " + number + " )";
+            'addNumBrackets':function (number) {
+                return "("+number+")";
+            },
+            'addMineBrackets':function (status) {
+                if (status == 'MINE'){
+                    return "[我的]"
                 }
             },
-            'addSquareBrackets':function (status) {
-                if (status == 'NORMAL'){
-                    return "[未圈]";
+            'addEnclosureBrackets':function (status) {
+                if(status == 'ENCLOSURE'){
+                    return "[已圈]"
                 }
-                else if(status == 'ENCLOSURE'){
-                    return "[已圈]";
-                }
-                else{
-                    return '';
+            },
+            'addNormalBrackets':function (status) {
+                if(status == 'NORMAL'){
+                    return "[未圈]"
                 }
             },
             'addOpenSeaWarning':function (Warning) {
@@ -168,4 +203,6 @@ jQuery(document).ready(function () {
 
         }
     });
+
+    organizationVue.searchOrganizations();
 });

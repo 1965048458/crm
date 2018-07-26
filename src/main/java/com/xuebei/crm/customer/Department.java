@@ -22,19 +22,28 @@ public class Department {
     @Expose
     private Department parent;
     @Expose
-    private List<Contacts> contactsList;
+    private List<Contacts> contactsList = new ArrayList<>();
     @Expose
-    private List<Department> departmentList;
+    private List<Department> departmentList = new ArrayList<>();
     @Expose
     private OpenSeaWarning openSeaWarning;
+
+    public Integer getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(Integer contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
     @Expose
     private Integer contactNumber = 0;
 
-    public void addContact(){
-        this.contactNumber+=1;
+    public void addContact(int contactNumber){
+        this.contactNumber+=contactNumber;
     }
 
-    private List<EnclosureApply> enclosureApplyList;
+    private List<EnclosureApply> enclosureApplyList = new ArrayList<>();
 
     public List<EnclosureApply> getEnclosureApplyList() {
         return enclosureApplyList;
@@ -134,16 +143,11 @@ public class Department {
     }
 
     public void addSubContact(Contacts contacts){
-        if(contactsList == null){
-            contactsList = new ArrayList<>();
-        }
         contactsList.add(contacts);
     }
 
     public void addEnclosureApply(EnclosureApply enclosureApply){
-        if(enclosureApplyList == null){
-            enclosureApplyList = new ArrayList<>();
-        }
+
         enclosureApplyList.add(enclosureApply);
     }
 }
