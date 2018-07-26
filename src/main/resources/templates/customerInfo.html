@@ -31,6 +31,10 @@
             float: left !important;
         }
 
+        .pull-right{
+            float: right!important;
+        }
+
         .customer-item{
             background-color: #FFFFFF;
             line-height: 1.47058824;
@@ -63,13 +67,14 @@
             <span onclick="backToList()" class="pull-left"><img src="/images/back_icon.svg"
                                                                 style="margin-top:3px"/></span>
             <span class="center" th:text="${customerName}"></span>
+            <span id="edit" class="pull-right" style="color: #53cfff;display: none ">编辑</span>
         </div>
         <div class="weui-tab" style="margin-top: 10px;">
             <div class="weui-navbar">
-                <div href="#tab1" class="weui-navbar__item weui-bar__item_on">
+                <div href="#tab1" class="weui-navbar__item weui-bar__item_on" onclick="editHide()">
                     <span class="center-ele">客户信息</span>
                 </div>
-                <div href="#tab2" class="weui-navbar__item">
+                <div href="#tab2" class="weui-navbar__item" onclick="editDisplay()">
                     <span class="center-ele">组织机构</span>
                 </div>
             </div>
@@ -214,9 +219,9 @@
 
                         <div v-show="showPage === 'showApply'" style="display: none">
                             <div class="top-bar center-box">
-                                <span class="pull-left" @click="applyQuit()">取消</span>
+                                <span class="pull-left" @click="applyQuit()" style="color: #53cfff">取消</span>
                                 <span class="center-ele">申请{{applyDeptName}}</span>
-                                <span class="pull-right" @click="applySubmit()">提交</span>
+                                <span class="pull-right" @click="applySubmit()" style="color: #53cfff">提交</span>
                             </div>
                             <div class="weui-cells">
                                 <div class="weui-cell">
@@ -341,7 +346,15 @@
             $(jQuery(this).attr("href")).show().siblings('.weui-tab__content').hide();
         });
     });
+    
+    function editDisplay() {
+        $('#edit').show();
+    }
 
+    function editHide() {
+        $('#edit').hide();
+    }
+    
     function backToList() {
         location.href = '/customer/customerList';
     }
