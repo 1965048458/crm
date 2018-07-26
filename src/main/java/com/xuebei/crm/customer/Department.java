@@ -27,6 +27,12 @@ public class Department {
     private List<Department> departmentList;
     @Expose
     private OpenSeaWarning openSeaWarning;
+    @Expose
+    private Integer contactNumber = 0;
+
+    public void addContact(){
+        this.contactNumber+=1;
+    }
 
     private List<EnclosureApply> enclosureApplyList;
 

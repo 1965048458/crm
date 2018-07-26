@@ -62,6 +62,7 @@ public class CustomerServiceImpl implements CustomerService {
             String departmentId = contacts.getDepartmentId();
             Department department = departmentMap.get(departmentId);
             department.addSubContact(contacts);
+            department.addContact();
         }
         List<Department> rltList = new ArrayList<>();
         for (Department department: departmentList) {
@@ -73,6 +74,10 @@ public class CustomerServiceImpl implements CustomerService {
                 prtDept.addSubDept(department);
             }
         }
+        for(Department department:rltList){
+
+        }
+
 
         return rltList;
     }
@@ -119,7 +124,12 @@ public class CustomerServiceImpl implements CustomerService {
         //不是我圈的地
         else {
             Visit visit = customerMapper.queryElseVisit(department.getDeptId(),enclosureApply.getStartTime(),userId);
-            int diffDays = diffDays(visit.getVisitTime());
+            int diffDays;
+            if(visit==null){
+                diffDays = diffDays(enclosureApply.getStartTime());
+            }else {
+                diffDays = diffDays(visit.getVisitTime());
+            }
             if(diffDays<90) department.setEnclosureStatus(EnclosureStatusEnum.ENCLOSURE);
             else department.setEnclosureStatus(EnclosureStatusEnum.NORMAL);
         }

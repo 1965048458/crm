@@ -201,7 +201,7 @@
                 #{userId},
                 #{reasons},
                 NOW(),
-                #{endTime},
+                date_add(NOW(), INTERVAL 3 MONTH),
                 'APPLYING',
                 #{userId},
                 NOW()

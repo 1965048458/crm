@@ -2,56 +2,6 @@
  * Created by Administrator on 2018/7/17.
  */
 
-var customerList = [
-    {
-        name: '校长',
-        number: '1',
-        Warning:{},
-        isCircle:"未圈",
-        contacts: [{'name': '李某人'}]
-    },
-    {
-        name: '副校长',
-        number: '1',
-        Warning:{openSeaWarning:'1',
-            leftTime:'7天10小时后',
-            warnedOrganization:'机械学院',
-            createdTime:'2018-01-30',
-            times:'1',
-            lastTime:'2018-03-01'
-                    },
-        isCircle:"已圈",
-        contacts: [{'name': '李副校长'}]
-    },
-    {
-        name:'书记',
-        number:'2',
-        Warning:{},
-        isCircle:"未圈",
-        customerList:[],
-        contacts:[{name:'张书记'},
-            {name:'赵书记'}]
-
-    },
-
-    {
-        name: '机械学院',
-        number: '2',
-        Warning:{},
-        isCircle:"未圈",
-        customerList: [
-            {
-                name: '机械制造及自动化',
-                number: '1',
-                Warning:{},
-                isCircle:"",
-                customerList: [],
-                contacts: [{'name': '李机械制造及自动化长', 'number': '0'}]
-            }
-        ],
-        contacts: [{'name': '李机械学院长', 'number': '0'}]
-    }
-];
 jQuery(document).ready(function () {
 
     var organizationVue = new Vue({
@@ -66,6 +16,7 @@ jQuery(document).ready(function () {
             applyDeptId:'',
             applyReasons:'',
             showSubmitDialog:false,
+            showSubmitErrDialog:false,
             submitReasons:'',
             warningDetails:{
                 openSeaWarning:'',
@@ -74,7 +25,9 @@ jQuery(document).ready(function () {
                 createdTime:'',
                 times:'',
                 lastTime:''
-            }
+            },
+            deptList:'',
+            errMsg:''
             //data: ''
         },
         methods: {
@@ -84,7 +37,7 @@ jQuery(document).ready(function () {
                     type: 'get',
                     url: '/customer/organization/show',
                     data: {
-                        customerId:'customerzju',
+                        customerId:'customerzju'
                     },
                     dataType: 'json',
                     cache: false
@@ -92,7 +45,7 @@ jQuery(document).ready(function () {
                     console.log(result);
                     if (result.successFlg) {
                         thisVue.showOrganization = true;
-                        thisVue.$set(thisVue, 'customerList', result.customerList);
+                        thisVue.$set(thisVue, 'customerList',result.customerList);
                     } else {
                         thisVue.errMsg = result.errMsg;
                         thisVue.showErrMsg = true;
@@ -130,7 +83,7 @@ jQuery(document).ready(function () {
                         thisVue.showSubmitDialog = true;
                     } else {
                         thisVue.errMsg = result.errMsg;
-                        thisVue.showErrMsg = true;
+                        thisVue.showSubmitErrDialog = true;
                     }
 
                 });
