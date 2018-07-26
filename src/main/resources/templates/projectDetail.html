@@ -13,10 +13,18 @@
     <script src="/project/jquery.timelinr-0.9.7.js"></script>
     <script src="/project/projectDetail.js"></script>
     <style>
-        .edgeButton {
-            color: dodgerblue;
-            height: 40px;
-            margin-top: 20%;
+        .top-bar {
+            background: #ffffff;
+            text-align: center;
+            padding: 10px 15px;
+        }
+
+        .pull-left {
+            float: left !important;
+        }
+
+        .pull-right {
+            float: right !important;
         }
 
         .center-box {
@@ -27,20 +35,13 @@
     </style>
 </head>
 <body>
-<div class="center-box">
+<div class="center-box" id="projectVue">
 
-    <div class="weui-flex" style="background-color: white;height: 45px;">
-        <div style="background: #ffffff;
-             text-align: center;
-             padding: 6px 15px;">
-            <span @click="backToList" class="pull-left"><img src="/images/back_icon.svg" style="margin-top:3px"/></span>
-        </div>
-        <div class="weui-flex__item" align="center">
-            <div class="placeholder center-box" align="center">项目详情</div>
-        </div>
-        <div>
-            <div class="placeholder edgeButton" align="center" @click="javascript: $('#draftDiv').show();"> *** &nbsp; </div>
-        </div>
+    <div class="top-bar">
+        <span @click="back" class="pull-left"><img src="/images/back_icon.svg" style="margin-top:8px"/></span>
+        <span class="center" style="font-size: larger;">项目详情</span>
+        <span class="pull-right" style="color: dodgerblue; margin-top: 8px;"
+              @click="apply"> *** &nbsp; </span>
     </div>
 
     <div class="weui-cells weui-cells_form">
@@ -48,13 +49,13 @@
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">项目名称</label></div>
                 <div class="weui-cell__bd">
-                    <p><span>安阳或任何负担.... </span></p>
+                    <p><span>安阳工程任何负担.... </span></p>
                 </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">项目内容</label></div>
                 <div class="weui-cell__bd">
-                    <p><span>虚拟收到过水电费.... </span></p>
+                    <p><span>虚拟仿真水电费.... </span></p>
                 </div>
             </div>
             <div class="weui-cell">
@@ -88,7 +89,7 @@
                 <ul id="issues">
                     <li id="r1">
                         <h1>2005 闪亮登场</h1>
-                        <p>2005年，呱呱坠地。界面清爽、。</p>
+                        <p>销售人员创建了项目</p>
                     </li>
                     <li id="r2">
                         <h1>2006 扬帆起航</h1>
@@ -99,20 +100,16 @@
         </div>
     </div>
 
-    <div style="display:none" id="draftDiv">
+    <div style="display: none" id="applyDiv">
         <div class="weui-mask" id="iosMask" style="opacity: 1;"></div>
         <div class="weui-actionsheet weui-actionsheet_toggle" id="iosActionsheet">
-            <div class="weui-actionsheet__title">
-                <p class="weui-actionsheet__title-text">这是一个标题，可以为一行或者两行。</p>
-            </div>
             <div class="weui-actionsheet__menu">
-                <div class="weui-actionsheet__cell">示例菜单</div>
-                <div class="weui-actionsheet__cell">示例菜单</div>
-                <div class="weui-actionsheet__cell">示例菜单</div>
-                <div class="weui-actionsheet__cell">示例菜单</div>
+                <div class="weui-actionsheet__cell" style="color: dodgerblue">申请项目支持</div>
+                <div class="weui-actionsheet__cell" style="color: dodgerblue">记录回款信息</div>
+                <div class="weui-actionsheet__cell" style="color: red">申请修改信息</div>
             </div>
             <div class="weui-actionsheet__action">
-                <div class="weui-actionsheet__cell" id="iosActionsheetCancel">取消</div>
+                <div class="weui-actionsheet__cell" id="iosActionsheetCancel" style="color: dodgerblue" @click="cancel">取消</div>
             </div>
         </div>
     </div>
