@@ -67,7 +67,7 @@
                 <div id="journalList" v-show="showPage === 'journalList'">
                     <div class="weui-navbar">
                             <span class="center-ele"
-                                  style="display:inline-block;font-size: 20px;margin-top: 5px;margin-left: 45%;">工作日志</span>
+                                  style="display:inline-block;font-size: 20px;margin-top: 5px;margin-left: 40%;">工作日志</span>
                         <label style="visibility: hidden">&nbsp;占位来表示空格</label>
                         <span class="center-ele"
                               style="display:inline-block;width:20px;height:40px;font-size: 30px; color: #00FFFF; padding-bottom: 0px;margin-left:0%;"
@@ -252,8 +252,17 @@
                 <div class="container" id="journalFilter" style="display: none" v-show="showPage === 'filterDiv'">
                     <div class="page home js_show">
                         <div class="weui-tab">
+                            <div class="weui-navbar" style="height: 40px;">
+
+
+                                <span @click="backToList" class="pull-left"style="margin-left: 5px;margin-top: 5px"><img src="/images/back_icon.svg" style="margin-top:3px"/></span>
+                                <span class="center" style="font-size:20px;margin-left: 40%;margin-top: 3px">筛选日志</span>
+
+
+                            </div>
                             <div class="weui-tab__panel">
                                 <div class="page__bd page__bd_spacing">
+
                                     <ul>
                                         <li class="">
                                             <div class="weui-cells weui-cells-form">

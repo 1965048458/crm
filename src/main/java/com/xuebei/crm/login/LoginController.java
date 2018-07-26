@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * Created by Rong Weicheng on 2018/7/9.
@@ -53,24 +54,38 @@ public class LoginController {
 
     @RequestMapping("/findPwd")
     public GsonView findPwd(@RequestParam("tel") String tel,
-                            @RequestParam("pwd") String pwd) {
+                            @RequestParam("pwd") String pwd,
+                            @RequestParam("captcha") String captcha,HttpServletRequest request) {
 
         GsonView gsonView = new GsonView();
         User user = loginService.searchTel(tel);
         if (user==null) {
-            gsonView.addStaticAttribute(SUCCESS_FLG, false);
+            gsonView.addStaticAttribute("exist", false);
         }
         else {
-            if (pwd.length() < 6) {
-                gsonView.addStaticAttribute(SUCCESS_FLG, false);
-                gsonView.addStaticAttribute("errMsg", "密码至少6位");
+            Date start = (Date) request.getSession().getAttribute("CAPTCHA_CREATE_TS");
+            Date now = new Date();
+            long c = (now.getTime() - start.getTime()) / 1000;
+            if (c > 60) {
+                gsonView.addStaticAttribute("time", false);
+            }
+            String capt = (String) request.getSession().getAttribute("CAPTCHA");
+            if (!capt.equals(captcha)) {
+                gsonView.addStaticAttribute("captcha", false);
             } else {
-                loginService.changePwd(tel, pwd);
-                gsonView.addStaticAttribute(SUCCESS_FLG, true);
+                if (pwd.length() < 6) {
+                    gsonView.addStaticAttribute(SUCCESS_FLG, false);
+                    gsonView.addStaticAttribute("errMsg", "密码至少6位");
+                } else {
+                    loginService.changePwd(tel, pwd);
+                    gsonView.addStaticAttribute(SUCCESS_FLG, true);
+                    request.getSession().removeAttribute("CAPTCHA");
+                }
             }
         }
         return gsonView;
     }
+
 
 
 
