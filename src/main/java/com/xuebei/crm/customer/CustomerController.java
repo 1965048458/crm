@@ -304,7 +304,10 @@ public class CustomerController {
     }
 
     @RequestMapping("/customerInfo")
-    public String customerInfo(){
+    public String customerInfo(@RequestParam(value = "customerName")String customerName,
+                               ModelMap modelMap, HttpServletRequest request){
+
+        modelMap.addAttribute("customerName", customerName);
         return "customerInfo";
     }
 

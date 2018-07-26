@@ -7,7 +7,6 @@ $(document).ready(function () {
     var searchCustInfoVue = new Vue({
         el: '#customerVue',
         data: {
-            titleBar: true,
             searchCustomer: true,
             customers: true,
             searchWord: '',
@@ -21,30 +20,27 @@ $(document).ready(function () {
                     type: 'get',
                     url: '/customer/queryCustomer',
                     data: {
-                        searchWord: thisVue.searchWord,
+                        searchWord: thisVue.searchWord
                     },
                     dataType: 'json',
                     cache: false
                 }).done(function (result) {
                     if (result.successFlg) {
                         thisVue.$set(thisVue, 'customerList', result.customerList);
+                        thisVue.customerList = result.customerList;
                     } else {
                         thisVue.errMsg = result.errMsg;
                     }
                 })
             },
             'search': function () {
-
-                this.showResult();
-                this.customers = true;
-                this.cancelSearch();
-                this.titleBar = true;
+                this.showResult();//this.customers = true;   逻辑待修改
+                window.location.href = "/customer/customerInfo?customerName=" + this.searchWord;
             },
             'text': function () {
                 $('#searchBar').addClass('weui-search-bar_focusing');
                 $('#searchText').focus();
                 $('#searchResult').show();
-                this.titleBar = false;
                 this.customers = false;
             },
             'filterList': function (customer) {
@@ -65,12 +61,11 @@ $(document).ready(function () {
             },
             'cancel': function () {
                 this.cancelSearch();
-                this.titleBar = true;
                 this.customers = true;
                 $('#searchInput').blur();
             },
-            'loadDetail': function (customerId) {
-                //
+            'loadDetail': function (customerName) {
+                window.location.href = "/customer/customerInfo?customerName=" +customerName;
             }
         }
     });
