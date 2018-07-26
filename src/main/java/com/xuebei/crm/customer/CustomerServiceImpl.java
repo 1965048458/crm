@@ -62,7 +62,7 @@ public class CustomerServiceImpl implements CustomerService {
             String departmentId = contacts.getDepartmentId();
             Department department = departmentMap.get(departmentId);
             department.addSubContact(contacts);
-            department.addContact();
+            department.addContact(1);
         }
         List<Department> rltList = new ArrayList<>();
         for (Department department: departmentList) {
@@ -72,12 +72,9 @@ public class CustomerServiceImpl implements CustomerService {
                 String prtId = department.getParent().getDeptId();
                 Department prtDept = departmentMap.get(prtId);
                 prtDept.addSubDept(department);
+                prtDept.addContact(department.getContactNumber());
             }
         }
-        for(Department department:rltList){
-
-        }
-
 
         return rltList;
     }

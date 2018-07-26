@@ -1,5 +1,6 @@
 package com.xuebei.crm.customer;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import com.xuebei.crm.dto.GsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.xuebei.crm.utils.UUIDGenerator;
@@ -256,9 +257,13 @@ public class CustomerController {
                                     HttpServletRequest request) {
         String userId = (String) request.getSession().getAttribute("userId");
         List<Department> deptList = customerService.queryDepartment(customerId, userId);
+        //TODO
+        List<Contacts> contactsList = customerMapper.queryContacts(customerId);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg",true);
         gsonView.addStaticAttribute("customerList", deptList);
+        //TODO
+        gsonView.addStaticAttribute("searchList",contactsList);
         return gsonView;
     }
 
