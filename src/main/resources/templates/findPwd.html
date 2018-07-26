@@ -7,19 +7,35 @@
     <!-- 引入 WeUI -->
     <link rel="stylesheet" href="/weui.css"/>
     <link rel="stylesheet" href="/example.css">
+    <style>
+        .top-bar {
+            background: #ffffff;
+            text-align: center;
+            padding: 10px 15px;
+        }
+        .pull-left {
+            float: left!important;
+        }
+    </style>
 </head>
 <body ontouchstart>
-    <div class = "container" id="container"></div>
+
     <div id = "insertVue">
-    <div class="weui-cells"  style="transform:rotate(180deg)">
-        <a class="weui-cell weui-cell_access" href="javascript:login();">
-            <div class="weui-cell__bd" style="color:transparent"  >
-                <p>back</p>
-            </div>
-            <div class="weui-cell__ft" >
-            </div>
-        </a>
-    </div>
+        <div class="top-bar" style="height: 20px;">
+            <a href="javascript:login();">
+                <span class="pull-left"><img src="/images/back_icon.svg" style="margin-top:3px"/></span>
+            </a>
+        </div>
+
+    <!--<div class="weui-cells"  style="transform:rotate(180deg)">-->
+        <!--<a class="weui-cell weui-cell_access" href="javascript:login();">-->
+            <!--<div class="weui-cell__bd" style="color:transparent"  >-->
+                <!--<p>back</p>-->
+            <!--</div>-->
+            <!--<div class="weui-cell__ft" >-->
+            <!--</div>-->
+        <!--</a>-->
+    <!--</div>-->
 
     <div class="weui-flex" style=" visibility: hidden">
         <div class="weui-flex__item">
