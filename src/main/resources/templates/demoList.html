@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>WeUI</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css"/>
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script>
+        function redirect(url) {
+            window.location = url;
+        }
+    </script>
+    <style>
+        .plan-title {
+            background-color: #FFFFFF;
+            line-height: 1.47058824;
+            font-size: 17px;
+            overflow: hidden;
+            position: relative;
+        }
+        .weui-cells:before,.receiver-box:after, .receiver-box:before {
+            border: none;
+        }
+        .top-bar {
+            background: #ffffff;
+            text-align: center;
+            padding: 10px 15px;
+        }
+        .pull-left {
+            float: left!important;
+        }
+        .pull-right {
+            float: right!important;
+        }
+        .visit-type-sel{
+            background: #ffffff;
+            border-top: solid 2px #DDDDDD;
+        }
+        .receiver-box {
+            width: auto;
+            padding: 5px 15px;
+        }
+        .receiver-name {
+            font-size: 12px;
+        }
+        .addVisit-img {
+            padding: 8px 15px;
+            width: 25px;
+            height: 25px;
+        }
+    </style>
+</head>
+
+<body >
+
+<div id="demoListVue">
+
+    <div class="top-bar">
+        <span class="center">选择功能</span>
+    </div>
+
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell" th:each="demoItem: ${demoItems}">
+            <div class="weui-cell__bd" th:onclick="'redirect(\&apos;'+${demoItem.getWebsite()}+'\&apos;'+')'">
+                <label th:text="${demoItem.getName()}">这里是测试名称</label>
+            </div>
+            <div>
+                <span><img src="/images/next_page.svg"></span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

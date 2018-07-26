@@ -59,6 +59,11 @@ public class CompanyController {
         return GsonView.createSuccessView();
     }
 
+    @RequestMapping("/structure")
+    public String organizationStructure() {
+        return "organizationStructure";
+    }
+
     @RequestMapping("/newCompany")
     public String invite(){
         return "newCompany";

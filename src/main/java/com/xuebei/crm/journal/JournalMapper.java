@@ -49,6 +49,10 @@ public interface JournalMapper {
     Integer receiverDeleteJournal(@Param("journalId") String journalId,
                                   @Param("receiverId") String receiverId);
 
+    // function for journal attachment
+    Integer insertJournalPatch(@Param("journalId") String journalId,
+                               @Param("content") String content);
+
     // other functions
     Boolean isUserSameCompany(@Param("userIdA") String userIdA,
                               @Param("userIdB") String userIdB);
