@@ -7,7 +7,6 @@ $(document).ready(function () {
     var searchCustInfoVue = new Vue({
         el: '#customerVue',
         data: {
-            titleBar: true,
             searchCustomer: true,
             customers: true,
             searchWord: '',
@@ -38,13 +37,11 @@ $(document).ready(function () {
                 this.showResult();
                 this.customers = true;
                 this.cancelSearch();
-                this.titleBar = true;
             },
             'text': function () {
                 $('#searchBar').addClass('weui-search-bar_focusing');
                 $('#searchText').focus();
                 $('#searchResult').show();
-                this.titleBar = false;
                 this.customers = false;
             },
             'filterList': function (customer) {
@@ -65,7 +62,6 @@ $(document).ready(function () {
             },
             'cancel': function () {
                 this.cancelSearch();
-                this.titleBar = true;
                 this.customers = true;
                 $('#searchInput').blur();
             },
