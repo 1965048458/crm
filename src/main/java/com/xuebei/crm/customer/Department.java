@@ -27,6 +27,22 @@ public class Department {
     private List<Department> departmentList;
     @Expose
     private OpenSeaWarning openSeaWarning;
+    @Expose
+    private Integer contactNumber = 0;
+
+    public void addContact(){
+        this.contactNumber+=1;
+    }
+
+    private List<EnclosureApply> enclosureApplyList;
+
+    public List<EnclosureApply> getEnclosureApplyList() {
+        return enclosureApplyList;
+    }
+
+    public void setEnclosureApplyList(List<EnclosureApply> enclosureApplyList) {
+        this.enclosureApplyList = enclosureApplyList;
+    }
 
     public List<Contacts> getContactsList() {
         return contactsList;
@@ -115,5 +131,19 @@ public class Department {
             departmentList = new ArrayList<>();
         }
         departmentList.add(department);
+    }
+
+    public void addSubContact(Contacts contacts){
+        if(contactsList == null){
+            contactsList = new ArrayList<>();
+        }
+        contactsList.add(contacts);
+    }
+
+    public void addEnclosureApply(EnclosureApply enclosureApply){
+        if(enclosureApplyList == null){
+            enclosureApplyList = new ArrayList<>();
+        }
+        enclosureApplyList.add(enclosureApply);
     }
 }

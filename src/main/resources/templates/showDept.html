@@ -2,13 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Organization</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>Department</title>
     <link rel="stylesheet" href="/weui.css">
     <link rel="stylesheet" href="/example.css"/>
     <script src="/lib/jquery-2.1.1.js"></script>
     <script src="/vue.v2.5.13.js"></script>
-    <script src="/organization/showOrganization.js" charset="utf-8"></script>
     <style>
         .pull-left{
             float: left!important;
@@ -19,8 +17,8 @@
         .top-bar{
             font-size: 18px;
             text-align: center;
-            background: #ffffff;
-            border-bottom: solid 1px #DDDDDD ;
+            background: #FAFAFA;
+            /*border-bottom: solid 1px #DDDDDD ;*/
         }
         .center-box{
             text-align: center;
@@ -54,6 +52,7 @@
         }
 
     </style>
+
 </head>
 <body>
 
@@ -61,9 +60,9 @@
     <div v-show="showPage === 'showCustomerOrganization'">
         <div class="top-bar center-box">
             <div>
-                <span class="pull-left">   <</span>
+                <span class="pull-left"><</span>
                 <span class="center-ele">浙江大学</span>
-                <span class="pull-right">编辑   </span>
+                <span class="pull-right">编辑</span>
             </div>
             <div class="select-bar">
                 <span @click="showCustomerInfo=true" >客户信息</span>
@@ -136,15 +135,6 @@
                 </div>
                 <div class="weui-dialog__ft">
                     <a @click="submitDialogCheck()" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
-                </div>
-            </div>
-        </div>
-        <div class="js_dialog" id="iosDialog2" style="opacity: 1;" v-show="showSubmitErrDialog">
-            <div class="weui-mask"></div>
-            <div class="weui-dialog">
-                <div class="weui-dialog__bd" v-text="errMsg"></div>
-                <div class="weui-dialog__ft">
-                    <a @click="showSubmitErrDialog=false" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
                 </div>
             </div>
         </div>
@@ -225,36 +215,5 @@
 </div>
 
 </body>
-
-<script type="text/x-template" id="customer">
-    <div class="weui-cells">
-        <div class="weui-cell">
-            <div class="weui-cell__bd">
-                <span class="pull-left" style="padding-right: 10px;"> > </span>
-                <span class="pull-left" @click="changeSubFold" style="padding-right: 5px;" v-text="customer.deptName"></span>
-                <span class="pull-left"  v-text="addBrackets(customer.contactsList)"></span>
-                <span class="pull-left" v-text="addSquareBrackets(customer.enclosureStatus)" @click="apply(customer.deptName, customer.deptId)"></span>
-                <!--<span class="pull-left" v-text="addOpenSeaWarning(customer.Warning)" @click="openSeaWarning(customer.Warning)"></span>-->
-            </div>
-
-            <div class="weui-cell__ft">
-                <span @click="apply(customer.deptName, customer.deptId)" style="font-size: larger"> + </span>
-            </div>
-
-        </div>
-        <div class="weui-cells" v-show="showSub">
-            <div class="weui-cell" v-for="contact in customer.contactsList">
-                <div class="weui-cell__hd">
-                    <img src="/images/customer/defaultUserIcon.png" class="usr-img">
-                </div>
-                <div class="weui-cell__bd">
-                    <span v-text="contact.realName"></span>
-                </div>
-            </div>
-            <div class="weui-cells" style="padding-left: 30px">
-                <customer v-for="subCustomer in customer.departmentList" :customer="subCustomer"></customer>
-            </div>
-        </div>
-    </div>
-</script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 </html>

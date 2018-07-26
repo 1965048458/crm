@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -252,11 +252,35 @@ public class CustomerController {
     public String organization(){return "customer/organization";}
 
     @RequestMapping("/organization/show")
-    public GsonView queryDepartment(@RequestParam("customerId") String customerId) {
-        List<Department> departmentList = customerService.queryDepartment(customerId);
+    public GsonView queryDepartment(@RequestParam("customerId") String customerId,
+                                    HttpServletRequest request) {
+        String userId = (String) request.getSession().getAttribute("userId");
+        List<Department> deptList = customerService.queryDepartment(customerId, userId);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg",true);
-        gsonView.addStaticAttribute("customerList", departmentList);
+        gsonView.addStaticAttribute("customerList", deptList);
+        return gsonView;
+    }
+
+    @RequestMapping("/organization/apply")
+    public GsonView applyDepartment(@RequestParam("submitReasons") String submitReasons,
+                                    @RequestParam("applyDeptId") String applyDeptId,
+                                    EnclosureApply enclosureApply,
+                                    HttpServletRequest request) {
+//        System.out.println(applyTime);
+        final String EMPTY_REASONS_ERROR = "申请理由不能为空";
+        if(submitReasons == null)
+            return GsonView.createErrorView(EMPTY_REASONS_ERROR);
+
+        String userId = (String) request.getSession().getAttribute("userId");
+        //enclosureApply.setEnclosureApplyId(11);
+        enclosureApply.setReasons(submitReasons);
+        enclosureApply.setDeptId(applyDeptId);
+        enclosureApply.setUserId(userId);
+//        enclosureApply.setApplyTime(Date);
+        customerMapper.insertEnclosureApply(enclosureApply);
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }
 

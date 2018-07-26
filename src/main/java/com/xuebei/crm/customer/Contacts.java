@@ -8,6 +8,17 @@ public class Contacts {
     @Expose
     private String contactsId;
     @Expose
+    private String departmentId;
+
+    public String getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    @Expose
     private String realName;
     @Expose
     private GenderEnum gender;

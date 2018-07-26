@@ -17,11 +17,18 @@
         <association property="parent" javaType="com.xuebei.crm.customer.Department">
             <id property="deptId" column="prt_id"/>
         </association>
-        <association property="contactsList" javaType="com.xuebei.crm.customer.Contacts">
-            <id property="contactId" column="contacts_id"/>
-            <result property="realName" column="real_nm"/>
-            <result property="gender" column="gender"/>
-        </association>
+        <!--<collection property="contactsList" resultMap="contactsMap"/>-->
+        <!--<collection property="enclosureApplyList" javaType="com.xuebei.crm.customer.EnclosureApply">-->
+            <!--<id property="enclosureApplyId" column="enclosure_apply_id"/>-->
+            <!--<result property="userId" column="user_id"/>-->
+            <!--<result property="statusCd" column="status_cd"/>-->
+        <!--</collection>-->
+    </resultMap>
+
+    <resultMap id="enclosureApplyMap" type="com.xuebei.crm.customer.EnclosureApply">
+        <id property="enclosureApplyId" column="enclosure_apply_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="statusCd" column="status_cd"/>
     </resultMap>
 
     <resultMap id="contactsTypeMap" type="com.xuebei.crm.customer.ContactsType">
@@ -36,6 +43,20 @@
         <result property="customerType" column="type_cd"/>
         <result property="profile" column="profile"/>
         <result property="website" column="website"/>
+    </resultMap>
+
+    <resultMap id="contactsMap" type="com.xuebei.crm.customer.Contacts">
+        <id property="contactsId" column="contacts_id"/>
+        <result property="departmentId" column="customer_dept_id"/>
+        <result property="realName" column="real_nm"/>
+        <result property="gender" column="gender"/>
+    </resultMap>
+
+    <resultMap id="visitMap" type="com.xuebei.crm.customer.Visit">
+        <id property="visitId" column="visit_log_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="visitTime" column="create_ts"/>
+        <result property="visitDept" column="des_id"/>
     </resultMap>
 
     <select id="isUserHasCustomer" resultType="java.lang.Boolean">
@@ -156,12 +177,118 @@
         WHERE cd.customer_id = #{customerId}
     </select>
 
-    <select id="queryContacts" resultMap="deptMap">
+    <select id="queryContacts" resultMap="contactsMap">
         SELECT c.* FROM contacts c
         INNER JOIN customer_dept cd ON c.customer_dept_id = cd.customer_dept_id
         WHERE cd.customer_id = #{customerId}
     </select>
 
+    <insert id="insertEnclosureApply" parameterType="com.xuebei.crm.customer.EnclosureApply">
+        INSERT INTO enclosure_apply(
+            apply_ts,
+            customer_dept_id,
+            user_id,
+            apply_reason,
+            apply_start_ts,
+            apply_end_ts,
+            status_cd,
+            updater_id,
+            update_ts
+        )
+        VALUES (
+                NOW(),
+                #{deptId},
+                #{userId},
+                #{reasons},
+                NOW(),
+                date_add(NOW(), INTERVAL 3 MONTH),
+                'APPLYING',
+                #{userId},
+                NOW()
+        );
+
+    </insert>
+
+    <select id="queryEnclosureApply" resultMap="enclosureApplyMap">
+        SELECT ea.user_id,ea.status_cd FROM enclosure_apply ea
+        WHERE ea.customer_dept_id = #{deptId}
+    </select>
+
+    <select id="queryNewEnclosureApply" resultMap="enclosureApplyMap">
+        SELECT *
+        FROM enclosure_apply as t
+        WHERE t.customer_dept_id = #{deptId} AND t.status_cd = 'PERMITTED'
+        ORDER BY t.apply_start_ts DESC
+        LIMIT 1
+        ;
+    </select>
+
+    <select id="queryMyVisit" resultMap="visitMap">
+        SELECT r1.create_ts,r1.user_id,r2.des_id,r1.visit_log_id
+        FROM
+            (
+                SELECT A.contacts_id, B.create_ts, B.user_id,A.visit_log_id
+                FROM
+                    (SELECT visit_contacts.contacts_id, visit_log.journal_id,visit_log.visit_log_id
+                     FROM visit_contacts LEFT JOIN visit_log ON
+                     visit_contacts.visit_log_id = visit_log.visit_log_id)
+                    AS A LEFT JOIN journal AS B ON A.journal_id = B.journal_id
+            ) AS r1
+            LEFT JOIN
+            (
+                SELECT contacts.contacts_id, dept_dest_table.des_id
+                FROM contacts LEFT JOIN
+                    ((SELECT customer_dept_id, prt_id AS des_id
+                      FROM customer_dept
+                      WHERE prt_id is not null)
+                     UNION
+                     (SELECT customer_dept_id, customer_dept_id AS des_id
+                      from customer_dept
+                      WHERE prt_id is null))
+
+                        AS dept_dest_table
+                        ON contacts.customer_dept_id = dept_dest_table.customer_dept_id
+            ) AS r2 ON r1.contacts_id = r2.contacts_id
+        WHERE r2.des_id = #{deptId}
+        AND r1.create_ts &gt;= #{startTime}
+        AND r1.user_id = #{userId}
+        ORDER BY r1.create_ts DESC
+        ;
+    </select>
+
+    <select id="queryElseVisit" resultMap="visitMap">
+        SELECT r1.create_ts,r1.user_id,r2.des_id,r1.visit_log_id
+        FROM
+        (
+        SELECT A.contacts_id, B.create_ts, B.user_id,A.visit_log_id
+        FROM
+        (SELECT visit_contacts.contacts_id, visit_log.journal_id,visit_log.visit_log_id
+        FROM visit_contacts LEFT JOIN visit_log ON
+        visit_contacts.visit_log_id = visit_log.visit_log_id)
+        AS A LEFT JOIN journal AS B ON A.journal_id = B.journal_id
+        ) AS r1
+        LEFT JOIN
+        (
+        SELECT contacts.contacts_id, dept_dest_table.des_id
+        FROM contacts LEFT JOIN
+        ((SELECT customer_dept_id, prt_id AS des_id
+        FROM customer_dept
+        WHERE prt_id is not null)
+        UNION
+        (SELECT customer_dept_id, customer_dept_id AS des_id
+        from customer_dept
+        WHERE prt_id is null))
+
+        AS dept_dest_table
+        ON contacts.customer_dept_id = dept_dest_table.customer_dept_id
+        ) AS r2 ON r1.contacts_id = r2.contacts_id
+        WHERE r2.des_id = #{deptId}
+        AND r1.create_ts &gt;= #{startTime}
+        AND r1.user_id != #{userId}
+        ORDER BY r1.create_ts DESC
+        LIMIT 1
+        ;
+    </select>
 
     <select id="searchSchool" parameterType="java.lang.String"  resultType="java.lang.String">
         select c.customer_nm from crm_customer c

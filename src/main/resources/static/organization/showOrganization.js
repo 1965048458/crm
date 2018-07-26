@@ -2,56 +2,6 @@
  * Created by Administrator on 2018/7/17.
  */
 
-var customerList = [
-    {
-        name: '校长',
-        number: '1',
-        Warning:{},
-        isCircle:"未圈",
-        contacts: [{'name': '李某人'}]
-    },
-    {
-        name: '副校长',
-        number: '1',
-        Warning:{openSeaWarning:'1',
-            leftTime:'7天10小时后',
-            warnedOrganization:'机械学院',
-            createdTime:'2018-01-30',
-            times:'1',
-            lastTime:'2018-03-01'
-                    },
-        isCircle:"已圈",
-        contacts: [{'name': '李副校长'}]
-    },
-    {
-        name:'书记',
-        number:'2',
-        Warning:{},
-        isCircle:"未圈",
-        customerList:[],
-        contacts:[{name:'张书记'},
-            {name:'赵书记'}]
-
-    },
-
-    {
-        name: '机械学院',
-        number: '2',
-        Warning:{},
-        isCircle:"未圈",
-        customerList: [
-            {
-                name: '机械制造及自动化',
-                number: '1',
-                Warning:{},
-                isCircle:"",
-                customerList: [],
-                contacts: [{'name': '李机械制造及自动化长', 'number': '0'}]
-            }
-        ],
-        contacts: [{'name': '李机械学院长', 'number': '0'}]
-    }
-];
 jQuery(document).ready(function () {
 
     var organizationVue = new Vue({
@@ -61,9 +11,13 @@ jQuery(document).ready(function () {
             showOrganization: false,
             showApplyDialog: false,
             customerList: '',
-            applyOrganization:'',
+            departmentList:'',
+            applyDeptName:'',
+            applyDeptId:'',
             applyReasons:'',
             showSubmitDialog:false,
+            showSubmitErrDialog:false,
+            submitReasons:'',
             warningDetails:{
                 openSeaWarning:'',
                 leftTime:'',
@@ -71,7 +25,9 @@ jQuery(document).ready(function () {
                 createdTime:'',
                 times:'',
                 lastTime:''
-            }
+            },
+            deptList:'',
+            errMsg:''
             //data: ''
         },
         methods: {
@@ -81,18 +37,25 @@ jQuery(document).ready(function () {
                     type: 'get',
                     url: '/customer/organization/show',
                     data: {
-                        customerId:'customerzju',
+                        customerId:'customerzju'
                     },
                     dataType: 'json',
                     cache: false
                 }).done(function (result) {
                     console.log(result);
-                    thisVue.showOrganization = true;
-                    thisVue.$set(thisVue, 'customerList', result.customerList);
+                    if (result.successFlg) {
+                        thisVue.showOrganization = true;
+                        thisVue.$set(thisVue, 'customerList',result.customerList);
+                    } else {
+                        thisVue.errMsg = result.errMsg;
+                        thisVue.showErrMsg = true;
+                    }
+
                 });
             },
-            'apply':function (name) {
-                this.applyOrganization = name;
+            'apply':function (name,id) {
+                this.applyDeptName = name;
+                this.applyDeptId = id;
                 this.showApplyDialog=true
             },
             'dialogCheck': function () {
@@ -105,17 +68,29 @@ jQuery(document).ready(function () {
             'applySubmit':function () {
                 var thisVue = this;
                 jQuery.ajax({
-                    type:'get',
-                    url:'/journal/list',
-                    data:'',
+                    type:'post',
+                    url:'/customer/organization/apply',
+                    data:{
+                        submitReasons:this.submitReasons,
+                        //applyDeptName:this.applyDeptName,
+                        applyDeptId:this.applyDeptId,
+                    },
                     dataType:'json',
                     cache:false
-                }).done(function(){
-                    thisVue.showSubmitDialog = true;
+                }).done(function(result){
+                    console.log(result);
+                    if (result.successFlg) {
+                        thisVue.showSubmitDialog = true;
+                    } else {
+                        thisVue.errMsg = result.errMsg;
+                        thisVue.showSubmitErrDialog = true;
+                    }
+
                 });
 
             },
             'applyQuit':function () {
+                this.submitReasons='',
                 this.showPage= 'showCustomerOrganization';
             },
             'submitDialogCheck':function () {
@@ -162,15 +137,15 @@ jQuery(document).ready(function () {
                     return " ( " + number + " )";
                 }
             },
-            'addSquareBrackets':function (isCircle) {
-                if (isCircle == "未圈"){
-                    return "["+isCircle+"]";
+            'addSquareBrackets':function (status) {
+                if (status == 'NORMAL'){
+                    return "[未圈]";
                 }
-                else if(isCircle == "已圈"){
-                    return "["+isCircle+"]";
+                else if(status == 'ENCLOSURE'){
+                    return "[已圈]";
                 }
                 else{
-                    return "";
+                    return '';
                 }
             },
             'addOpenSeaWarning':function (Warning) {
@@ -181,9 +156,9 @@ jQuery(document).ready(function () {
                     return '';
                 }
             },
-            'apply':function (name) {
-                organizationVue.apply(name);
-                console.log(name);
+            'apply':function (name,id) {
+                organizationVue.apply(name,id);
+                console.log(name,id);
             },
             'openSeaWarning':function (warning) {
                 console.log("component.warning")

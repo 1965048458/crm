@@ -65,63 +65,62 @@
         <div class="weui-tab__panel">
             <div id="journalVue">
                 <div id="journalList" v-show="showPage === 'journalList'">
-                    <div class="top-bar center-box">
-                        <div class="weui-navbar">
+                    <div class="weui-navbar">
                             <span class="center-ele"
-                                  style="font-size: 20px;margin-top: 5px;margin-left: 40%;">工作日志</span>
-                            <label style="visibility: hidden">&nbsp;占位来表示空格</label>
-                            <span class="weui-cell__ft"
-                                  style="width:20px;height:40px;font-size: 30px; color: #00FFFF; padding-bottom: 0px;margin-bottom:0px;"
-                                  @click="clickAddJournalButton">+</span>
-                        </div>
+                                  style="display:inline-block;font-size: 20px;margin-top: 5px;margin-left: 45%;">工作日志</span>
+                        <label style="visibility: hidden">&nbsp;占位来表示空格</label>
+                        <span class="center-ele"
+                              style="display:inline-block;width:20px;height:40px;font-size: 30px; color: #00FFFF; padding-bottom: 0px;margin-left:0%;"
+                              @click="clickAddJournalButton">+</span>
+                    </div>
 
-                        <div id="addJournalChosenDialog" style="display: none" v-show="showAddJournalDialog">
-                            <div class="weui-mask" @click="cancelAddJournalEvent"></div>
-                            <div class="add-journal">
-                                <div class="weui-actionsheet__menu" style="border-radius: 0.33em">
-                                    <a href="/journal/edit?type=DAILY">
-                                        <div class="weui-actionsheet__cell add-journal-item">填写日报</div>
-                                    </a>
-                                    <a href="/journal/edit?type=WEEKLY">
-                                        <div class="weui-actionsheet__cell add-journal-item"
-                                             style="border-top: 1px solid #e5e5e5;">填写周报
-                                        </div>
-                                    </a>
-                                    <a href="/journal/edit?type=MONTHLY">
-                                        <div class="weui-actionsheet__cell add-journal-item"
-                                             style="border-top: 1px solid #e5e5e5;">填写月报
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="weui-navbar" style="margin-top: 40px">
-                            <div class="weui-navbar__item weui-bar__item_on">
-                                <span @click="searchAll">全部</span>
-                            </div>
-                            <div class="weui-navbar__item">
-                                <span @click="searchUnRead">未读<span v-text=""></span></span>
-                            </div>
-                            <div class="weui-navbar__item">
-                                <span @click="searchMine">我的</span>
-                            </div>
-                            <div class="weui-navbar__item">
-                                <span @click="searchDay">日报</span>
-                            </div>
-                            <div class="weui-navbar__item">
-                                <span @click="searchWeek">周报</span>
-                            </div>
-                            <div class="weui-navbar__item">
-                                <span @click="searchMonth">月报</span>
-                            </div>
-                            <div class="weui-navbar__item">
-                            <span @click="toFilter()">
-                                <img style="width: 20px;height: 20px;padding-top: 0px"
-                                     src="/images/journal/filter.png"></span>
+                    <div id="addJournalChosenDialog" style="display: none" v-show="showAddJournalDialog">
+                        <div class="weui-mask" @click="cancelAddJournalEvent"></div>
+                        <div class="add-journal">
+                            <div class="weui-actionsheet__menu" style="border-radius: 0.33em">
+                                <a href="/journal/edit?type=DAILY">
+                                    <div class="weui-actionsheet__cell add-journal-item">填写日报</div>
+                                </a>
+                                <a href="/journal/edit?type=WEEKLY">
+                                    <div class="weui-actionsheet__cell add-journal-item"
+                                         style="border-top: 1px solid #e5e5e5;">填写周报
+                                    </div>
+                                </a>
+                                <a href="/journal/edit?type=MONTHLY">
+                                    <div class="weui-actionsheet__cell add-journal-item"
+                                         style="border-top: 1px solid #e5e5e5;">填写月报
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
+
+                    <div class="weui-navbar" style="margin-top: 40px">
+                        <div class="weui-navbar__item weui-bar__item_on">
+                            <span @click="searchAll">全部</span>
+                        </div>
+                        <div class="weui-navbar__item">
+                            <span @click="searchUnRead">未读<span v-text=""></span></span>
+                        </div>
+                        <div class="weui-navbar__item">
+                            <span @click="searchMine">我的</span>
+                        </div>
+                        <div class="weui-navbar__item">
+                            <span @click="searchDay">日报</span>
+                        </div>
+                        <div class="weui-navbar__item">
+                            <span @click="searchWeek">周报</span>
+                        </div>
+                        <div class="weui-navbar__item">
+                            <span @click="searchMonth">月报</span>
+                        </div>
+                        <div class="weui-navbar__item">
+                            <span @click="toFilter()">
+                                <img style="width: 20px;height: 20px;padding-top: 0px"
+                                     src="/images/journal/filter.png"></span>
+                        </div>
+                    </div>
+
 
                     <div class="journal-list">
                         <div class="weui-flex">
@@ -208,7 +207,7 @@
                             </a>
                         </div>
 
-                        <div class="weui-form-preview" >
+                        <div class="weui-form-preview">
                             <div class="weui-form-preview__bd">
                                 <div class="weui-form-preview__item">
                                     <label class="weui-form-preview__label">今日总结:</label>
@@ -252,159 +251,169 @@
 
                 <div class="container" id="journalFilter" style="display: none" v-show="showPage === 'filterDiv'">
                     <div class="page home js_show">
-                        <div class="page__bd page__bd_spacing">
-                            <ul>
-                                <li class="">
-                                    <div class="weui-cells weui-cells-form">
-                                        <div>
-                                            <div class="weui-cell__hd">
-                                                <p class="weui-cells__title">按类型筛选</p>
-                                            </div>
-                                            <div class="weui-cells__hd">
-                                                <div class="weui-cells weui-cells_radio">
-                                                    <label class="weui-cell weui-check__label" for="day">
-                                                        <div class="weui-cell__bd ">
-                                                            <p>日报</p>
+                        <div class="weui-tab">
+                            <div class="weui-tab__panel">
+                                <div class="page__bd page__bd_spacing">
+                                    <ul>
+                                        <li class="">
+                                            <div class="weui-cells weui-cells-form">
+                                                <div>
+                                                    <div class="weui-cell__hd">
+                                                        <p class="weui-cells__title">按类型筛选</p>
+                                                    </div>
+                                                    <div class="weui-cells__hd">
+                                                        <div class="weui-cells weui-cells_radio">
+                                                            <label class="weui-cell weui-check__label" for="day">
+                                                                <div class="weui-cell__bd ">
+                                                                    <p>日报</p>
+                                                                </div>
+                                                                <div class="weui-cell__ft">
+                                                                    <input type="radio" class="weui-check" value="DAILY"
+                                                                           v-model="journalType" id="day">
+                                                                    <span class="weui-icon-checked"></span>
+                                                                </div>
+                                                            </label>
+                                                            <label class="weui-cell weui-check__label" for="week">
+                                                                <div class="weui-cell__bd ">
+                                                                    <p>周报</p>
+                                                                </div>
+                                                                <div class="weui-cell__ft">
+                                                                    <input type="radio" class="weui-check"
+                                                                           value="WEEKLY"
+                                                                           v-model="journalType" id="week">
+                                                                    <span class="weui-icon-checked"></span>
+                                                                </div>
+                                                            </label>
+                                                            <label class="weui-cell weui-check__label" for="month">
+                                                                <div class="weui-cell__bd ">
+                                                                    <p>月报</p>
+                                                                </div>
+                                                                <div class="weui-cell__ft">
+                                                                    <input type="radio" class="weui-check"
+                                                                           value="MONTHLY"
+                                                                           v-model="journalType" id="month">
+                                                                    <span class="weui-icon-checked"></span>
+                                                                </div>
+                                                            </label>
                                                         </div>
-                                                        <div class="weui-cell__ft">
-                                                            <input type="radio" class="weui-check" value="DAILY"
-                                                                   v-model="journalType" id="day">
-                                                            <span class="weui-icon-checked"></span>
-                                                        </div>
-                                                    </label>
-                                                    <label class="weui-cell weui-check__label" for="week">
-                                                        <div class="weui-cell__bd ">
-                                                            <p>周报</p>
-                                                        </div>
-                                                        <div class="weui-cell__ft">
-                                                            <input type="radio" class="weui-check" value="WEEKLY"
-                                                                   v-model="journalType" id="week">
-                                                            <span class="weui-icon-checked"></span>
-                                                        </div>
-                                                    </label>
-                                                    <label class="weui-cell weui-check__label" for="month">
-                                                        <div class="weui-cell__bd ">
-                                                            <p>月报</p>
-                                                        </div>
-                                                        <div class="weui-cell__ft">
-                                                            <input type="radio" class="weui-check" value="MONTHLY"
-                                                                   v-model="journalType" id="month">
-                                                            <span class="weui-icon-checked"></span>
-                                                        </div>
-                                                    </label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="">
-                                    <div class="weui-cells weui-cells-form">
-                                        <div class="weui-cell__hd">
-                                            <p class="weui-cells__title">按员工筛选</p>
-                                        </div>
-                                        <div class="weui-cell__bd weui-cells-form">
-                                            <div>
-                                                <span>&nbsp; &nbsp;</span>
-                                                <span style="display: inline-block;position: relative;">
+                                        </li>
+                                        <li class="">
+                                            <div class="weui-cells weui-cells-form">
+                                                <div class="weui-cell__hd">
+                                                    <p class="weui-cells__title">按员工筛选</p>
+                                                </div>
+                                                <div class="weui-cell__bd weui-cells-form">
+                                                    <div>
+                                                        <span>&nbsp; &nbsp;</span>
+                                                        <span style="display: inline-block;position: relative;">
                                     <img src="/images/icon_tabbar.png" alt="" class="weui-tabbar__icon">
                                     <p class="weui-tabbar__label">刘勇</p>
                                 </span>
-                                                <span style="display: inline-block;position: relative;">
+                                                        <span style="display: inline-block;position: relative;">
                                     <img src="/images/icon_tabbar.png" alt="" class="weui-tabbar__icon">
                                     <p class="weui-tabbar__label">添加</p>
                                 </span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="">
-                                    <div class="weui-cell weui-cell_select">
-                                        <div class="weui-cell__hd">
-                                            <label for class="weui-label">按拜访客户</label>
-                                        </div>
-                                        <div class="weui-cell__bd">
-                                            <select class="weui-select" id="selectClient" v-model="client">
-                                                <option value="client_1">客户端1</option>
-                                                <option value="client_2">客户端2</option>
-                                                <option value="client_3">客户端3</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="">
-                                    <div class="weui-cell weui-cell_select">
-                                        <div class="weui-cell__hd" >
-                                            <label for class="weui-label" >按相关项目</label>
-                                        </div>
-                                        <div class="weui-cell__bd">
-                                            <select class="weui-select" id="selectProject" v-model="project">
-                                                <option value="project_1">项目1</option>
-                                                <option value="project_2">项目2</option>
-                                                <option value="project_3">项目3</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="">
-                                    <div class="weui-cells weui-cells_form">
-                                        <a class="weui-cell weui-cell_access js_item" data-id="startTime"
-                                           href="javascript:;">
-                                            <div class="weui-cell__hd">
-                                                <p>开始时间&nbsp; &nbsp; &nbsp;</p>
+                                        </li>
+                                        <li class="">
+                                            <div class="weui-cell weui-cell_select">
+                                                <div class="weui-cell__hd">
+                                                    <label for class="weui-label">按拜访客户</label>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                    <select class="weui-select" id="selectClient" v-model="client">
+                                                        <option value="client_1">客户端1</option>
+                                                        <option value="client_2">客户端2</option>
+                                                        <option value="client_3">客户端3</option>
+                                                    </select>
+                                                </div>
                                             </div>
-                                            <div class="weui-cell__bd">
-                                                <input class="weui-input" type="date" v-model="startTime"/>
+                                        </li>
+                                        <li class="">
+                                            <div class="weui-cell weui-cell_select">
+                                                <div class="weui-cell__hd">
+                                                    <label for class="weui-label">按相关项目</label>
+                                                </div>
+                                                <div class="weui-cell__bd">
+                                                    <select class="weui-select" id="selectProject" v-model="project">
+                                                        <option value="project_1">项目1</option>
+                                                        <option value="project_2">项目2</option>
+                                                        <option value="project_3">项目3</option>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </a>
-                                        <a class="weui-cell weui-cell_access js_item" data-id="endTime"
-                                           href="javascript:;">
-                                            <div class="weui-cell__hd">
-                                                <p>结束时间&nbsp; &nbsp; &nbsp;</p>
+                                        </li>
+                                        <li class="">
+                                            <div class="weui-cells weui-cells_form">
+                                                <a class="weui-cell weui-cell_access js_item" data-id="startTime"
+                                                   href="javascript:;">
+                                                    <div class="weui-cell__hd">
+                                                        <p>开始时间&nbsp; &nbsp; &nbsp;</p>
+                                                    </div>
+                                                    <div class="weui-cell__bd">
+                                                        <input class="weui-input" type="date" v-model="startTime"/>
+                                                    </div>
+                                                </a>
+                                                <a class="weui-cell weui-cell_access js_item" data-id="endTime"
+                                                   href="javascript:;">
+                                                    <div class="weui-cell__hd">
+                                                        <p>结束时间&nbsp; &nbsp; &nbsp;</p>
+                                                    </div>
+                                                    <div class="weui-cell__bd">
+                                                        <input class="weui-input" type="date" v-model="endTime"/>
+                                                    </div>
+                                                </a>
                                             </div>
-                                            <div class="weui-cell__bd">
-                                                <input class="weui-input" type="date" v-model="endTime"/>
+                                        </li>
+                                        <li class="">
+                                            <div class="weui-cell weui-cell_switch">
+                                                <div class="weui-cell__bd">未读</div>
+                                                <div class="weui-cell__ft">
+                                                    <label for="switchCP" class="weui-switch-cp">
+                                                        <input id="switchCP" v-model="isRead"
+                                                               class="weui-switch-cp__input"
+                                                               type="checkbox" checked="checked"/>
+                                                        <div class="weui-switch-cp__box"></div>
+                                                    </label>
+                                                </div>
                                             </div>
-                                        </a>
-                                    </div>
-                                </li>
-                                <li class="">
-                                    <div class="weui-cell weui-cell_switch">
-                                        <div class="weui-cell__bd">未读</div>
-                                        <div class="weui-cell__ft">
-                                            <label for="switchCP" class="weui-switch-cp">
-                                                <input id="switchCP" v-model="isRead" class="weui-switch-cp__input" type="checkbox" checked="checked"/>
-                                                <div class="weui-switch-cp__box"></div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="">
-                                    <div class="weui-flex">
-                                        <div class="weui-flex__item">
-                                            <div class="placeholder" style="visibility: hidden">weui</div>
-                                        </div>
-                                        <div class="weui-flex__item">
-                                            <div class="placeholder">
-                                                <button class="weui-btn weui-btn_mini weui-btn_default" type=button
-                                                        @click="backToList()">
-                                                    取消
-                                                </button>
+                                        </li>
+                                        <li class="">
+                                            <div class="weui-flex">
+                                                <div class="weui-flex__item">
+                                                    <div class="placeholder" style="visibility: hidden">weui</div>
+                                                </div>
+                                                <div class="weui-flex__item">
+                                                    <div class="placeholder">
+                                                        <button class="weui-btn weui-btn_mini weui-btn_default"
+                                                                type=button
+                                                                @click="backToList()">
+                                                            取消
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="weui-flex__item">
+                                                    <div class="placeholder">
+                                                        <button class="weui-btn weui-btn_mini weui-btn_primary"
+                                                                type=button
+                                                                @click="searchFilter()">
+                                                            确认
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="weui-flex__item">
+                                                    <div class="placeholder" style="visibility: hidden">weui</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="weui-flex__item">
-                                            <div class="placeholder">
-                                                <button class="weui-btn weui-btn_mini weui-btn_primary" type=button
-                                                        @click="searchFilter()">
-                                                    确认
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="weui-flex__item">
-                                            <div class="placeholder" style="visibility: hidden">weui</div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
