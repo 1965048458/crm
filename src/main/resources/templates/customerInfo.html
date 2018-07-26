@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
@@ -15,87 +15,135 @@
         .center-ele {
             display: inline-block;
         }
+
         .weui-grid {
             text-align: center;
+        }
+
+        .top-bar {
+            font-size: 18px;
+            text-align: center;
+            padding: 10px 15px;
+        }
+
+        .pull-left {
+            float: left !important;
         }
 
     </style>
 </head>
 <body>
 <div class="center-box">
-    <div class="center-ele">
-        <div class="weui-media-box weui-media-box_text">
-            <h1 class="weui-media-box__title">数据信息</h1>
-            <div class="weui-grids">
-                <a class="weui-grid">
-                    <canvas id="canvas1" width="80" height="80"
-                            style="background:rgba(0,0,0,0);"></canvas>
-                    <p class="weui-grid__label">成功率</p>
-                </a>
-                <a class="weui-grid">
-                    <canvas id="canvas2" width="80" height="80"
-                            style="background:rgba(0,0,0,0);"></canvas>
-                    <p class="weui-grid__label">覆盖率</p>
-                </a>
-                <a class="weui-grid">
-                    <canvas id="canvas3" width="80" height="80"
-                            style="background:rgba(0,0,0,0);"></canvas>
-                    <p class="weui-grid__label">渗透率</p>
-                </a>
+    <div class="page navbar js_show">
+        <div class="top-bar">
+            <span onclick="backToList()" class="pull-left"><img src="/images/back_icon.svg"
+                                                                style="margin-top:3px"/></span>
+            <span class="center" th:text="${customerName}"></span>
+        </div>
+        <div class="weui-tab" style="margin-top: 10px;">
+            <div class="weui-navbar">
+                <div href="#tab1" class="weui-navbar__item weui-bar__item_on">
+                    <span class="center-ele">客户信息</span>
+                </div>
+                <div href="#tab2" class="weui-navbar__item">
+                    <span class="center-ele">组织机构</span>
+                </div>
             </div>
-        </div>
+            <div class="weui-tab__panel">
+                <div id="tab1" class="weui-tab__content" style="display: block;">
+                    <div class="center-ele">
+                        <div class="weui-media-box weui-media-box_text">
+                            <h1 class="weui-media-box__title">数据信息</h1>
+                            <div class="weui-grids">
+                                <a class="weui-grid">
+                                    <canvas id="canvas1" width="80" height="80"
+                                            style="background:rgba(0,0,0,0);"></canvas>
+                                    <p class="weui-grid__label">成功率</p>
+                                </a>
+                                <a class="weui-grid">
+                                    <canvas id="canvas2" width="80" height="80"
+                                            style="background:rgba(0,0,0,0);"></canvas>
+                                    <p class="weui-grid__label">覆盖率</p>
+                                </a>
+                                <a class="weui-grid">
+                                    <canvas id="canvas3" width="80" height="80"
+                                            style="background:rgba(0,0,0,0);"></canvas>
+                                    <p class="weui-grid__label">渗透率</p>
+                                </a>
+                            </div>
+                        </div>
 
-        <div class="weui-cells">
-            <a class="weui-cell weui-cell_access" href="javascript:;">
-                <div class="weui-cell__bd">
-                    <p>拜访次数</p>
+                        <div class="weui-cells">
+                            <a class="weui-cell weui-cell_access" href="javascript:;">
+                                <div class="weui-cell__bd">
+                                    <p>拜访次数</p>
+                                </div>
+                                <div class="weui-cell__ft">10</div>
+                            </a>
+
+                        </div>
+
+                        <div class="weui-media-box weui-media-box_text">
+                            <h1 class="weui-media-box__title">项目信息</h1>
+                            <div class="weui-grids" style="text-align: center">
+                                <a class="weui-grid">
+                                    <p class="weui-grid__label">
+                                    <p>5个</p>
+                                    <p> 商机/项目
+                                    <p/>
+                                    </p>
+                                </a>
+                                <a class="weui-grid">
+                                    <p class="weui-grid__label">
+                                    <p>20次</p>
+                                    <p>项目支持</p>
+                                    </p>
+                                </a>
+                                <a class="weui-grid">
+                                    <p class="weui-grid__label">
+                                    <p>10.5万</p>
+                                    <p>回款金额</p>
+                                    </p>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="weui-media-box weui-media-box_text">
+                            <h1 class="weui-media-box__title">简介（选填）</h1>
+                            <p class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</p>
+                        </div>
+
+                        <div class="weui-cells">
+                            <a class="weui-cell weui-cell_access" href="javascript:;">
+                                <div class="weui-cell__bd">
+                                    <p>官网: <span style="color:#00FFFF">www.zju.edu.cn</span></p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="weui-cell__ft">10</div>
-            </a>
-
-        </div>
-
-        <div class="weui-media-box weui-media-box_text">
-            <h1 class="weui-media-box__title">项目信息</h1>
-            <div class="weui-grids" style="text-align: center">
-                <a class="weui-grid">
-                    <p class="weui-grid__label">
-                    <p>5个</p>
-                    <p> 商机/项目
-                    <p/>
-                    </p>
-                </a>
-                <a class="weui-grid">
-                    <p class="weui-grid__label">
-                    <p>20次</p>
-                    <p>项目支持</p>
-                    </p>
-                </a>
-                <a class="weui-grid">
-                    <p class="weui-grid__label">
-                    <p>10.5万</p>
-                    <p>回款金额</p>
-                    </p>
-                </a>
+                <div id="tab2" class="weui-tab__content">
+                    <p style="text-align: center">组织机构尚未整合</p>
+                </div>
             </div>
-        </div>
-
-        <div class="weui-media-box weui-media-box_text">
-            <h1 class="weui-media-box__title">简介（选填）</h1>
-            <p class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</p>
-        </div>
-
-        <div class="weui-cells">
-            <a class="weui-cell weui-cell_access" href="javascript:;">
-                <div class="weui-cell__bd">
-                    <p>官网: <span style="color:#00FFFF">www.zju.edu.cn</span></p>
-                </div>
-                <div class="weui-cell__ft">
-                </div>
-            </a>
         </div>
     </div>
 </div>
+
+<script type="text/javascript" class="navbar js_show">
+    $(function () {
+        $('.weui-navbar__item').on('click', function () {
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+            $(jQuery(this).attr("href")).show().siblings('.weui-tab__content').hide();
+        });
+    });
+
+    function backToList() {
+        location.href = '/customer/customerList';
+    }
+</script>
 
 </body>
 </html>
