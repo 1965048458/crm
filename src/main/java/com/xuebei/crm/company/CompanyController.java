@@ -1,6 +1,5 @@
 package com.xuebei.crm.company;
 
-import com.xuebei.crm.customer.Customer;
 import com.xuebei.crm.dto.GsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,6 +66,11 @@ public class CompanyController {
     @RequestMapping("/newCompany")
     public String invite(){
         return "newCompany";
+    }
+
+    @RequestMapping("/addCompany")
+    public void addCompany(String companyName, String myPos, List<CompanyUser> colList){
+        companyService.addCompany(companyName, myPos, colList);
     }
 
     @RequestMapping("/addMember")

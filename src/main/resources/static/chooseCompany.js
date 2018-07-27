@@ -22,6 +22,9 @@ jQuery(document).ready(function () {
                         }
                     }
                 });
+            },
+            'create':function () {
+                window.location.href = '/company/newCompany';
             }
         }
     });

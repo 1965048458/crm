@@ -14,4 +14,5 @@ public interface CompanyMapper {
 
     void insertMember(String name, String tel);
 
+    void addCompany(String companyName, String myPos, List<CompanyUser> colList);
 }
