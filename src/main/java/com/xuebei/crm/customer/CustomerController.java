@@ -1,6 +1,5 @@
 package com.xuebei.crm.customer;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import com.xuebei.crm.dto.GsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.xuebei.crm.utils.UUIDGenerator;
