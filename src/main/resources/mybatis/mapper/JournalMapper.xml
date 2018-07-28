@@ -33,6 +33,23 @@
         <result property="tel" column="TEL"/>
         <result property="avatarUrl" column="avatar_url"/>
     </resultMap>
+
+    <resultMap id="journalCustomerMap" type="com.xuebei.crm.journal.JournalCustomer">
+        <id property="customerId" column="customer_id"/>
+        <result property="name" column="customer_nm"/>
+    </resultMap>
+
+    <resultMap id="contactsMap" type="com.xuebei.crm.customer.Contacts">
+        <id property="contactsId" column="contacts_id"/>
+        <result property="realName" column="real_nm"/>
+    </resultMap>
+
+    <resultMap id="journalPatchMap" type="com.xuebei.crm.journal.JournalPatch">
+        <id property="journalPatchId" column="journal_patch_id"/>
+        <result property="journalId" column="journal_id"/>
+        <result property="content" column="content"/>
+        <result property="createTs" column="create_ts"/>
+    </resultMap>
     
     <insert id="createJournal" parameterType="com.xuebei.crm.journal.Journal" useGeneratedKeys="true" keyColumn="journal_id" keyProperty="journalId">
       INSERT INTO journal (
@@ -110,7 +127,7 @@
             (#{visitId}, #{contactsId})
     </insert>
 
-    <select id="queryVisitContacts" resultType="java.lang.String">
+    <select id="queryVisitContacts" resultMap="contactsMap">
         SELECT contacts_id FROM visit_contacts
         WHERE visit_log_id = #{visitId}
     </select>
@@ -149,9 +166,6 @@
         SELECT j.*, u.real_nm FROM journal j
         INNER JOIN user_view u ON j.user_id = u.user_id
         WHERE j.user_id = #{userId}
-        <if test="isRead != null">
-            AND 1 = 0
-        </if>
         <if test="journalType != null">
             AND j.type_cd = #{journalType}
         </if>
@@ -161,7 +175,7 @@
         <if test="endTime != null">
             AND j.create_ts &lt; #{endTime}
         </if>
-
+        AND has_submitted = 1
     </select>
 
     <select id="searchJournal" resultMap="journalMap">
@@ -190,23 +204,8 @@
     <select id="searchReceivedJournal" resultMap="journalMap">
         SELECT j.*, u.real_nm  FROM journal j
         INNER JOIN user_view u ON j.user_id = u.user_id
-        INNER JOIN journal_receiver r ON j.journal_id = r.journal_id
-        WHERE r.receiver_id = #{userId}
-        <if test="isRead != null">
-            <if test="isRead == 1">
-                AND r.has_read = 1
-            </if>
-            <if test="isRead == 0 " >
-                AND r.has_read = 0
-            </if>
-        </if>
-
-        <if test="senderIds != null">
-            <foreach collection="sdId" item="item" index="index" separator=" ">
-                OR j.user_id = #{item}
-            </foreach>
-        </if>
-
+        WHERE j.user_id != #{userId}
+        AND has_submitted = 1
         <if test="journalType != null">
             AND j.type_cd = #{journalType}
         </if>
@@ -238,4 +237,28 @@
                 NOW()
             );
     </insert>
+
+    <select id="findJournalDraft" resultMap="journalMap">
+        SELECT *
+        FROM journal
+        WHERE user_id = #{userId} AND has_submitted = 0;
+    </select>
+
+    <select id="queryJournalCustomersByCompanyId" resultMap="journalCustomerMap">
+        SELECT customer_id, customer_nm
+		FROM customer_view
+		WHERE company_id = #{companyId};
+    </select>
+
+    <select id="queryContactsByCustomerId" resultMap="contactsMap">
+        SELECT * FROM contacts_view
+		WHERE customer_id = #{customerId};
+    </select>
+
+    <select id="queryJournalPatch" resultMap="journalPatchMap">
+        SELECT *
+		FROM journal_patch
+		WHERE journal_id = #{journalId};
+    </select>
+
 </mapper>

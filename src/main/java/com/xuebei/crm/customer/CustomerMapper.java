@@ -59,4 +59,6 @@ public interface CustomerMapper {
     List<String> searchSchool(@Param("keyword")String keyword);
 
     List<ContactsType> queryContactsTypes(@Param("customerId") String customerId);
+
+    ContactsDept queryContactsDept(@Param("contactsId") String contactsId);
 }

@@ -59,6 +59,14 @@
         <result property="visitDept" column="des_id"/>
     </resultMap>
 
+    <resultMap id="contactsDeptMap" type="com.xuebei.crm.customer.ContactsDept">
+        <id property="contactsId" column="contacts_id"/>
+        <result property="customerName" column="customer_nm"/>
+        <result property="deptName" column="department_nm"/>
+        <result property="prtDeptName" column="prt_dept_nm"/>
+        <result property="realName" column="real_nm"/>
+    </resultMap>
+
     <select id="isUserHasCustomer" resultType="java.lang.Boolean">
         SELECT COUNT(company_customer.customer_id)
         FROM company_user INNER JOIN company_customer ON company_user.company_id = company_customer.company_id
@@ -299,6 +307,16 @@
         SELECT contacts_type_id, type_name
         FROM contacts_type
         WHERE customer_id = #{customerId};
+    </select>
+    
+    <select id="queryContactsDept" resultMap="contactsDeptMap">
+        SELECT ta.contacts_id, ta.real_nm, tb.*
+		FROM contacts AS ta LEFT JOIN
+		(SELECT A.customer_dept_id, A.department_nm, B.customer_dept_id AS prt_dept_id, B.department_nm AS prt_dept_name, A.customer_id, U.customer_nm
+		FROM customer_dept AS A LEFT JOIN customer_dept AS B ON A.prt_id = B.customer_dept_id LEFT JOIN crm_customer AS U ON A.customer_id = U.customer_id
+		) AS tb
+		ON ta.customer_dept_id = tb.customer_dept_id
+		WHERE contacts_id= #{contactsId};
     </select>
 
 </mapper>

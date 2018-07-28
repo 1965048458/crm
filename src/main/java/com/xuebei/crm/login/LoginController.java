@@ -1,7 +1,9 @@
 package com.xuebei.crm.login;
 
+import com.xuebei.crm.company.CompanyMapper;
 import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.user.User;
+import com.xuebei.crm.utils.UUIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,9 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
+
+    @Autowired
+    private CompanyMapper companyMapper;
 
     public static final String SUCCESS_FLG = "successFlg";
 
@@ -40,6 +45,14 @@ public class LoginController {
             if (user.getPwd().equals(pwd)) {
                 request.getSession().setAttribute("crmUserId", user.getCRMUserId());
                 gsonView.addStaticAttribute(SUCCESS_FLG, true);
+
+                final String companyId = "eb4fd11d472249359eb6acef2e5bf8e5";
+                String userId = companyMapper.queryUserId(user.getCRMUserId(), companyId);
+                if (userId == null) {
+                    userId = UUIDGenerator.genUUID();
+                    companyMapper.joinCompany(user.getCRMUserId(), userId, companyId);
+                }
+                request.getSession().setAttribute("userId", userId);
             } else {
                 gsonView.addStaticAttribute(SUCCESS_FLG, false);
             }
