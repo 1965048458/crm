@@ -15,26 +15,20 @@ $(document).ready(function () {
             'selPost': function () {
                 this.showPage = 'selPos';
             },
-            'backToMe': function () {
-                window.location.href = '/company/chooseCompany';
-            },
             'back': function () {
                 this.showPage = 'main';
             },
             'create': function () {
 
             },
-            'inviteMember': function () {
+            'inviteMember':function () {
                 this.showPage = 'invite';
             },
-            'backToMain': function () {
+            'backToMain':function () {
                 this.showPage = 'main';
             },
-            'save': function () {
-
-            },
-            'saveAndAdd':function () {
-
+            'save':function () {
+                
             }
         }
     });

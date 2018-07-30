@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface JournalMapper {
-    Journal findJournalDraft(@Param("userId") String userId);
+
     // functions for table journal
     Integer createJournal(Journal journal);
 
@@ -22,6 +22,8 @@ public interface JournalMapper {
 
     Integer deleteJournal(@Param("userId") String userId,
                           @Param("journalId") String journalId);
+
+    Journal findJournalDraft(@Param("userId") String userId);
 
     // functions for table visit_log
     Integer deleteVisitLog(@Param("journalId") String journalId);
@@ -69,12 +71,6 @@ public interface JournalMapper {
     List<User> searchUnread(@Param("journalId") String journalId);
 
     List<User> searchRead(@Param("journalId") String journalId);
-
-    Journal loadDetail(@Param("journalId") String journalId);
-
-    List<JournalPatch> loadPatches(@Param("journalId") String journalId);
-
-    List<VisitRecord> loadVisitRecs(String journalId);
 
     List<JournalCustomer> queryJournalCustomersByCompanyId(@Param("companyId") String companyId);
 

@@ -190,10 +190,12 @@ public class JournalController {
 
     @RequestMapping("/detail")
     public GsonView detail(String journalId){
-        Journal journal = journalService.loadDetail(journalId);
+        List journal = journalService.searchDatail(journalId);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg", true);
-        gsonView.addStaticAttribute("journal", journal);
+        gsonView.addStaticAttribute("journal", journal.get(0));
+        gsonView.addStaticAttribute("unread", journal.get(1));
+        gsonView.addStaticAttribute("read", journal.get(2));
         return gsonView;
     }
 
