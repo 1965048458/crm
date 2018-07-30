@@ -16,7 +16,8 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void insertMember(String name, String tel) {
-        companyMapper.insertMember(name, tel);
+        //companyMapper.insertMember(name, tel);
+        return;
     }
 
     @Override

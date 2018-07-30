@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 
 import java.util.Date;
 
+<<<<<<< HEAD
 /**
  * Created by Administrator on 2018/7/27.
  */
@@ -24,6 +25,32 @@ public class JournalPatch {
 
     public void setJouPatchId(String jouPatchId) {
         this.jouPatchId = jouPatchId;
+=======
+public class JournalPatch {
+    @Expose
+    private String content;
+    @Expose
+    private Date createTs;
+
+    private String journalId;
+    private String journalPatchId;
+
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Date getCreateTs() {
+        return createTs;
+    }
+
+    public void setCreateTs(Date createTs) {
+        this.createTs = createTs;
+>>>>>>> origin/develop
     }
 
     public String getJournalId() {
@@ -34,19 +61,12 @@ public class JournalPatch {
         this.journalId = journalId;
     }
 
-    public String getContent() {
-        return content;
+    public String getJournalPatchId() {
+        return journalPatchId;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setJournalPatchId(String journalPatchId) {
+        this.journalPatchId = journalPatchId;
     }
 
-    public Date getCreatTm() {
-        return creatTm;
-    }
-
-    public void setCreatTm(Date creatTm) {
-        this.creatTm = creatTm;
-    }
 }

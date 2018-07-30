@@ -101,28 +101,34 @@ jQuery(document).ready(function () {
                 this.searchList(data);
             },
             'loadDetail': function (journalId) {
-                var thisVue = this;
-                jQuery.ajax({
-                    type: 'get',
-                    url: '/journal/detail',
-                    data: {
-                        journalId: journalId
-                    },
-                    dataType: 'json',
-                    cache: false
-                }).done(function (result) {
-                    var journal = result.journal;
-                    journal.unread = result.unread;
-                    journal.read = result.read;
-                    thisVue.$set(thisVue, 'curJournal', journal);
-                    thisVue.showPage = 'journalDetail';
-                });
+                // var thisVue = this;
+                // jQuery.ajax({
+                //     type: 'get',
+                //     url: '/journal/detail',
+                //     data: {
+                //         journalId: journalId
+                //     },
+                //     dataType: 'json',
+                //     cache: false
+                // }).done(function (result) {
+                //     var journal = result.journal;
+                //     journal.unread = result.unread;
+                //     journal.read = result.read;
+                //     thisVue.$set(thisVue, 'curJournal', journal);
+                //     thisVue.showPage = 'journalDetail';
+                // });
+                this.curJournal = journalId;
+                this.showPage = 'journalDetail';
             },
             'backToList': function () {
                 this.showPage = 'journalList';
             },
             'journalName': function (journal) {
-                return journal.user.realName + '的' + TYPE_NAMES[journal.type];
+                var prefixName = journal.user.realName;
+                if (journal.isMine) {
+                    prefixName = '我';
+                }
+                return prefixName + '的' + TYPE_NAMES[journal.type];
             },
             'clickAddJournalButton': function () {
                 this.showAddJournalDialog = true;
@@ -135,6 +141,37 @@ jQuery(document).ready(function () {
             },
             'quit':function () {
                 this.showPage = 'journalList';
+            },
+            'patchAction': function(journalId) {
+                jQuery("#patchButtonDiv_"+journalId).css("display", "none");
+                jQuery("#patchContent_"+journalId).val("");
+                jQuery("#patchDiv_"+journalId).css("display", "block");
+            },
+            'patchSubmit': function(journalId) {
+                jQuery.ajax({
+                    type:'get',
+                    url:'/journal/action/journalAttachment',
+                    data: {
+                        journalId: journalId,
+                        content: jQuery("#patchContent_"+journalId).val()
+                    },
+                    dataType: 'json',
+                    cache: false,
+                    success: function() {
+                        location.reload(true);
+                    }
+                });
+                jQuery("#patchButtonDiv_"+journalId).css("display", "block");
+                jQuery("#patchDiv_"+journalId).css("display", "none");
+            },
+            'convertVisitType': function(ty) {
+                var str = '错误';
+                if (ty === 'VISIT') {
+                    str = '拜访';
+                } else {
+                    str = '电话';
+                }
+                return str;
             }
         }
     });

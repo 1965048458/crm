@@ -1,5 +1,9 @@
 package com.xuebei.crm.journal;
 
+import com.xuebei.crm.customer.Contacts;
+import com.xuebei.crm.customer.ContactsDept;
+import com.xuebei.crm.customer.Customer;
+import com.xuebei.crm.customer.CustomerMapper;
 import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
 import com.xuebei.crm.user.User;
@@ -15,6 +19,9 @@ public class JournalServiceImpl implements JournalService {
     @Autowired
     private JournalMapper journalMapper;
 
+    @Autowired
+    private CustomerMapper customerMapper;
+
     /**
      * 创建一个新日志
      * 注意：调用该方法前，需要将 session 中 userId 装载入 journal 对象中(Not checked)
@@ -24,11 +31,9 @@ public class JournalServiceImpl implements JournalService {
     public void createJournal(Journal journal) throws InformationNotCompleteException, AuthenticationException {
         checkBasicInfo(journal);
         checkVisitRecords(journal.getVisitRecords());
-        checkReceivers(journal.getUserId(), journal.getReceivers());
 
         journalMapper.createJournal(journal);
         insertVisitRecords(journal.getJournalId(), journal.getVisitRecords());
-        insertReceivers(journal.getJournalId(), journal.getReceivers());
     }
 
     @Override
@@ -41,13 +46,10 @@ public class JournalServiceImpl implements JournalService {
             throw new AuthenticationException("日志已提交");
         }
         checkVisitRecords(journal.getVisitRecords());
-        checkReceivers(journal.getUserId(), journal.getReceivers());
 
         journalMapper.updateJournal(journal);
         deleteVisitRecords(journal.getJournalId());
         insertVisitRecords(journal.getJournalId(), journal.getVisitRecords());
-        journalMapper.deleteJournalReceiver(journal.getJournalId());
-        insertReceivers(journal.getJournalId(), journal.getReceivers());
     }
 
     @Override
@@ -57,7 +59,6 @@ public class JournalServiceImpl implements JournalService {
         }
 
         deleteVisitRecords(journalId);
-        journalMapper.deleteJournalReceiver(journalId);
         journalMapper.deleteJournal(userId, journalId);
     }
 
@@ -69,9 +70,8 @@ public class JournalServiceImpl implements JournalService {
         Journal journal = journalMapper.queryJournalById(journalId);
         journal.setVisitRecords(journalMapper.queryVisitLogs(journalId));
         for (VisitRecord visitRecord: journal.getVisitRecords()) {
-            visitRecord.setContactsIds(journalMapper.queryVisitContacts(visitRecord.getVisitId()));
+            visitRecord.setChosenContacts(journalMapper.queryVisitContacts(visitRecord.getVisitId()));
         }
-        journal.setReceivers(journalMapper.queryJournalReceiver(journal.getJournalId()));
 
         return journal;
     }
@@ -107,32 +107,11 @@ public class JournalServiceImpl implements JournalService {
                 throw new InformationNotCompleteException("visitType 不能为空");
             if (visitRecord.getVisitResult() == null)
                 throw new InformationNotCompleteException("visitResult 不能为空");
-            if (visitRecord.getContactsIds() == null)
-                continue;
+//            if (visitRecord.getContactsIds() == null)
+//                continue;
 //            for (String contactsId: visitRecord.getContactsIds()) {
 //                // TODO: contactsId 联系人是否为公司所有(权限)
 //            }
-        }
-    }
-
-    /**
-     * 检查接收人对象中的 信息完整度 和 接收人权限
-     * @param currentUserId 当前登录用户的ID
-     * @param receivers 接受者的 List 对象
-     * @throws InformationNotCompleteException 接受者对象缺少必要的信息(userId)
-     * @throws AuthenticationException 权限问题, 接收人非同公司
-     */
-    private void checkReceivers(String currentUserId, List<User> receivers)
-            throws InformationNotCompleteException, AuthenticationException {
-        if (receivers == null)
-            return;
-        for (User receiver: receivers) {
-            if (receiver.getUserId() == null)
-                throw new InformationNotCompleteException("receiver.userId 不能为空");
-            String receiverUserId = receiver.getUserId();
-            if (!journalMapper.isUserSameCompany(currentUserId, receiverUserId)) {
-                throw new AuthenticationException("接收日志用户与发送日志用户不在同一公司");
-            }
         }
     }
 
@@ -142,19 +121,11 @@ public class JournalServiceImpl implements JournalService {
         for (VisitRecord visitRecord: visitRecords) {
             visitRecord.setJournalId(journalId);
             journalMapper.insertVisitLog(visitRecord);
-            if (visitRecord.getContactsIds() == null)
-                continue;
-            for (String contactsId: visitRecord.getContactsIds()) {
-                journalMapper.insertVisitContacts(visitRecord.getVisitId(), contactsId);
+//            if (visitRecord.getContactsIds() == null)
+//                continue;
+            for (Contacts contacts: visitRecord.getChosenContacts()) {
+                journalMapper.insertVisitContacts(visitRecord.getVisitId(), contacts.getContactsId());
             }
-        }
-    }
-
-    private void insertReceivers(String journalId, List<User> receivers) {
-        if (receivers == null)
-            return;
-        for (User receiver: receivers) {
-            journalMapper.insertJournalReceiver(journalId, receiver.getUserId());
         }
     }
 
@@ -174,19 +145,36 @@ public class JournalServiceImpl implements JournalService {
         }
 
         List<Journal> myJournal = journalMapper.searchMyJournal(param);
-        List<Journal> receivedJournal = journalMapper.searchReceivedJournal(param);
+        List<Journal> receivedJournal = new ArrayList<>();
+        if (param.getUserId().equals("00284bca325c4e77b9f30c5671ec1c44")) {
+            receivedJournal = journalMapper.searchReceivedJournal(param);
+        }
+
         List<Journal> allJournalList = new ArrayList<>();
 
         allJournalList.addAll(myJournal);
         allJournalList.addAll(receivedJournal);
+
         if (param.getIsMine() != null && param.getIsMine() == 1 ){
             allJournalList.removeAll(receivedJournal);
         }
         allJournalList.sort((journal1, journal2)-> journal1.getCreateTs().before(journal2.getCreateTs())?1:-1);
         //统计日志有多少人已读
         for (Journal jn : allJournalList  ) {
+            jn.setVisitRecords(journalMapper.queryVisitLogs(jn.getJournalId()));
+            for (VisitRecord visitRecord: jn.getVisitRecords()) {
+                visitRecord.setChosenContacts(journalMapper.queryVisitContacts(visitRecord.getVisitId()));
+                for (Contacts contacts: visitRecord.getChosenContacts()) {
+                    ContactsDept contactsDept = customerMapper.queryContactsDept(contacts.getContactsId());
+                    contacts.setTotalName(contactsDept.toString());
+                }
+            }
             List<User> journalRead = journalMapper.searchRead(jn.getJournalId());
             jn.setReadNum(journalRead.size());
+            // 查询日志补丁
+            jn.setJournalPatches(journalMapper.queryJournalPatch(jn.getJournalId()));
+            // 跟新是否是自己
+            jn.setIsMine(jn.getUserId().equals(param.getUserId()));
         }
         return allJournalList;
     }
@@ -201,7 +189,15 @@ public class JournalServiceImpl implements JournalService {
         result.add(journalUnread);
         result.add(journalRead);
         return result;
+    }
 
+    @Override
+    public List<JournalCustomer> getAllContacts(String companyId) {
+        List<JournalCustomer> customerList = journalMapper.queryJournalCustomersByCompanyId(companyId);
+        for (JournalCustomer customer: customerList) {
+            customer.setContactsGroup(journalMapper.queryContactsByCustomerId(customer.getCustomerId()));
+        }
+        return customerList;
     }
 
 

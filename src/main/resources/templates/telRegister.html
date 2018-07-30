@@ -8,6 +8,8 @@
     <!-- 引入 WeUI -->
     <link rel="stylesheet" href="/weui.css"/>
     <link rel="stylesheet" href="/example.css">
+    <script src="http://47.96.188.208/static/js/jquery-2.1.1.js"></script>
+
     <style>
         .top-bar {
             background: #ffffff;
@@ -94,7 +96,7 @@
                     <input class="weui-input" type="number" name="tel" placeholder="输入手机号" v-model="tel">
                 </div>
                 <div class="weui-cell__ft">
-                    <a href="javascript:;" class="weui-vcode-btn">获取验证码</a>
+                    <a id="send-captcha" @click="getCaptcha" href="javascript:;" class="weui-vcode-btn" >获取验证码</a>
                 </div>
             </div>
         </div>
@@ -103,7 +105,7 @@
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text" placeholder="输入验证码">
+                    <input class="weui-input" type="text" placeholder="输入验证码" v-model="captcha">
                 </div>
             </div>
         </div>
@@ -138,12 +140,11 @@
     </div>
 </div>
 </body>
-<script>
+<script type="text/javascript">
     function login() {
         location.href = '/';
-    }
+    };
 </script>
-<script src="http://47.96.188.208/static/js/jquery-2.1.1.js"></script>
 <script src="/vue.v2.5.13.js"></script>
 <script src="/loginRegister.js"></script>
 

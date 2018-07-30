@@ -12,7 +12,11 @@ public interface CompanyMapper {
     String queryUserId(@Param("crmUserId") String crmUserId,
                        @Param("companyId") String companyId);
 
-    void insertMember(String name, String tel);
+    void joinCompany(@Param("crmUserId") String crmUserId,
+                     @Param("userId") String userId,
+                     @Param("companyId") String companyId);
+
+    String queryCompanyIdByUserId(@Param("userId") String userId);
 
     void addCompany(String companyName, String myPos, List<CompanyUser> colList);
 }

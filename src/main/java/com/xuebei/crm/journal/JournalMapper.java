@@ -74,4 +74,10 @@ public interface JournalMapper {
     List<JournalPatch> loadPatches(@Param("journalId") String journalId);
 
     List<VisitRecord> loadVisitRecs(String journalId);
+
+    List<JournalCustomer> queryJournalCustomersByCompanyId(@Param("companyId") String companyId);
+
+    List<Contacts> queryContactsByCustomerId(@Param("customerId") String customerId);
+
+    List<JournalPatch> queryJournalPatch(@Param("journalId") String journalId);
 }

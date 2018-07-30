@@ -43,7 +43,8 @@ jQuery(document).ready(function () {
        },
        methods: {
            'backToList': function () {
-               jQuery('#draftDiv').show();
+               window.location = "/journal/toList";
+               //jQuery('#draftDiv').show();
            },
            'cancelBackToList': function () {
                jQuery('#draftDiv').hide();
@@ -51,7 +52,6 @@ jQuery(document).ready(function () {
            'saveDraft': function () {
                var result = this.prepareData();
                result.hasSubmitted = false;
-               // this.doSaveJournal(postData);
                this.doSaveJournal(result);
            },
            'doSaveJournal': function (postData) {
@@ -83,6 +83,9 @@ jQuery(document).ready(function () {
            },
            'addVisitContacts': function (index) {
                this.curVisit = this.visits[index];
+               if (this.curVisit.chosenContacts == null) {
+                   this.curVisit.chosenContacts = [];
+               }
                this.$set(this, 'chosenContactsTmp', this.curVisit.chosenContacts);
                this.showPage = 'selectContacts';
            },
@@ -153,7 +156,7 @@ jQuery(document).ready(function () {
            },
            'calcVisitCustomerName': function (visit) {
                var contacts = visit.chosenContacts;
-               if (contacts.length === 0) {
+               if (contacts == null || contacts.length === 0) {
                    return "无";
                }
                var str = contacts[0].realName;
@@ -164,6 +167,17 @@ jQuery(document).ready(function () {
                    str = str + "等";
                }
                return str;
+           },
+           'queryContacts': function (contactsId) {
+               for (var i in this.customers) {
+                   var customer = this.customers[i];
+                   var contactsGroup = customer.contactsGroup;
+                   for (var j in contactsGroup) {
+                       if (contactsGroup[j].contactsId === contactsId)
+                           return contactsGroup[j];
+                   }
+               }
+               return null;
            }
        },
        computed: {
@@ -193,6 +207,7 @@ jQuery(document).ready(function () {
             cache: false,
             success: function(result) {
                 editJournalVue.$set(editJournalVue, 'colleagues', result.colleagues);
+                editJournalVue.$set(editJournalVue, 'customers', result.customer);
             }
         });
     } else {
@@ -206,6 +221,8 @@ jQuery(document).ready(function () {
                 editJournalVue.$set(editJournalVue, 'plan', result.journal.plan);
                 editJournalVue.$set(editJournalVue, 'visits', result.journal.visitRecords);
                 editJournalVue.$set(editJournalVue, 'colleagues', result.colleagues);
+                editJournalVue.$set(editJournalVue, 'customers', result.customer);
+                console.log(editJournalVue.customers);
                 console.log(result.journal.receivers);
                 console.log(result.colleagues);
                 for (var revId in result.journal.receivers) {
@@ -215,41 +232,19 @@ jQuery(document).ready(function () {
                         }
                     }
                 }
+                for (var visitId in editJournalVue.visits) {
+                    var visit = editJournalVue.visits[visitId];
+                    var chosenContacts = visit.chosenContacts;
+                    for (var ind in chosenContacts) {
+                        chosenContacts[ind] = editJournalVue.queryContacts(chosenContacts[ind].contactsId);
+                    }
+                }
             }
         });
     }
 
+    window.onbeforeunload = function() {
+        editJournalVue.saveDraft();
+    }
 
 });
-
-function setHasSubmitted() {
-    $('#hasSubmitted').val('true');
-}
-
-function sendAjax() {
-    var postData = {
-        "type": "DAILY",
-        "summary": "今天做了什么",
-        "plan": "明日计划",
-        "hasSubmitted": false,
-        "visitRecords": [{
-            "visitName": "今日拜访1",
-            "contactsIds": [""],
-            "visitType": "PHONE",
-            "visitResult": "拜访结果"
-        }],
-        "receivers": [
-            {"userId": "001c52e79ee0484ca8158e926b5c05a3"},
-            {"userId": "0022287b3f7a404d8fcca44aa76842c2"}
-        ]
-    };
-    $.ajax({
-        url: "/journal/testJson",
-        cache: false,
-        data: JSON.stringify(postData),
-        contentType: "application/json; charset=utf-8",
-        type: "POST"
-    }).done(function (res) {
-        console.log(res);
-    });
-}

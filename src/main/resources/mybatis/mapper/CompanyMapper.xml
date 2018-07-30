@@ -22,4 +22,34 @@
         WHERE crm_user_id = #{crmUserId} AND company_id = #{companyId};
     </select>
 
+    <select id="queryCompanyIdByUserId" resultType="java.lang.String">
+        SELECT company_id
+        FROM company_user
+        WHERE user_id = #{userId};
+    </select>
+
+    <insert id="joinCompany">
+        INSERT INTO `crmdb`.`company_user` (
+            `user_id`,
+            `user_type`,
+            `crm_user_id`,
+            `company_id`,
+            `creator_id`,
+            `create_ts`,
+            `updater_id`,
+            `update_ts`
+        )
+        VALUES
+            (
+                #{userId},
+                'NORMAL',
+                #{crmUserId},
+                #{companyId},
+                'system',
+                NOW(),
+                'system',
+                NOW()
+            );
+    </insert>
+
 </mapper>

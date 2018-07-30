@@ -1,5 +1,6 @@
 package com.xuebei.crm.journal;
 
+import com.xuebei.crm.company.CompanyMapper;
 import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
@@ -18,6 +19,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/journal")
 public class JournalController {
+
+    @Autowired
+    private CompanyMapper companyMapper;
 
     @Autowired
     private JournalService journalService;
@@ -107,22 +111,28 @@ public class JournalController {
         GsonView gsonView = new GsonView();
         Journal journal = journalService.queryJournalById(acquireUserId(request), journalId);
         List<User> colleagues = journalMapper.queryColleagues(acquireUserId(request));
+        String companyId = companyMapper.queryCompanyIdByUserId(acquireUserId(request));
+        List<JournalCustomer> customerList = journalService.getAllContacts(companyId);
         gsonView.addStaticAttribute("journal", journal);
         gsonView.addStaticAttribute("colleagues", colleagues);
+        gsonView.addStaticAttribute("customer", customerList);
         return gsonView;
     }
 
     @RequestMapping("/action/getColleagueList")
     public GsonView getColleagueList(HttpServletRequest request) {
-
+        List<JournalCustomer> customerList;
         List<User> colleagues;
         try {
             colleagues = journalMapper.queryColleagues(acquireUserId(request));
+            String companyId = companyMapper.queryCompanyIdByUserId(acquireUserId(request));
+            customerList = journalService.getAllContacts(companyId);
         } catch (AuthenticationException e) {
             return GsonView.createErrorView(e.getMessage());
         }
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("colleagues", colleagues);
+        gsonView.addStaticAttribute("customer", customerList);
         return gsonView;
     }
 
@@ -135,30 +145,28 @@ public class JournalController {
             return "error/500";
         }
 
-        if (journalId == null) {
-            JournalTypeEnum journalType = JournalTypeEnum.valueOf(type);
-            modelMap.addAttribute("newJournal", true);
-            modelMap.addAttribute("journalType", type);
-            modelMap.addAttribute("journalId", 0);
-            modelMap.addAttribute("summaryLabel", journalType.getSummaryName());
-            modelMap.addAttribute("planLabel", journalType.getPlanName());
-            modelMap.addAttribute("summary","");
-            modelMap.addAttribute("plan", "");
-        } else {
-            try {
+        try {
+            if (journalId == null) {
+                Journal journal = journalMapper.findJournalDraft(acquireUserId(request));
+                if (journal != null) {
+                    modelMap.addAttribute("journalType", journal.getType());
+                    modelMap.addAttribute("journalId", journal.getJournalId());
+                } else {
+                    modelMap.addAttribute("journalType", type);
+                    modelMap.addAttribute("journalId", 0);
+                }
+            } else {
                 Journal journal = journalService.queryJournalById(acquireUserId(request), journalId);
-                modelMap.addAttribute("newJournal", false);
-                modelMap.addAttribute("journal", journal);
+                if (journal == null) {
+                    return "error/404";
+                }
                 modelMap.addAttribute("journalType", journal.getType());
                 modelMap.addAttribute("journalId", journal.getJournalId());
-                modelMap.addAttribute("summaryLabel", journal.getType().getSummaryName());
-                modelMap.addAttribute("planLabel", journal.getType().getPlanName());
-                modelMap.addAttribute("summary", journal.getSummary());
-                modelMap.addAttribute("plan", journal.getPlan());
-            } catch (AuthenticationException e) {
-                return "error/500";
             }
+        } catch (AuthenticationException e) {
+            return "error/500";
         }
+
 
         return "editJournal";
     }
@@ -171,9 +179,8 @@ public class JournalController {
     @RequestMapping("/list")
     public GsonView list(JournalSearchParam param, HttpServletRequest request){
         HttpSession session = request.getSession();
-        String userId = (String)session.getAttribute("crmUserId");
-        param.setUserId("00284bca325c4e77b9f30c5671ec1c44");
-        //param.setUserId(userId);
+        String userId = (String)session.getAttribute("userId");
+        param.setUserId(userId);
         List<Journal> journals =journalService.searchJournal(param);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("journalList", journals);

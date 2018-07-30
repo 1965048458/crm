@@ -48,6 +48,12 @@ public class Journal {
     @Expose
     private Integer readNum;
 
+    @Expose
+    private List<JournalPatch> journalPatches;
+
+    @Expose
+    private Boolean isMine;
+
     public User getUser() {
         return user;
     }
@@ -142,5 +148,21 @@ public class Journal {
 
     public void setReadNum(Integer readNum) {
         this.readNum = readNum;
+    }
+
+    public List<JournalPatch> getJournalPatches() {
+        return journalPatches;
+    }
+
+    public void setJournalPatches(List<JournalPatch> journalPatches) {
+        this.journalPatches = journalPatches;
+    }
+
+    public Boolean getIsMine() {
+        return isMine;
+    }
+
+    public void setIsMine(Boolean isMine) {
+        this.isMine = isMine;
     }
 }
