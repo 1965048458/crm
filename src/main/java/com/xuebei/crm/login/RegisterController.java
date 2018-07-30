@@ -1,7 +1,9 @@
 package com.xuebei.crm.login;
 
+
 import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
 import com.xuebei.crm.dto.GsonView;
+import com.xuebei.crm.user.GenderEnum;
 import com.xuebei.crm.user.User;
 import com.xuebei.crm.utils.UUIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+
 
 /**
  * Created by Rong Weicheng on 2018/7/9.
@@ -30,12 +33,40 @@ public class RegisterController {
         return "telRegister";
     }
 
+    @RequestMapping("/supplementaryInformation/add")
+    public GsonView supplementaryAdd(@RequestParam("tel") String tel,
+                                     @RequestParam("realName") String realName,
+                                     @RequestParam("pwd") String pwd,
+                                     @RequestParam("gender") String gender,
+                                     @RequestParam("age") int age,
+                                     @RequestParam(value = "mail", required = false) String mail,
+                                     @RequestParam(value = "address", required = false) String address,
+                                     HttpServletRequest request) {
+        GsonView gsonView = new GsonView();
+        GenderEnum genderEnum = GenderEnum.valueOf(gender);
+        User user = new User();
+        String userId = UUIDGenerator.genUUID();
+        user.setUserId(userId);
+        user.setTel(tel);
+        user.setRealName(realName);
+        user.setPwd(pwd);
+        user.setGenderEnum(genderEnum);
+        user.setAge(age);
+        user.setMail(mail);
+        user.setAddress(address);
+        registerService.insertUser(user);
+        request.getSession().setAttribute("crmUserId", user.getCRMUserId());
+        gsonView.addStaticAttribute(SUCCESS_FLG, true);
+        request.getSession().removeAttribute("CAPTCHA");
+        request.getSession().removeAttribute("CAPTCHA_CREATE_TS");
+        return gsonView;
+    }
+
     @RequestMapping("/telRegister")
     public GsonView telRegister(@RequestParam("tel") String tel,
                                 @RequestParam("realName") String realName,
                                 @RequestParam("pwd") String pwd,
                                 @RequestParam("captcha") String captcha, HttpServletRequest request) {
-        User user = new User();
         GsonView gsonView = new GsonView();
         if (tel.equals("") || tel.length() != 11 || realName.equals("") || pwd.length() < 6 || captcha.length() != 4) {
             gsonView.addStaticAttribute(SUCCESS_FLG, false);
@@ -47,25 +78,26 @@ public class RegisterController {
                 gsonView.addStaticAttribute("errMsg", "用户已存在");
             } else {
                 Date start = (Date) request.getSession().getAttribute("CAPTCHA_CREATE_TS");
-                Date now = new Date();
-                long c = (now.getTime() - start.getTime()) / 1000;
-                if (c > 60) {
-                    gsonView.addStaticAttribute("time", false);
-                } else if (!captcha.equals(request.getSession().getAttribute("CAPTCHA"))) {
-                    gsonView.addStaticAttribute("captcha", false);
+                if (start == null) {
+                    gsonView.addStaticAttribute(SUCCESS_FLG, false);
+                    gsonView.addStaticAttribute("errMsg", "请获取验证码");
+                } else {
+                    Date now = new Date();
+                    long c = (now.getTime() - start.getTime()) / 1000;
+                    if (c > 60) {
+                        gsonView.addStaticAttribute(SUCCESS_FLG, false);
+                        gsonView.addStaticAttribute("errMsg", "验证码已过期，请重新发送");
+
+                    } else if (!captcha.equals(request.getSession().getAttribute("CAPTCHA"))) {
+                        gsonView.addStaticAttribute(SUCCESS_FLG, false);
+                        gsonView.addStaticAttribute("errMsg", "验证码错误");
+
                     } else {
-                        String userId = UUIDGenerator.genUUID();
-                        user.setUserId(userId);
-                        user.setTel(tel);
-                        user.setRealName(realName);
-                        user.setPwd(pwd);
-                        registerService.insertUser(user);
                         gsonView.addStaticAttribute(SUCCESS_FLG, true);
-                        request.getSession().removeAttribute("CAPTCHA");
                     }
                 }
             }
-
+        }
         return gsonView;
     }
 
@@ -76,35 +108,13 @@ public class RegisterController {
         User userExist = registerService.searchTel(tel);
         if (userExist != null) {
             send = false;
-            gsonView.addStaticAttribute("exist", true);
+            gsonView.addStaticAttribute(SUCCESS_FLG, false);
+            gsonView.addStaticAttribute("errMsg", "用户已存在");
         } else {
-            Date ts = (Date) request.getSession().getAttribute("CAPTCHA_CREATE_TS");
-            if (ts == null) {
-                send = true;
-            } else {
-                Date start = (Date) request.getSession().getAttribute("CAPTCHA_CREATE_TS");
-                Date now = new Date();
-                long c = (now.getTime() - start.getTime()) / 1000;
-                if (c < 60) {
-                    send = false;
-                    gsonView.addStaticAttribute("notExpire", true);
-                } else {
-                    send = true;
-                }
-            }
+            send = check(gsonView, send, request);
         }
         if (send) {
-            String captcha = SendCaptchaServiceImpl.randomNoSeq(4);
-            AlibabaAliqinFcSmsNumSendResponse rsp = SendCaptchaServiceImpl.sendCaptcha(tel, captcha);
-            if (rsp == null) {
-                gsonView.addStaticAttribute("successFlag", false);
-            } else if (!rsp.isSuccess()) {
-                gsonView.addStaticAttribute("successFlag", false);
-            } else {
-                request.getSession().setAttribute("CAPTCHA_CREATE_TS", new Date());
-                request.getSession().setAttribute("CAPTCHA", captcha);
-                gsonView.addStaticAttribute("successFlag", true);
-            }
+            sendCaptcha(gsonView, tel, request);
         }
         return gsonView;
     }
@@ -116,36 +126,49 @@ public class RegisterController {
         User userExist = registerService.searchTel(tel);
         if (userExist == null) {
             send = false;
-            gsonView.addStaticAttribute("exist", false);
+            gsonView.addStaticAttribute(SUCCESS_FLG, false);
+            gsonView.addStaticAttribute("errMsg", "用户不存在");
         } else {
-            Date ts = (Date) request.getSession().getAttribute("CAPTCHA_CREATE_TS");
-            if (ts == null) {
-                send = true;
-            } else {
-                Date start = (Date) request.getSession().getAttribute("CAPTCHA_CREATE_TS");
-                Date now = new Date();
-                long c = (now.getTime() - start.getTime()) / 1000;
-                if (c < 60) {
-                    send = false;
-                    gsonView.addStaticAttribute("notExpire", true);
-                } else {
-                    send = true;
-                }
-            }
+            send = check(gsonView, send, request);
         }
         if (send) {
-            String captcha = SendCaptchaServiceImpl.randomNoSeq(4);
-            AlibabaAliqinFcSmsNumSendResponse rsp = SendCaptchaServiceImpl.sendCaptcha(tel, captcha);
-            if (rsp == null) {
-                gsonView.addStaticAttribute("successFlag", false);
-            } else if (!rsp.isSuccess()) {
-                gsonView.addStaticAttribute("successFlag", false);
-            } else {
-                request.getSession().setAttribute("CAPTCHA_CREATE_TS", new Date());
-                request.getSession().setAttribute("CAPTCHA", captcha);
-                gsonView.addStaticAttribute("successFlag", true);
-            }
+            sendCaptcha(gsonView, tel, request);
         }
         return gsonView;
     }
+
+    public boolean check(GsonView gsonView, boolean send, HttpServletRequest request) {
+        Date ts = (Date) request.getSession().getAttribute("CAPTCHA_CREATE_TS");
+        if (ts == null) {
+            send = true;
+        } else {
+            Date start = (Date) request.getSession().getAttribute("CAPTCHA_CREATE_TS");
+            Date now = new Date();
+            long c = (now.getTime() - start.getTime()) / 1000;
+            if (c < 60) {
+                send = false;
+                gsonView.addStaticAttribute(SUCCESS_FLG, false);
+                String message = "验证码已发送，请" + (60 - c) + "s后再次点击发送";
+                gsonView.addStaticAttribute("errMsg", message);
+            } else {
+                send = true;
+            }
+        }
+        return send;
+    }
+
+    public void sendCaptcha(GsonView gsonView, String tel, HttpServletRequest request) {
+        String captcha = SendCaptchaServiceImpl.randomNoSeq(4);
+        AlibabaAliqinFcSmsNumSendResponse rsp = SendCaptchaServiceImpl.sendCaptcha(tel, captcha);
+        if (rsp == null || !rsp.isSuccess()) {
+            gsonView.addStaticAttribute(SUCCESS_FLG, false);
+            gsonView.addStaticAttribute("errMsg", "发送失败");
+        } else {
+            request.getSession().setAttribute("CAPTCHA_CREATE_TS", new Date());
+            request.getSession().setAttribute("CAPTCHA", captcha);
+            gsonView.addStaticAttribute("successFlag", true);
+            gsonView.addStaticAttribute("errMsg", "发送成功");
+        }
+    }
+
 }

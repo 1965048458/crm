@@ -35,8 +35,7 @@ public class LoginController {
         User user = loginService.searchTel(tel);
         if (user == null) {
             gsonView.addStaticAttribute(SUCCESS_FLG, false);
-        }
-        else {
+        } else {
             if (user.getPwd().equals(pwd)) {
                 request.getSession().setAttribute("crmUserId", user.getCRMUserId());
                 gsonView.addStaticAttribute(SUCCESS_FLG, true);
@@ -55,38 +54,43 @@ public class LoginController {
     @RequestMapping("/findPwd")
     public GsonView findPwd(@RequestParam("tel") String tel,
                             @RequestParam("pwd") String pwd,
-                            @RequestParam("captcha") String captcha,HttpServletRequest request) {
+                            @RequestParam("captcha") String captcha, HttpServletRequest request) {
 
         GsonView gsonView = new GsonView();
         User user = loginService.searchTel(tel);
-        if (user==null) {
-            gsonView.addStaticAttribute("exist", false);
-        }
-        else {
+        if (user == null) {
+            gsonView.addStaticAttribute(SUCCESS_FLG, false);
+            gsonView.addStaticAttribute("errMsg", "用户不存在");
+        } else {
             Date start = (Date) request.getSession().getAttribute("CAPTCHA_CREATE_TS");
-            Date now = new Date();
-            long c = (now.getTime() - start.getTime()) / 1000;
-            if (c > 60) {
-                gsonView.addStaticAttribute("time", false);
-            }
-            String capt = (String) request.getSession().getAttribute("CAPTCHA");
-            if (!capt.equals(captcha)) {
-                gsonView.addStaticAttribute("captcha", false);
+            if (start == null) {
+                gsonView.addStaticAttribute(SUCCESS_FLG, false);
+                gsonView.addStaticAttribute("errMsg", "请获取验证码");
             } else {
-                if (pwd.length() < 6) {
+                Date now = new Date();
+                long c = (now.getTime() - start.getTime()) / 1000;
+                if (c > 900) {
                     gsonView.addStaticAttribute(SUCCESS_FLG, false);
-                    gsonView.addStaticAttribute("errMsg", "密码至少6位");
+                    gsonView.addStaticAttribute("errMsg", "验证码已过期，请重新发送");
+                }
+                String capt = (String) request.getSession().getAttribute("CAPTCHA");
+                if (!capt.equals(captcha)) {
+                    gsonView.addStaticAttribute(SUCCESS_FLG, false);
+                    gsonView.addStaticAttribute("errMsg", "验证码错误");
                 } else {
-                    loginService.changePwd(tel, pwd);
-                    gsonView.addStaticAttribute(SUCCESS_FLG, true);
-                    request.getSession().removeAttribute("CAPTCHA");
+                    if (pwd.length() < 6) {
+                        gsonView.addStaticAttribute(SUCCESS_FLG, false);
+                        gsonView.addStaticAttribute("errMsg", "密码至少6位");
+                    } else {
+                        loginService.changePwd(tel, pwd);
+                        gsonView.addStaticAttribute(SUCCESS_FLG, true);
+                        request.getSession().removeAttribute("CAPTCHA");
+                        request.getSession().removeAttribute("CAPTCHA_CREATE_TS");
+                    }
                 }
             }
         }
         return gsonView;
     }
-
-
-
 
 }

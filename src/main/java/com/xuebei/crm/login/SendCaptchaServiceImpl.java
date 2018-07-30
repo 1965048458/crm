@@ -37,7 +37,7 @@ public class SendCaptchaServiceImpl  {
             req.setExtend("");
             req.setSmsType("normal");
             req.setSmsFreeSignName(signName);
-            Integer expireTime =60/ 60;
+            Integer expireTime =900/ 60;
             req.setSmsParamString(buildSmsParams(captcha, Integer.toString(expireTime)));
             req.setRecNum(phoneNo);
             req.setSmsTemplateCode(templateCode);
