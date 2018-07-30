@@ -7,7 +7,7 @@ import java.util.List;
  */
 public interface CompanyService {
 
-    void insertMember(String name, String tel);
+    void insertMember(CompanyUser companyUser);
 
-    void addCompany(String companyName, String myPos, List<CompanyUser> colList);
+    void addCompany(String companyName, List<CompanyUser> companyUsers);
 }

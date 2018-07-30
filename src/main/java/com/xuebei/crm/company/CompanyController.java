@@ -71,12 +71,12 @@ public class CompanyController {
 
     @RequestMapping("/addCompany")
     public void addCompany(String companyName, String myPos, List<CompanyUser> colList){
-        companyService.addCompany(companyName, myPos, colList);
+        companyService.addCompany(companyName, colList);
     }
 
     @RequestMapping("/addMember")
-    public void insertMember(String name, String tel){
-        companyService.insertMember(name, tel);
+    public void insertMember(CompanyUser companyUser){
+        companyService.insertMember(companyUser);
     }
 
 }

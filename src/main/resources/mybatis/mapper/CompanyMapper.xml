@@ -11,8 +11,11 @@
     </resultMap>
 
     <select id="queryCompanyListByCrmUserId" resultMap="companyMap">
-        SELECT company.company_id, com_nm
-        FROM user_view LEFT JOIN company ON user_view.company_id = company.company_id
+        SELECT
+            company.company_id,
+            com_nm
+        FROM user_view
+            LEFT JOIN company ON user_view.company_id = company.company_id
         WHERE user_view.crm_user_id = #{crmUserId};
     </select>
 
@@ -51,5 +54,30 @@
                 NOW()
             );
     </insert>
+
+    <insert id="addCompany">
+        INSERT INTO `crmdb`.`company` (
+            `company_id`,
+            `com_nm`,
+            `creator_id`,
+            `create_ts`,
+            `updater_id`,
+            `update_ts`
+        )
+        VALUES (
+            #{companyId},
+            #{companyName},
+            'system',
+            NOW(),
+            'system',
+            NOW()
+        )
+
+    </insert>
+
+    <select id="getUserId">
+        SELECT crm_user_id FROM crm_user
+        WHERE real_nm = #{userName} AND TEL = #{tel}
+    </select>
 
 </mapper>
