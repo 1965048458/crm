@@ -41,18 +41,16 @@
             <span class="pull-right" @Click="confirmAddContacts">完成</span>
         </div>
 
-        <div class="weui-cells weui-cells_form" v-show="isTopDept === 'false'">
-            <div class="weui-cell">
-                <div class="weui-cell__bd" @click="chooseContactsType">
-                    <label>选择联系人职位</label>
+        <div class="weui-cells" v-show="isTopDept === 'false'">
+            <a class="weui-cell weui-cell_access" href="javascript:;" @Click="chooseContactsType">
+                <div class="weui-cell__bd">
+                    <p>选择联系人职位</p>
                 </div>
-                <div>
-                    <span>></span>
-                </div>
-            </div>
+                <div class="weui-cell__ft" v-text="contactsTypeString">职位</div>
+            </a>
         </div>
 
-        <div class="weui-cells weui-cells_form">
+        <div class="weui-cells">
             <div class="weui-cell">
                 <div class="weui-cell__hd">
                     <label class="weui-label">姓名</label>
@@ -61,14 +59,12 @@
                     <input  class="weui-input" placeholder="输入联系人的姓名" v-model="realName">
                 </div>
             </div>
-            <div class="weui-cell" @click="chooseGender">
+            <a class="weui-cell weui-cell_access" href="javascript:;" @Click="chooseGender">
                 <div class="weui-cell__bd">
-                    <label>性别</label>
+                    <p>性别</p>
                 </div>
-                <div>
-                    <span>></span>
-                </div>
-            </div>
+                <div class="weui-cell__ft" v-text="genderString">男</div>
+            </a>
         </div>
 
         <div class="weui-cells weui-cells_form">
@@ -203,7 +199,7 @@
                 </div>
                 <div class="weui-cell__ft">
                     <input type="radio" class="weui-check" :id="'type' + contactsType.contactsTypeId"
-                           :value="contactsType.contactsTypeId" v-model="contactsTypeId">
+                           :value="contactsType" v-model="curContactsType">
                     <i class="weui-icon-checked"></i>
                 </div>
             </label>
