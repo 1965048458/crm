@@ -3,6 +3,8 @@ package com.xuebei.crm.company;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2018/7/25.
  */
@@ -16,5 +18,10 @@ public class CompanyServiceImpl implements CompanyService {
     public void insertMember(String name, String tel) {
         //companyMapper.insertMember(name, tel);
         return;
+    }
+
+    @Override
+    public void addCompany(String companyName, String myPos, List<CompanyUser> colList) {
+        companyMapper.addCompany(companyName, myPos, colList);
     }
 }

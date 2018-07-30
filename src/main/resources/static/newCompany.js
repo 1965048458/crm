@@ -15,6 +15,9 @@ $(document).ready(function () {
             'selPost': function () {
                 this.showPage = 'selPos';
             },
+            'backToMe': function () {
+                window.location.href = '/company/chooseCompany';
+            },
             'back': function () {
                 this.showPage = 'main';
             },
@@ -29,6 +32,9 @@ $(document).ready(function () {
             },
             'save':function () {
                 
+            },
+            'saveAndAdd':function () {
+
             }
         }
     });

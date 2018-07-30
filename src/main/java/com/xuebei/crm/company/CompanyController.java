@@ -69,6 +69,11 @@ public class CompanyController {
         return "newCompany";
     }
 
+    @RequestMapping("/addCompany")
+    public void addCompany(String companyName, String myPos, List<CompanyUser> colList){
+        companyService.addCompany(companyName, myPos, colList);
+    }
+
     @RequestMapping("/addMember")
     public void insertMember(String name, String tel){
         companyService.insertMember(name, tel);
