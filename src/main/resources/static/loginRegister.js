@@ -32,7 +32,7 @@ jQuery(document).ready(function () {
                     cache: false
                 }).done(function (result) {
                     if (result.successFlg) {
-                        window.location = '/company/chooseCompany';
+                        window.location = '/journal/toList';
                     } else {
                         alert("用户名或密码不正确");
                     }
