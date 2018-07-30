@@ -21,6 +21,7 @@ public class LoginController {
     private LoginService loginService;
 
     public static final String SUCCESS_FLG = "successFlg";
+    public static final String ERRMSG = "errMsg";
 
     @RequestMapping("")
     public String registerAndLogin() {
@@ -60,27 +61,27 @@ public class LoginController {
         User user = loginService.searchTel(tel);
         if (user == null) {
             gsonView.addStaticAttribute(SUCCESS_FLG, false);
-            gsonView.addStaticAttribute("errMsg", "用户不存在");
+            gsonView.addStaticAttribute(ERRMSG, "用户不存在");
         } else {
             Date start = (Date) request.getSession().getAttribute("CAPTCHA_CREATE_TS");
             if (start == null) {
                 gsonView.addStaticAttribute(SUCCESS_FLG, false);
-                gsonView.addStaticAttribute("errMsg", "请获取验证码");
+                gsonView.addStaticAttribute(ERRMSG, "请获取验证码");
             } else {
                 Date now = new Date();
                 long c = (now.getTime() - start.getTime()) / 1000;
                 if (c > 900) {
                     gsonView.addStaticAttribute(SUCCESS_FLG, false);
-                    gsonView.addStaticAttribute("errMsg", "验证码已过期，请重新发送");
+                    gsonView.addStaticAttribute(ERRMSG, "验证码已过期，请重新发送");
                 }
                 String capt = (String) request.getSession().getAttribute("CAPTCHA");
                 if (!capt.equals(captcha)) {
                     gsonView.addStaticAttribute(SUCCESS_FLG, false);
-                    gsonView.addStaticAttribute("errMsg", "验证码错误");
+                    gsonView.addStaticAttribute(ERRMSG, "验证码错误");
                 } else {
                     if (pwd.length() < 6) {
                         gsonView.addStaticAttribute(SUCCESS_FLG, false);
-                        gsonView.addStaticAttribute("errMsg", "密码至少6位");
+                        gsonView.addStaticAttribute(ERRMSG, "密码至少6位");
                     } else {
                         loginService.changePwd(tel, pwd);
                         gsonView.addStaticAttribute(SUCCESS_FLG, true);
