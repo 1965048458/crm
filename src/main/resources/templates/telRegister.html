@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="/weui.css"/>
     <link rel="stylesheet" href="/example.css">
     <script src="http://47.96.188.208/static/js/jquery-2.1.1.js"></script>
-
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/loginRegister.js"></script>
     <style>
         .top-bar {
             background: #ffffff;
@@ -24,79 +25,69 @@
 </head>
 <body ontouchstart>
 
-
-<div class="top-bar" style="height: 20px;">
-    <a href="javascript:login();">
-        <span class="pull-left"><img src="/images/back_icon.svg" style="margin-top:3px"/></span>
-    </a>
-</div>
-<!--<div class="weui-cells"  style="transform:rotate(180deg)">-->
-<!--<a class="weui-cell weui-cell_access" href="javascript:login();">-->
-<!--<div class="weui-cell__bd" style="color:transparent"  >-->
-<!--<p>back</p>-->
-<!--</div>-->
-<!--<div class="weui-cell__ft" >-->
-<!--</div>-->
-<!--</a>-->
-<!--</div>-->
-<div class="weui-flex" style=" visibility: hidden">
-    <div class="weui-flex__item">
-        <div class="placeholder">placeholder</div>
-    </div>
-</div>
-<div class="weui-flex" style=" visibility: hidden">
-    <div class="weui-flex__item">
-        <div class="placeholder">placeholder</div>
-    </div>
-</div>
-<div class="weui-flex" style=" visibility: hidden">
-    <div class="weui-flex__item">
-        <div class="placeholder">placeholder</div>
-    </div>
-</div>
-<div class="weui-flex" style=" visibility: hidden">
-    <div class="weui-flex__item">
-        <div class="placeholder">placeholder</div>
-    </div>
-</div>
-<div class="weui-flex">
-    <div class="weui-flex__item">
-        <div class="placeholder"></div>
-    </div>
-    <div class="weui-flex__item">
-        <div class="placeholder" style="text-align: center;">
-            <h2>手机号注册</h2>
+<div id="insertVue">
+    <div id="telRegister" v-show="showPage === 'telRegister'">
+        <div class="top-bar" style="height: 20px;">
+            <a href="javascript:login();">
+                <span class="pull-left"><img src="/images/back_icon.svg" style="margin-top:3px"/></span>
+            </a>
         </div>
-    </div>
-    <div class="weui-flex__item">
-        <div class="placeholder"></div>
-    </div>
-</div>
-<div class="weui-flex" style=" visibility: hidden">
-    <div class="weui-flex__item">
-        <div class="placeholder">placeholder</div>
-    </div>
-</div>
-<div class="weui-flex" style=" visibility: hidden">
-    <div class="weui-flex__item">
-        <div class="placeholder">placeholder</div>
-    </div>
-</div>
-<div class="weui-flex" style=" visibility: hidden">
-    <div class="weui-flex__item">
-        <div class="placeholder">placeholder</div>
-    </div>
-</div>
-
-<div class="page__bd page__bd_spacing">
-    <div id="insertVue">
+        <div class="weui-flex" style=" visibility: hidden">
+            <div class="weui-flex__item">
+                <div class="placeholder">placeholder</div>
+            </div>
+        </div>
+        <div class="weui-flex" style=" visibility: hidden">
+            <div class="weui-flex__item">
+                <div class="placeholder">placeholder</div>
+            </div>
+        </div>
+        <div class="weui-flex" style=" visibility: hidden">
+            <div class="weui-flex__item">
+                <div class="placeholder">placeholder</div>
+            </div>
+        </div>
+        <div class="weui-flex" style=" visibility: hidden">
+            <div class="weui-flex__item">
+                <div class="placeholder">placeholder</div>
+            </div>
+        </div>
+        <div class="weui-flex">
+            <div class="weui-flex__item">
+                <div class="placeholder"></div>
+            </div>
+            <div class="weui-flex__item">
+                <div class="placeholder" style="text-align: center;">
+                    <h2>手机号注册</h2>
+                </div>
+            </div>
+            <div class="weui-flex__item">
+                <div class="placeholder"></div>
+            </div>
+        </div>
+        <div class="weui-flex" style=" visibility: hidden">
+            <div class="weui-flex__item">
+                <div class="placeholder">placeholder</div>
+            </div>
+        </div>
+        <div class="weui-flex" style=" visibility: hidden">
+            <div class="weui-flex__item">
+                <div class="placeholder">placeholder</div>
+            </div>
+        </div>
+        <div class="weui-flex" style=" visibility: hidden">
+            <div class="weui-flex__item">
+                <div class="placeholder">placeholder</div>
+            </div>
+        </div>
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell weui-cell_vcode">
                 <div class="weui-cell__bd">
                     <input class="weui-input" type="number" name="tel" placeholder="输入手机号" v-model="tel">
                 </div>
                 <div class="weui-cell__ft">
-                    <a id="send-captcha" @click="getCaptcha" href="javascript:;" class="weui-vcode-btn" >获取验证码</a>
+                    <a id="send-captcha" @click="getCaptchaRegister" href="javascript:;"
+                       class="weui-vcode-btn">获取验证码</a>
                 </div>
             </div>
         </div>
@@ -138,14 +129,83 @@
             <a href="javascript:;" class="weui-btn weui-btn_primary" id=submit_btn @click="register">确认</a>
         </div>
     </div>
+
+    <div id="supplementaryInformation" style="display: none" v-show="showPage === 'supplementaryInformation'">
+        <div class="top-bar">
+            <!--<span @click="backToList" class="pull-left"><img src="/images/back_icon.svg" style="margin-top:3px"/></span>-->
+            <span class="center">补充个人信息</span>
+        </div>
+        <div class="weui-panel__bd">
+            <a href="javascript:;" class="weui-media-box weui-media-box_appmsg">
+                <div class="weui-media-box__hd">
+                    <img src="/images/journal/defaultUserIcon.png" style="width: 60px;height: 60px"
+                         alt=""
+                         class="weui-tabbar__icon">
+                </div>
+                <div class="weui-media-box__bd">
+                    <h4 class="weui-media-box__title">{{realName}}</h4>
+                    <p class="weui-media-box__desc">{{tel}}</p>
+                </div>
+            </a>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell weui-cell_select weui-cell_select-after">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label" style="color: red">性别:</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <select class="weui-select" name="select2" v-model="gender">
+                            <option value="MALE">男</option>
+                            <option value="FEMALE">女</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label" style="color: red">年龄：</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="number" pattern="[0-9]*" placeholder="必填" v-model="age"/>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">邮箱:</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" placeholder="输入邮箱(选填)" v-model="mail"/>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">地址:</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" placeholder="输入地址(选填)" v-model="address"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui-flex" style=" visibility: hidden">
+                <div class="weui-flex__item">
+                    <div class="placeholder">placeholder</div>
+                </div>
+            </div>
+
+            <div class="hb_mar_top_40">
+                <button class="weui-btn weui-btn_primary"  @click="confirm">确认</button>
+            </div>
+
+        </div>
+    </div>
 </div>
 </body>
 <script type="text/javascript">
     function login() {
         location.href = '/';
-    };
+    }
+    ;
 </script>
-<script src="/vue.v2.5.13.js"></script>
-<script src="/loginRegister.js"></script>
+
 
 </html>
