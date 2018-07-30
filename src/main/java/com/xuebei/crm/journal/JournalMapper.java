@@ -68,4 +68,10 @@ public interface JournalMapper {
     List<User> searchUnread(@Param("journalId") String journalId);
 
     List<User> searchRead(@Param("journalId") String journalId);
+
+    Journal loadDetail(@Param("journalId") String journalId);
+
+    List<JournalPatch> loadPatches(@Param("journalId") String journalId);
+
+    List<VisitRecord> loadVisitRecs(String journalId);
 }

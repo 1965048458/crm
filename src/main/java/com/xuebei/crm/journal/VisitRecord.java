@@ -11,6 +11,18 @@ public class VisitRecord {
     @Expose
     private List<String> contactsIds;
     @Expose
+    private List<ContactInfo> contactsInfo;
+
+    public List<ContactInfo> getContactsInfo() {
+        return contactsInfo;
+    }
+
+    public void setContactsInfo(List<ContactInfo> contactsInfo) {
+        this.contactsInfo = contactsInfo;
+    }
+
+    @Expose
+
     private VisitTypeEnum visitType;
     @Expose
     private String visitResult;

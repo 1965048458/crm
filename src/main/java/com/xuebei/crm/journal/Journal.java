@@ -29,6 +29,17 @@ public class Journal {
     private List<VisitRecord> visitRecords;
 
     @Expose
+    private List<JournalPatch> patchList;
+
+    public List<JournalPatch> getPatchList() {
+        return patchList;
+    }
+
+    public void setPatchList(List<JournalPatch> patchList) {
+        this.patchList = patchList;
+    }
+
+    @Expose
     private List<User> receivers;
 
     @Expose

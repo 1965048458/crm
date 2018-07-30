@@ -203,4 +203,15 @@ public class JournalServiceImpl implements JournalService {
         return result;
 
     }
+
+
+    @Override
+    public Journal loadDetail(String journalId) {
+        Journal journal = journalMapper.loadDetail(journalId);
+        List<VisitRecord> records = journalMapper.loadVisitRecs(journalId);
+        List<JournalPatch> patches = journalMapper.loadPatches(journalId);
+        journal.setPatchList(patches);
+        journal.setVisitRecords(records);
+        return journal;
+    }
 }
