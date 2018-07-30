@@ -1,5 +1,6 @@
 package com.xuebei.crm.journal;
 
+import com.xuebei.crm.customer.Contacts;
 import com.xuebei.crm.user.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface JournalMapper {
-
+    Journal findJournalDraft(@Param("userId") String userId);
     // functions for table journal
     Integer createJournal(Journal journal);
 
@@ -36,7 +37,7 @@ public interface JournalMapper {
     Integer insertVisitContacts(@Param("visitId") String visitId,
                                 @Param("contactsId") String contactsId);
 
-    List<String> queryVisitContacts(@Param("visitId") String visitId);
+    List<Contacts> queryVisitContacts(@Param("visitId") String visitId);
 
     // functions for table journal_receiver
     Integer deleteJournalReceiver(@Param("journalId") String journalId);
