@@ -18,8 +18,8 @@ public interface CompanyMapper {
 
     String queryCompanyIdByUserId(@Param("userId") String userId);
 
-    void addCompany(String companyId, String companyName);
+    void addCompany(@Param("companyId")String companyId, @Param("companyName")String companyName);
 
-    String getUserId(String userName, String tel);
+    String getUserId(@Param("userName") String userName, @Param("tel") String tel);
 
 }

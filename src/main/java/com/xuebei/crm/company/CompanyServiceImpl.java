@@ -26,10 +26,12 @@ public class CompanyServiceImpl implements CompanyService {
         companyMapper.addCompany(companyId, companyName);
 
         String crmUserId = null;
+        String userId = null;
         for (CompanyUser user: companyUsers
              ) {
+            userId = UUIDGenerator.genUUID();
             crmUserId = companyMapper.getUserId(user.getCrmUserName(), user.getTel());
-            companyMapper.joinCompany(crmUserId, UUIDGenerator.genUUID(), companyId);
+            companyMapper.joinCompany(crmUserId, userId, companyId);
         }
 
     }
