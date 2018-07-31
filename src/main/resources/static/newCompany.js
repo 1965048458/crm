@@ -25,6 +25,10 @@ $(document).ready(function () {
             },
             'create': function () {
                 var thisVue = this;
+                if (this.companyName === "" || this.members.length < 3){
+                    alert("公司名不能为空且公司成员不能少于三人");
+                    return;
+                }
                 var postData = {
                     companyId: '',
                     companyName: this.companyName,

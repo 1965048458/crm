@@ -88,4 +88,10 @@ public class CompanyController {
         companyService.insertMember(companyUser);
     }
 
+    @RequestMapping("/memberDetail")
+    public String memberDetail(){
+        return "memberDetail";
+    }
+
+
 }
