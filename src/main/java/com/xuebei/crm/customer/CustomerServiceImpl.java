@@ -151,6 +151,28 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public List querySearchList(List<Department> deptList){
+        List<String> searchList = new ArrayList<>();
+        querySearchList(deptList,searchList);
+        return searchList;
+    }
+    private void querySearchList(List<Department> deptList, List<String > searchList){
+        for(Department department:deptList){
+            if(department.getEnclosureStatus().equals(EnclosureStatusEnum.MINE) ||
+                    department.getEnclosureStatus().equals(EnclosureStatusEnum.NORMAL)){
+                searchList.add(department.getDeptName());
+                if(!department.getContactsList().isEmpty() || department.getContactsList()!=null){
+                    for(Contacts contacts:department.getContactsList()){
+                        searchList.add(contacts.getRealName());
+                    }
+                }
+                if(!department.getDepartmentList().isEmpty() || department.getDepartmentList()!=null){
+                    querySearchList(department.getDepartmentList(), searchList);
+                }
+            }
+        }
+    }
+    @Override
     public List<String> searchSchool(String keyword){
         return customerMapper.searchSchool(keyword);
     }

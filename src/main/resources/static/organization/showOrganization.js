@@ -116,8 +116,12 @@ jQuery(document).ready(function () {
             },
             search:function () {
                 console.log(this.searchWord);
+                //var target = this.searchWord
+                var target  = "#" + this.searchWord;
                 this.showOrganization = true;
+
                 this.cancelSearch();
+                jQuery(target).HoverTreeScroll(1000);
             },
             text:function () {
                 $('#searchBar').addClass('weui-search-bar_focusing');
@@ -126,7 +130,7 @@ jQuery(document).ready(function () {
                 this.showOrganization = false;
             },
             filterList:function (searchItem) {
-                return searchItem.realName.indexOf(this.searchWord) != -1;
+                return searchItem.indexOf(this.searchWord) != -1;
             },
             hideSearchResult:function () {
                 $('#searchResult').hide();
@@ -162,25 +166,30 @@ jQuery(document).ready(function () {
             };
         },
         methods: {
-            'changeSubFold' : function () {
-                this.showSub = !this.showSub;
+            'changeSubFold' : function (status) {
+                if(status == 'ENCLOSURE'){
+                    this.showSub = false;
+                }else {
+                    this.showSub = !this.showSub;
+                }
+
             },
             'addNumBrackets':function (number) {
-                return "("+number+")";
+                return "( "+number+" )";
             },
             'addMineBrackets':function (status) {
                 if (status == 'MINE'){
-                    return "[我的]"
+                    return "[ 我的 ]"
                 }
             },
             'addEnclosureBrackets':function (status) {
                 if(status == 'ENCLOSURE'){
-                    return "[已圈]"
+                    return "[ 已圈 ]"
                 }
             },
             'addNormalBrackets':function (status) {
                 if(status == 'NORMAL'){
-                    return "[未圈]"
+                    return "[ 未圈 ]"
                 }
             },
             'addOpenSeaWarning':function (Warning) {

@@ -257,12 +257,12 @@ public class CustomerController {
         String userId = (String) request.getSession().getAttribute("userId");
         List<Department> deptList = customerService.queryDepartment(customerId, userId);
         //TODO
-        List<Contacts> contactsList = customerMapper.queryContacts(customerId);
+        List searchList = customerService.querySearchList(deptList);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg",true);
         gsonView.addStaticAttribute("customerList", deptList);
         //TODO
-        gsonView.addStaticAttribute("searchList",contactsList);
+        gsonView.addStaticAttribute("searchList",searchList);
         return gsonView;
     }
 

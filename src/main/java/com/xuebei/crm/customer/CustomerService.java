@@ -17,5 +17,7 @@ public interface CustomerService {
 
     List<Department> queryDepartment(String customerId,String userId);
 
+    List querySearchList(List<Department> deptList);
+
     List<String> searchSchool(String keyword);
 }

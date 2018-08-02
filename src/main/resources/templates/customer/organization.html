@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-if="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Organization</title>
@@ -9,6 +9,7 @@
     <script src="/lib/jquery-2.1.1.js"></script>
     <script src="/vue.v2.5.13.js"></script>
     <script src="/organization/showOrganization.js" charset="utf-8"></script>
+    <script src="http://static.walkclass.com/js/plugins/jquery.hovertreescroll.js" type="text/javascript"></script>
     <style>
         .pull-left{
             float: left!important;
@@ -62,7 +63,7 @@
         <div class="page__bd" style="height: 100%;">
             <div class="weui-tab">
                 <div class="weui-navbar">
-                    <div class="weui-navbar__item">
+                    <div class="weui-navbar__item" onclick="console.log(11);jQuery('#12345').HoverTreeScroll(1000);">
                         客户信息
                     </div>
                     <div class="weui-navbar__item" @click="searchOrganizations()">
@@ -71,7 +72,6 @@
                 </div>
 
                 <div class="weui-tab__panel">
-
                     <div class="weui-search-bar" id="searchBar" >
                         <div class="weui-search-bar__form">
                             <div class="weui-search-bar__box">
@@ -93,10 +93,10 @@
                         <div class="weui-cells weui-cells_radio">
                             <label class="weui-cell weui-check__label" v-for="searchItem in searchList.filter(filterList)">
                                 <div class="weui-cell__bd">
-                                    <p v-text="searchItem.realName"></p>
+                                    <p v-text="searchItem"></p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <input type="radio" class="weui-check" v-bind:value="searchItem.realName" v-model="searchWord">
+                                    <input type="radio" class="weui-check" v-bind:value="searchItem" v-model="searchWord">
                                 </div>
                             </label>
                         </div>
@@ -249,19 +249,20 @@
 <script type="text/x-template" id="customer">
     <div class="weui-cells">
         <div class="weui-cell">
-            <div class="weui-cell__bd"  >
+            <div class="weui-cell__bd"  :id="customer.deptName" >
                 <span class="pull-left" style="padding-right: 10px;"> > </span>
-                <span class="pull-left" @click="changeSubFold" style="padding-right: 5px;" v-text="customer.deptName"></span>
+                <span class="pull-left" @click="changeSubFold(customer.enclosureStatus)" style="padding-right: 5px;" v-text="customer.deptName"></span>
                 <span class="pull-left" v-text="addNumBrackets(customer.contactNumber)"></span>
-                <span class="pull-left" v-text="addMineBrackets(customer.enclosureStatus)"></span>
-                <span class="pull-left" v-text="addEnclosureBrackets(customer.enclosureStatus)"></span>
-                <span class="pull-left" v-text="addNormalBrackets(customer.enclosureStatus)" @click="apply(customer.deptName, customer.deptId)"></span>
+                <span class="pull-left" v-text="addMineBrackets(customer.enclosureStatus)" style="padding-left:5px;color: #20ccff;font-size: small"></span>
+                <span class="pull-left" v-text="addEnclosureBrackets(customer.enclosureStatus)" style="padding-left:5px;color: #666666"></span>
+                <span class="pull-left" v-text="addNormalBrackets(customer.enclosureStatus)" style="padding-left:5px;color: cyan;font-size: small"
+                      @click="apply(customer.deptName, customer.deptId)"></span>
                 <!--<span class="pull-left" v-text="addOpenSeaWarning(customer.Warning)" @click="openSeaWarning(customer.Warning)"></span>-->
             </div>
 
         </div>
-        <div class="weui-cells" v-show="showSub">
-            <div class="weui-cell" v-for="contact in customer.contactsList">
+        <div class="weui-cells" v-show="showSub" v-if="customer.enclosureStatus!='ENCLOSURE'">
+            <div class="weui-cell" v-for="contact in customer.contactsList" :id="contact.realName">
                 <div class="weui-cell__hd">
                     <img src="/images/customer/defaultUserIcon.png" class="usr-img">
                 </div>
