@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 45.2 (43514) - http://www.bohemiancoding.com/sketch -->
+    <title>C阶段</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="20" cy="20" r="20"></circle>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-2" transform="translate(-1425.000000, -1254.000000)">
+            <g id="C阶段" transform="translate(1425.000000, 1254.000000)">
+                <g id="Group-3">
+                    <g id="Oval">
+                        <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        <circle stroke="#7FC25D" stroke-width="3" cx="20" cy="20" r="18.5"></circle>
+                    </g>
+                    <path d="M20,0 L20,20 L0,20 C0,8.954305 8.954305,0 20,0 Z" id="Combined-Shape" fill="#EEEEEE"></path>
+                    <circle id="Oval" fill="#FFFFFF" cx="20" cy="20" r="18"></circle>
+                </g>
+                <text id="C" font-family="PingFangSC-Regular, PingFang SC" font-size="18" font-weight="normal" letter-spacing="0.2600001" fill="#7FC25D">
+                    <tspan x="13" y="26.5">C</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

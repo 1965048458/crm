@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>新建商机</title>
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css"/>
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/weui.min.js"></script>
+    <script src="/newSale.js"></script>
+
+    <style>
+        .top-bar {
+            background: #FFFFFF;
+            text-align: center;
+            padding: 10px 15px;
+            font-size: large;
+        }
+
+        .pull-left {
+            float: left !important;
+        }
+
+        .pull-right {
+            float: right !important;
+        }
+
+        .center-box {
+            font-size: large;
+            height: 40px;
+        }
+
+        .card{
+            color: grey;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="saleVue" class="center-box">
+
+    <div id="basicInfo" v-show="showPage === 'basicInfo'">
+        <div class="top-bar">
+            <span @click="back" class="pull-left">
+                <img src="/images/back_icon.svg"
+                     style="margin-top:8px;"/></span>
+            <span class="center" style="margin-top: 3px;">新建商机</span>
+            <span class="pull-right" style="margin-top: 3px; color: #28b3ff"
+                  @click="finish"> 完成 &nbsp; </span>
+        </div>
+
+        <div>
+            <div class="weui-cells">
+                <div class="weui-cell">基本信息</div>
+                <label style="margin-left: 15px"><span style="color: red">*</span>制作内容</label>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" placeholder="请填写制作内容">
+                    </div>
+                </div>
+                <a class="weui-cell weui-cell_access" @click="showDatePicker">
+                    <div class="weui-cell__bd">
+                        <p><span style="color: red">*</span>预估挂标日期</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <span v-text="preDate"></span>
+                    </div>
+                </a>
+                <a class="weui-cell weui-cell_access" @click="deliverDatePicker">
+                    <div class="weui-cell__bd">
+                        <p><span style="color: red">*</span>交付日期</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <span v-text="deliverDate"></span>
+                    </div>
+                </a>
+                <a class="weui-cell weui-cell_access" @click="selSaleStage">
+                    <div class="weui-cell__bd">
+                        <p><span style="color: red">*</span>销售阶段</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <span v-text="saleStage"></span>
+                    </div>
+                </a>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label"><span
+                            style="color: red">*</span>金额(元)</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="number" placeholder="        请输入">
+                    </div>
+                </div>
+                <a class="weui-cell weui-cell_access" @click="selCustomer">
+                    <div class="weui-cell__bd">
+                        <p><span style="color: red">*</span>客户名称</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <span v-text="customer"></span>
+                    </div>
+                </a>
+                <a class="weui-cell weui-cell_access" @click="selContact">
+                    <div class="weui-cell__bd">
+                        <p><span style="color: red">*</span>客户联系人</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <span v-text="custContact"></span>
+                    </div>
+                </a>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label"><span style="color: red">*</span>商机名称</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="number" placeholder="        请输入">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="saleStage" v-show="showPage === 'saleStage'">
+        <div class="top-bar">
+            <span @click="backToInfo" class="pull-left">
+                <img src="/images/back_icon.svg"
+                     style="margin-top:8px;"/></span>
+            <span class="center" style="margin-top: 3px;">选择销售阶段</span>
+            <span class="pull-right" style="margin-top: 3px; color: #28b3ff"
+                  @click="done"> 完成 &nbsp; </span>
+        </div>
+        <div class="weui-cells weui-cells_radio">
+            <label class="weui-cell weui-check__label" v-for="(stage, index) in stages">
+                <div class="weui-cell__hd">
+                    <img :src="'/images/opportunity/'+ ind[index] +'Stage.svg' " style="margin-right: 10px"/>
+                </div>
+                <div class="weui-cell__bd">
+                    <p v-text="stage"></p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check"
+                           :value="ind[index] + '阶段'"
+                           v-model="selStage">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label">
+                <div class="weui-cell__hd">
+                    <img src="/images/opportunity/loseOrder.svg" style="margin-right: 10px"/>
+                </div>
+                <div class="weui-cell__bd">
+                    <p>输单</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check"
+                           value="输单"
+                           v-model="selStage">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <div id="customer" v-show="showPage === 'customer'">
+        <div class="top-bar">
+            <span @click="backToInfo" class="pull-left">
+                <img src="/images/back_icon.svg"
+                     style="margin-top:8px;"/></span>
+            <span class="center" style="margin-top: 3px;">选择客户</span>
+            <span class="pull-right" style="margin-top: 3px; " @click="add">
+                <img src="/images/add.png"
+                     style="width: 20px; height: 20px; display: block"/></span>
+            </span>
+        </div>
+
+        <div class="weui-search-bar" id="searchBar">
+            <div class="weui-search-bar__form">
+                <div class="weui-search-bar__box">
+                    <i class="weui-icon-search"></i>
+                    <input type="text" class="weui-search-bar__input" id="searchInput"
+                           placeholder="搜索">
+                    <a href="javascript:" class="weui-icon-clear" id="searchClear"
+                       @click=""></a>
+                </div>
+                <label class="weui-search-bar__label" id="searchText" @click=""
+                       style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                    <i class="weui-icon-search"></i>
+                    <span>搜索</span>
+                </label>
+            </div>
+            <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel"
+               @click="">取消</a>
+        </div>
+
+        <div class="weui-cells weui-cells_radio">
+            <label class="weui-cell weui-check__label">
+                <div class="weui-cell__bd">
+                    <p>浙江大学</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check"
+                           value="12" name="c1">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label">
+                <div class="weui-cell__bd">
+                    <p>浙江工业大学</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check"
+                           value="11" name="c1">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <div id="custContact" v-show="showPage === 'custContact'">
+        <div class="top-bar">
+            <span @click="backToInfo" class="pull-left">
+                <img src="/images/back_icon.svg"
+                     style="margin-top:12px;"/></span>
+            <p class="center" style="font-size: 18px;">选择客户联系人</p>
+            <p class="center" style="font-size: x-small">浙江大学</p>
+        </div>
+
+        <div class="weui-cells weui-cells_radio">
+            <label class="weui-cell weui-check__label">
+                <div class="weui-cell__bd">
+                    <p>刘建国</p>
+                    <p class="card">机械学院-主任</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check"
+                           value="12" name="c2">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label">
+                <div class="weui-cell__bd">
+                    <p>吴浩然</p>
+                    <p class="card">机械学院-机械制造专业-教师</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check"
+                           value="18" name="c2">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label">
+                <div class="weui-cell__bd">
+                    <p>李峰</p>
+                    <p class="card">电器学院-自动化造专业-教师</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check"
+                           value="23" name="c2">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
