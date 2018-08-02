@@ -8,6 +8,7 @@ import com.xuebei.crm.user.GenderEnum;
 import com.xuebei.crm.user.User;
 import com.xuebei.crm.utils.UUIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,9 +46,8 @@ public class RegisterController {
                                      @RequestParam("realName") String realName,
                                      @RequestParam("pwd") String pwd,
                                      @RequestParam("gender") String gender,
-                                     @RequestParam("age") int age,
-                                     @RequestParam(value = "mail", required = false) String mail,
-                                     @RequestParam(value = "address", required = false) String address,
+                                     @DateTimeFormat(pattern = "yyyy-MM-dd") Date birth,
+                                     @RequestParam("mail") String mail,
                                      HttpServletRequest request) {
         GsonView gsonView = new GsonView();
         GenderEnum genderEnum = GenderEnum.valueOf(gender);
@@ -58,9 +58,8 @@ public class RegisterController {
         user.setRealName(realName);
         user.setPwd(pwd);
         user.setGenderEnum(genderEnum);
-        user.setAge(age);
         user.setMail(mail);
-        user.setAddress(address);
+        user.setBirth(birth);
         registerService.insertUser(user);
         request.getSession().setAttribute("crmUserId", user.getCRMUserId());
         gsonView.addStaticAttribute(SUCCESS_FLG, true);

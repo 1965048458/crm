@@ -83,11 +83,11 @@
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell weui-cell_vcode">
                 <div class="weui-cell__bd">
-                    <input  id="inputTel" class="weui-input" type="number" name="tel" placeholder="输入手机号" v-model="tel">
+                    <input id="inputTel" class="weui-input" type="number" name="tel" placeholder="输入手机号" v-model="tel">
                 </div>
                 <div class="weui-cell__ft">
                     <a id="send-captcha" @click="getCaptchaRegister" href="javascript:;"
-                       class="weui-vcode-btn" >获取验证码</a>
+                       class="weui-vcode-btn">获取验证码</a>
                 </div>
             </div>
         </div>
@@ -135,22 +135,43 @@
             <!--<span @click="backToList" class="pull-left"><img src="/images/back_icon.svg" style="margin-top:3px"/></span>-->
             <span class="center">补充个人信息</span>
         </div>
-        <div class="weui-panel__bd">
-            <a href="javascript:;" class="weui-media-box weui-media-box_appmsg">
-                <div class="weui-media-box__hd">
-                    <img  src="/images/journal/defaultUserIcon.png" style="width: 60px;height: 60px"
-                         alt=""
-                         class="weui-tabbar__icon">
+        <div class="weui-panel__bd" style="text-align: center;">
+            <div class="weui-flex" style=" visibility: hidden">
+                <div class="weui-flex__item">
+                    <div class="placeholder">placeholder</div>
                 </div>
-                <div class="weui-media-box__bd">
-                    <h4 class="weui-media-box__title">{{realName}}</h4>
-                    <p class="weui-media-box__desc">{{tel}}</p>
+            </div>
+            <img src="/images/journal/defaultUserIcon.png" style="width: 60px;height: 60px"
+                 alt=""
+                 class="weui-tabbar__icon">
+            <div class="weui-flex" >
+                <div class="weui-flex__item">
+                    <div class="placeholder" style="font-size: smaller;color: #9B9B9B">点击上传头像</div>
                 </div>
-            </a>
+            </div>
+
             <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">姓名:</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" v-model="realName">
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">电话:</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" v-model="tel">
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">出生年月:</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="date" v-model="birth">
+                    </div>
+                </div>
                 <div class="weui-cell weui-cell_select weui-cell_select-after">
                     <div class="weui-cell__hd">
-                        <label class="weui-label" style="color: red">性别:</label>
+                        <label class="weui-label" >性别:</label>
                     </div>
                     <div class="weui-cell__bd">
                         <select class="weui-select" name="select2" v-model="gender">
@@ -159,33 +180,13 @@
                         </select>
                     </div>
                 </div>
-            </div>
-
-            <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label" style="color: red">年龄：</label></div>
+                    <div class="weui-cell__hd"><label class="weui-label">电子邮箱:</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="number" pattern="[0-9]*" placeholder="必填" v-model="age"/>
+                        <input class="weui-input" type="email" name="email" placeholder="输入电子邮箱" v-model="mail"/>
                     </div>
                 </div>
             </div>
-            <div class="weui-cells weui-cells_form">
-                <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label">邮箱:</label></div>
-                    <div class="weui-cell__bd">
-                        <input class="weui-input" type="text" placeholder="输入邮箱(选填)" v-model="mail"/>
-                    </div>
-                </div>
-            </div>
-            <div class="weui-cells weui-cells_form">
-                <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label">地址:</label></div>
-                    <div class="weui-cell__bd">
-                        <input class="weui-input" type="text" placeholder="输入地址(选填)" v-model="address"/>
-                    </div>
-                </div>
-            </div>
-
             <div class="weui-flex" style=" visibility: hidden">
                 <div class="weui-flex__item">
                     <div class="placeholder">placeholder</div>
