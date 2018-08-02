@@ -272,20 +272,20 @@ public class CustomerController {
                                     @RequestParam("applyDeptId") String applyDeptId,
                                     EnclosureApply enclosureApply,
                                     HttpServletRequest request) {
-//        System.out.println(applyTime);
-        final String EMPTY_REASONS_ERROR = "申请理由不能为空";
-        if(submitReasons == null)
-            return GsonView.createErrorView(EMPTY_REASONS_ERROR);
-
-        String userId = (String) request.getSession().getAttribute("userId");
-        //enclosureApply.setEnclosureApplyId(11);
-        enclosureApply.setReasons(submitReasons);
-        enclosureApply.setDeptId(applyDeptId);
-        enclosureApply.setUserId(userId);
-//        enclosureApply.setApplyTime(Date);
-        customerMapper.insertEnclosureApply(enclosureApply);
         GsonView gsonView = new GsonView();
-        gsonView.addStaticAttribute("successFlg", true);
+        final String EMPTY_REASONS_ERROR = "申请理由不能为空";
+        if(submitReasons == null || submitReasons.equals("")) {
+            gsonView.addStaticAttribute("successFlg", false);
+            gsonView.addStaticAttribute("errMsg",EMPTY_REASONS_ERROR);
+        }
+        else{
+            String userId = (String) request.getSession().getAttribute("userId");
+            enclosureApply.setReasons(submitReasons);
+            enclosureApply.setDeptId(applyDeptId);
+            enclosureApply.setUserId(userId);
+            customerMapper.insertEnclosureApply(enclosureApply);
+            gsonView.addStaticAttribute("successFlg", true);
+        }
         return gsonView;
     }
 

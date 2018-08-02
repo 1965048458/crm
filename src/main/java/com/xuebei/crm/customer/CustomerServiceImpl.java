@@ -75,7 +75,13 @@ public class CustomerServiceImpl implements CustomerService {
                 prtDept.addContact(department.getContactNumber());
             }
         }
-
+        //TODO 判断哪些部门可以显示，哪些部门或联系人可以搜索
+        for(Department department:rltList){
+            if(department.getEnclosureStatus().equals(EnclosureStatusEnum.MINE) ||
+                    department.getEnclosureStatus().equals(EnclosureStatusEnum.NORMAL)){
+                department.setCanUnFold(true);
+            }
+        }
         return rltList;
     }
 
