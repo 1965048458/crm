@@ -29,6 +29,10 @@ public class OpportunityController {
         return "opportunity";
     }
 
+    @RequestMapping("newSale")
+    public String newSale(){
+        return "newSale";
+    }
 
 
 }

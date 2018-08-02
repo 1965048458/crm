@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="14px" viewBox="0 0 18 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 45.2 (43514) - http://www.bohemiancoding.com/sketch -->
+    <title>阶段勾选</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-2" transform="translate(-2088.000000, -998.000000)" fill-rule="nonzero" fill="#67BE61">
+            <path d="M2105.36298,1001.57713 L2096.60799,1010.46279 C2096.15064,1010.92015 2095.62795,1011.05082 2095.03993,1011.05082 C2094.45191,1011.05082 2093.92922,1010.92015 2093.53721,1010.46279 L2088.63702,1005.56261 C2087.78766,1004.71325 2087.78766,1003.47187 2088.63702,1002.6225 C2089.48639,1001.77314 2090.72777,1001.77314 2091.57713,1002.6225 L2094.97459,1006.01996 L2102.42287,998.637024 C2103.27223,997.787659 2104.51361,997.787659 2105.36298,998.637024 C2106.21234,999.486388 2106.21234,1000.72777 2105.36298,1001.57713 Z" id="阶段勾选"></path>
+        </g>
+    </g>
+</svg>
