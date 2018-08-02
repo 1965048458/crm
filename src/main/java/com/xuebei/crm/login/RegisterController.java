@@ -165,16 +165,15 @@ public class RegisterController {
 
     public void sendCaptcha(GsonView gsonView, String tel, HttpServletRequest request) {
         String captcha = sendCaptchaService.randomNoSeq(4);
-//        AlibabaAliqinFcSmsNumSendResponse rsp;
-        Rsp rsp = new Rsp();
-//        try {
-//            rsp = sendCaptchaService.sendCaptcha(tel, captcha);
-//        }
-//        catch (ApiException e) {
-//            gsonView.addStaticAttribute(SUCCESS_FLG, false);
-//            gsonView.addStaticAttribute(ERRMSG, "短信发送失败");
-//            return;
-//        }
+        AlibabaAliqinFcSmsNumSendResponse rsp;
+        try {
+            rsp = sendCaptchaService.sendCaptcha(tel, captcha);
+        }
+        catch (ApiException e) {
+            gsonView.addStaticAttribute(SUCCESS_FLG, false);
+            gsonView.addStaticAttribute(ERRMSG, "短信发送失败");
+            return;
+        }
 
         if (rsp == null || !rsp.isSuccess()) {
             gsonView.addStaticAttribute(SUCCESS_FLG, false);
@@ -186,12 +185,4 @@ public class RegisterController {
             gsonView.addStaticAttribute(ERRMSG, "发送成功");
         }
     }
-
-    public class Rsp{
-        boolean isSuccess(){
-            return true;
-        }
-    }
-
-
 }

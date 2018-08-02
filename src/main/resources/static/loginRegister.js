@@ -188,12 +188,6 @@ jQuery(document).ready(function () {
                     });
                 }
             },
-            'captchaClick': function () {
-                if (this.time == 60) {
-                    $("#send-captcha").css('color', 'gray');
-                    this.reserveCode();
-                }
-            },
             'reserveCode': function () {
                 var thisVue = this;
                 var timer = setInterval(function () {
