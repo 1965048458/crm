@@ -228,8 +228,8 @@
                         <span>调入公海的原因</span>
 
                         <ul>
-                            <li><span>原因一</span></li>
-                            <li><span>原因二</span></li>
+                            <li><span>1.该客户在三个月内没有任何跟进或相关日志</span></li>
+                            <li><span>2.该客户在n个月没有任何交易</span></li>
                         </ul>
                     </div>
                 </div>
@@ -250,14 +250,18 @@
     <div class="weui-cells">
         <div class="weui-cell">
             <div class="weui-cell__bd"  :id="customer.deptName" >
-                <span class="pull-left" style="padding-right: 10px;"> > </span>
+                <span class="pull-left" @click="changeSubFold(customer.enclosureStatus)" style="padding-right: 10px;">
+                    <img :src="imgPath">
+
+                </span>
                 <span class="pull-left" @click="changeSubFold(customer.enclosureStatus)" style="padding-right: 5px;" v-text="customer.deptName"></span>
-                <span class="pull-left" v-text="addNumBrackets(customer.contactNumber)"></span>
+                <span class="pull-left" v-text="addNumBrackets(customer.contactNumber,customer.enclosureStatus)"></span>
                 <span class="pull-left" v-text="addMineBrackets(customer.enclosureStatus)" style="padding-left:5px;color: #20ccff;font-size: small"></span>
-                <span class="pull-left" v-text="addEnclosureBrackets(customer.enclosureStatus)" style="padding-left:5px;color: #666666"></span>
+                <span class="pull-left" v-text="addEnclosureBrackets(customer.enclosureStatus)" style="padding-left:5px;color: #666666;font-size: small"></span>
                 <span class="pull-left" v-text="addNormalBrackets(customer.enclosureStatus)" style="padding-left:5px;color: cyan;font-size: small"
                       @click="apply(customer.deptName, customer.deptId)"></span>
-                <!--<span class="pull-left" v-text="addOpenSeaWarning(customer.Warning)" @click="openSeaWarning(customer.Warning)"></span>-->
+                <span class="pull-left" v-text="addOpenSeaWarning(customer.openSeaWarning)" style="color: #F43530;padding-left: 5px"
+                      @click="openSeaWarning(customer.openSeaWarning)"></span>
             </div>
 
         </div>

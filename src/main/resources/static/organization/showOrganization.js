@@ -107,10 +107,10 @@ jQuery(document).ready(function () {
             'openSeaWarningDetail':function (warning) {
 
                 this.warningDetails.leftTime = warning.leftTime;
-                this.warningDetails.warnedOrganization = warning.warnedOrganization;
+                this.warningDetails.warnedOrganization = warning.deptName;
                 this.warningDetails.createdTime = warning.createdTime;
-                this.warningDetails.times = warning.times;
-                this.warningDetails.lastTime = warning.lastTime;
+                this.warningDetails.times = warning.followTimes;
+                this.warningDetails.lastTime = warning.lastTimeFollow;
                 this.showPage = 'showOpenSeaWarning';
 
             },
@@ -163,19 +163,34 @@ jQuery(document).ready(function () {
                 showOrganization: false,
                 showApplyDialog: false,
                 showApply: false,
+                imgPath:"/images/customer/right.png",
+
             };
         },
         methods: {
             'changeSubFold' : function (status) {
                 if(status == 'ENCLOSURE'){
                     this.showSub = false;
+                    this.setImgPath();
                 }else {
                     this.showSub = !this.showSub;
+                    this.setImgPath();
                 }
 
             },
-            'addNumBrackets':function (number) {
-                return "( "+number+" )";
+            'setImgPath':function () {
+                if(this.showSub == false){
+                    this.imgPath = "/images/customer/right.png";
+                }else {
+                    this.imgPath = "/images/customer/down.png";
+                }
+            },
+            'addNumBrackets':function (number,status) {
+                if(status == 'ENCLOSURE' || number == '0'){
+                    return '';
+                }else{
+                    return "( "+number+" )";
+                }
             },
             'addMineBrackets':function (status) {
                 if (status == 'MINE'){
@@ -192,8 +207,8 @@ jQuery(document).ready(function () {
                     return "[ 未圈 ]"
                 }
             },
-            'addOpenSeaWarning':function (Warning) {
-                if(Warning.openSeaWarning == '1'){
+            'addOpenSeaWarning':function (warning) {
+                if(warning != null){
                     return "!!即将进入公海";
                 }
                 else {

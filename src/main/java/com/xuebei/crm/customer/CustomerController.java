@@ -256,6 +256,16 @@ public class CustomerController {
                                     HttpServletRequest request) {
         String userId = (String) request.getSession().getAttribute("userId");
         List<Department> deptList = customerService.queryDepartment(customerId, userId);
+        deptList.get(0).setEnclosureStatus(EnclosureStatusEnum.ENCLOSURE);
+        deptList.get(5).setEnclosureStatus(EnclosureStatusEnum.ENCLOSURE);
+        deptList.get(4).setEnclosureStatus(EnclosureStatusEnum.MINE);
+        OpenSeaWarning openSeaWarning = new OpenSeaWarning();
+        openSeaWarning.setDeptName(deptList.get(4).getDeptName());
+        openSeaWarning.setFollowTimes(2);
+        openSeaWarning.setLeftTime("3");
+        openSeaWarning.setCreatedTime("2018-08-08 12:23:33");
+        openSeaWarning.setLastTimeFollow("2018-09-08 12:23:33");
+        deptList.get(4).setOpenSeaWarning(openSeaWarning);
         //TODO
         List searchList = customerService.querySearchList(deptList);
         GsonView gsonView = new GsonView();

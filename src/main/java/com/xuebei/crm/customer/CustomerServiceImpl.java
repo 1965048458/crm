@@ -98,9 +98,11 @@ public class CustomerServiceImpl implements CustomerService {
             //从未拜访
             int diffDays;
             int followTimes = 0;
+            String lastTime = "";
             if(visitList.isEmpty()){
                 //比较申请圈地时间与当前时间的间隔
                  diffDays = diffDays(enclosureApply.getStartTime());
+                 lastTime = enclosureApply.getStartTime();
             }
             //拜访过
             else {
@@ -108,15 +110,18 @@ public class CustomerServiceImpl implements CustomerService {
                 //比较最新的一次拜访时间与当前时间的间隔
                 diffDays = diffDays(visit.getVisitTime());
                 followTimes = visitList.size();
+                lastTime = visit.getVisitTime();
+
             }
             //申请圈地后未到83天
             if(diffDays<83) department.setEnclosureStatus(EnclosureStatusEnum.MINE);
                 //距离申请圈地后83天 90天以内
             else if (diffDays>=83 && diffDays<90){
                 OpenSeaWarning openSeaWarning = new OpenSeaWarning();
+                openSeaWarning.setCreatedTime(enclosureApply.getStartTime());
                 openSeaWarning.setFollowTimes(followTimes);
-                openSeaWarning.setLastTimeFollow(enclosureApply.getStartTime());
-                openSeaWarning.setDepartment(department);
+                openSeaWarning.setLastTimeFollow(lastTime);
+                openSeaWarning.setDeptName(department.getDeptName());
                 department.setEnclosureStatus(EnclosureStatusEnum.MINE);
             }
             //距离申请圈地后超过90天
