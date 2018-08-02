@@ -33,8 +33,7 @@ public class SendCaptchaServiceImpl implements SendCaptchaService{
     public AlibabaAliqinFcSmsNumSendResponse sendCaptcha(String phoneNo, String captcha) throws ApiException {
         String signName = "学呗课堂";
         String templateCode = "SMS_18270121";
-        AlibabaAliqinFcSmsNumSendResponse rsp = new AlibabaAliqinFcSmsNumSendResponse();
-
+        AlibabaAliqinFcSmsNumSendResponse rsp ;
         AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
         req.setExtend("");
         req.setSmsType("normal");

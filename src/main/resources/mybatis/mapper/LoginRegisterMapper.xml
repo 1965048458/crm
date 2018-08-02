@@ -24,10 +24,10 @@
 
     <insert id="insertUser" parameterType="com.xuebei.crm.user.User">
         INSERT INTO  crm_user
-        ( crm_user_id,tel,pwd, real_nm, gender, age, mail, address,
+        ( crm_user_id,tel,pwd, real_nm, gender, mail,birth,
         avatar_url, create_ts, update_ts)
         VALUES
-        ( #{userId},#{tel},  #{pwd}, #{realName}, #{genderEnum}, #{age}, #{mail},#{address},
+        ( #{userId},#{tel},  #{pwd}, #{realName}, #{genderEnum}, #{mail},#{birth},
          "/images/journal/defaultUserIcon.png", NOW(), NOW())
     </insert>
 </mapper>
