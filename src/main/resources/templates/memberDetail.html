@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
@@ -26,12 +26,11 @@
         }
 
         .center-box {
-            margin-top: 1%;
             font-size: large;
             height: 40px;
         }
 
-        .person_info{
+        .person_info {
             margin-top: 15%;
             text-align: center;
         }
@@ -43,46 +42,114 @@
 
 <div class="center-box" id="detailVue">
 
-    <div class="panel_info" style="background: #478bff no-repeat fixed center; background-size: 60% 60%">
-        <div class="top-bar">
-            <span @click="back" class="pull-left"><img src="/images/back_icon.svg" style="margin-top:8px; background: #FFFFFF"/></span>
-            <span class="pull-right" style="margin-top: 8px; color: #FFFFFF"
-                  @click="setting"> *** &nbsp; </span>
+    <div id="mInfo" v-show="showPage === 'mInfo'">
+        <div class="panel_info" style="background: #478bff ; background-size: 100% 100%">
+            <div class="top-bar">
+                <span @click="back" class="pull-left"><img src="/images/back_icon.svg"
+                                                           style="margin-top:8px; background: #FFFFFF"/></span>
+                <span class="pull-right" style="margin-top: 8px; color: #FFFFFF"
+                      @click="setting"> *** &nbsp; </span>
+            </div>
+
+            <div class="person_info">
+                <p><img src="/images/male.jpg"/></p>
+                <p v-text="" style="font-size: larger; color: #FFFFFF">李明</p>
+                <p v-text="" style="font-size: small; color: #FFFFFF">销售</p>
+            </div>
+
         </div>
 
-        <div class="person_info">
-            <p><img src="/images/male.jpg"/></p>
-            <p v-text="" style="font-size: larger; color: #FFFFFF">李明</p>
-            <p v-text="" style="font-size: small; color: #FFFFFF">销售</p>
-        </div>
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><img src="/images/phone.jpg" alt=""
+                                                style="width:20px;margin-right:5px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>&nbsp;手机</p>
+                </div>
+                <div class="pull-left">18812345678</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><img src="/images/email.jpg" alt=""
+                                                style="width:20px;margin-right:5px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>&nbsp;邮箱</p>
+                </div>
+                <div class="pull-left">123321@126.com</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><img src="/images/position.jpg" alt=""
+                                                style="width:20px;margin-right:5px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>&nbsp;职位</p>
+                </div>
+                <div class="pull-left">销售</div>
+            </div>
 
+        </div>
     </div>
 
-    <div class="weui-cells">
-        <div class="weui-cell">
-            <div class="weui-cell__hd"><img src="/images/phone.jpg" alt="" style="width:20px;margin-right:5px;display:block"></div>
-            <div class="weui-cell__bd">
-                <p>&nbsp;手机</p>
+    <div id="mSetting" v-show="showPage === 'mSetting'">
+        <div class="center-box">
+            <div class="top-bar" style="background: #FFFFFF;">
+                <span @click="backToMain" class="pull-left"><img src="/images/back_icon.svg"
+                                                                 style="margin-top:8px;"/></span>
+                <span class="center" style="margin-top: 8px;font-size: larger;">成员设置</span>
             </div>
-            <div class="pull-left">18812345678</div>
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd"><img src="/images/email.jpg" alt="" style="width:20px;margin-right:5px;display:block"></div>
-            <div class="weui-cell__bd">
-                <p>&nbsp;邮箱</p>
-            </div>
-            <div class="pull-left">123321@126.com</div>
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd"><img src="/images/position.jpg" alt="" style="width:20px;margin-right:5px;display:block"></div>
-            <div class="weui-cell__bd">
-                <p>&nbsp;职位</p>
-            </div>
-            <div class="pull-left">销售</div>
-        </div>
 
+            <div class="weui-cells">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">员工</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <span class="pull-right">李明</span>
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">姓名备注</label></div>
+                    <div class="weui-cell__bd"><input placeholder="输入姓名备注" class="weui-input"></div>
+                </div>
+                <a class="weui-cell weui-cell_access" href="javascript:;">
+                    <div class="weui-cell__bd">
+                        <p>员工职位</p>
+                    </div>
+                    <div class="weui-cell__ft">销售</div>
+                </a>
+                <a class="weui-cell weui-cell_access" @click="setDept">
+                    <div class="weui-cell__bd">
+                        <p>所属部门</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        销售部门<span v-text="department"></span>
+                    </div>
+                </a>
+            </div>
+
+            <button class="weui-btn" style="position: fixed; bottom: 10px; text-align: center;color: red;">删除成员</button>
+
+        </div>
     </div>
 
+    <div id="selDept" v-show="showPage === 'selDept'">
+        <div class="top-bar" style="background: #FFFFFF;">
+            <span @click="backToSetting" class="pull-left"><img src="/images/back_icon.svg" style="margin-top:6px"/></span>
+            <span class="center">所属部门</span>
+        </div>
+        <div class="weui-cells">
+
+            <div class="weui-cells weui-cells_radio">
+                <label class="weui-cell weui-check__label" v-for="dept in deptList">
+                    <div class="weui-cell__bd">
+                        <p v-text="dept"></p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" class="weui-check" v-bind:value="dept" v-model="department">
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
 
 </div>
 </body>
