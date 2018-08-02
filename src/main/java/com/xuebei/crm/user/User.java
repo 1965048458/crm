@@ -22,6 +22,15 @@ public class User {
     private String avatarUrl;
     @Expose
     private String pwd ;
+    @Expose
+    private GenderEnum gender;
+    @Expose
+    private int age;
+    @Expose
+    private String mail;
+    @Expose
+    private String address;
+
 
     public String getUserId() {
         return userId;
@@ -77,5 +86,37 @@ public class User {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
+    }
+
+    public GenderEnum getGenderEnum() {
+        return gender;
+    }
+
+    public void setGenderEnum(GenderEnum gender) {
+        this.gender = gender;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

@@ -9,6 +9,8 @@ public class Contacts {
     private String contactsId;
     @Expose
     private String departmentId;
+    @Expose
+    private String totalName;
 
     public String getDepartmentId() {
         return departmentId;
@@ -145,6 +147,14 @@ public class Contacts {
 
     public void setContactsType(ContactsType contactsType) {
         this.contactsType = contactsType;
+    }
+
+    public String getTotalName() {
+        return totalName;
+    }
+
+    public void setTotalName(String totalName) {
+        this.totalName = totalName;
     }
 
 }

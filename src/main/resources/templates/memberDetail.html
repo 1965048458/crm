@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>个人信息</title>
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css"/>
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/memberDetail.js"></script>
+
+    <style>
+
+        .top-bar {
+            text-align: center;
+            padding: 10px 15px;
+        }
+
+        .pull-left {
+            float: left !important;
+        }
+
+        .pull-right {
+            float: right !important;
+        }
+
+        .center-box {
+            margin-top: 1%;
+            font-size: large;
+            height: 40px;
+        }
+
+        .person_info{
+            margin-top: 15%;
+            text-align: center;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="center-box" id="detailVue">
+
+    <div class="panel_info" style="background: #478bff no-repeat fixed center; background-size: 60% 60%">
+        <div class="top-bar">
+            <span @click="back" class="pull-left"><img src="/images/back_icon.svg" style="margin-top:8px; background: #FFFFFF"/></span>
+            <span class="pull-right" style="margin-top: 8px; color: #FFFFFF"
+                  @click="setting"> *** &nbsp; </span>
+        </div>
+
+        <div class="person_info">
+            <p><img src="/images/male.jpg"/></p>
+            <p v-text="" style="font-size: larger; color: #FFFFFF">李明</p>
+            <p v-text="" style="font-size: small; color: #FFFFFF">销售</p>
+        </div>
+
+    </div>
+
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><img src="/images/phone.jpg" alt="" style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__bd">
+                <p>&nbsp;手机</p>
+            </div>
+            <div class="pull-left">18812345678</div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><img src="/images/email.jpg" alt="" style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__bd">
+                <p>&nbsp;邮箱</p>
+            </div>
+            <div class="pull-left">123321@126.com</div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><img src="/images/position.jpg" alt="" style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__bd">
+                <p>&nbsp;职位</p>
+            </div>
+            <div class="pull-left">销售</div>
+        </div>
+
+    </div>
+
+
+</div>
+</body>
+</html>

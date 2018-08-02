@@ -1,9 +1,11 @@
 package com.xuebei.crm.company;
 
+import com.google.gson.Gson;
 import com.xuebei.crm.customer.Customer;
 import com.xuebei.crm.dto.GsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -69,9 +71,27 @@ public class CompanyController {
         return "newCompany";
     }
 
-    @RequestMapping("/addMember")
-    public void insertMember(String name, String tel){
-        companyService.insertMember(name, tel);
+    @RequestMapping("/addCompany")
+    public GsonView addCompany(@RequestBody Company company,
+                               HttpServletRequest request){
+        String crmUserId = (String) request.getSession().getAttribute("crmUserId");
+        String companyName = company.getCompanyName();
+        List<CompanyUser> companyUserList = company.getCompanyUserList();
+        companyService.addCompany(companyName, companyUserList);
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
     }
+
+    @RequestMapping("/addMember")
+    public void insertMember(CompanyUser companyUser){
+        companyService.insertMember(companyUser);
+    }
+
+    @RequestMapping("/memberDetail")
+    public String memberDetail(){
+        return "memberDetail";
+    }
+
 
 }

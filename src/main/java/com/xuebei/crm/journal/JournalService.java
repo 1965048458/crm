@@ -18,4 +18,6 @@ public interface JournalService {
     List<Journal> searchJournal(JournalSearchParam param);
 
     List  searchDatail(String journalId);
+
+    List<JournalCustomer> getAllContacts(String companyId);
 }

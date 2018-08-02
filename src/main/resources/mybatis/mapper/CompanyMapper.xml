@@ -11,8 +11,11 @@
     </resultMap>
 
     <select id="queryCompanyListByCrmUserId" resultMap="companyMap">
-        SELECT company.company_id, com_nm
-        FROM user_view LEFT JOIN company ON user_view.company_id = company.company_id
+        SELECT
+            company.company_id,
+            com_nm
+        FROM user_view
+            LEFT JOIN company ON user_view.company_id = company.company_id
         WHERE user_view.crm_user_id = #{crmUserId};
     </select>
 
@@ -20,6 +23,61 @@
         SELECT user_id
         FROM user_view
         WHERE crm_user_id = #{crmUserId} AND company_id = #{companyId};
+    </select>
+
+    <select id="queryCompanyIdByUserId" resultType="java.lang.String">
+        SELECT company_id
+        FROM company_user
+        WHERE user_id = #{userId};
+    </select>
+
+    <insert id="joinCompany">
+        INSERT INTO `crmdb`.`company_user` (
+            `user_id`,
+            `user_type`,
+            `crm_user_id`,
+            `company_id`,
+            `creator_id`,
+            `create_ts`,
+            `updater_id`,
+            `update_ts`
+        )
+        VALUES
+            (
+                #{userId},
+                'NORMAL',
+                #{crmUserId},
+                #{companyId},
+                'system',
+                NOW(),
+                'system',
+                NOW()
+            );
+    </insert>
+
+    <insert id="addCompany">
+        INSERT INTO `crmdb`.`company` (
+            `company_id`,
+            `com_nm`,
+            `creator_id`,
+            `create_ts`,
+            `updater_id`,
+            `update_ts`
+        )
+        VALUES (
+            #{companyId},
+            #{companyName},
+            'system',
+            NOW(),
+            'system',
+            NOW()
+        )
+
+    </insert>
+
+    <select id="getUserId" resultType="java.lang.String">
+        SELECT crm_user_id FROM crm_user
+        WHERE real_nm = #{userName} AND TEL = #{tel}
     </select>
 
 </mapper>

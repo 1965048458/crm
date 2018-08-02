@@ -12,17 +12,47 @@ public class CompanyUser {
     @Expose
     private String userId;
     @Expose
-    private String userType;
+    private String userPos;
     @Expose
     private String companyId;
     @Expose
-    private Date createTs;
+    private String crmUserId;
     @Expose
-    private Date updateTs;
+    private String tel;
     @Expose
-    private String creatorId;
-    @Expose
-    private String updaterId;
+    private String crmUserName;
+
+    public String getUserPos() {
+        return userPos;
+    }
+
+    public void setUserPos(String userPos) {
+        this.userPos = userPos;
+    }
+
+    public String getCrmUserId() {
+        return crmUserId;
+    }
+
+    public void setCrmUserId(String crmUserId) {
+        this.crmUserId = crmUserId;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getCrmUserName() {
+        return crmUserName;
+    }
+
+    public void setCrmUserName(String crmUserName) {
+        this.crmUserName = crmUserName;
+    }
 
     public String getUserId() {
         return userId;
@@ -32,13 +62,6 @@ public class CompanyUser {
         this.userId = userId;
     }
 
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
 
     public String getCompanyId() {
         return companyId;
@@ -48,35 +71,4 @@ public class CompanyUser {
         this.companyId = companyId;
     }
 
-    public Date getCreateTs() {
-        return createTs;
-    }
-
-    public void setCreateTs(Date createTs) {
-        this.createTs = createTs;
-    }
-
-    public Date getUpdateTs() {
-        return updateTs;
-    }
-
-    public void setUpdateTs(Date updateTs) {
-        this.updateTs = updateTs;
-    }
-
-    public String getCreatorId() {
-        return creatorId;
-    }
-
-    public void setCreatorId(String creatorId) {
-        this.creatorId = creatorId;
-    }
-
-    public String getUpdaterId() {
-        return updaterId;
-    }
-
-    public void setUpdaterId(String updaterId) {
-        this.updaterId = updaterId;
-    }
 }

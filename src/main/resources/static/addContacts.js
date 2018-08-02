@@ -8,7 +8,7 @@ jQuery(document).ready(function () {
             errMsg: '',
             showPage: 'addContactsPage',
             isTopDept: jQuery('#isTopDept').val(),
-            contactsTypeId: null,
+            curContactsType: null,
             realName: '',
             gender: null,
             tel: '',
@@ -46,7 +46,7 @@ jQuery(document).ready(function () {
                 if (jQuery('#isTopDept').val() === 'true') {
                     //doNoting
                 } else {
-                    uploadData['contactsTypeId'] = this.contactsTypeId;
+                    uploadData['contactsTypeId'] = this.curContactsType.contactsTypeId;
                 }
 
                 jQuery.ajax({
@@ -75,6 +75,26 @@ jQuery(document).ready(function () {
             },
             'confirmContactsType': function () {
                 this.showPage = 'addContactsPage';
+            }
+        },
+        computed: {
+            'genderString': function() {
+                if (this.gender == null) {
+                    return '请选择';
+                } else if (this.gender === 'MALE') {
+                    return '男';
+                } else if (this.gender === 'FEMALE') {
+                    return '女';
+                } else {
+                    return '请选择';
+                }
+            },
+            'contactsTypeString': function() {
+                if (this.curContactsType == null) {
+                    return '请选择';
+                } else {
+                    return this.curContactsType.typeName;
+                }
             }
         }
     });
