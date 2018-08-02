@@ -13,10 +13,12 @@ jQuery(document).ready(function () {
             pwd: '',
             captcha: '',
             showPage: 'telRegister',
-            gender:'',
-            age:'',
-            mail:'',
-            address:'',
+            gender: '',
+            age: '',
+            mail: '',
+            address: '',
+            time: 60,
+            flag: true,
         },
         methods: {
             'login': function () {
@@ -101,82 +103,112 @@ jQuery(document).ready(function () {
                 if (this.tel.length != 11) {
                     alert("请填写正确的11位手机号码！");
                 } else {
-                    var thisVue = this;
-                    jQuery.ajax({
-                        type: 'post',
-                        url: '/telRegister/captcha',
-                        data: {
-                            tel: thisVue.tel,
-                        },
-                        dataType: 'json',
-                        cache: false
-                    }).done(function (result) {
-                        if (result.successFlg) {
-                            alert(result.errMsg);
-                        } else {
-                            alert(result.errMsg);
-                        }
-                    });
+                    if (this.flag) {
+                        this.flag = false;
+                        var thisVue = this;
+                        jQuery.ajax({
+                            type: 'post',
+                            url: '/telRegister/captcha',
+                            data: {
+                                tel: thisVue.tel,
+                            },
+                            dataType: 'json',
+                            cache: false
+                        }).done(function (result) {
+                            if (result.successFlg) {
+                                $("#inputTel").attr("readonly","readonly");
+                                $("#send-captcha").css('color', 'gray');
+                                thisVue.reserveCode();
+                            } else {
+                                thisVue.flag = true;
+                                alert(result.errMsg);
+                            }
+                        });
+                    }
                 }
             },
             'getCaptchaPwd': function () {
                 if (this.tel.length != 11) {
                     alert("请填写正确的11位手机号码！");
                 } else {
-                    var thisVue = this;
-                    jQuery.ajax({
-                        type: 'post',
-                        url: '/findPwd/captcha',
-                        data: {
-                            tel: thisVue.tel,
-                        },
-                        dataType: 'json',
-                        cache: false
-                    }).done(function (result) {
-                        if (result.successFlg) {
-                            alert(result.errMsg);
-                        } else {
-                            alert(result.errMsg);
-                        }
-                    });
-                }
-            },
-            'confirm': function () {
-                if (this.gender =='') {
-                    alert("请选择性别");
-                } else if(this.age =='') {
-                    alert("请填写年龄");
-                }else if(this.age >150 || this.age <0) {
-                    alert("请输入正确的年龄");
-                } else{
+                    if (this.flag) {
+                        this.flag = false;
                         var thisVue = this;
-
                         jQuery.ajax({
                             type: 'post',
-                            url: '/supplementaryInformation/add',
+                            url: '/findPwd/captcha',
                             data: {
-                                realName: thisVue.realName,
                                 tel: thisVue.tel,
-                                pwd: thisVue.pwd,
-                                gender: thisVue.gender,
-                                age: thisVue.age,
-                                mail:thisVue.mail,
-                                address:thisVue.address,
                             },
                             dataType: 'json',
                             cache: false
                         }).done(function (result) {
                             if (result.successFlg) {
-                                window.location = '/company/chooseCompany';
+                                $("#inputTel").attr("readonly","readonly");
+                                $("#send-captcha").css('color', 'gray');
+                                thisVue.reserveCode();
                             } else {
-                                alert("信息填写错误，注册失败");
+                                thisVue.flag = true;
+                                alert(result.errMsg);
                             }
                         });
                     }
+                }
+            },
+            'confirm': function () {
+                if (this.gender == '') {
+                    alert("请选择性别");
+                } else if (this.age == '') {
+                    alert("请填写年龄");
+                } else if (this.age > 150 || this.age < 0) {
+                    alert("请输入正确的年龄");
+                } else {
+                    var thisVue = this;
 
-
+                    jQuery.ajax({
+                        type: 'post',
+                        url: '/supplementaryInformation/add',
+                        data: {
+                            realName: thisVue.realName,
+                            tel: thisVue.tel,
+                            pwd: thisVue.pwd,
+                            gender: thisVue.gender,
+                            age: thisVue.age,
+                            mail: thisVue.mail,
+                            address: thisVue.address,
+                        },
+                        dataType: 'json',
+                        cache: false
+                    }).done(function (result) {
+                        if (result.successFlg) {
+                            window.location = '/company/chooseCompany';
+                        } else {
+                            alert("信息填写错误，注册失败");
+                        }
+                    });
+                }
+            },
+            'captchaClick': function () {
+                if (this.time == 60) {
+                    $("#send-captcha").css('color', 'gray');
+                    this.reserveCode();
+                }
+            },
+            'reserveCode': function () {
+                var thisVue = this;
+                var timer = setInterval(function () {
+                    thisVue.time--;
+                    $("#send-captcha").html("获取验证码" + thisVue.time + "s");
+                    if (thisVue.time == 0) {
+                        thisVue.time = 60;
+                        $("#send-captcha").css('color', '#3CC51F');
+                        $("#send-captcha").html("获取验证码");
+                        clearInterval(timer);
+                        thisVue.flag = true;
+                        $("#inputTel").removeAttr("readonly");
+                    }
+                }, 1000)
             },
         }
-
     });
 })

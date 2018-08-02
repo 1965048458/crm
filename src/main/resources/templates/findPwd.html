@@ -89,10 +89,10 @@
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell weui-cell_vcode">
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="number" placeholder="输入手机号" v-model="tel">
+                    <input id="inputTel" class="weui-input" type="number" placeholder="输入手机号" v-model="tel">
                 </div>
                 <div class="weui-cell__ft">
-                    <a href="javascript:;" @click="getCaptchaPwd" class="weui-vcode-btn">获取验证码</a>
+                    <a id="send-captcha" href="javascript:;" @click="getCaptchaPwd" class="weui-vcode-btn">获取验证码</a>
                 </div>
             </div>
         </div>
