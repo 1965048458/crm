@@ -15,7 +15,7 @@
         .top-bar {
             background: #FFFFFF;
             text-align: center;
-            padding: 10px 15px;
+            padding: 10px 10px;
             font-size: large;
         }
 
@@ -95,18 +95,11 @@
                 </div>
                 <a class="weui-cell weui-cell_access" @click="selCustomer">
                     <div class="weui-cell__bd">
-                        <p><span style="color: red">*</span>客户名称</p>
+                        <p><span style="color: red">*</span>客户及联系人</p>
                     </div>
                     <div class="weui-cell__ft">
                         <span v-text="customer"></span>
-                    </div>
-                </a>
-                <a class="weui-cell weui-cell_access" @click="selContact">
-                    <div class="weui-cell__bd">
-                        <p><span style="color: red">*</span>客户联系人</p>
-                    </div>
-                    <div class="weui-cell__ft">
-                        <span v-text="custContact"></span>
+                        <span v-text="contact"></span>
                     </div>
                 </a>
 
@@ -162,15 +155,14 @@
         </div>
     </div>
 
-    <div id="customer" v-show="showPage === 'customer'">
+    <div id="customerContact" v-show="showPage === 'customerContact'">
         <div class="top-bar">
             <span @click="backToInfo" class="pull-left">
                 <img src="/images/back_icon.svg"
                      style="margin-top:8px;"/></span>
-            <span class="center" style="margin-top: 3px;">选择客户</span>
-            <span class="pull-right" style="margin-top: 6px; " @click="add">
-                <img src="/images/add.png"
-                     style="width: 16px; height: 16px; display: block"/></span>
+            <span class="center" style="margin-top: 3px;">选择客户及联系人</span>
+            <span class="pull-right" style="margin-top: 3px; color: #28b3ff"
+                  @click="done"> 完成 &nbsp;
             </span>
         </div>
 
@@ -217,51 +209,6 @@
         </div>
     </div>
 
-    <div id="custContact" v-show="showPage === 'custContact'">
-        <div class="top-bar">
-            <span @click="backToInfo" class="pull-left">
-                <img src="/images/back_icon.svg"
-                     style="margin-top:12px;"/></span>
-            <p class="center" style="font-size: 18px;">选择客户联系人</p>
-            <p class="center" style="font-size: x-small">浙江大学</p>
-        </div>
-
-        <div class="weui-cells weui-cells_radio">
-            <label class="weui-cell weui-check__label">
-                <div class="weui-cell__bd">
-                    <p>刘建国</p>
-                    <p class="card">机械学院-主任</p>
-                </div>
-                <div class="weui-cell__ft">
-                    <input type="radio" class="weui-check"
-                           value="12" v-model="custContact">
-                    <span class="weui-icon-checked"></span>
-                </div>
-            </label>
-            <label class="weui-cell weui-check__label">
-                <div class="weui-cell__bd">
-                    <p>吴浩然</p>
-                    <p class="card">机械学院-机械制造专业-教师</p>
-                </div>
-                <div class="weui-cell__ft">
-                    <input type="radio" class="weui-check"
-                           value="18" v-model="custContact">
-                    <span class="weui-icon-checked"></span>
-                </div>
-            </label>
-            <label class="weui-cell weui-check__label">
-                <div class="weui-cell__bd">
-                    <p>李峰</p>
-                    <p class="card">电器学院-自动化造专业-教师</p>
-                </div>
-                <div class="weui-cell__ft">
-                    <input type="radio" class="weui-check"
-                           value="23" v-model="custContact">
-                    <span class="weui-icon-checked"></span>
-                </div>
-            </label>
-        </div>
-    </div>
 </div>
 
 </body>

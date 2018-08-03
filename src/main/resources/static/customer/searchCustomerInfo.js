@@ -74,7 +74,7 @@ $(document).ready(function () {
                     $loadingToast.fadeOut(100);
                     //temp.showPage = 'invite';
                     window.location.href = "/customer/customerInfo?customerName=" + customerName;
-                }, 2000);
+                }, 500);
             }
         }
     });
