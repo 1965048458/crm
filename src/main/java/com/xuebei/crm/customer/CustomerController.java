@@ -396,6 +396,7 @@ public class CustomerController {
                                    ModelMap modelMap) {
         Contacts contacts = customerMapper.queryContactsById(contactsId);
         List<FollowUpRecord> followUpRecords = customerMapper.queryFollowUpRecordsByContactsId(contactsId);
+        modelMap.addAttribute("followUpRecords", followUpRecords);
         modelMap.addAttribute("contacts", contacts);
         return "contactsInfo";
     }

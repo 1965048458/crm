@@ -153,33 +153,19 @@
 
     <div id="followUpPage">
 
-        <div class="weui-panel weui-panel_access" style="margin-top: 10px;">
+        <div class="weui-panel weui-panel_access" style="margin-top: 10px;" th:each="item : ${followUpRecords}">
             <div class="weui-panel__bd">
-                <p class="project">虚拟仿真中心建设</p>
-                <p class="visitor">拜访人：刘晓婷</p>
-                <p class="visit_result">跟进结果：梁院长对我们的虚拟仿真资源和双创空间形式非常认可，表示要安排
-                    时间我们的虚拟仿真资源和双创空间形式非常认可，表示要安排时间到我们现在</p>
-            </div>
-            <div class="weui-panel__ft" style="padding-top: 16px;">
-                <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link"
-                   style="padding: 0px 15px; height: 30px;">
-                    <span class="follow-up-time">2018年6月23日</span>
-                    <span class="follow-up-detail-btn">查看详情<span class="weui-cell__ft"></span></span>
-                </a>
-            </div>
-        </div>
-
-        <div class="weui-panel weui-panel_access" style="margin-top: 10px;">
-            <div class="weui-panel__bd">
-                <p class="project">虚拟仿真中心建设</p>
-                <p class="visitor">拜访人：刘晓婷</p>
-                <p class="visit_result">跟进结果：梁院长对我们的虚拟仿真资源和双创空间形式非常认可，表示要安排
-                    时间我们的虚拟仿真资源和双创空间形式非常认可，表示要安排时间到我们现在</p>
+                <p class="project" th:text="'虚拟仿真中心建设'">虚拟仿真中心建设</p>
+                <p class="visitor" th:text="'拜访人：'+${item.getFollowUpPersonRealName()}">拜访人：刘晓婷</p>
+                <p class="visit_result" th:text="'跟进结果：'+${item.getFollowUpResult()}">跟进结果：梁院长对我们
+                    的虚拟仿真资源和双创空间形式非常认可，表示要安排
+                    时间我们的虚拟仿真资源和双创空间形式非常认
+                    可，表示要安排时间到我们现在</p>
             </div>
             <div class="weui-panel__ft" style="display: block;">
                 <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link"
                    style="padding: 0px 15px; height: 30px;">
-                    <span class="follow-up-time">2018年6月23日</span>
+                    <span class="follow-up-time" th:text="${item.getFollowUpTimeStr()}">2018年6月23日</span>
                     <span class="follow-up-detail-btn">查看详情<span class="weui-cell__ft"></span></span>
                 </a>
             </div>
