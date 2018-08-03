@@ -54,6 +54,8 @@
             <span class="center">创建公司</span>
         </div>
 
+        <div class="weui-toptips weui-toptips_warn " style="display:none">公司名不能为空且公司成员不能少于三人</div>
+
         <div class="center-ele">
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
@@ -100,6 +102,16 @@
                 </div>
             </div>
 
+            <!--BEGIN toast-->
+            <div id="toast" style="display: none;">
+                <div class="weui-mask_transparent"></div>
+                <div class="weui-toast">
+                    <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                    <p class="weui-toast__content">已完成</p>
+                </div>
+            </div>
+            <!--end toast-->
+
             <button @click="create" class="weui-btn weui-btn_primary" style="position: fixed; bottom: 10px">
                 立即创建
             </button>
@@ -126,6 +138,7 @@
                 </label>
             </div>
         </div>
+
     </div>
 
     <div class="center-box" id="invite" v-show="showPage === 'invite'">
@@ -135,6 +148,8 @@
             <span class="pull-right" style="color: dodgerblue;"
                   @click="save"> 保存 &nbsp; </span>
         </div>
+
+        <div class="weui-toptips weui-toptips_warn invite_tip" style="display:none">姓名或手机号均不能为空!</div>
 
         <div class="center-ele">
             <div class="weui-cells weui-cells_form">

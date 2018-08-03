@@ -66,7 +66,15 @@ $(document).ready(function () {
                 $('#searchInput').blur();
             },
             'loadDetail': function (customerName) {
-                window.location.href = "/customer/customerInfo?customerName=" + customerName;
+                var $loadingToast = $('#loadingToast');
+                if ($loadingToast.css('display') != 'none') return;
+                //var temp = this;
+                $loadingToast.fadeIn(100);
+                setTimeout(function () {
+                    $loadingToast.fadeOut(100);
+                    //temp.showPage = 'invite';
+                    window.location.href = "/customer/customerInfo?customerName=" + customerName;
+                }, 2000);
             }
         }
     });
