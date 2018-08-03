@@ -22,6 +22,60 @@
         .pull-left {
             float: left!important;
         }
+        .my-we-ui-cell {
+            padding: 11px 15px;
+        }
+        .topic {
+            font-size:16px;
+            padding: 11px 15px;
+        }
+        .detail {
+            padding-left: 15px;
+            padding-bottom: 27px;
+            padding-right: 15px;
+            min-height: 97px;
+            font-size: 15px;
+        }
+        .project {
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 13px;
+        }
+        .visitor {
+            height: 23px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 5px;
+            font-size: 15px;
+            color: #666666;
+            line-height: 22px;
+        }
+        .visit_result {
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 5px;
+            font-size: 15px;
+            color: #888888;
+            line-height: 22px;
+            height: 44px;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            display: -webkit-inline-box;
+            text-overflow: ellipsis;
+        }
+        .follow-up-time {
+            font-size: 12px;
+            color: #B2B2B2;
+            text-align: left;
+            width: 50%;
+        }
+        .follow-up-detail-btn {
+            color: #B2B2B2;
+            font-size: 13px;
+            text-align: right;
+            width: 50%;
+        }
     </style>
 </head>
 <body>
@@ -29,100 +83,112 @@
 <div id="contactsInfoVue">
 
     <div class="top-bar">
-        <span class="pull-left" @Click="back">《</span>
+        <span class="pull-left" @Click="back"><img src="/images/back_icon.svg"></span>
         <span th:text="${contacts.getRealName()}"></span>
     </div>
 
     <div class="weui-navbar" style="position: relative;">
-        <div class="weui-navbar__item weui-bar__item_on">
+        <div class="weui-navbar__item weui-bar__item_on" style="padding: 10px 0px;">
             基本信息
         </div>
-        <div class="weui-navbar__item">
+        <div class="weui-navbar__item" style="padding: 10px 0px;">
             跟进记录
         </div>
     </div>
 
-    <div class="weui-cells weui-cells_form" style="font-size: 14px">
-        <div class="weui-cell">
-            <div class="weui-cell__hd">
-                <label class="weui-label">职位：</label>
+    <div style="display: none;" id="infoPage">
+        <div class="weui-cells weui-cells_form" style="font-size: 15px;">
+            <div class="weui-cell my-we-ui-cell">
+                <div class="weui-cell__hd">
+                    <span th:text="'职位：'+'IDLE'">性别：</span>
+                </div>
             </div>
-            <div class="weui-cell__bd">
-                IDLE
+            <div class="weui-cell my-we-ui-cell">
+                <div class="weui-cell__hd">
+                    <span th:text="'性别：'+${contacts.showGender()}"></span>
+                </div>
             </div>
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd">
-                <label class="weui-label">性别：</label>
+            <div class="weui-cell my-we-ui-cell">
+                <div class="weui-cell__hd">
+                    <span th:text="'电话：'+${contacts.showTel()}"></span>
+                </div>
             </div>
-            <div class="weui-cell__bd">
-                <span th:text="${contacts.showGender()}"></span>
+            <div class="weui-cell my-we-ui-cell">
+                <div class="weui-cell__hd">
+                    <span th:text="'座机：'+${contacts.showPhone()}"></span>
+                </div>
             </div>
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd">
-                <label class="weui-label">电话：</label>
+            <div class="weui-cell my-we-ui-cell">
+                <div class="weui-cell__hd">
+                    <span th:text="'邮箱：'+${contacts.showEmail()}"></span>
+                </div>
             </div>
-            <div class="weui-cell__bd">
-                <span th:text="${contacts.showTel()}"></span>
+            <div class="weui-cell my-we-ui-cell">
+                <div class="weui-cell__hd">
+                    <span th:text="'微信：'+${contacts.showWeChat()}"></span>
+                </div>
             </div>
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd">
-                <label class="weui-label">座机：</label>
+            <div class="weui-cell my-we-ui-cell">
+                <div class="weui-cell__hd">
+                    <span th:text="'QQ：'+${contacts.showQQ()}"></span>
+                </div>
             </div>
-            <div class="weui-cell__bd">
-                <span th:text="${contacts.showPhone()}"></span>
-            </div>
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd">
-                <label class="weui-label">邮箱：</label>
-            </div>
-            <div class="weui-cell__bd">
-                <span th:text="${contacts.showEmail()}"></span>
-            </div>
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd">
-                <label class="weui-label">微信：</label>
-            </div>
-            <div class="weui-cell__bd">
-                <span th:text="${contacts.showWeChat()}"></span>
+            <div class="weui-cell my-we-ui-cell">
+                <div class="weui-cell__hd">
+                    <span th:text="'办公地点：'+${contacts.showOfficeAddr()}"></span>
+                </div>
             </div>
         </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd">
-                <label class="weui-label">QQ：</label>
+
+        <div class="weui-cells">
+            <p class="topic">个人简介</p>
+            <p th:text="${contacts.showProfile()}" class="detail"></p>
+        </div>
+
+        <div class="weui-cells">
+            <p class="topic">特殊关系</p>
+            <p class="detail" th:text="${contacts.showSpecialRelationship()}"></p>
+        </div>
+    </div>
+
+    <div id="followUpPage">
+
+        <div class="weui-panel weui-panel_access" style="margin-top: 10px;">
+            <div class="weui-panel__bd">
+                <p class="project">虚拟仿真中心建设</p>
+                <p class="visitor">拜访人：刘晓婷</p>
+                <p class="visit_result">跟进结果：梁院长对我们的虚拟仿真资源和双创空间形式非常认可，表示要安排
+                    时间我们的虚拟仿真资源和双创空间形式非常认可，表示要安排时间到我们现在</p>
             </div>
-            <div class="weui-cell__bd">
-                <span th:text="${contacts.showQQ()}"></span>
+            <div class="weui-panel__ft" style="padding-top: 16px;">
+                <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link"
+                   style="padding: 0px 15px; height: 30px;">
+                    <span class="follow-up-time">2018年6月23日</span>
+                    <span class="follow-up-detail-btn">查看详情<span class="weui-cell__ft"></span></span>
+                </a>
             </div>
         </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd">
-                <label class="weui-label">办公地点：</label>
+
+        <div class="weui-panel weui-panel_access" style="margin-top: 10px;">
+            <div class="weui-panel__bd">
+                <p class="project">虚拟仿真中心建设</p>
+                <p class="visitor">拜访人：刘晓婷</p>
+                <p class="visit_result">跟进结果：梁院长对我们的虚拟仿真资源和双创空间形式非常认可，表示要安排
+                    时间我们的虚拟仿真资源和双创空间形式非常认可，表示要安排时间到我们现在</p>
             </div>
-            <div class="weui-cell__bd">
-                <span th:text="${contacts.showOfficeAddr()}"></span>
+            <div class="weui-panel__ft" style="display: block;">
+                <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link"
+                   style="padding: 0px 15px; height: 30px;">
+                    <span class="follow-up-time">2018年6月23日</span>
+                    <span class="follow-up-detail-btn">查看详情<span class="weui-cell__ft"></span></span>
+                </a>
             </div>
         </div>
     </div>
 
-    <div class="weui-cells weui-cells_form">
-        <div class="weui-cell" style="padding-bottom: 0">
-            <div class="plan-title"><p>个人简介</p></div>
-        </div>
-        <div class="weui-cells weui-cells_form" style="margin-top: 0;">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <textarea class="weui-textarea" rows="5" style="font-size: 14px"
-                              placeholder="比如个人信息、人际关系、兴趣爱好、行事风格、家庭情况等信息（选填）"
-                              v-model="profile"></textarea>
-                </div>
-            </div>
-        </div>
-    </div>
+    <br>
+    <br>
+
 </div>
 
 

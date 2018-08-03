@@ -16,7 +16,8 @@ $(document).ready(function () {
             customer: '请选择',
             custContact: '请选择',
             content: '',
-            saleName: ''
+            saleName: '',
+            keyWord: ''
         },
         methods: {
             'back': function () {
@@ -73,8 +74,32 @@ $(document).ready(function () {
             'add': function () {
                 //
             },
-            'selContact':function () {
+            'selContact': function () {
                 this.showPage = 'custContact';
+            },
+            'search': function () {
+                //this.customers = true;   逻辑待修改
+                window.location.href = "/customer/customerInfo?customerName=" + this.keyWord;
+            },
+            'text': function () {
+                $('#searchBar').addClass('weui-search-bar_focusing');
+                $('#searchText').focus();
+            },
+            'hideSearchResult': function () {
+                $('#searchResult').hide();
+                this.keyWord = "";
+            },
+            'cancelSearch': function () {
+                this.hideSearchResult();
+                $('#searchBar').removeClass('weui-search-bar_focusing');
+            },
+            'clear': function () {
+                this.keyWord = "";
+                $('#searchInput').focus();
+            },
+            'cancel': function () {
+                this.cancelSearch();
+                $('#searchInput').blur();
             }
         }
     });
