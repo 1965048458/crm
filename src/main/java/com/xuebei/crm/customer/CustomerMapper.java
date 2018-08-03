@@ -58,11 +58,15 @@ public interface CustomerMapper {
                        @Param("userId") String userId
     );
 
+    void insertEnclosureDelayApply(EnclosureApply enclosureApply);
+
     List<String> searchSchool(@Param("keyword")String keyword);
 
     List<ContactsType> queryContactsTypes(@Param("customerId") String customerId);
 
     ContactsDept queryContactsDept(@Param("contactsId") String contactsId);
+
+    List<Customer> getMyCustomers(@Param("userId") String userId);
 
     List<FollowUpRecord> queryFollowUpRecordsByContactsId(@Param("contactsId") String contactsId);
 }

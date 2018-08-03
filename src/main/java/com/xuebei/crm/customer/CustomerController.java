@@ -304,13 +304,24 @@ public class CustomerController {
                                     HttpServletRequest request) {
         String userId = (String) request.getSession().getAttribute("userId");
         List<Department> deptList = customerService.queryDepartment(customerId, userId);
+        deptList.get(0).setEnclosureStatus(EnclosureStatusEnum.ENCLOSURE);
+        deptList.get(5).setEnclosureStatus(EnclosureStatusEnum.ENCLOSURE);
+        deptList.get(4).setEnclosureStatus(EnclosureStatusEnum.MINE);
+        OpenSeaWarning openSeaWarning = new OpenSeaWarning();
+        openSeaWarning.setDeptName(deptList.get(4).getDeptName());
+        openSeaWarning.setFollowTimes(2);
+        openSeaWarning.setLeftTime("3");
+        openSeaWarning.setDeptId("dept1");
+        openSeaWarning.setCreatedTime("2018-08-08 12:23:33");
+        openSeaWarning.setLastTimeFollow("2018-09-08 12:23:33");
+        deptList.get(4).setOpenSeaWarning(openSeaWarning);
         //TODO
-        List<Contacts> contactsList = customerMapper.queryContacts(customerId);
+        List searchList = customerService.querySearchList(deptList);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg",true);
         gsonView.addStaticAttribute("customerList", deptList);
         //TODO
-        gsonView.addStaticAttribute("searchList",contactsList);
+        gsonView.addStaticAttribute("searchList",searchList);
         return gsonView;
     }
 
@@ -319,20 +330,32 @@ public class CustomerController {
                                     @RequestParam("applyDeptId") String applyDeptId,
                                     EnclosureApply enclosureApply,
                                     HttpServletRequest request) {
-//        System.out.println(applyTime);
-        final String EMPTY_REASONS_ERROR = "申请理由不能为空";
-        if(submitReasons == null)
-            return GsonView.createErrorView(EMPTY_REASONS_ERROR);
-
-        String userId = (String) request.getSession().getAttribute("userId");
-        //enclosureApply.setEnclosureApplyId(11);
-        enclosureApply.setReasons(submitReasons);
-        enclosureApply.setDeptId(applyDeptId);
-        enclosureApply.setUserId(userId);
-//        enclosureApply.setApplyTime(Date);
-        customerMapper.insertEnclosureApply(enclosureApply);
         GsonView gsonView = new GsonView();
-        gsonView.addStaticAttribute("successFlg", true);
+        final String EMPTY_REASONS_ERROR = "申请理由不能为空";
+        if(submitReasons == null || submitReasons.equals("")) {
+            gsonView.addStaticAttribute("successFlg", false);
+            gsonView.addStaticAttribute("errMsg",EMPTY_REASONS_ERROR);
+        }
+        else{
+            String userId = (String) request.getSession().getAttribute("userId");
+            enclosureApply.setReasons(submitReasons);
+            enclosureApply.setDeptId(applyDeptId);
+            enclosureApply.setUserId(userId);
+            customerMapper.insertEnclosureApply(enclosureApply);
+            gsonView.addStaticAttribute("successFlg", true);
+        }
+        return gsonView;
+    }
+
+    @RequestMapping("/organization/delayApply")
+    public GsonView delayApply(@RequestParam("deptId") String deptId){
+        GsonView gsonView = new GsonView();
+        customerService.enclosureDelayApply(deptId);
+//        EnclosureApply enclosureApply = new EnclosureApply();
+//        enclosureApply.setEnclosureApplyId(11);
+//        customerMapper.insertEnclosureDelayApply(enclosureApply);
+        gsonView.addStaticAttribute("successFlg",true);
+        //gsonView.addStaticAttribute("errMsg","申请延期失败");
         return gsonView;
     }
 
@@ -347,6 +370,16 @@ public class CustomerController {
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg", true);
         gsonView.addStaticAttribute("customerList", customerList);
+        return gsonView;
+    }
+
+    @RequestMapping("/getMyCustomers")
+    public GsonView getMyCustomers(HttpServletRequest request){
+        String userId = (String) request.getSession().getAttribute("userId");
+        List<Customer> myCustomers = customerService.getMyCustomers(userId);//"57259d54f9994209a813e8ad2b297b3a"
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("myCustomers", myCustomers);
         return gsonView;
     }
 

@@ -19,7 +19,13 @@ public interface CustomerService {
 
     List<Department> queryDepartment(String customerId,String userId);
 
+    List querySearchList(List<Department> deptList);
+
+    void enclosureDelayApply(String deptId);
+
     List<String> searchSchool(String keyword);
+
+    List<Customer> getMyCustomers(String userId);
 
     Boolean isDepartmentNameDuplicated(String customerId, String deptName);
 

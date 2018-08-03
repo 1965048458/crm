@@ -8,8 +8,28 @@ import com.google.gson.annotations.Expose;
 public class OpenSeaWarning {
     @Expose
     private String leftTime;
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
     @Expose
-    private Department department;
+    private String  deptName;
+    @Expose
+    private String deptId;
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
+    }
+
     @Expose
     private String createdTime;
     @Expose
@@ -57,13 +77,5 @@ public class OpenSeaWarning {
 
     public void setCreatedTime(String createdTime) {
         this.createdTime = createdTime;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
     }
 }

@@ -1,6 +1,7 @@
 package com.xuebei.crm.customer;
 
 import com.google.gson.annotations.Expose;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,16 @@ public class Department {
     private List<Department> departmentList = new ArrayList<>();
     @Expose
     private OpenSeaWarning openSeaWarning;
+    @Expose
+    private Boolean canUnFold = false;
+
+    public Boolean getCanUnFold() {
+        return canUnFold;
+    }
+
+    public void setCanUnFold(Boolean canUnFold) {
+        this.canUnFold = canUnFold;
+    }
 
     public Integer getContactNumber() {
         return contactNumber;
