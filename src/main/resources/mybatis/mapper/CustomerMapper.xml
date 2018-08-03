@@ -73,6 +73,12 @@
         <result property="visitTime" column="create_ts"/>
         <result property="visitDept" column="des_id"/>
     </resultMap>
+    
+    <resultMap id="followUpRecordMap" type="com.xuebei.crm.customer.FollowUpRecord">
+        <result property="followUpTime" column="create_ts"/>
+        <result property="followUpPersonRealName" column="real_nm"/>
+        <result property="followUpResult" column="visit_result"/>
+    </resultMap>
 
     <resultMap id="contactsDeptMap" type="com.xuebei.crm.customer.ContactsDept">
         <id property="contactsId" column="contacts_id"/>
@@ -335,9 +341,17 @@
 		WHERE contacts_id= #{contactsId};
     </select>
 
-    <select id="queryContactsById" resultMap="contactsMap">
-        SELECT * FROM contacts
+    <select id="queryContactsById" resultMap="contactsDetailMap">
+        SELECT * FROM contacts c
         WHERE contacts_id = #{contactsId};
+    </select>
+
+    <select id="queryFollowUpRecordsByContactsId" resultMap="followUpRecordMap">
+        SELECT journal.create_ts, user_view.real_nm, visit_log.visit_result
+        FROM visit_contacts LEFT JOIN visit_log ON visit_contacts.visit_log_id = visit_log.visit_log_id LEFT JOIN journal ON visit_log.journal_id = journal.journal_id
+            LEFT JOIN user_view ON journal.user_id = user_view.user_id
+        WHERE contacts_id = #{contactsId}
+        ORDER BY (journal.create_ts) desc;
     </select>
 
 </mapper>

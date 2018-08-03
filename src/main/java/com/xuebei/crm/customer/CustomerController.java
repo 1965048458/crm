@@ -359,13 +359,14 @@ public class CustomerController {
     }
 
     @RequestMapping("/contactsInfo")
-    public String contactsInfoPage(@RequestParam("contactsId")String contacsId,
+    public String contactsInfoPage(@RequestParam("contactsId")String contactsId,
                                    ModelMap modelMap) {
-        Contacts contacts = customerMapper.queryContactsById(contacsId);
+        Contacts contacts = customerMapper.queryContactsById(contactsId);
+        List<FollowUpRecord> followUpRecords = customerMapper.queryFollowUpRecordsByContactsId(contactsId);
         modelMap.addAttribute("contacts", contacts);
         return "contactsInfo";
     }
 
-    
+
 
 }

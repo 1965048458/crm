@@ -55,6 +55,14 @@ public class Contacts {
         this.contactsId = contactsId;
     }
 
+    public String getTotalName() {
+        return totalName;
+    }
+
+    public void setTotalName(String totalName) {
+        this.totalName = totalName;
+    }
+
     public String getRealName() {
         return realName;
     }
@@ -135,14 +143,6 @@ public class Contacts {
         this.specialRelationship = specialRelationship;
     }
 
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
     public ContactsType getContactsType() {
         return contactsType;
     }
@@ -151,12 +151,16 @@ public class Contacts {
         this.contactsType = contactsType;
     }
 
-    public String getTotalName() {
-        return totalName;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setTotalName(String totalName) {
-        this.totalName = totalName;
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public static String getNotFilled() {
+        return NOT_FILLED;
     }
 
     public String showGender() {
