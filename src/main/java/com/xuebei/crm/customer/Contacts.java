@@ -45,6 +45,8 @@ public class Contacts {
     @Expose
     private Department department;
 
+    private final static String NOT_FILLED = "未填";
+
     public String getContactsId() {
         return contactsId;
     }
@@ -155,6 +157,80 @@ public class Contacts {
 
     public void setTotalName(String totalName) {
         this.totalName = totalName;
+    }
+
+    public String showGender() {
+        if (gender == null) {
+            return NOT_FILLED;
+        } else if (gender == GenderEnum.FEMALE) {
+            return "女";
+        } else {
+            return "男";
+        }
+    }
+
+    public String showPhone() {
+        if (phone == null || phone.trim().equals("")) {
+            return NOT_FILLED;
+        } else {
+            return phone;
+        }
+    }
+
+    public String showTel() {
+        if (tel == null || tel.trim().equals("")) {
+            return NOT_FILLED;
+        } else {
+            return tel;
+        }
+    }
+
+    public String showWeChat() {
+        if (wechat == null || wechat.trim().equals("")) {
+            return NOT_FILLED;
+        } else {
+            return wechat;
+        }
+    }
+
+    public String showQQ() {
+        if (QQ == null || QQ.trim().equals("")) {
+            return NOT_FILLED;
+        } else {
+            return QQ;
+        }
+    }
+
+    public String showEmail() {
+        if (email == null || email.trim().equals("")) {
+            return NOT_FILLED;
+        } else {
+            return email;
+        }
+    }
+
+    public String showOfficeAddr() {
+        if (officeAddr == null || officeAddr.trim().equals("")) {
+            return NOT_FILLED;
+        } else {
+            return officeAddr;
+        }
+    }
+
+    public String showProfile() {
+        if (profile == null || profile.trim().equals("")) {
+            return NOT_FILLED;
+        } else {
+            return profile;
+        }
+    }
+
+    public String showSpecialRelationship() {
+        if (specialRelationship == null || specialRelationship.trim().equals("")) {
+            return NOT_FILLED;
+        } else {
+            return specialRelationship;
+        }
     }
 
 }
