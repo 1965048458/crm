@@ -6,33 +6,35 @@ jQuery(document).ready(function () {
 
     var organizationVue = new Vue({
         el: '#organizationVue',
-        data: {
-            showPage:'showCustomerOrganization',
-            showOrganization: false,
-            showApplyDialog: false,
-            customerList: '',
-            departmentList:'',
-            applyDeptName:'',
-            applyDeptId:'',
-            applyReasons:'',
-            showSubmitDialog:false,
-            showSubmitErrDialog:false,
-            showSearchResult:false,
-            submitReasons:'',
-            warningDetails:{
-                openSeaWarning:'',
-                leftTime:'',
-                warnedOrganization:'',
-                createdTime:'',
-                times:'',
-                lastTime:''
-            },
-            deptList:'',
-            errMsg:'',
-            searchList:[],
-            searchWord:'',
-
-            //data: ''
+        data:function(){
+            return{
+                showPage:'showCustomerOrganization',
+                showOrganization: false,
+                showApplyDialog: false,
+                customerList: '',
+                departmentList:'',
+                applyDeptName:'',
+                applyDeptId:'',
+                applyReasons:'',
+                showSubmitDialog:false,
+                showSubmitErrDialog:false,
+                showSearchResult:false,
+                showDelayApplyDialog:false,
+                showDelayApplyErrDialog:false,
+                submitReasons:'',
+                warningDetails:{
+                    deptId:'',
+                    leftTime:'',
+                    warnedOrganization:'',
+                    createdTime:'',
+                    times:'',
+                    lastTime:''
+                },
+                deptList:'',
+                errMsg:'',
+                searchList:[],
+                searchWord:'',
+            };
         },
         methods: {
             'searchOrganizations': function () {
@@ -55,7 +57,6 @@ jQuery(document).ready(function () {
                         thisVue.errMsg = result.errMsg;
                         thisVue.showErrMsg = true;
                     }
-
                 });
             },
             'apply':function (name,id) {
@@ -77,7 +78,6 @@ jQuery(document).ready(function () {
                     url:'/customer/organization/apply',
                     data:{
                         submitReasons:this.submitReasons,
-                        //applyDeptName:this.applyDeptName,
                         applyDeptId:this.applyDeptId,
                     },
                     dataType:'json',
@@ -90,22 +90,22 @@ jQuery(document).ready(function () {
                         thisVue.errMsg = result.errMsg;
                         thisVue.showSubmitErrDialog = true;
                     }
-
                 });
-
             },
             'applyQuit':function () {
-                this.submitReasons='',
+                this.submitReasons='';
                 this.showPage= 'showCustomerOrganization';
             },
             'submitDialogCheck':function () {
                 this.showSubmitDialog = false;
+                this.submitReasons = '';
+                this.showPage= 'showCustomerOrganization';
             },
             'openSea2Organization':function () {
                 this.showPage = 'showCustomerOrganization';
             },
             'openSeaWarningDetail':function (warning) {
-
+                this.warningDetails.deptId = warning.deptId;
                 this.warningDetails.leftTime = warning.leftTime;
                 this.warningDetails.warnedOrganization = warning.deptName;
                 this.warningDetails.createdTime = warning.createdTime;
@@ -113,6 +113,37 @@ jQuery(document).ready(function () {
                 this.warningDetails.lastTime = warning.lastTimeFollow;
                 this.showPage = 'showOpenSeaWarning';
 
+            },
+            'enclosureDelayApply':function(deptId, deptName){
+                var thisVue = this;
+                jQuery.ajax({
+                    type:'post',
+                    url:'/customer/organization/delayApply',
+                    data:{
+                        deptId:deptId,
+                    },
+                    dataType:'json',
+                    cache:false
+                }).done(function(result){
+                    console.log(result);
+                    if(result.successFlg){
+                        thisVue.showDelayApplyDialog = true;
+                        //console.log(thisVue.showDelayApplyErrDialog)
+                    }else{
+                        thisVue.errMsg = result.errMsg;
+                        thisVue.showDelayApplyErrDialog = true;
+                    }
+                });
+            },
+            'delayApplyDialogCheck':function () {
+                this.showDelayApplyDialog=false;
+                //
+                this.searchOrganizations();
+                this.showPage='showCustomerOrganization';
+            },
+            'delayApplyErrDialogCheck':function () {
+                this.showDelayApplyErrDialog = false;
+                this.showPage = 'showCustomerOrganization';
             },
             search:function () {
                 console.log(this.searchWord);
@@ -163,7 +194,7 @@ jQuery(document).ready(function () {
                 showOrganization: false,
                 showApplyDialog: false,
                 showApply: false,
-                imgPath:"/images/customer/right.png",
+                imgPath:"/images/customer/fold.svg",
 
             };
         },
@@ -180,9 +211,16 @@ jQuery(document).ready(function () {
             },
             'setImgPath':function () {
                 if(this.showSub == false){
-                    this.imgPath = "/images/customer/right.png";
+                    this.imgPath = "/images/customer/fold.svg";
                 }else {
-                    this.imgPath = "/images/customer/down.png";
+                    this.imgPath = "/images/customer/unfold.svg";
+                }
+            },
+            'checkGender':function(gender){
+                if(gender == 'FEMALE'){
+                    return "/images/customer/FEMALE.svg";
+                }else{
+                    return "/images/customer/MALE.svg";
                 }
             },
             'addNumBrackets':function (number,status) {

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="19px" viewBox="0 0 18 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 45.2 (43514) - http://www.bohemiancoding.com/sketch -->
+    <title>联系人_高亮</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-2" transform="translate(-534.000000, -981.000000)" stroke="#B6CAD4" stroke-width="1.5" fill-rule="nonzero">
+            <g id="联系人_高亮" transform="translate(534.000000, 981.000000)">
+                <path d="M4.56774194,5.20403226 C4.56774194,7.65590931 6.55538101,9.64354839 9.00725806,9.64354839 C11.4591351,9.64354839 13.4467742,7.65590931 13.4467742,5.20403226 C13.4467742,2.7521552 11.4591351,0.764516129 9.00725806,0.764516129 C6.55538101,0.764516129 4.56774194,2.7521552 4.56774194,5.20403226 Z" id="Shape"></path>
+                <path d="M0.757258065,15.8758065 C0.757258065,16.8968785 4.40749994,17.8965726 9.00030242,17.8965726 C13.5933452,17.8965726 17.2444925,16.8968098 17.2451613,15.8758065 C17.2451613,13.0862927 15.2712437,11.9346774 11.2741935,11.9346774 L6.72822581,11.9346774 C2.73117568,11.9346774 0.757258065,13.0862927 0.757258065,15.8758065 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

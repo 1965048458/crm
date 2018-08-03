@@ -263,6 +263,7 @@ public class CustomerController {
         openSeaWarning.setDeptName(deptList.get(4).getDeptName());
         openSeaWarning.setFollowTimes(2);
         openSeaWarning.setLeftTime("3");
+        openSeaWarning.setDeptId("dept1");
         openSeaWarning.setCreatedTime("2018-08-08 12:23:33");
         openSeaWarning.setLastTimeFollow("2018-09-08 12:23:33");
         deptList.get(4).setOpenSeaWarning(openSeaWarning);
@@ -295,6 +296,18 @@ public class CustomerController {
             customerMapper.insertEnclosureApply(enclosureApply);
             gsonView.addStaticAttribute("successFlg", true);
         }
+        return gsonView;
+    }
+
+    @RequestMapping("/organization/delayApply")
+    public GsonView delayApply(@RequestParam("deptId") String deptId){
+        GsonView gsonView = new GsonView();
+        customerService.enclosureDelayApply(deptId);
+//        EnclosureApply enclosureApply = new EnclosureApply();
+//        enclosureApply.setEnclosureApplyId(11);
+//        customerMapper.insertEnclosureDelayApply(enclosureApply);
+        gsonView.addStaticAttribute("successFlg",true);
+        //gsonView.addStaticAttribute("errMsg","申请延期失败");
         return gsonView;
     }
 

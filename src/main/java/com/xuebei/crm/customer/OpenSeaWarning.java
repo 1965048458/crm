@@ -20,6 +20,17 @@ public class OpenSeaWarning {
     @Expose
     private String  deptName;
     @Expose
+    private String deptId;
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
+    }
+
+    @Expose
     private String createdTime;
     @Expose
     private Integer followTimes;

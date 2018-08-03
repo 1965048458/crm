@@ -19,5 +19,7 @@ public interface CustomerService {
 
     List querySearchList(List<Department> deptList);
 
+    void enclosureDelayApply(String deptId);
+
     List<String> searchSchool(String keyword);
 }

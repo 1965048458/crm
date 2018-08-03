@@ -95,10 +95,10 @@ public class CustomerServiceImpl implements CustomerService {
         if(enclosureApply.getUserId().equals(userId)){
             //获取圈地开始后所有的拜访记录
             List<Visit> visitList= customerMapper.queryMyVisit(department.getDeptId(),enclosureApply.getStartTime(),userId);
-            //从未拜访
             int diffDays;
             int followTimes = 0;
-            String lastTime = "";
+            String lastTime;
+            //从未拜访
             if(visitList.isEmpty()){
                 //比较申请圈地时间与当前时间的间隔
                  diffDays = diffDays(enclosureApply.getStartTime());
@@ -122,6 +122,7 @@ public class CustomerServiceImpl implements CustomerService {
                 openSeaWarning.setFollowTimes(followTimes);
                 openSeaWarning.setLastTimeFollow(lastTime);
                 openSeaWarning.setDeptName(department.getDeptName());
+                openSeaWarning.setDeptId(department.getDeptId());
                 department.setEnclosureStatus(EnclosureStatusEnum.MINE);
             }
             //距离申请圈地后超过90天
@@ -160,6 +161,12 @@ public class CustomerServiceImpl implements CustomerService {
         List<String> searchList = new ArrayList<>();
         querySearchList(deptList,searchList);
         return searchList;
+    }
+
+    @Override
+    public void enclosureDelayApply(String deptId){
+        EnclosureApply enclosureApply = customerMapper.queryNewEnclosureApply(deptId);
+        customerMapper.insertEnclosureDelayApply(enclosureApply);
     }
     private void querySearchList(List<Department> deptList, List<String > searchList){
         for(Department department:deptList){
