@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -32,6 +31,7 @@ public class CustomerController {
     private CustomerServiceImpl customerService;
 
     private static String AUTHENTICATION_ERROR_MSG = "用户没有改操作权限";
+    private final static String DEPT_NAME_BLANK_ERROR_MSG = "部门名称不能为空";
 
 
     // TODO: 最终完善登录功能并去掉
@@ -91,11 +91,18 @@ public class CustomerController {
 
 
 
-    @RequestMapping("/addDepartmentPage")
+    @RequestMapping("/addTopDepartment")
     public String addDepartmentPage(@RequestParam("customerId") String customerId,
                                       ModelMap modelMap) {
         modelMap.addAttribute("customerId", customerId);
         return "addTopDepartment";
+    }
+
+    @RequestMapping("/addSubDepartment")
+    public String addSubDepartment(@RequestParam("deptId") String deptId,
+                                   ModelMap modelMap) {
+        modelMap.addAttribute("parentDeptId", deptId);
+        return "addSubDepartment";
     }
 
     @RequestMapping("/addOrganizationPage")
@@ -120,8 +127,6 @@ public class CustomerController {
                                       @RequestParam("deptName") String deptName,
                                       @RequestParam(value = "website", required = false) String website,
                                       @RequestParam(value = "profile", required = false) String profile) {
-        final String DEPT_NAME_BLANK_ERROR_MSG = "部门名称不能为空";
-
         if (!customerService.isUserHasCustomer(acquireUserId(), customerId)) {
             return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
         }
@@ -150,6 +155,49 @@ public class CustomerController {
 
         return GsonView.createSuccessView();
     }
+
+    /**
+     * 增加专业（二级机构）
+     * 1. 用户是否有操作该一级机构的权限，即用户圈了该专业
+     * 2. 机构名检查，机构名不为空，机构名不重复
+     */
+    @RequestMapping("/action/addSubDepartment")
+    public GsonView addSubDepartment(@RequestParam("parentDeptId") String parentDeptId,
+                                     @RequestParam("deptName") String deptName) {
+        // TODO： 用户是否圈了该专业检查
+
+        // 检查是否为空
+        deptName = deptName.trim();
+        if (StringUtils.isEmptyOrWhitespace(deptName)) {
+            return GsonView.createErrorView(DEPT_NAME_BLANK_ERROR_MSG);
+        }
+
+        // 检查机构名称是否重复
+        if (customerService.isSubDepartmentNameDuplicated(parentDeptId, deptName)) {
+            return GsonView.createErrorView("专业(部门)名称重复，请重新输入");
+        }
+
+        customerService.addSubDepartment(parentDeptId, deptName);
+
+        return GsonView.createSuccessView();
+    }
+
+    /**
+     * 为前段提供 实时检测 专业（二级机构）可以使用 的接口
+     */
+    @RequestMapping("/action/subDepartmentCheck")
+    public GsonView subDepartmentCheck(@RequestParam("parentDeptId") String parentDeptId,
+                                       @RequestParam("deptName") String deptName) {
+        deptName = deptName.trim();
+        if (StringUtils.isEmptyOrWhitespace(deptName)) {
+            return GsonView.createErrorView(DEPT_NAME_BLANK_ERROR_MSG);
+        }
+        if (customerService.isSubDepartmentNameDuplicated(parentDeptId, deptName)) {
+            return GsonView.createErrorView("此专业已存在或已被圈，无法添加");
+        }
+        return GsonView.createSuccessView();
+    }
+
 
     @RequestMapping("addContactsPage")
     public String addContactsPage(@RequestParam("deptId") String deptId,
@@ -325,6 +373,16 @@ public class CustomerController {
         return gsonView;
     }
 
+    @RequestMapping("/getMyCustomers")
+    public GsonView getMyCustomers(HttpServletRequest request){
+        String userId = (String) request.getSession().getAttribute("userId");
+        List<Customer> myCustomers = customerService.getMyCustomers(userId);//"57259d54f9994209a813e8ad2b297b3a"
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("myCustomers", myCustomers);
+        return gsonView;
+    }
+
     @RequestMapping("/customerInfo")
     public String customerInfo(@RequestParam(value = "customerName")String customerName,
                                ModelMap modelMap, HttpServletRequest request){
@@ -332,5 +390,15 @@ public class CustomerController {
         modelMap.addAttribute("customerName", customerName);
         return "customerInfo";
     }
+
+    @RequestMapping("/contactsInfo")
+    public String contactsInfoPage(@RequestParam("contactsId")String contacsId,
+                                   ModelMap modelMap) {
+        Contacts contacts = customerMapper.queryContactsById(contacsId);
+        modelMap.addAttribute("contacts", contacts);
+        return "contactsInfo";
+    }
+
+    
 
 }

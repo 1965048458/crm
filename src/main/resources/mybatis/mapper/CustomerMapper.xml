@@ -49,6 +49,21 @@
         <result property="gender" column="gender"/>
     </resultMap>
 
+    <resultMap id="contactsDetailMap" type="com.xuebei.crm.customer.Contacts">
+        <id property="contactsId" column="contacts_id"/>
+        <result property="departmentId" column="customer_dept_id"/>
+        <result property="realName" column="real_nm"/>
+        <result property="gender" column="gender"/>
+        <result property="phone" column="phone"/>
+        <result property="wechat" column="wechat"/>
+        <result property="tel" column="tel"/>
+        <result property="QQ" column="QQ"/>
+        <result property="email" column="email"/>
+        <result property="officeAddr" column="office_address"/>
+        <result property="profile" column="profile"/>
+        <result property="specialRelationship" column="special_relationship"/>
+    </resultMap>
+
     <resultMap id="visitMap" type="com.xuebei.crm.customer.Visit">
         <id property="visitId" column="visit_log_id"/>
         <result property="userId" column="user_id"/>
@@ -70,13 +85,14 @@
         WHERE company_user.user_id = #{userId} and company_customer.customer_id = #{customerId};
     </select>
 
-    <select id="isTopDepartNameExist" resultType="java.lang.Boolean">
+    <select id="isDepartNameExist" resultType="java.lang.Boolean">
         SELECT COUNT(customer_id)
         FROM customer_dept
-        WHERE customer_id = #{customerId} AND prt_id is null AND department_nm = #{departmentName};
+        WHERE customer_id = #{customerId}
+        AND department_nm = #{departmentName};
     </select>
 
-    <insert id="insertTopDepartment" parameterType="com.xuebei.crm.customer.Department">
+    <insert id="insertDepartment" parameterType="com.xuebei.crm.customer.Department">
         INSERT INTO customer_dept (
             customer_dept_id,
             prt_id,
@@ -129,6 +145,12 @@
             customer_nm LIKE CONCAT('%', #{searchWord}, '%')
     </select>
 
+    <select id="getMyCustomers" resultMap="customerMap">
+        SELECT c.*
+        FROM crm_customer c
+        RIGHT JOIN crm_user u ON c.creator_id = u.crm_user_id
+        WHERE u.crm_user_id = #{userId}
+    </select>
 
     <select id="queryDepartmentById" resultMap="deptMap">
         SELECT *
@@ -331,6 +353,11 @@
 		) AS tb
 		ON ta.customer_dept_id = tb.customer_dept_id
 		WHERE contacts_id= #{contactsId};
+    </select>
+
+    <select id="queryContactsById" resultMap="contactsMap">
+        SELECT * FROM contacts
+        WHERE contacts_id = #{contactsId};
     </select>
 
 </mapper>

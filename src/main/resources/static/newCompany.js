@@ -26,7 +26,10 @@ $(document).ready(function () {
             'create': function () {
                 var thisVue = this;
                 if (this.companyName === "" || this.members.length < 3){
-                    alert("公司名不能为空且公司成员不能少于三人");
+                    $('.weui-toptips').css('display', 'block');
+                    setTimeout(function () {
+                        $('.weui-toptips').css('display', 'none');
+                    }, 2000);
                     return;
                 }
                 var postData = {
@@ -43,8 +46,11 @@ $(document).ready(function () {
                     cache: false
                 }).done(function (result) {
                     if (result.successFlg) {
-                        alert("创建成功！");
-                        window.location = '/company/chooseCompany';
+                        $('#toast').fadeIn(100);
+                        setTimeout(function () {
+                            $('#toast').fadeOut(100);
+                            window.location = '/company/chooseCompany';
+                        }, 2000);
                     } else {
                         thisVue.errMsg = result.errMsg;
                         thisVue.showErrMsg = true;
@@ -78,7 +84,10 @@ $(document).ready(function () {
             },
             'checkNull': function () {
                 if (this.name == "" || this.tel == "") {
-                    alert("姓名或手机号不能为空！");
+                    $('.invite_tip').css('display', 'block');
+                    setTimeout(function () {
+                        $('.invite_tip').css('display', 'none');
+                    }, 2000);
                     return false;
                 }
                 return true;

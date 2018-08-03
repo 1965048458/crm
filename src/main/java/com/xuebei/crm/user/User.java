@@ -1,6 +1,9 @@
 package com.xuebei.crm.user;
 
 import com.google.gson.annotations.Expose;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  * Created by Rong Weicheng on 2018/7/10.
@@ -30,7 +33,17 @@ public class User {
     private String mail;
     @Expose
     private String address;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date birth;
 
+
+    public Date getBirth() {
+        return birth;
+    }
+
+    public void setBirth(Date birth) {
+        this.birth = birth;
+    }
 
     public String getUserId() {
         return userId;

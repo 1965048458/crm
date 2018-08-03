@@ -1,6 +1,7 @@
 package com.xuebei.crm.customer;
 
 import com.xuebei.crm.exception.DepartmentNameDuplicatedException;
+import com.xuebei.crm.utils.UUIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +24,24 @@ public class CustomerServiceImpl implements CustomerService {
      * @throws DepartmentNameDuplicatedException
      */
     public void addTopDepartment(Department department) throws DepartmentNameDuplicatedException {
-        if (customerMapper.isTopDepartNameExist(department.getCustomer().getCustomerId(), department.getDeptName())) {
+        if (customerMapper.isDepartNameExist(department.getCustomer().getCustomerId(), department.getDeptName())) {
             throw new DepartmentNameDuplicatedException("二级学院名已存在，请重新输入");
         }
 
-        customerMapper.insertTopDepartment(department);
+        customerMapper.insertDepartment(department);
+    }
+
+    public void addSubDepartment(String parentDeptId, String deptName) {
+        Department prtDept = customerMapper.queryDepartmentById(parentDeptId);
+
+        Department dept = new Department();
+        dept.setDeptId(UUIDGenerator.genUUID());
+        dept.setDeptName(deptName);
+        dept.setEnclosureStatus(EnclosureStatusEnum.NORMAL);
+        dept.setCustomer(prtDept.getCustomer());
+        dept.setParent(prtDept);
+
+        customerMapper.insertDepartment(dept);
     }
 
     /**
@@ -189,4 +203,28 @@ public class CustomerServiceImpl implements CustomerService {
         return customerMapper.searchSchool(keyword);
     }
 
+
+    @Override
+    public List<Customer> getMyCustomers(String userId){
+        return customerMapper.getMyCustomers(userId);
+    }
+
+    /**
+     * 检查机构名是否重复
+     * 检查规则：同一学校（企业）下不能有重名机构
+     * @param customerId 客户ID
+     * @param deptName 新增机构名
+     */
+    public Boolean isDepartmentNameDuplicated(String customerId, String deptName) {
+        return customerMapper.isDepartNameExist(customerId, deptName);
+    }
+
+    /**
+     * 检查子机构名是否重复
+     * 创建子机构时，参数只有父机构的ID；由于同一学校（企业）下都不能有重名机构，因此检查机构名重复调用相同的接口
+     */
+    public Boolean isSubDepartmentNameDuplicated(String parentDeptId, String deptName) {
+        Department parentDept = customerMapper.queryDepartmentById(parentDeptId);
+        return customerMapper.isDepartNameExist(parentDept.getCustomer().getCustomerId(), deptName);
+    }
 }

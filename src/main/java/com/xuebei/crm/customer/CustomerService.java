@@ -10,6 +10,8 @@ public interface CustomerService {
 
     void addTopDepartment(Department department) throws DepartmentNameDuplicatedException;
 
+    void addSubDepartment(String parentDeptId, String deptName);
+
     void newSchool(String customer_id,String name,String schoolType,String profile,
                    String website,String creator_id,String create_ts,String updater_id,String update_ts);
 
@@ -22,4 +24,10 @@ public interface CustomerService {
     void enclosureDelayApply(String deptId);
 
     List<String> searchSchool(String keyword);
+
+    List<Customer> getMyCustomers(String userId);
+
+    Boolean isDepartmentNameDuplicated(String customerId, String deptName);
+
+    Boolean isSubDepartmentNameDuplicated(String parentDeptId, String deptName);
 }

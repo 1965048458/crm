@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>添加联系人</title>
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css"/>
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/contactsInfo.js"></script>
+
+    <style>
+        .weui-cells:before {
+            border: none;
+        }
+        .top-bar {
+            background: #ffffff;
+            text-align: center;
+            padding: 10px 15px;
+        }
+        .pull-left {
+            float: left!important;
+        }
+    </style>
+</head>
+<body>
+
+<div id="contactsInfoVue">
+
+    <div class="top-bar">
+        <span class="pull-left" @Click="back">《</span>
+        <span th:text="${contacts.getRealName()}"></span>
+    </div>
+
+    <div class="weui-navbar" style="position: relative;">
+        <div class="weui-navbar__item weui-bar__item_on">
+            基本信息
+        </div>
+        <div class="weui-navbar__item">
+            跟进记录
+        </div>
+    </div>
+
+    <div class="weui-cells weui-cells_form" style="font-size: 14px">
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">职位：</label>
+            </div>
+            <div class="weui-cell__bd">
+                IDLE
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">性别：</label>
+            </div>
+            <div class="weui-cell__bd">
+                <span th:text="${contacts.showGender()}"></span>
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">电话：</label>
+            </div>
+            <div class="weui-cell__bd">
+                <span th:text="${contacts.showTel()}"></span>
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">座机：</label>
+            </div>
+            <div class="weui-cell__bd">
+                <span th:text="${contacts.showPhone()}"></span>
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">邮箱：</label>
+            </div>
+            <div class="weui-cell__bd">
+                <span th:text="${contacts.showEmail()}"></span>
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">微信：</label>
+            </div>
+            <div class="weui-cell__bd">
+                <span th:text="${contacts.showWeChat()}"></span>
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">QQ：</label>
+            </div>
+            <div class="weui-cell__bd">
+                <span th:text="${contacts.showQQ()}"></span>
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">办公地点：</label>
+            </div>
+            <div class="weui-cell__bd">
+                <span th:text="${contacts.showOfficeAddr()}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell" style="padding-bottom: 0">
+            <div class="plan-title"><p>个人简介</p></div>
+        </div>
+        <div class="weui-cells weui-cells_form" style="margin-top: 0;">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" rows="5" style="font-size: 14px"
+                              placeholder="比如个人信息、人际关系、兴趣爱好、行事风格、家庭情况等信息（选填）"
+                              v-model="profile"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
