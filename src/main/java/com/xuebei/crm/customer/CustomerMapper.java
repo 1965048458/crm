@@ -14,10 +14,10 @@ public interface CustomerMapper {
     Boolean isUserHasCustomer(@Param("userId") String userId,
                               @Param("customerId") String customerId);
 
-    Boolean isTopDepartNameExist(@Param("customerId") String customerId,
+    Boolean isDepartNameExist(@Param("customerId") String customerId,
                                  @Param("departmentName") String departmentName);
 
-    void insertTopDepartment(Department department);
+    void insertDepartment(Department department);
 
     void newSchool(@Param("customer_id")String customer_id,
                    @Param("name")String name,
@@ -31,6 +31,8 @@ public interface CustomerMapper {
     Department queryDepartmentById(@Param("deptId") String deptId);
 
     ContactsType queryContactsTypeById(@Param("contactsTypeId") String contactsTypeId);
+
+    Contacts queryContactsById(@Param("contactsId") String contactsId);
 
     void insertContacts(Contacts contacts);
 

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>添加部门</title>
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css"/>
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/addSubDepartment.js"></script>
+
+    <style>
+        .weui-cells:before {
+            border: none;
+        }
+        .top-bar {
+            background: #ffffff;
+            text-align: center;
+            padding: 10px 15px;
+        }
+        .pull-left {
+            float: left!important;
+        }
+        .pull-right {
+            float: right!important;
+        }
+    </style>
+</head>
+<body>
+
+<div id="addSubDepartmentVue">
+
+    <input id="parentDeptId" type="hidden" th:value="${parentDeptId}">
+
+    <div class="top-bar">
+        <span class="pull-left" @Click="cancelAddSubDepartment" style="color: #0076FF" id="cancelBtn">取消</span>
+        <span>添加专业</span>
+        <span class="pull-right" @Click="confirmAddSubDepartment" style="color: gray" id="submitBtn">完成</span>
+    </div>
+
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label" style="width: 122px;">
+                    专业/部门名称
+                </label>
+            </div>
+            <div class="weui-cell__bd">
+                <input  class="weui-input" placeholder="请输入专业或部门全称" v-model="deptName" v-on:input="deptNameInputChanged()">
+            </div>
+        </div>
+    </div>
+
+    <div style="padding: 0px 15px;line-height: 1;" v-show="showPromptMessage">
+        <span style="padding-left: 122px;color: red;font-size: 7px;" v-text="promptMessage">
+            错了
+        </span>
+    </div>
+
+
+</div>
+
+</body>
+</html>
