@@ -149,4 +149,10 @@ public class CustomerServiceImpl implements CustomerService {
         return customerMapper.searchSchool(keyword);
     }
 
+
+    @Override
+    public List<Customer> getMyCustomers(String userId){
+        return customerMapper.getMyCustomers(userId);
+    }
+
 }

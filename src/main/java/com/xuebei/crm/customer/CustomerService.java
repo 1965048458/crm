@@ -18,4 +18,6 @@ public interface CustomerService {
     List<Department> queryDepartment(String customerId,String userId);
 
     List<String> searchSchool(String keyword);
+
+    List<Customer> getMyCustomers(String userId);
 }

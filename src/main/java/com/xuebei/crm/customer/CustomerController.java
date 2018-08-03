@@ -302,6 +302,16 @@ public class CustomerController {
         return gsonView;
     }
 
+    @RequestMapping("/getMyCustomers")
+    public GsonView getMyCustomers(HttpServletRequest request){
+        String userId = (String) request.getSession().getAttribute("userId");
+        List<Customer> myCustomers = customerService.getMyCustomers(userId);//"57259d54f9994209a813e8ad2b297b3a"
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("myCustomers", myCustomers);
+        return gsonView;
+    }
+
     @RequestMapping("/customerInfo")
     public String customerInfo(@RequestParam(value = "customerName")String customerName,
                                ModelMap modelMap, HttpServletRequest request){

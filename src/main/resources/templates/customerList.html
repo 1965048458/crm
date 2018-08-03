@@ -20,10 +20,9 @@
             display: inline-block;
         }
 
-        .top-bar{
+        .top-bar {
             text-align: center;
-            border-bottom: solid 1px #DDDDDD;
-            bottom: 10px;
+            background: #FFFFFF;
         }
 
         .pull-left {
@@ -43,11 +42,14 @@
             <div class="weui-tab">
                 <div class="page navbar js_show">
                     <div class="weui-navbar">
-                        <div id="titleBar" class="weui-navbar__item top-bar" style="height: 30px">
-                            <span class="center-ele" style="font-size: 25px;">客户</span>
+                        <div id="titleBar" class="weui-navbar__item top-bar" style="height: 25px; padding: 15px 10px;">
+                            <span @click="backToInfo" class="pull-left">
+                                <img src="/images/back_icon.svg" style="margin-top:8px;"/></span>
+                            <span class="center-ele" style="font-size: 22px;">客户</span>
                             <a href="javascript:addCustomer();">
-                                        <span class="pull-right"
-                                              style="font-size: 25px; color: #00FFFF;">+ &nbsp;</span>
+                                        <span class="pull-right" style="margin-top: 8px;"><img
+                                                src="/images/add.png"
+                                                style="width: 16px; height: 16px; display: block"/></span>
                             </a>
                         </div>
                     </div>
@@ -94,50 +96,41 @@
                             </div>
 
                             <div id="customers" v-show="customers">
-                                <div class="myCustomerList">
-                                    <div class="weui-panel__bd">
-                                        <div class="weui-media-box weui-media-box_text">
-                                            <h1 class="weui-media-box__title">我的客户</h1>
-                                            <div class="myCustomers">
-                                                <div class="weui-panel__bd">
-                                                    <a @click="" class="weui-media-box weui-media-box_appmsg">
-                                                        <div class="weui-media-box__hd">
-                                                            <img class="weui-media-box__thumb"
-                                                                 src="/images/icon_nav_layout.png"
-                                                                 alt="">
-                                                        </div>
-                                                        <div class="weui-media-box__bd">
-                                                            <h4 class="weui-media-box__title">浙江大学</h4>
-                                                            <p class="weui-media-box__desc">最后跟进: 20180421</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
+                                <div class="myCustomerList weui-panel weui-panel_access">
+                                    <div class="weui-panel__hd weui-media-box__title">我的客户</div>
+                                    <div class="weui-panel__bd myCustomers">
+                                        <a class="weui-media-box weui-media-box_appmsg"
+                                           @click="loadDetail(customer.customerName)" v-for="customer in myCustomers">
+                                            <div class="weui-media-box__hd">
+                                                <img class="weui-media-box__thumb"
+                                                     src="/images/icon_nav_layout.png"
+                                                     alt="">
                                             </div>
-                                        </div>
+                                            <div class="weui-media-box__bd">
+                                                <h1 class="weui-media-box__title"
+                                                    v-text="customer.customerName"></h1>
+                                                <p class="weui-media-box__desc">最后跟进: 20180421</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
 
-                                <div class="allCustomerList">
-                                    <div class="weui-panel__bd">
-                                        <div class="weui-media-box weui-media-box_text">
-                                            <h1 class="weui-media-box__title">全部客户</h1>
-                                            <div class="allCustomers" v-for="customer in customerList">
-                                                <div class="weui-panel__bd" @click="loadDetail(customer.customerName)">
-                                                    <a class="weui-media-box weui-media-box_appmsg">
-                                                        <div class="weui-media-box__hd">
-                                                            <img class="weui-media-box__thumb"
-                                                                 src="/images/icon_nav_layout.png"
-                                                                 alt="">
-                                                        </div>
-                                                        <div class="weui-media-box__bd">
-                                                            <h1 class="weui-media-box__title"
-                                                                v-text="customer.customerName"></h1>
-                                                            <p class="weui-media-box__desc">最后跟进: 20180421</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
+                                <div class="allCustomerList weui-panel weui-panel_access">
+                                    <div class="weui-panel__hd weui-media-box__title">区域客户</div>
+                                    <div class="weui-panel__bd allCustomers">
+                                        <a class="weui-media-box weui-media-box_appmsg"
+                                           @click="loadDetail(customer.customerName)" v-for="customer in customerList">
+                                            <div class="weui-media-box__hd">
+                                                <img class="weui-media-box__thumb"
+                                                     src="/images/icon_nav_layout.png"
+                                                     alt="">
                                             </div>
-                                        </div>
+                                            <div class="weui-media-box__bd">
+                                                <h1 class="weui-media-box__title"
+                                                    v-text="customer.customerName"></h1>
+                                                <p class="weui-media-box__desc">最后跟进: 20180421</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

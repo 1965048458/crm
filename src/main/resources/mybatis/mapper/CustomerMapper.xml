@@ -19,9 +19,9 @@
         </association>
         <!--<collection property="contactsList" resultMap="contactsMap"/>-->
         <!--<collection property="enclosureApplyList" javaType="com.xuebei.crm.customer.EnclosureApply">-->
-            <!--<id property="enclosureApplyId" column="enclosure_apply_id"/>-->
-            <!--<result property="userId" column="user_id"/>-->
-            <!--<result property="statusCd" column="status_cd"/>-->
+        <!--<id property="enclosureApplyId" column="enclosure_apply_id"/>-->
+        <!--<result property="userId" column="user_id"/>-->
+        <!--<result property="statusCd" column="status_cd"/>-->
         <!--</collection>-->
     </resultMap>
 
@@ -67,16 +67,24 @@
         <result property="realName" column="real_nm"/>
     </resultMap>
 
+    <select id="getMyCustomers" resultMap="customerMap">
+        SELECT c.*
+        FROM crm_customer c
+            RIGHT JOIN crm_user u ON c.creator_id = u.crm_user_id
+        WHERE u.crm_user_id = #{userId}
+    </select>
+
     <select id="isUserHasCustomer" resultType="java.lang.Boolean">
         SELECT COUNT(company_customer.customer_id)
-        FROM company_user INNER JOIN company_customer ON company_user.company_id = company_customer.company_id
-        WHERE company_user.user_id = #{userId} and company_customer.customer_id = #{customerId};
+        FROM company_user
+            INNER JOIN company_customer ON company_user.company_id = company_customer.company_id
+        WHERE company_user.user_id = #{userId} AND company_customer.customer_id = #{customerId};
     </select>
 
     <select id="isTopDepartNameExist" resultType="java.lang.Boolean">
         SELECT COUNT(customer_id)
         FROM customer_dept
-        WHERE customer_id = #{customerId} AND prt_id is null AND department_nm = #{departmentName};
+        WHERE customer_id = #{customerId} AND prt_id IS NULL AND department_nm = #{departmentName};
     </select>
 
     <insert id="insertTopDepartment" parameterType="com.xuebei.crm.customer.Department">
@@ -103,32 +111,34 @@
 
     <insert id="newSchool" parameterType="java.lang.String">
         INSERT INTO crm_customer (
-        customer_id,
-        customer_nm,
-        type_cd,
-        profile,
-        website,
-        creator_id,
-        create_ts,
-        updater_id,
-        update_ts
+            customer_id,
+            customer_nm,
+            type_cd,
+            profile,
+            website,
+            creator_id,
+            create_ts,
+            updater_id,
+            update_ts
         )
         VALUES
-        (
-        #{customer_id},
-        #{name},
-        #{schoolType},
-        #{profile},
-        #{website},
-        #{creator_id},
-        NOW(),
-        #{updater_id},
-        NOW()
-        );
+            (
+                #{customer_id},
+                #{name},
+                #{schoolType},
+                #{profile},
+                #{website},
+                #{creator_id},
+                NOW(),
+                #{updater_id},
+                NOW()
+            );
     </insert>
 
     <select id="queryCustomerInfo" resultMap="customerMap">
-        SELECT * FROM crm_customer WHERE
+        SELECT *
+        FROM crm_customer
+        WHERE
             customer_nm LIKE CONCAT('%', #{searchWord}, '%')
     </select>
 
@@ -141,36 +151,36 @@
 
     <insert id="insertContacts" parameterType="com.xuebei.crm.customer.Contacts">
         INSERT INTO `crmdb`.`contacts` (
-			`contacts_id`,
-			`customer_dept_id`,
-			`real_nm`,
-			`gender`,
-			`phone`,
-			`wechat`,
-			`tel`,
-			`QQ`,
-			`email`,
-			`office_address`,
-			`profile`,
-			`special_relationship`,
-			`contacts_type_id`
-		)
-		VALUES
-			(
-				#{contactsId},
-				#{department.deptId},
-				#{realName},
-				#{gender},
-				#{phone},
-				#{wechat},
-				#{tel},
-				#{QQ},
-				#{email},
-				#{officeAddr},
-				#{profile},
-				#{specialRelationship},
-				#{contactsType.contactsTypeId}
-			);
+            `contacts_id`,
+            `customer_dept_id`,
+            `real_nm`,
+            `gender`,
+            `phone`,
+            `wechat`,
+            `tel`,
+            `QQ`,
+            `email`,
+            `office_address`,
+            `profile`,
+            `special_relationship`,
+            `contacts_type_id`
+        )
+        VALUES
+            (
+                #{contactsId},
+                #{department.deptId},
+                #{realName},
+                #{gender},
+                #{phone},
+                #{wechat},
+                #{tel},
+                #{QQ},
+                #{email},
+                #{officeAddr},
+                #{profile},
+                #{specialRelationship},
+                #{contactsType.contactsTypeId}
+            );
     </insert>
 
     <select id="queryContactsTypeById" resultMap="contactsTypeMap">
@@ -180,19 +190,21 @@
     </select>
 
     <select id="queryDepartment" resultMap="deptMap">
-        SELECT cd.* FROM customer_dept cd
-        LEFT JOIN contacts c ON c.customer_dept_id = cd.customer_dept_id
+        SELECT cd.*
+        FROM customer_dept cd
+            LEFT JOIN contacts c ON c.customer_dept_id = cd.customer_dept_id
         WHERE cd.customer_id = #{customerId}
     </select>
 
     <select id="queryContacts" resultMap="contactsMap">
-        SELECT c.* FROM contacts c
-        INNER JOIN customer_dept cd ON c.customer_dept_id = cd.customer_dept_id
+        SELECT c.*
+        FROM contacts c
+            INNER JOIN customer_dept cd ON c.customer_dept_id = cd.customer_dept_id
         WHERE cd.customer_id = #{customerId}
     </select>
 
     <insert id="insertEnclosureApply" parameterType="com.xuebei.crm.customer.EnclosureApply">
-        INSERT INTO enclosure_apply(
+        INSERT INTO enclosure_apply (
             apply_ts,
             customer_dept_id,
             user_id,
@@ -204,119 +216,170 @@
             update_ts
         )
         VALUES (
-                NOW(),
-                #{deptId},
-                #{userId},
-                #{reasons},
-                NOW(),
-                date_add(NOW(), INTERVAL 3 MONTH),
-                'APPLYING',
-                #{userId},
-                NOW()
+            NOW(),
+            #{deptId},
+            #{userId},
+            #{reasons},
+            NOW(),
+            date_add(NOW(), INTERVAL 3 MONTH),
+            'APPLYING',
+            #{userId},
+            NOW()
         );
 
     </insert>
 
     <select id="queryEnclosureApply" resultMap="enclosureApplyMap">
-        SELECT ea.user_id,ea.status_cd FROM enclosure_apply ea
+        SELECT
+            ea.user_id,
+            ea.status_cd
+        FROM enclosure_apply ea
         WHERE ea.customer_dept_id = #{deptId}
     </select>
 
     <select id="queryNewEnclosureApply" resultMap="enclosureApplyMap">
         SELECT *
-        FROM enclosure_apply as t
+        FROM enclosure_apply AS t
         WHERE t.customer_dept_id = #{deptId} AND t.status_cd = 'PERMITTED'
         ORDER BY t.apply_start_ts DESC
-        LIMIT 1
-        ;
+        LIMIT 1;
     </select>
 
     <select id="queryMyVisit" resultMap="visitMap">
-        SELECT r1.create_ts,r1.user_id,r2.des_id,r1.visit_log_id
+        SELECT
+            r1.create_ts,
+            r1.user_id,
+            r2.des_id,
+            r1.visit_log_id
         FROM
             (
-                SELECT A.contacts_id, B.create_ts, B.user_id,A.visit_log_id
+                SELECT
+                    A.contacts_id,
+                    B.create_ts,
+                    B.user_id,
+                    A.visit_log_id
                 FROM
-                    (SELECT visit_contacts.contacts_id, visit_log.journal_id,visit_log.visit_log_id
-                     FROM visit_contacts LEFT JOIN visit_log ON
-                     visit_contacts.visit_log_id = visit_log.visit_log_id)
-                    AS A LEFT JOIN journal AS B ON A.journal_id = B.journal_id
+                    (SELECT
+                         visit_contacts.contacts_id,
+                         visit_log.journal_id,
+                         visit_log.visit_log_id
+                     FROM visit_contacts
+                         LEFT JOIN visit_log ON
+                                                 visit_contacts.visit_log_id = visit_log.visit_log_id)
+                        AS A LEFT JOIN journal AS B ON A.journal_id = B.journal_id
             ) AS r1
             LEFT JOIN
             (
-                SELECT contacts.contacts_id, dept_dest_table.des_id
-                FROM contacts LEFT JOIN
-                    ((SELECT customer_dept_id, prt_id AS des_id
+                SELECT
+                    contacts.contacts_id,
+                    dept_dest_table.des_id
+                FROM contacts
+                    LEFT JOIN
+                    ((SELECT
+                          customer_dept_id,
+                          prt_id AS des_id
                       FROM customer_dept
-                      WHERE prt_id is not null)
+                      WHERE prt_id IS NOT NULL)
                      UNION
-                     (SELECT customer_dept_id, customer_dept_id AS des_id
-                      from customer_dept
-                      WHERE prt_id is null))
+                     (SELECT
+                          customer_dept_id,
+                          customer_dept_id AS des_id
+                      FROM customer_dept
+                      WHERE prt_id IS NULL))
 
                         AS dept_dest_table
                         ON contacts.customer_dept_id = dept_dest_table.customer_dept_id
             ) AS r2 ON r1.contacts_id = r2.contacts_id
         WHERE r2.des_id = #{deptId}
-        AND r1.create_ts &gt;= #{startTime}
-        AND r1.user_id = #{userId}
-        ORDER BY r1.create_ts DESC
-        ;
+              AND r1.create_ts &gt;= #{startTime}
+              AND r1.user_id = #{userId}
+        ORDER BY r1.create_ts DESC;
     </select>
 
     <select id="queryElseVisit" resultMap="visitMap">
-        SELECT r1.create_ts,r1.user_id,r2.des_id,r1.visit_log_id
+        SELECT
+            r1.create_ts,
+            r1.user_id,
+            r2.des_id,
+            r1.visit_log_id
         FROM
-        (
-        SELECT A.contacts_id, B.create_ts, B.user_id,A.visit_log_id
-        FROM
-        (SELECT visit_contacts.contacts_id, visit_log.journal_id,visit_log.visit_log_id
-        FROM visit_contacts LEFT JOIN visit_log ON
-        visit_contacts.visit_log_id = visit_log.visit_log_id)
-        AS A LEFT JOIN journal AS B ON A.journal_id = B.journal_id
-        ) AS r1
-        LEFT JOIN
-        (
-        SELECT contacts.contacts_id, dept_dest_table.des_id
-        FROM contacts LEFT JOIN
-        ((SELECT customer_dept_id, prt_id AS des_id
-        FROM customer_dept
-        WHERE prt_id is not null)
-        UNION
-        (SELECT customer_dept_id, customer_dept_id AS des_id
-        from customer_dept
-        WHERE prt_id is null))
+            (
+                SELECT
+                    A.contacts_id,
+                    B.create_ts,
+                    B.user_id,
+                    A.visit_log_id
+                FROM
+                    (SELECT
+                         visit_contacts.contacts_id,
+                         visit_log.journal_id,
+                         visit_log.visit_log_id
+                     FROM visit_contacts
+                         LEFT JOIN visit_log ON
+                                                 visit_contacts.visit_log_id = visit_log.visit_log_id)
+                        AS A LEFT JOIN journal AS B ON A.journal_id = B.journal_id
+            ) AS r1
+            LEFT JOIN
+            (
+                SELECT
+                    contacts.contacts_id,
+                    dept_dest_table.des_id
+                FROM contacts
+                    LEFT JOIN
+                    ((SELECT
+                          customer_dept_id,
+                          prt_id AS des_id
+                      FROM customer_dept
+                      WHERE prt_id IS NOT NULL)
+                     UNION
+                     (SELECT
+                          customer_dept_id,
+                          customer_dept_id AS des_id
+                      FROM customer_dept
+                      WHERE prt_id IS NULL))
 
-        AS dept_dest_table
-        ON contacts.customer_dept_id = dept_dest_table.customer_dept_id
-        ) AS r2 ON r1.contacts_id = r2.contacts_id
+                        AS dept_dest_table
+                        ON contacts.customer_dept_id = dept_dest_table.customer_dept_id
+            ) AS r2 ON r1.contacts_id = r2.contacts_id
         WHERE r2.des_id = #{deptId}
-        AND r1.create_ts &gt;= #{startTime}
-        AND r1.user_id != #{userId}
+              AND r1.create_ts &gt;= #{startTime}
+              AND r1.user_id != #{userId}
         ORDER BY r1.create_ts DESC
-        LIMIT 1
-        ;
+        LIMIT 1;
     </select>
 
-    <select id="searchSchool" parameterType="java.lang.String"  resultType="java.lang.String">
-        select c.customer_nm from crm_customer c
+    <select id="searchSchool" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT c.customer_nm
+        FROM crm_customer c
         WHERE c.customer_nm LIKE CONCAT('%', #{keyword}, '%')
     </select>
 
     <select id="queryContactsTypes" resultMap="contactsTypeMap">
-        SELECT contacts_type_id, type_name
+        SELECT
+            contacts_type_id,
+            type_name
         FROM contacts_type
         WHERE customer_id = #{customerId};
     </select>
-    
+
     <select id="queryContactsDept" resultMap="contactsDeptMap">
-        SELECT ta.contacts_id, ta.real_nm, tb.*
-		FROM contacts AS ta LEFT JOIN
-		(SELECT A.customer_dept_id, A.department_nm, B.customer_dept_id AS prt_dept_id, B.department_nm AS prt_dept_name, A.customer_id, U.customer_nm
-		FROM customer_dept AS A LEFT JOIN customer_dept AS B ON A.prt_id = B.customer_dept_id LEFT JOIN crm_customer AS U ON A.customer_id = U.customer_id
-		) AS tb
-		ON ta.customer_dept_id = tb.customer_dept_id
-		WHERE contacts_id= #{contactsId};
+        SELECT
+            ta.contacts_id,
+            ta.real_nm,
+            tb.*
+        FROM contacts AS ta LEFT JOIN
+            (SELECT
+                 A.customer_dept_id,
+                 A.department_nm,
+                 B.customer_dept_id AS prt_dept_id,
+                 B.department_nm    AS prt_dept_name,
+                 A.customer_id,
+                 U.customer_nm
+             FROM customer_dept AS A LEFT JOIN customer_dept AS B ON A.prt_id = B.customer_dept_id
+                 LEFT JOIN crm_customer AS U ON A.customer_id = U.customer_id
+            ) AS tb
+                ON ta.customer_dept_id = tb.customer_dept_id
+        WHERE contacts_id = #{contactsId};
     </select>
 
 </mapper>

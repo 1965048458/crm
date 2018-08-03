@@ -11,7 +11,8 @@ $(document).ready(function () {
             customers: true,
             searchWord: '',
             errMsg: undefined,
-            customerList: []
+            customerList: [],
+            myCustomers: []
         },
         methods: {
             'showResult': function () {
@@ -31,7 +32,7 @@ $(document).ready(function () {
                     } else {
                         thisVue.errMsg = result.errMsg;
                     }
-                })
+                });
             },
             'search': function () {
                 this.showResult();//this.customers = true;   逻辑待修改
@@ -65,9 +66,20 @@ $(document).ready(function () {
                 $('#searchInput').blur();
             },
             'loadDetail': function (customerName) {
-                window.location.href = "/customer/customerInfo?customerName=" +customerName;
+                window.location.href = "/customer/customerInfo?customerName=" + customerName;
             }
         }
     });
     searchCustInfoVue.showResult();
+
+    $.ajax({
+        type:'get',
+        url:'/customer/getMyCustomers',
+        dataType:'json',
+        cache:false,
+        success:function (result) {
+            searchCustInfoVue.$set(searchCustInfoVue, 'myCustomers', result.myCustomers);
+        }
+    });
+
 });
