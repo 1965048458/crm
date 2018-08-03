@@ -4,9 +4,16 @@
 
 $(document).ready(function () {
 
-    var searchCustInfoVue = new Vue({
-        el: '#customerVue',
+    var opportunityVue = new Vue({
+        el: '#opportunityVue',
         data: {
+            imgSort:'/images/opportunity/排序未选中.svg',
+            imgFilter:'/images/opportunity/筛选未选中.svg',
+            showSortPage:false,
+            showFilterPage:false,
+            showPage:'',
+            filterCondition:'',
+
             titleBar: true,
             searchCustomer: true,
             customers: true,
@@ -33,26 +40,46 @@ $(document).ready(function () {
                     }
                 })
             },
-            'search': function () {
+            'sort': function () {
+                if(this.imgFilter == '/images/opportunity/筛选已选中.svg'){
+                    this.showFilterPage = false;
+                    this.filterCondition = '';
+                }
+                if(this.imgSort == '/images/opportunity/排序未选中.svg'){
+                    this.showSortPage = true;
+                    this.imgSort = "/images/opportunity/排序已选中.svg";
+                    this.imgFilter = "/images/opportunity/筛选未选中.svg";
+                }else{
+                    this.showSortPage = false;
+                    this.imgSort = "/images/opportunity/排序未选中.svg";
+                }
+            },
+            'filter': function () {
+                if(this.imgSort == '/images/opportunity/排序已选中.svg'){
+                    this.showSortPage = false;
+                    this.imgSort = "/images/opportunity/排序未选中.svg";
 
-                this.showResult();
-                this.customers = true;
-                this.cancelSearch();
-                this.titleBar = true;
+                }
+                if(this.imgFilter == '/images/opportunity/筛选未选中.svg'){
+                    this.showFilterPage = true;
+                    this.filterCondition = 'scene';
+                    this.imgFilter = "/images/opportunity/筛选已选中.svg";
+                    this.imgSort = "/images/opportunity/排序未选中.svg";
+                }else{
+                    this.showFilterPage = false;
+                    this.filterCondition = '';
+                    this.imgFilter = "/images/opportunity/筛选未选中.svg";
+                }
             },
-            'text': function () {
-                $('#searchBar').addClass('weui-search-bar_focusing');
-                $('#searchText').focus();
-                $('#searchResult').show();
-                this.titleBar = false;
-                this.customers = false;
+            'cancelMask': function () {
+                this.showSortPage = false;
+                this.showFilterPage=false;
+                this.filterCondition = '';
+                this.imgSort = "/images/opportunity/排序未选中.svg";
+                this.imgFilter = "/images/opportunity/筛选未选中.svg";
             },
-            'filterList': function (customer) {
-                return customer.customerName.indexOf(this.searchWord) != -1;
-            },
-            'hideSearchResult': function () {
-                $('#searchResult').hide();
-                this.searchWord = "";
+            'filterSelect': function () {
+
             },
             'cancelSearch': function () {
                 this.hideSearchResult();
@@ -74,5 +101,5 @@ $(document).ready(function () {
             }
         }
     });
-    searchCustInfoVue.showResult();
+    opportunityVue.showResult();
 });
