@@ -22,6 +22,16 @@ public class Customer {
     private List contacts;
     @Expose
     private List customer;
+    @Expose
+    private String lastTs;
+
+    public String getLastTs() {
+        return lastTs;
+    }
+
+    public void setLastTs(String lastTs) {
+        this.lastTs = lastTs;
+    }
 
     public List getCustomer() {
         return customer;

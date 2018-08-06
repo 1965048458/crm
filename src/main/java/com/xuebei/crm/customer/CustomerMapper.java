@@ -67,4 +67,9 @@ public interface CustomerMapper {
     ContactsDept queryContactsDept(@Param("contactsId") String contactsId);
 
     List<Customer> getMyCustomers(@Param("userId") String userId);
+
+    List<FollowUpRecord> queryFollowUpRecordsByContactsId(@Param("contactsId") String contactsId);
+
+    String lastFollowTs(@Param("customerId") String customerId);
+
 }

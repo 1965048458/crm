@@ -3,6 +3,14 @@
  */
 
 $(document).ready(function () {
+
+    function handleTime(time) {
+        if (time < 10)
+            return "0" + time;
+        else
+            return time;
+    }
+
     var saleVue = new Vue({
         el: '#saleVue',
         data: {
@@ -14,7 +22,7 @@ $(document).ready(function () {
             saleStage: '请选择',
             selStage: '',
             customer: '请选择',
-            custContact: '请选择',
+            contact: '',
             content: '',
             saleName: '',
             keyWord: ''
@@ -34,7 +42,7 @@ $(document).ready(function () {
                         console.log(result);
                     },
                     onConfirm: function (result) {
-                        thisVue.preDate = result[0] + '-' + result[1] + '-' + result[2];
+                        thisVue.preDate = result[0] + '-' + handleTime(result[1]) + '-' + handleTime(result[2]);
                         console.log(result);
                     }
                 });
@@ -50,7 +58,7 @@ $(document).ready(function () {
                         console.log(result);
                     },
                     onConfirm: function (result) {
-                        thisVue.deliverDate = result;
+                        thisVue.deliverDate = result[0] + '-' + handleTime(result[1]) + '-' + handleTime(result[2]);
                         console.log(result);
                     }
                 });
@@ -69,13 +77,10 @@ $(document).ready(function () {
                 this.showPage = 'basicInfo';
             },
             'selCustomer': function () {
-                this.showPage = 'customer';
+                this.showPage = 'customerContact';
             },
             'add': function () {
                 //
-            },
-            'selContact': function () {
-                this.showPage = 'custContact';
             },
             'search': function () {
                 //this.customers = true;   逻辑待修改

@@ -74,18 +74,18 @@ $(document).ready(function () {
                     $loadingToast.fadeOut(100);
                     //temp.showPage = 'invite';
                     window.location.href = "/customer/customerInfo?customerName=" + customerName;
-                }, 2000);
+                }, 500);
             }
         }
     });
     searchCustInfoVue.showResult();
 
     $.ajax({
-        type:'get',
-        url:'/customer/getMyCustomers',
-        dataType:'json',
-        cache:false,
-        success:function (result) {
+        type: 'get',
+        url: '/customer/getMyCustomers',
+        dataType: 'json',
+        cache: false,
+        success: function (result) {
             searchCustInfoVue.$set(searchCustInfoVue, 'myCustomers', result.myCustomers);
         }
     });
