@@ -57,7 +57,7 @@
             font-size: 15px;
             color: #888888;
             line-height: 22px;
-            height: 44px;
+            /* height: 44px; */
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
@@ -83,20 +83,21 @@
 <div id="contactsInfoVue">
 
     <div class="top-bar">
-        <span class="pull-left" @Click="back"><img src="/images/back_icon.svg"></span>
+        <span class="pull-left" @click="back"><img src="/images/back_icon.svg"></span>
         <span th:text="${contacts.getRealName()}"></span>
     </div>
 
     <div class="weui-navbar" style="position: relative;">
-        <div class="weui-navbar__item weui-bar__item_on" style="padding: 10px 0px;">
+        <div class="weui-navbar__item weui-bar__item_on" style="padding: 10px 0px;"
+             id="infoPageBtn" @click="switch2InfoPage">
             基本信息
         </div>
-        <div class="weui-navbar__item" style="padding: 10px 0px;">
+        <div class="weui-navbar__item" style="padding: 10px 0px;" id="followUpPageBtn" @click="switch2FollowUpPage">
             跟进记录
         </div>
     </div>
 
-    <div style="display: none;" id="infoPage">
+    <div v-show="showPage == 'infoPage'" id="infoPageDiv">
         <div class="weui-cells weui-cells_form" style="font-size: 15px;">
             <div class="weui-cell my-we-ui-cell">
                 <div class="weui-cell__hd">
@@ -151,7 +152,7 @@
         </div>
     </div>
 
-    <div id="followUpPage">
+    <div v-show="showPage == 'followUpPage'" id="followUpPageDiv">
 
         <div class="weui-panel weui-panel_access" style="margin-top: 10px;" th:each="item : ${followUpRecords}">
             <div class="weui-panel__bd">

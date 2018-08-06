@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
@@ -151,7 +151,7 @@
                         </div>
 
                         <div class="weui-cells">
-                            <a class="weui-cell weui-cell_access" href="javascript:;">
+                            <a class="weui-cell weui-cell_access" href="javascript:hLink();">
                                 <div class="weui-cell__bd">
                                     <p>官网: <span style="color:#00FFFF">www.zju.edu.cn</span></p>
                                 </div>
@@ -414,6 +414,10 @@
 
     function editHide() {
         $('#edit').hide();
+    }
+
+    function hLink() {
+        return ;
     }
 
     function backToList() {
