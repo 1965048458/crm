@@ -65,7 +65,7 @@ $(document).ready(function () {
                 this.customers = true;
                 $('#searchInput').blur();
             },
-            'loadDetail': function (customerName) {
+            'loadDetail': function (customer) {
                 var $loadingToast = $('#loadingToast');
                 if ($loadingToast.css('display') != 'none') return;
                 //var temp = this;
@@ -73,7 +73,7 @@ $(document).ready(function () {
                 setTimeout(function () {
                     $loadingToast.fadeOut(100);
                     //temp.showPage = 'invite';
-                    window.location.href = "/customer/customerInfo?customerName=" + customerName;
+                    window.location.href = "/customer/customerInfo?customerId=" + customer.customerId + "&customerName=" +customer.customerName;
                 }, 500);
             }
         }
