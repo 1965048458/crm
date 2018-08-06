@@ -74,6 +74,8 @@
     <resultMap id="followUpRecordMap" type="com.xuebei.crm.customer.FollowUpRecord">
         <result property="followUpTime" column="create_ts"/>
         <result property="followUpPersonRealName" column="real_nm"/>
+        <result property="visitLogId" column="visit_log_id"/>
+        <result property="followUpType" column="visit_type"/>
         <result property="followUpResult" column="visit_result"/>
     </resultMap>
 
@@ -367,7 +369,7 @@
     </select>
 
     <select id="queryFollowUpRecordsByContactsId" resultMap="followUpRecordMap">
-        SELECT journal.create_ts, user_view.real_nm, visit_log.visit_result
+        SELECT journal.create_ts, user_view.real_nm, visit_log.visit_log_id, visit_log.visit_type, visit_log.visit_result
         FROM visit_contacts LEFT JOIN visit_log ON visit_contacts.visit_log_id = visit_log.visit_log_id LEFT JOIN journal ON visit_log.journal_id = journal.journal_id
             LEFT JOIN user_view ON journal.user_id = user_view.user_id
         WHERE contacts_id = #{contactsId}
