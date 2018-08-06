@@ -164,6 +164,16 @@
         WHERE customer_dept_id = #{deptId};
     </select>
 
+    <select id="lastFollowTs" resultType="java.lang.String">
+        SELECT DATE_FORMAT(max(j.create_ts), '%Y%m%d') FROM crm_customer cc
+        INNER JOIN contacts_type ct ON cc.customer_id = ct.customer_id
+        INNER JOIN contacts cs ON cs.contacts_type_id = ct.contacts_type_id
+        INNER JOIN visit_contacts vc ON vc.contacts_id = cs.contacts_id
+        INNER JOIN visit_log vl ON vl.visit_log_id = vc.visit_log_id
+        INNER JOIN journal j ON vl.journal_id = j.journal_id
+        WHERE cc.customer_id = #{customerId}
+    </select>
+
     <insert id="insertContacts" parameterType="com.xuebei.crm.customer.Contacts">
         INSERT INTO `crmdb`.`contacts` (
 			`contacts_id`,

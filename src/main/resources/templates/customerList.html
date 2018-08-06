@@ -16,10 +16,6 @@
             text-align: center;
         }
 
-        .center-ele {
-            display: inline-block;
-        }
-
         .top-bar {
             text-align: center;
             background: #FFFFFF;
@@ -42,12 +38,12 @@
             <div class="weui-tab">
                 <div class="page navbar js_show">
                     <div class="weui-navbar">
-                        <div id="titleBar" class="weui-navbar__item top-bar" style="height: 25px; padding: 15px 10px;">
+                        <div id="titleBar" class="weui-navbar__item top-bar" style="height: 28px; padding: 10px 10px;">
                             <span @click="backToInfo" class="pull-left">
-                                <img src="/images/back_icon.svg" style="margin-top:8px;"/></span>
-                            <span class="center-ele" style="font-size: 22px;">客户</span>
+                                <img src="/images/back_icon.svg" style="margin-top:7px;"/></span>
+                            <span class="center" style="font-size: 22px; margin-top: 1px">客户</span>
                             <a href="javascript:addCustomer();">
-                                        <span class="pull-right" style="margin-top: 8px;"><img
+                                        <span class="pull-right" style="margin-top: 7px;"><img
                                                 src="/images/add.png"
                                                 style="width: 16px; height: 16px; display: block"/></span>
                             </a>
@@ -55,7 +51,7 @@
                     </div>
                     <div class="weui-tab__panel">
                         <div id="customerVue">
-                            <div id="searchCustomer" v-show="searchCustomer" style="margin-top: 3px">
+                            <div id="searchCustomer" v-show="searchCustomer" style="margin-top: 0px">
                                 <div class="center-box">
                                     <div class="weui-search-bar" id="searchBar">
                                         <div class="weui-search-bar__form">
@@ -109,7 +105,7 @@
                                             <div class="weui-media-box__bd">
                                                 <h1 class="weui-media-box__title"
                                                     v-text="customer.customerName"></h1>
-                                                <p class="weui-media-box__desc">最后跟进: 20180421</p>
+                                                <p class="weui-media-box__desc">最后跟进: {{customer.lastTs}}</p>
                                             </div>
                                         </a>
                                     </div>
@@ -128,7 +124,7 @@
                                             <div class="weui-media-box__bd">
                                                 <h1 class="weui-media-box__title"
                                                     v-text="customer.customerName"></h1>
-                                                <p class="weui-media-box__desc">最后跟进: 20180421</p>
+                                                <p class="weui-media-box__desc">最后跟进: {{customer.lastTs}}</p>
                                             </div>
                                         </a>
                                     </div>

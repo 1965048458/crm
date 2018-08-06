@@ -1,5 +1,6 @@
 package com.xuebei.crm.customer;
 
+import com.google.gson.Gson;
 import com.xuebei.crm.dto.GsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.xuebei.crm.utils.UUIDGenerator;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -374,7 +376,7 @@ public class CustomerController {
     }
 
     @RequestMapping("/getMyCustomers")
-    public GsonView getMyCustomers(HttpServletRequest request){
+    public GsonView getMyCustomers(HttpServletRequest request) {
         String userId = (String) request.getSession().getAttribute("userId");
         List<Customer> myCustomers = customerService.getMyCustomers(userId);//"57259d54f9994209a813e8ad2b297b3a"
         GsonView gsonView = new GsonView();
@@ -383,11 +385,19 @@ public class CustomerController {
         return gsonView;
     }
 
+    @RequestMapping("/lastTime")
+    public GsonView lastTime(@RequestParam("customerId") String customerId){
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("lastTime", customerService.lastFollowTs(customerId));
+        return gsonView;
+    }
+
     @RequestMapping("/customerInfo")
-    public String customerInfo(@RequestParam(value = "customerName")String customerName,
+    public String customerInfo(@RequestParam("customerName")String customerName,
                                ModelMap modelMap, HttpServletRequest request){
 
         modelMap.addAttribute("customerName", customerName);
+        //modelMap.addAttribute("customerId", customerId);
         return "customerInfo";
     }
 
