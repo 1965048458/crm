@@ -37,13 +37,13 @@ jQuery(document).ready(function () {
             };
         },
         methods: {
-            'searchOrganizations': function () {
+            'searchOrganizations': function (customerId) {
                 var thisVue = this;
                 jQuery.ajax({
                     type: 'get',
                     url: '/customer/organization/show',
                     data: {
-                        customerId:'customerzju'
+                        customerId:customerId
                     },
                     dataType: 'json',
                     cache: false
@@ -138,7 +138,7 @@ jQuery(document).ready(function () {
             'delayApplyDialogCheck':function () {
                 this.showDelayApplyDialog=false;
                 //
-                this.searchOrganizations();
+                //this.searchOrganizations();
                 this.showPage='showCustomerOrganization';
             },
             'delayApplyErrDialogCheck':function () {
@@ -260,11 +260,12 @@ jQuery(document).ready(function () {
             'openSeaWarning':function (warning) {
                 console.log("component.warning")
                 organizationVue.openSeaWarningDetail(warning);
-            }
-
-
+            },
+            'toContactDetail':function (contactsId) {
+                window.location = '/customer/contactsInfo?contactsId='+contactsId;
+            },
         }
     });
 
-    organizationVue.searchOrganizations();
+    organizationVue.searchOrganizations('customerzju');
 });
