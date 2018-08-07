@@ -7,12 +7,22 @@ $(document).ready(function () {
     var opportunityVue = new Vue({
         el: '#opportunityVue',
         data: {
-            imgSort:'/images/opportunity/排序未选中.svg',
-            imgFilter:'/images/opportunity/筛选未选中.svg',
-            showSortPage:false,
-            showFilterPage:false,
-            showPage:'',
-            filterCondition:'',
+            imgSort: '/images/opportunity/排序未选中.svg',
+            imgFilter: '/images/opportunity/筛选未选中.svg',
+            showSortPage: false,
+            showFilterPage: false,
+            showPage: '',
+            filterCondition: '',
+            filterValue: '',
+            sceneValue: 'all',
+            dateValue: 'all',
+            dateValueStart: '',
+            dateValueEnd: '',
+            creatorValue: 'all',
+            creatorV: '',
+            stageValue: 'all',
+            customerValue: 'all',
+            customerValueIn: '',
 
             titleBar: true,
             searchCustomer: true,
@@ -41,65 +51,112 @@ $(document).ready(function () {
                 })
             },
             'sort': function () {
-                if(this.imgFilter == '/images/opportunity/筛选已选中.svg'){
+                if (this.imgFilter == '/images/opportunity/筛选已选中.svg') {
                     this.showFilterPage = false;
                     this.filterCondition = '';
                 }
-                if(this.imgSort == '/images/opportunity/排序未选中.svg'){
+                if (this.imgSort == '/images/opportunity/排序未选中.svg') {
                     this.showSortPage = true;
                     this.imgSort = "/images/opportunity/排序已选中.svg";
                     this.imgFilter = "/images/opportunity/筛选未选中.svg";
-                }else{
+                } else {
                     this.showSortPage = false;
                     this.imgSort = "/images/opportunity/排序未选中.svg";
                 }
             },
             'filter': function () {
-                if(this.imgSort == '/images/opportunity/排序已选中.svg'){
+                if (this.imgSort == '/images/opportunity/排序已选中.svg') {
                     this.showSortPage = false;
                     this.imgSort = "/images/opportunity/排序未选中.svg";
 
                 }
-                if(this.imgFilter == '/images/opportunity/筛选未选中.svg'){
+                if (this.imgFilter == '/images/opportunity/筛选未选中.svg') {
                     this.showFilterPage = true;
                     this.filterCondition = 'scene';
                     this.imgFilter = "/images/opportunity/筛选已选中.svg";
                     this.imgSort = "/images/opportunity/排序未选中.svg";
-                }else{
+                } else {
                     this.showFilterPage = false;
                     this.filterCondition = '';
                     this.imgFilter = "/images/opportunity/筛选未选中.svg";
                 }
             },
+            'filterScene': function () {
+                this.filterCondition = 'scene';
+            },
+            'filterDate': function () {
+                this.filterCondition = 'date';
+            },
+            'filterCreator': function () {
+                this.filterCondition = 'creator';
+            },
+            'filterStage': function () {
+                this.filterCondition = 'stage';
+            },
+            'filterCustomer': function () {
+                this.filterCondition = 'customer';
+            },
             'cancelMask': function () {
                 this.showSortPage = false;
-                this.showFilterPage=false;
+                this.showFilterPage = false;
                 this.filterCondition = '';
                 this.imgSort = "/images/opportunity/排序未选中.svg";
                 this.imgFilter = "/images/opportunity/筛选未选中.svg";
             },
-            'filterSelect': function () {
-
+            'removeChecked': function () {
+                this.dateValue = '';
             },
-            'cancelSearch': function () {
-                this.hideSearchResult();
-                $('#searchBar').removeClass('weui-search-bar_focusing');
-                $('#searchText').show();
+            'removeChecked1': function () {
+                this.creatorValue = '';
+                this.creatorV = '汪峰';
             },
-            'clear': function () {
-                this.searchWord = "";
-                $('#searchInput').focus();
+            'creatorChecked': function () {
+                this.creatorV = '';
             },
-            'cancel': function () {
-                this.cancelSearch();
-                this.titleBar = true;
-                this.customers = true;
-                $('#searchInput').blur();
+            'dateChecked': function () {
+                this.dateValueStart = '';
+                this.dateValueEnd = '';
             },
-            'loadDetail': function (customerId) {
-                //
+            'customerChecked': function () {
+                this.customerValueIn = '';
+            },
+            'finish': function () {
+                this.showFilterPage = false;
+                this.filterCondition = '';
+            },
+            'reset': function () {
+                this.sceneValue = 'all';
+                this.dateValue = 'all';
+                this.creatorValue = 'all';
+                this.stageValue = 'all';
+                this.customerValue = 'all';
+                this.dateValueStart = '';
+                this.dateValueEnd = '';
+                this.creatorV = '';
+                this.customerValueIn='';
             }
+        },
+        watch: {
+            'filterCondition': function () {
+                $("#" + this.filterValue).css('background-color', '#FFFFFF');
+                $("#" + this.filterCondition).css('background-color', 'gainsboro');
+                this.filterValue = this.filterCondition;
+            },
+            'customerValueIn': function () {
+                if (this.customerValueIn != '') {
+                    this.customerValue = '';
+                } else {
+                    this.customerValue = 'all';
+                }
+            },
+            'creatorV': function () {
+                if (this.creatorV != '') {
+                    this.creatorValue = '';
+                } else {
+                    this.creatorValue = 'all';
+                }
+            },
         }
     });
-    opportunityVue.showResult();
+
 });

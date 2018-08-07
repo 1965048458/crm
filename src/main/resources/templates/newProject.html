@@ -25,60 +25,138 @@
         .pull-left {
             float: left !important;
         }
+
+        .edgeButton {
+            color: dodgerblue;
+        }
     </style>
 </head>
 <body>
 <div id="newProject">
     <div class="page tabbar js_show">
         <div class="weui-tab">
-            <div class="weui-navbar" style="height: 40px;">
+            <div class="weui-navbar" style="height: 50px">
+                <div class="weui-navbar__item">
 
-
-                <span class="pull-left" style="width: 8%;margin-top: 8px">&nbsp;
-                <img src="/images/back_icon.svg" /></span>
-                    <span class="center-ele" style="width: 92%;font-size: 20px;text-align: center" >新建项目</span>
-
+                <span class="pull-left" style="margin-top: 8px;margin-left: 8px">
+                <img src="/images/back_icon.svg"/></span>
+                    <span class="center-ele" style="font-size: 20px;text-align: center;padding-bottom: 8px">新建项目</span>
+                    <div style="float:right;height:40px;">
+                        <div class=" edgeButton" style="font-size: 20px; text-align: center;margin-right: 8px;"
+                             @click="submit">完成
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="weui-tab__panel">
-                <div class="weui-cells weui-cells_form">
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd"><label class="weui-label">项目名称</label></div>
-                        <div class="weui-cell__bd">
-                            <input class="weui-input" type="text" placeholder="请输入项目名称" v-model="name"/>
-                        </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <h4>基本信息</h4>
                     </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd"><label class="weui-label">项目内容</label></div>
-                        <div class="weui-cell__bd">
-                            <input class="weui-input" type="text" placeholder="请输入项目内容" v-model="content"/>
-                        </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd"><label class="weui-label">代理商</label></div>
-                        <div class="weui-cell__bd">
-                            <input class="weui-input" type="text" placeholder="请输入代理商(可选)" v-model="agent"/>
-                        </div>
-                    </div>
-
                 </div>
-                <div class="weui-cells">
-                    <a class="weui-cell weui-cell_access">
-                        <label class="weui-label" style="white-space:nowrap">客户联系人</label>
-                        <div class="weui-cell__bd" id="selNam">
-                            &nbsp; {{person}}
-                        </div>
-                        <div class="weui-cell__ft">待选择</div>
-                    </a>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">
+
+                            <label style="color: red">*</label><label>项目内容</label>
+                        </label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" placeholder="填写项目内容" v-model="content"/>
+                    </div>
                 </div>
 
-                <div class="weui-cells__title">项目背景</div>
-                <div class="weui-cells weui-cells_form">
-                    <div class="weui-cell">
-                        <div class="weui-cell__bd">
-                            <textarea class="weui-textarea" placeholder="请输入项目背景" rows="15"
-                                      v-model="background"></textarea>
-                        </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">代理商</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" placeholder="请输入代理商名称(可选)" v-model="agent"/>
+                    </div>
+                </div>
+
+                <a class="weui-cell weui-cell_access">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">
+
+                            <label style="color: red">*</label><label>交付日期</label>
+                        </label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        &nbsp; {{person}}
+                    </div>
+                    <div class="weui-cell__ft">请选择</div>
+                </a>
+
+                <a class="weui-cell weui-cell_access">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">
+
+                            <label style="color: red">*</label><label>项目状态</label>
+                        </label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        &nbsp; {{person}}
+                    </div>
+                    <div class="weui-cell__ft">请选择</div>
+                </a>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">
+
+                            <label style="color: red">*</label><label>金额(元)</label>
+                        </label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" placeholder="填输入项目金额" v-model="content"/>
+                    </div>
+                </div>
+
+
+                <a class="weui-cell weui-cell_access">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">
+
+                            <label style="color: red">*</label><label>客户及联系人</label>
+                        </label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        &nbsp; {{person}}
+                    </div>
+                    <div class="weui-cell__ft">请选择</div>
+                </a>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">
+
+                            <label style="color: red">*</label><label>项目名称</label>
+                        </label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" placeholder="填输入项目名称" v-model="content"/>
+                    </div>
+                </div>
+
+
+                <!--<div class="weui-cells__title">项目背景</div>-->
+                <!--<div class="weui-cells weui-cells_form">-->
+                <!--<div class="weui-cell">-->
+                <!--<div class="weui-cell__bd">-->
+                <!--<textarea class="weui-textarea" placeholder="请输入项目背景" rows="15"-->
+                <!--v-model="background"></textarea>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+
+                <div class="weui-flex" style=" visibility: hidden">
+                    <div class="weui-flex__item">
+                        <div class="placeholder">placeholder</div>
+                    </div>
+                </div>
+                <div class="weui-flex" style=" visibility: hidden">
+                    <div class="weui-flex__item">
+                        <div class="placeholder">placeholder</div>
                     </div>
                 </div>
                 <div class="page__bd page__bd_spacing">
@@ -86,6 +164,7 @@
                         <button class="weui-btn weui-btn_primary" id=submit_btn @click="submit">立即创建</button>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
