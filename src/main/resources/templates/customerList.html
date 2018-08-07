@@ -35,31 +35,33 @@
 <div class="page tabbar js_show">
     <div class="weui-tab">
         <div class="weui-tab__panel">
-            <div class="weui-tab">
+            <div id="customerVue" class="weui-tab">
                 <div class="page navbar js_show">
-                    <div class="weui-navbar">
-                        <div id="titleBar" class="weui-navbar__item top-bar" style="height: 28px; padding: 10px 10px;">
+                    <div id="titleBar" v-show="titleBar">
+                        <div class="navbar">
+                            <div class="top-bar" style="height: 28px; padding: 10px 10px;">
                             <span @click="backToInfo" class="pull-left">
                                 <img src="/images/back_icon.svg" style="margin-top:7px;"/></span>
-                            <span class="center" style="font-size: 22px; margin-top: 1px">客户</span>
-                            <a href="javascript:addCustomer();">
+                                <span class="center" style="font-size: 22px; margin-top: 1px">客户</span>
+                                <a href="javascript:addCustomer();">
                                         <span class="pull-right" style="margin-top: 7px;"><img
                                                 src="/images/add.png"
                                                 style="width: 16px; height: 16px; display: block"/></span>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                     </div>
+
                     <div class="weui-tab__panel">
-                        <div id="customerVue">
-                            <div id="searchCustomer" v-show="searchCustomer" style="margin-top: 0px">
-                                <div class="center-box">
+                        <div class="panel">
+                            <div id="searchCustomer" v-show="searchCustomer" style="margin-top: 1px">
+                                <div class="searchBar">
                                     <div class="weui-search-bar" id="searchBar">
                                         <div class="weui-search-bar__form">
                                             <div class="weui-search-bar__box">
                                                 <i class="weui-icon-search"></i>
                                                 <input type="text" class="weui-search-bar__input" id="searchInput"
-                                                       placeholder="搜索"
-                                                       @keyup.enter="search" v-model="searchWord" required="">
+                                                       placeholder="搜索" v-model="searchWord">
                                                 <a href="javascript:" class="weui-icon-clear" id="searchClear"
                                                    @click="clear"></a>
                                             </div>
@@ -88,6 +90,21 @@
                                             </label>
                                         </div>
                                     </div>
+                                    <div class="weui-panel__bd" v-if="customerList.filter(filterList).length <= 2">
+                                        <a class="weui-media-box weui-media-box_appmsg"
+                                           @click="loadDetail(customer)" v-for="customer in customerList.filter(filterList)">
+                                            <div class="weui-media-box__hd">
+                                                <img class="weui-media-box__thumb"
+                                                     src="/images/customer/school.svg"
+                                                     alt="">
+                                            </div>
+                                            <div class="weui-media-box__bd">
+                                                <h1 class="weui-media-box__title"
+                                                    v-text="customer.customerName"></h1>
+                                                <p class="weui-media-box__desc">最后跟进: {{customer.lastTs}}</p>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
 
@@ -112,7 +129,7 @@
                                 </div>
 
                                 <div class="allCustomerList weui-panel weui-panel_access">
-                                    <div class="weui-panel__hd weui-media-box__title">区域客户</div>
+                                    <div class="weui-panel__hd weui-media-box__title">公海客户</div>
                                     <div class="weui-panel__bd allCustomers">
                                         <a class="weui-media-box weui-media-box_appmsg"
                                            @click="loadDetail(customer)" v-for="customer in customerList">
