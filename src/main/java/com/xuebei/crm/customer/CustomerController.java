@@ -398,11 +398,11 @@ public class CustomerController {
     }
 
     @RequestMapping("/customerInfo")
-    public String customerInfo(@RequestParam("customerName")String customerName,
-                               ModelMap modelMap, HttpServletRequest request){
-
+    public String customerInfo(@RequestParam("customerId")String customerId,
+                               @RequestParam("customerName") String customerName,
+                               ModelMap modelMap){
+        modelMap.addAttribute("customerId", customerId);
         modelMap.addAttribute("customerName", customerName);
-        //modelMap.addAttribute("customerId", customerId);
         return "customerInfo";
     }
 

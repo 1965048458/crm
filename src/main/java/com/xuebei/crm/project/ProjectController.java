@@ -41,6 +41,15 @@ public class ProjectController {
         return "newProject";
     }
 
+    /**
+     * 新建项目
+     * @param name
+     * @param content
+     * @param agent
+     * @param person
+     * @param background
+     * @return
+     */
     @RequestMapping("add")
     public GsonView addProject(@RequestParam("name") String name,
                                @RequestParam("content") String content,

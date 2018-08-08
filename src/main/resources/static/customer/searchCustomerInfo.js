@@ -9,6 +9,7 @@ $(document).ready(function () {
         data: {
             searchCustomer: true,
             customers: true,
+            titleBar: true,
             searchWord: '',
             errMsg: undefined,
             customerList: [],
@@ -34,15 +35,15 @@ $(document).ready(function () {
                     }
                 });
             },
-            'search': function () {
-                this.showResult();//this.customers = true;   逻辑待修改
-                window.location.href = "/customer/customerInfo?customerName=" + this.searchWord;
+            'backToInfo':function () {
+                //this.customers = true;
             },
             'text': function () {
                 $('#searchBar').addClass('weui-search-bar_focusing');
                 $('#searchText').focus();
                 $('#searchResult').show();
                 this.customers = false;
+                this.titleBar = false;
             },
             'filterList': function (customer) {
                 return customer.customerName.indexOf(this.searchWord) != -1;
@@ -63,9 +64,10 @@ $(document).ready(function () {
             'cancel': function () {
                 this.cancelSearch();
                 this.customers = true;
+                this.titleBar = true;
                 $('#searchInput').blur();
             },
-            'loadDetail': function (customerName) {
+            'loadDetail': function (customer) {
                 var $loadingToast = $('#loadingToast');
                 if ($loadingToast.css('display') != 'none') return;
                 //var temp = this;
@@ -73,10 +75,10 @@ $(document).ready(function () {
                 setTimeout(function () {
                     $loadingToast.fadeOut(100);
                     //temp.showPage = 'invite';
-                    window.location.href = "/customer/customerInfo?customerName=" + customerName;
+                    window.location.href = "/customer/customerInfo?customerId=" + customer.customerId + "&customerName=" +customer.customerName;
                 }, 500);
             }
-        }
+        },
     });
     searchCustInfoVue.showResult();
 

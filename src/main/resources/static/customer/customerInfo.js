@@ -1,12 +1,30 @@
 /**
  * Created by Administrator on 2018/7/18.
  */
-var color = ["","#2eff4e","#2b79ff","#ff7e24"];
+var color = ["", "#2eff4e", "#2b79ff", "#ff7e24"];
 var percent = [0, 80, 75, 90];
 //window.onload =
 $(function () {
 
-    for (var i = 1; i <= 3; i++){
+    var customerVue = new Vue({
+        el: '#customerVue',
+        data: {
+            customerName: ''
+        },
+        methods: {
+            'getCustomerInfo': function () {
+                $.ajax({
+                    type: 'get',
+                    url: '',
+                    data:{},
+                    dataType: 'json',
+                    cache: false
+                });
+            }
+        }
+    });
+
+    for (var i = 1; i <= 3; i++) {
         var canvas = document.getElementById('canvas' + i),  //获取canvas元素
             context = canvas.getContext('2d'),  //获取画图环境，指明为2d
             centerX = canvas.width / 2,   //Canvas中心点x轴坐标
