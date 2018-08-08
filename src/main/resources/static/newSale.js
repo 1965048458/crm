@@ -21,10 +21,15 @@ $(document).ready(function () {
             deliverDate: '请选择',
             saleStage: '请选择',
             selStage: '',
-            customer: '请选择',
             contact: '',
+            temp: '',
             content: '',
             saleName: '',
+            customerList: '',
+            departmentList: '',
+            deptList: '',
+            //searchList:[],
+            errMsg: '',
             keyWord: ''
         },
         methods: {
@@ -72,19 +77,24 @@ $(document).ready(function () {
             'selSaleStage': function () {
                 this.showPage = 'saleStage';
             },
-            'done': function () {
+            'done1': function () {
                 this.saleStage = this.selStage;
+                this.showPage = 'basicInfo';
+            },
+            'done2': function () {
+                this.contact = this.temp;
                 this.showPage = 'basicInfo';
             },
             'selCustomer': function () {
                 this.showPage = 'customerContact';
+                this.searchOrganizations('customerzju');
             },
             'add': function () {
                 //
             },
             'search': function () {
                 //this.customers = true;   逻辑待修改
-                window.location.href = "/customer/customerInfo?customerName=" + this.keyWord;
+                window.location.href = "/customer/customer?customerName=" + this.keyWord;
             },
             'text': function () {
                 $('#searchBar').addClass('weui-search-bar_focusing');
@@ -105,6 +115,76 @@ $(document).ready(function () {
             'cancel': function () {
                 this.cancelSearch();
                 $('#searchInput').blur();
+            },
+            'searchOrganizations': function (customerId) {
+                var thisVue = this;
+                jQuery.ajax({
+                    type: 'get',
+                    url: '/customer/organization/show',
+                    data: {
+                        customerId: customerId
+                    },
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    console.log(result);
+                    if (result.successFlg) {
+                        thisVue.$set(thisVue, 'customerList', result.customerList);
+                        //thisVue.$set(thisVue, 'searchList', result.searchList)
+                    } else {
+                        thisVue.errMsg = result.errMsg;
+                    }
+                });
+            },
+            'onTransferValue': function (customerInfo) {
+                this.temp = customerInfo;
+            }
+        }
+    });
+
+    Vue.component('customer', {
+        template: '#customer',
+        props: ['customer'],
+        data: function () {
+            return {
+                customerInfo: '',
+                showSub: false,
+                imgPath: "/images/customer/fold.svg"
+            };
+        },
+        methods: {
+            'changeSubFold': function () {
+                this.showSub = !this.showSub;
+                this.setImgPath();
+            },
+            'setImgPath': function () {
+                if (this.showSub == false) {
+                    this.imgPath = "/images/customer/fold.svg";
+                } else {
+                    this.imgPath = "/images/customer/unfold.svg";
+                }
+            },
+            'checkGender': function (gender) {
+                if (gender == 'FEMALE') {
+                    return "/images/customer/FEMALE.svg";
+                } else {
+                    return "/images/customer/MALE.svg";
+                }
+            },
+            'addNumBrackets': function (number) {
+                if (number == '0') {
+                    return '';
+                } else {
+                    return "( " + number + " )";
+                }
+            },
+            'onTransferValue': function (customerInfo) {
+                this.$emit('transfer_value', customerInfo);
+            }
+        },
+        watch: {
+            'customerInfo': function () {
+                this.$emit('transfer_value', this.customerInfo);
             }
         }
     });
