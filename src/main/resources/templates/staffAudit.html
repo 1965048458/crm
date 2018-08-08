@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>人员审核</title>
+
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css">
+
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css">
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/staffAudit.js"></script>
+    <style>
+        .top-bar {
+            text-align: center;
+            background: #FFFFFF;
+        }
+
+        .pull-left {
+            float: left !important;
+        }
+
+        .pull-right {
+            float: right !important;
+        }
+    </style>
+</head>
+<body>
+<div id="staffAudit">
+
+
+    <div id="check" >
+        <div class="weui-tab">
+            <div class="weui-navbar">
+                <div id="titleBar2" class="weui-navbar__item top-bar" style="height: 28px; padding: 10px 10px;">
+                            <span @click="back" class="pull-left">
+                                <img src="/images/back_icon.svg" style="margin-top:7px;"/></span>
+                    <span class="center" style="font-size: 22px; margin-top: 1px">人员审核</span>
+                    <a>
+                                        <span class="pull-right" style="margin-top: 7px;display: none"><img
+                                                src="/images/add.png"
+                                                style="width: 16px; height: 16px; display: block"/></span>
+                    </a>
+                </div>
+            </div>
+            <div class="weui-tab__panel">
+
+                <div v-for="applyStaff in applyStaffList">
+                    <div class="weui-panel weui-panel_access">
+                        <div class="weui-panel__bd" style=" height: 90px;margin-top: 0px">
+                            <a href="javascript:;" class="weui-media-box weui-media-box_appmsg"
+                               style=" height: 90px; padding: 0px ;">
+                                <div class="weui-media-box__hd" style=" height: 90px;width: 90px; margin-right: 0px; ">
+                                    <img src="/images/journal/defaultUserIcon.png"
+                                         style="width: 60px;height: 60px;  line-height: 5px;padding:15px"
+                                         alt=""
+                                         class="weui-tabbar__icon">
+                                </div>
+                                <div class="weui-media-box__bd" style="margin-right: 2em;">
+                                    <p style="color: #333333;font-size: 16px">
+                                    <p>{{applyStaff.crmUserName}}
+
+                                        <span style="float: right;font-size: 13px"
+                                        >申请时间：{{applyStaff.createTs}}</span>
+                                    </p>
+                                    <p><span >联系方式：</span><span>{{applyStaff.tel}}</span></p>
+
+                                    <p><span>职位：</span></p>
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="weui-cell">
+                            <div class="weui-flex__item" style="text-align: center;border-right: groove"
+                                 @click="agree(applyStaff.userId)">
+                                <div class="placeholder">同意</div>
+                            </div>
+                            <div class="weui-flex__item" style="text-align: center" @click="refuse(applyStaff.userId)">
+                                <div class="placeholder">拒绝</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

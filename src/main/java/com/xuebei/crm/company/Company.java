@@ -13,6 +13,17 @@ public class Company {
     @Expose
     List<CompanyUser> companyUserList;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Expose
+    private String status;
+
     public String getCompanyId() {
         return companyId;
     }

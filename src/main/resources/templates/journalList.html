@@ -349,7 +349,7 @@
 
                 <div class="container" id="journalFilter" style="display: none" v-show="showPage === 'filterDiv'">
                     <div class="page home js_show">
-                        <div class="weui-tab">
+
                             <div class="weui-navbar" style="height: 40px;">
 
 
@@ -358,11 +358,11 @@
                                                                                     style="margin-top:3px"/></span>
                                 <span class="center" style="font-size:20px;margin-left: 40%;margin-top: 3px">筛选日志</span>
 
-
                             </div>
-                            <div class="weui-tab__panel">
-                                <div class="page__bd page__bd_spacing">
 
+                            <div class="weui-tab">
+                            <div class="weui-tab__panel">
+                                <!--<div class="page__bd page__bd_spacing">-->
                                     <ul>
                                         <li class="">
                                             <div class="weui-cells weui-cells-form">
@@ -521,7 +521,7 @@
                                             </div>
                                         </li>
                                     </ul>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -569,17 +569,16 @@
             $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
         });
     });
-    $(function () {
-        $('.weui-navbar__item').on('click', function () {
-            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
-        });
-    });
+//    $(function () {
+//        $('.weui-navbar__item').on('click', function () {
+//            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+//        });
+//    });
 </script>
 <script>
     function customer() {
         location.href = '/customer/customerList';
-    }
-    ;
+    };
     function opportunity() {
         location.href = '/opportunity';
     }
