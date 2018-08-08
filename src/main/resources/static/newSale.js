@@ -26,10 +26,12 @@ $(document).ready(function () {
             contactId: '',
             content: '',
             saleName: '',
-            customerList: '',
-            departmentList: '',
-            deptList: '',
-            //searchList:[],
+            opportunityName: '',
+            amount: '',
+            customerId: '',
+            myCustomers: [],
+            showSub: true,
+            imgPath: "/images/customer/fold.svg",
             errMsg: '',
             keyWord: ''
         },
@@ -69,9 +71,6 @@ $(document).ready(function () {
                     }
                 });
             },
-            'finish': function () {
-                //todo
-            },
             'backToInfo': function () {
                 this.showPage = 'basicInfo';
             },
@@ -86,15 +85,45 @@ $(document).ready(function () {
                 var str = this.temp.split(':')
                 this.contact = str[0];
                 this.contactId = str[1];
+                this.customerId = str[2];
                 console.log(this.contactId);
                 this.showPage = 'basicInfo';
             },
             'selCustomer': function () {
                 this.showPage = 'customerContact';
-                this.searchOrganizations('customerzju');
+                this.showMyCustomers();
             },
             'add': function () {
-                //
+                var thisVue = this;
+                var postData = {
+                    customerId: this.customerId,
+                    opportunityName: this.opportunityName,
+                    salesStatus: this.saleStage,
+                    amount: this.amount,
+                    checkDate: this.preDate,
+                    clinchDate: this.deliverDate,
+                    content: this.content,
+                    contactId: this.contactId
+                };
+                $.ajax({
+                    type: 'post',
+                    url: '/opportunity/addSale',
+                    data: JSON.stringify(postData),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        $('#toast').fadeIn(100);
+                        setTimeout(function () {
+                            $('#toast').fadeOut(100);
+                            //window.location = '/company/chooseCompany';
+                        }, 2000);
+                    } else {
+                        thisVue.errMsg = result.errMsg;
+                        thisVue.showErrMsg = true;
+                    }
+                });
             },
             'search': function () {
                 //this.customers = true;   逻辑待修改
@@ -120,25 +149,31 @@ $(document).ready(function () {
                 this.cancelSearch();
                 $('#searchInput').blur();
             },
-            'searchOrganizations': function (customerId) {
+            'showMyCustomers': function () {
                 var thisVue = this;
-                jQuery.ajax({
+                $.ajax({
                     type: 'get',
-                    url: '/customer/organization/show',
-                    data: {
-                        customerId: customerId
-                    },
+                    url: '/opportunity/getCustomers',
                     dataType: 'json',
                     cache: false
                 }).done(function (result) {
-                    console.log(result);
                     if (result.successFlg) {
-                        thisVue.$set(thisVue, 'customerList', result.customerList);
-                        //thisVue.$set(thisVue, 'searchList', result.searchList)
+                        thisVue.$set(thisVue, 'myCustomers', result.customerList);
                     } else {
                         thisVue.errMsg = result.errMsg;
                     }
                 });
+            },
+            'setImgPath': function () {
+                if (this.showSub == false) {
+                    this.imgPath = "/images/customer/fold.svg";
+                } else {
+                    this.imgPath = "/images/customer/unfold.svg";
+                }
+            },
+            'changeSubFold': function () {
+                this.showSub = !this.showSub;
+                this.setImgPath();
             },
             'onTransferValue': function (customerInfo) {
                 this.temp = customerInfo;

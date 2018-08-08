@@ -98,7 +98,7 @@ public class CustomerServiceImpl implements CustomerService {
                 }
             }
             totalName = contacts.getCustomerName() + "-" + totalName + contacts.getTypeName() + "-" + contacts.getRealName()
-                    + ":" + contacts.getContactsId();
+                    + ":" + contacts.getContactsId() + ":" + contacts.getCustomerId();
             contacts.setTotalName(totalName);
             department.addSubContact(contacts);
             department.addContact(1);

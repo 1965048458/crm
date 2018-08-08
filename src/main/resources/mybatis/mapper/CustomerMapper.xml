@@ -49,6 +49,7 @@
         <result property="gender" column="gender"/>
         <result property="typeName" column="type_name"/>
         <result property="customerName" column="customer_nm"/>
+        <result property="customerId" column="customer_id"/>
     </resultMap>
 
     <resultMap id="contactsDetailMap" type="com.xuebei.crm.customer.Contacts">
@@ -233,7 +234,8 @@
         SELECT
             c.*,
             ct.type_name,
-            cu.customer_nm
+            cu.customer_nm,
+            cu.customer_id
         FROM contacts c
             INNER JOIN customer_dept cd ON c.customer_dept_id = cd.customer_dept_id
             INNER JOIN contacts_type ct ON ct.contacts_type_id = c.contacts_type_id

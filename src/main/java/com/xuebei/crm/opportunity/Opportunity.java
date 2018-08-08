@@ -26,6 +26,16 @@ public class Opportunity {
     private double totalCoast;
     @Expose
     private String content;
+    @Expose
+    private String contactId;
+
+    public String getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
+    }
 
     public String getContent() {
         return content;

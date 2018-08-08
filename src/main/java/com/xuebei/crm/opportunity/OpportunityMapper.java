@@ -12,5 +12,6 @@ import java.util.List;
 @Mapper
 public interface OpportunityMapper {
 
+    void addSale(Opportunity opportunity);
 
 }

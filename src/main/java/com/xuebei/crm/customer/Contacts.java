@@ -52,6 +52,17 @@ public class Contacts {
     }
 
     @Expose
+    private String customerId;
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    @Expose
     private String customerName;
 
     public String getCustomerName() {
