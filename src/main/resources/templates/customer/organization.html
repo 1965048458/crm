@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-if="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Organization</title>
@@ -22,7 +22,7 @@
             text-align: center;
             background: #ffffff;
             border-bottom: solid 1px #DDDDDD ;
-            padding-left:15px;padding-right:15px;padding-top: 10px;padding-bottom: 10px
+            padding-left:15px;padding-right:15px;padding-top: 8px;padding-bottom: 8px
         }
         .center-box{
             text-align: center;
@@ -60,19 +60,28 @@
 <body>
 
 <div id="organizationVue" >
+    <input id="customerId" type="hidden" th:value="${customerId}">
     <div class="page navbar js_show" v-show="showPage === 'showCustomerOrganization'">
         <div class="page__bd" style="height: 100%;">
             <div class="weui-tab">
-                <div class="weui-navbar">
-                    <div class="weui-navbar__item" onclick="console.log(11);jQuery('#12345').HoverTreeScroll(1000);">
+                <div class="top-bar center-box" style="border: hidden">
+                    <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;">返回</span>
+                    <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);">{{customer.customerName}}</span>
+                    <span class="pull-right" style="color: rgb(61, 168, 244); font-size: 16px;">编辑</span>
+                </div>
+
+                <div class="weui-navbar" style="position: relative;height: 40px;background-color: #ffffff">
+                    <div id="customerInfoBtn" class="weui-navbar__item" @click="switch2CustomerInfoPage"
+                         style="padding: 10px 0;border: hidden" onclick="console.log(11);">
                         客户信息
                     </div>
-                    <div class="weui-navbar__item" @click="searchOrganizations()">
+                    <div id="organizationInfoBtn" class="weui-navbar__item weui-bar__item_on" @click="switch2OrganizationInfoPage"
+                         style="padding: 10px 0;border: hidden" >
                         组织机构
                     </div>
                 </div>
 
-                <div class="weui-tab__panel">
+                <div class="weui-tab__panel" style="padding-top: 0px" >
                     <div class="weui-search-bar" id="searchBar" >
                         <div class="weui-search-bar__form">
                             <div class="weui-search-bar__box">

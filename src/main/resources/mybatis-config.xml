@@ -23,5 +23,6 @@
         <mapper resource="mybatis/mapper/CompanyMapper.xml"/>
         <mapper resource="mybatis/mapper/OpportunityMapper.xml"/>
         <mapper resource="mybatis/mapper/ProjectMapper.xml"/>
+        <mapper resource="mybatis/mapper/MemberMapper.xml"/>
     </mappers>
 </configuration>

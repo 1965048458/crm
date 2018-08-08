@@ -8,7 +8,7 @@ jQuery(document).ready(function () {
         el: '#organizationVue',
         data:function(){
             return{
-                showPage:'showCustomerOrganization',
+                showPage:'',
                 showOrganization: false,
                 showApplyDialog: false,
                 customerList: '',
@@ -22,6 +22,10 @@ jQuery(document).ready(function () {
                 showDelayApplyDialog:false,
                 showDelayApplyErrDialog:false,
                 submitReasons:'',
+                customer:{
+                    customerId:'customerzju',
+                    customerName:'浙江大学',
+                },
                 warningDetails:{
                     deptId:'',
                     leftTime:'',
@@ -50,6 +54,7 @@ jQuery(document).ready(function () {
                 }).done(function (result) {
                     console.log(result);
                     if (result.successFlg) {
+                        thisVue.showPage='showCustomerOrganization';
                         thisVue.showOrganization = true;
                         thisVue.$set(thisVue, 'customerList',result.customerList);
                         thisVue.$set(thisVue, 'searchList', result.searchList)
@@ -58,6 +63,17 @@ jQuery(document).ready(function () {
                         thisVue.showErrMsg = true;
                     }
                 });
+            },
+            'switch2CustomerInfoPage':function () {
+                $('#customerInfoBtn').attr("class","weui-navbar__item weui-bar__item_on");
+                $('#organizationInfoBtn').attr("class","weui-navbar__item");
+                this.showPage='showCustomerInfoPage';
+            },
+            'switch2OrganizationInfoPage':function () {
+                $('#organizationInfoBtn').attr("class","weui-navbar__item weui-bar__item_on");
+                $('#customerInfoBtn').attr("class","weui-navbar__item");
+                this.searchOrganizations(this.customer.customerId);
+                this.showPage='showCustomerOrganization';
             },
             'apply':function (name,id) {
                 this.applyDeptName = name;
@@ -267,5 +283,7 @@ jQuery(document).ready(function () {
         }
     });
 
-    organizationVue.searchOrganizations('customerzju');
+    var customerId = $("#customerId").val();
+
+    organizationVue.searchOrganizations(customerId);
 });
