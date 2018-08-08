@@ -21,8 +21,9 @@ $(document).ready(function () {
             deliverDate: '请选择',
             saleStage: '请选择',
             selStage: '',
-            contact: '',
+            contact: '请选择',
             temp: '',
+            contactId: '',
             content: '',
             saleName: '',
             customerList: '',
@@ -82,7 +83,10 @@ $(document).ready(function () {
                 this.showPage = 'basicInfo';
             },
             'done2': function () {
-                this.contact = this.temp;
+                var str = this.temp.split(':')
+                this.contact = str[0];
+                this.contactId = str[1];
+                console.log(this.contactId);
                 this.showPage = 'basicInfo';
             },
             'selCustomer': function () {

@@ -24,6 +24,16 @@ public class Opportunity {
     private Date clinchDate;
     @Expose
     private double totalCoast;
+    @Expose
+    private String content;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public String getOpportunityId() {
         return opportunityId;

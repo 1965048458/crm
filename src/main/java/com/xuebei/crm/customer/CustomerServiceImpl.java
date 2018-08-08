@@ -56,7 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> queryCustomerInfo(String searchWord){
+    public List<Customer> queryCustomerInfo(String searchWord) {
 
         try {
             List<Customer> customerList = customerMapper.queryCustomerInfo(searchWord);
@@ -64,7 +64,7 @@ public class CustomerServiceImpl implements CustomerService {
                 customer.setLastTs(lastFollowTs(customer.getCustomerId()));
             }
             return customerList;
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -81,8 +81,25 @@ public class CustomerServiceImpl implements CustomerService {
             departmentMap.put(department.getDeptId(), department);
         }
         for (Contacts contacts : contactsList) {
+            String totalName = "";
             String departmentId = contacts.getDepartmentId();
             Department department = departmentMap.get(departmentId);
+            Department temp = department;
+            while (temp != null) {
+                String deptName = temp.getDeptName();
+                if (deptName != null && deptName != "") {
+                    totalName = deptName + "-" + totalName;
+                }
+                if (temp.getParent() != null) {
+                    String prtId = temp.getParent().getDeptId();
+                    temp = departmentMap.get(prtId);
+                } else {
+                    temp = null;
+                }
+            }
+            totalName = contacts.getCustomerName() + "-" + totalName + contacts.getTypeName() + "-" + contacts.getRealName()
+                    + ":" + contacts.getContactsId();
+            contacts.setTotalName(totalName);
             department.addSubContact(contacts);
             department.addContact(1);
         }
@@ -215,7 +232,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     @Override
-    public List<Customer> getMyCustomers(String userId){
+    public List<Customer> getMyCustomers(String userId) {
 
         try {
             List<Customer> customerList = customerMapper.getMyCustomers(userId);
@@ -223,7 +240,7 @@ public class CustomerServiceImpl implements CustomerService {
                 customer.setLastTs(lastFollowTs(customer.getCustomerId()));
             }
             return customerList;
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
 

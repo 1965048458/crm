@@ -62,9 +62,9 @@
         <div class="top-bar">
             <span @click="back" class="pull-left">
                 <img src="/images/back_icon.svg"
-                     style="margin-top:8px;"/></span>
+                     style="margin-top:5px;"/></span>
             <span class="center" style="margin-top: 3px;">新建商机</span>
-            <span class="pull-right" style="margin-top: 3px; color: #28b3ff"
+            <span class="pull-right" style="margin-top: 0px; color: #28b3ff"
                   @click="finish"> 完成 &nbsp; </span>
         </div>
 
@@ -74,7 +74,7 @@
                 <label style="margin-left: 15px"><span style="color: red">*</span>制作内容</label>
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="text" placeholder="请填写制作内容">
+                        <input class="weui-input" type="text" placeholder="请填写制作内容" v-model="content">
                     </div>
                 </div>
                 <a class="weui-cell weui-cell_access" @click="showDatePicker">
@@ -112,11 +112,9 @@
                 <a class="weui-cell weui-cell_access" @click="selCustomer">
                     <div class="weui-cell__bd">
                         <p><span style="color: red">*</span>客户及联系人</p>
-                        <p style="color: grey">请选择</p>
+                        <p style="color: grey" v-text="contact"></p>
                     </div>
-                    <div class="weui-cell__ft">
-                        <span v-text="contact"></span>
-                    </div>
+                    <div class="weui-cell__ft"></div>
                 </a>
 
                 <label style="margin-left: 15px"><span style="color: red">*</span>商机名称</label>
@@ -133,9 +131,9 @@
         <div class="top-bar">
             <span @click="backToInfo" class="pull-left">
                 <img src="/images/back_icon.svg"
-                     style="margin-top:8px;"/></span>
+                     style="margin-top:5px;"/></span>
             <span class="center" style="margin-top: 3px;">选择销售阶段</span>
-            <span class="pull-right" style="margin-top: 3px; color: #28b3ff"
+            <span class="pull-right" style="margin-top: 0px; color: #28b3ff"
                   @click="done1"> 完成 &nbsp; </span>
         </div>
         <div class="weui-cells weui-cells_radio">
@@ -236,7 +234,7 @@
                 </div>
                 <div class="weui-cell__ft">
                     <input type="radio" class="weui-check" name="radio"
-                           :value="contact.realName" v-model="customerInfo">
+                           :value="contact.totalName" v-model="customerInfo">
                     <span class="weui-icon-checked"></span>
                 </div>
             </label>
