@@ -36,12 +36,43 @@ public class MemberController {
         return gsonView;
     }
 
-    @RequestMapping("/editRelationship")
+    @RequestMapping("/addSubMember")
     public GsonView editRelationship(@RequestParam("upperMemberId") String upperMemberId,
                                      @RequestParam("lowerMemberId") String lowerMemberId){
         GsonView gsonView = new GsonView();
-        memberMapper.updateRelationship(upperMemberId,lowerMemberId);
+        String[] ids = lowerMemberId.split(",");
+        for(String subMemberId:ids){
+            memberMapper.updateRelationship(upperMemberId,subMemberId);
+        }
+
         gsonView.addStaticAttribute("successFlg",true);
+        return gsonView;
+    }
+
+    @RequestMapping("/deleteLeader")
+    public GsonView deleteLeader(@RequestParam("memberId") String memberId){
+        GsonView gsonView = new GsonView();
+        memberMapper.deleteLeader(memberId);
+        return gsonView;
+    }
+
+
+
+    @RequestMapping("searchSiblings")
+    public GsonView searchSiblings(@RequestParam("memberId") String memberId){
+        GsonView gsonView = new GsonView();
+        List<Member> siblingsList = memberService.searchSiblingsList(memberId);
+        gsonView.addStaticAttribute("successFlg",true);
+        gsonView.addStaticAttribute("siblingsList",siblingsList);
+        return gsonView;
+    }
+
+    @RequestMapping("subMemberList")
+    public GsonView subMemberList(@RequestParam("userId") String userId){
+        GsonView gsonView = new GsonView();
+        List<Member> subMemberList = memberService.searchSubMemberList(userId);
+        gsonView.addStaticAttribute("successFlg",true);
+        gsonView.addStaticAttribute("subMemberList",subMemberList);
         return gsonView;
     }
 

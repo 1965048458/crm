@@ -19,20 +19,63 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<Member> searchMemberList(String companyId) {
         List<Member> memberList = memberMapper.searchMemberList(companyId);
-        List<Member> rltList = new ArrayList<>();
+        List<Member> memberTree = new ArrayList<>();
         Map<String, Member> memberMap = new HashMap<>();
         for(Member member:memberList){
             memberMap.put(member.getMemberId(), member);
         }
+        getMemberTree(memberList, memberTree, memberMap);
+        return memberTree;
+    }
+
+    private void getMemberTree(List<Member> memberList, List<Member> memberTree, Map<String, Member> memberMap) {
         for(Member member:memberList){
             if(member.getLeader() == null){
-                rltList.add(member);
+                memberTree.add(member);
             }else {
                 String leaderId = member.getLeader().getMemberId();
                 Member leaderMember = memberMap.get(leaderId);
                 leaderMember.addSubMember(member);
+                leaderMember.addSubMemberNum(1);
+                while(leaderMember.getLeader()!=null){
+                    leaderMember = memberMap.get(leaderMember.getLeader().getMemberId());
+                    leaderMember.addSubMemberNum(1);
+                }
             }
         }
-        return rltList;
+    }
+
+    @Override
+    public List<Member> searchSiblingsList(String memberId) {
+        String companyId = memberMapper.getCompanyIdByMemberId(memberId);
+        List<Member> memberList = memberMapper.searchMemberList(companyId);
+        List<Member> memberTree = new ArrayList<>();
+        Map<String, Member> memberMap = new HashMap<>();
+        for(Member member:memberList){
+            memberMap.put(member.getMemberId(), member);
+        }
+        Member currentMember = memberMap.get(memberId);
+        while(currentMember.getLeader() != null){
+            currentMember = memberMap.get(currentMember.getLeader().getMemberId());
+        }
+        getMemberTree(memberList, memberTree, memberMap);
+        memberTree.remove(currentMember);
+
+        return memberTree;
+    }
+
+    @Override
+    public List<Member> searchSubMemberList(String userId) {
+        String companyId = memberMapper.getCompanyIdByMemberId(userId);
+        List<Member> memberList = memberMapper.searchMemberList(companyId);
+        List<Member> memberTree = new ArrayList<>();
+        Map<String, Member> memberMap = new HashMap<>();
+        for(Member member:memberList){
+            memberMap.put(member.getMemberId(),member);
+        }
+        getMemberTree(memberList, memberTree, memberMap);
+
+        return null;
+
     }
 }
