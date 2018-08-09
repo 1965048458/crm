@@ -48,7 +48,10 @@ public class OpportunityController {
     }
 
     @RequestMapping("addSale")
-    public GsonView addSale(@RequestBody Opportunity opportunity){
+    public GsonView addSale(@RequestBody Opportunity opportunity,
+                            HttpServletRequest request){
+        String userId = (String) request.getSession().getAttribute("userId");
+        opportunity.setUserId(userId);//"57259d54f9994209a813e8ad2b297b3a"
         opportunityService.addSale(opportunity);
         opportunityService.addOpportunityContact(opportunity.getOpportunityId(), opportunity.getContactId());
         GsonView gsonView = new GsonView();
