@@ -4,6 +4,8 @@ import com.xuebei.crm.company.CompanyMapper;
 import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
+import com.xuebei.crm.member.Member;
+import com.xuebei.crm.member.MemberService;
 import com.xuebei.crm.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,9 @@ public class JournalController {
 
     @Autowired
     private CompanyMapper companyMapper;
+
+    @Autowired
+    private MemberService memberService;
 
     @Autowired
     private JournalService journalService;
@@ -226,6 +231,15 @@ public class JournalController {
         }
 
         return GsonView.createSuccessView();
+    }
+
+    @RequestMapping("subMemberList")
+    public GsonView subMemberList(@RequestParam("userId") String userId){
+        GsonView gsonView = new GsonView();
+        List<Member> subMemberList = memberService.searchSubMemberList(userId);
+        gsonView.addStaticAttribute("successFlg",true);
+        gsonView.addStaticAttribute("subMemberList",subMemberList);
+        return gsonView;
     }
 
 }

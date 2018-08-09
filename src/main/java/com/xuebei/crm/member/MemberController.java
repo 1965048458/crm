@@ -67,15 +67,4 @@ public class MemberController {
         return gsonView;
     }
 
-    @RequestMapping("subMemberList")
-    public GsonView subMemberList(@RequestParam("userId") String userId){
-        GsonView gsonView = new GsonView();
-        List<Member> subMemberList = memberService.searchSubMemberList(userId);
-        gsonView.addStaticAttribute("successFlg",true);
-        gsonView.addStaticAttribute("subMemberList",subMemberList);
-        return gsonView;
-    }
-
-
-
 }

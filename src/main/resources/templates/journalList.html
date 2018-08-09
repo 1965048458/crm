@@ -250,7 +250,7 @@
                         </div>
                     </div>
 
-                    <div class="blank" style="margin:40% auto auto auto; text-align:center; "
+                    <div class="blank" style="margin:20% auto auto auto; text-align:center; "
                          v-if="journalList.length === 0">
                         <p>
                             <img src="/images/journal/日志空.svg" style="background: #FFFFFF;"/>
@@ -528,6 +528,10 @@
                             <!--</div>-->
                         <!--</div>-->
                     </div>
+                </div>
+
+                <div id="selSender" v-show="showPage === 'selSender">
+                    <div></div>
                 </div>
 
                 <div class="js_dialog" id="iosDialog2" style="opacity: 1;display: none" v-show="showErrMsg">

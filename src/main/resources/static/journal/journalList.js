@@ -102,6 +102,14 @@ jQuery(document).ready(function () {
                 this.searchList(data);
             },
             'addSenders':function () {
+                var thisVue = this;
+                $.ajax({
+                    type:'get',
+                    url:'',
+                    //data:
+                });
+            },
+            'finish':function () {
                 //
             },
             'loadDetail': function (journalId) {
