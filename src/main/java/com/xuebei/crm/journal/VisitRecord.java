@@ -2,6 +2,7 @@ package com.xuebei.crm.journal;
 
 import com.google.gson.annotations.Expose;
 import com.xuebei.crm.customer.Contacts;
+import com.xuebei.crm.opportunity.Opportunity;
 
 import java.util.List;
 
@@ -17,6 +18,10 @@ public class VisitRecord {
     private String visitResult;
     @Expose
     private String journalId;
+    @Expose
+    private Integer opportunityId;
+    @Expose
+    private String opportunityName;
 
     public String getVisitId() {
         return visitId;
@@ -56,6 +61,22 @@ public class VisitRecord {
 
     public void setChosenContacts(List<Contacts> chosenContacts) {
         this.chosenContacts = chosenContacts;
+    }
+
+    public Integer getOpportunityId() {
+        return opportunityId;
+    }
+
+    public void setOpportunityId(Integer opportunityId) {
+        this.opportunityId = opportunityId;
+    }
+
+    public String getOpportunityName() {
+        return opportunityName;
+    }
+
+    public void setOpportunityName(String opportunityName) {
+        this.opportunityName = opportunityName;
     }
 
 }

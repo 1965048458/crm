@@ -27,7 +27,7 @@ public class Project {
     @Expose
     private String agent;
     @Expose
-    private String opportunityId;
+    private Integer opportunityId;
     @Expose
     private String contractId;
     @Expose
@@ -121,11 +121,28 @@ public class Project {
         this.agent = agent;
     }
 
-    public String getOpportunityId() {
+    public Integer getOpportunityId() {
         return opportunityId;
     }
 
-    public void setOpportunityId(String opportunityId) {
+    public void setOpportunityId(Integer opportunityId) {
         this.opportunityId = opportunityId;
+    }
+
+    public int hashCode() {
+        if (projectId != null) {
+            return projectId.hashCode();
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Project) {
+            return projectId .equals(((Project)obj).projectId);
+        } else {
+            return false;
+        }
     }
 }

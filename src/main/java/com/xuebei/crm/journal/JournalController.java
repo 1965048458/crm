@@ -4,6 +4,9 @@ import com.xuebei.crm.company.CompanyMapper;
 import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
+import com.xuebei.crm.opportunity.Opportunity;
+import com.xuebei.crm.project.Project;
+import com.xuebei.crm.project.ProjectMapper;
 import com.xuebei.crm.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/journal")
@@ -113,9 +117,14 @@ public class JournalController {
         List<User> colleagues = journalMapper.queryColleagues(acquireUserId(request));
         String companyId = companyMapper.queryCompanyIdByUserId(acquireUserId(request));
         List<JournalCustomer> customerList = journalService.getAllContacts(companyId);
+        Set<String> userGroup = journalService.getAllSubordinatesUserId(acquireUserId(request));
+//        Set<Project> projectList = journalService.getAllSubordinatesProjects(userGroup);
+        Set<Opportunity> opportunitySet = journalService.getAllSubordinatesOpportunity(userGroup);
         gsonView.addStaticAttribute("journal", journal);
         gsonView.addStaticAttribute("colleagues", colleagues);
         gsonView.addStaticAttribute("customer", customerList);
+//        gsonView.addStaticAttribute("projects", projectList);
+        gsonView.addStaticAttribute("opportunities", opportunitySet);
         return gsonView;
     }
 
@@ -123,16 +132,21 @@ public class JournalController {
     public GsonView getColleagueList(HttpServletRequest request) {
         List<JournalCustomer> customerList;
         List<User> colleagues;
+        Set<Opportunity> opportunitySet;
         try {
             colleagues = journalMapper.queryColleagues(acquireUserId(request));
             String companyId = companyMapper.queryCompanyIdByUserId(acquireUserId(request));
             customerList = journalService.getAllContacts(companyId);
+            Set<String> userGroup = journalService.getAllSubordinatesUserId(acquireUserId(request));
+            opportunitySet = journalService.getAllSubordinatesOpportunity(userGroup);
         } catch (AuthenticationException e) {
             return GsonView.createErrorView(e.getMessage());
         }
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("colleagues", colleagues);
         gsonView.addStaticAttribute("customer", customerList);
+        gsonView.addStaticAttribute("opportunities", opportunitySet);
+
         return gsonView;
     }
 
@@ -226,6 +240,16 @@ public class JournalController {
         }
 
         return GsonView.createSuccessView();
+    }
+
+    @RequestMapping("/test")
+    public GsonView getUserList(@RequestParam("userId") String userId) {
+        Set<String> cs = journalService.getAllSubordinatesUserId(userId);
+        Set<Opportunity> opportunities = journalService.getAllSubordinatesOpportunity(cs);
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("projects", opportunities);
+        gsonView.addStaticAttribute("users", cs);
+        return gsonView;
     }
 
 }
