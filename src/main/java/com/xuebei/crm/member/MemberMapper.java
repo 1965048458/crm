@@ -14,4 +14,10 @@ public interface MemberMapper {
 
     void updateRelationship(@Param("upperMemberId") String upperMemberId,
                             @Param("lowerMemberId") String lowerMemberId);
+
+    List<Member> searchSiblingsList(@Param("memberId") String memberId);
+
+    String getCompanyIdByMemberId(@Param("memberId") String memberId);
+
+    void deleteLeader(@Param("memberId") String memberId);
 }

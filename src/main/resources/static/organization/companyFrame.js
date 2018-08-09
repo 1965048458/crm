@@ -7,33 +7,132 @@ jQuery(document).ready(function () {
        el:"#memberSettingVue",
         data:{
            showPage:'showMember',
+            companyId:'',
             memberList:[],
+            siblingsList:[],
+            showMemberRelationship:false,
+            showMemberInfo:false,
+            showMembership:false,
+            showOptionalMember:false,
+            lowerMemberId:[],
+            upperMemberId:''
         },
         methods:{
-           init:function () {
-               this.showPage='showMember'
+           init:function (companyId) {
+               this.showPage='showMember';
+               this.companyId=companyId;
            },
-           getMemberList:function (companyId) {
+           getMemberList:function () {
                var thisVue = this;
                $.ajax({
                    type:'get',
                    url:'/member/relationship',
                    data:{
-                       companyId:companyId
+                       companyId:thisVue.companyId
                    },
                    dataType:'json',
                    cache:false
                }).done(function (result) {
                    console.log(result);
                    thisVue.$set(thisVue, 'memberList', result.memberList);
+                   thisVue.showMemberRelationship=true;
+                   thisVue.showMemberInfo=false;
                });
            },
+            getMemberInfo:function () {
+              this.showMemberInfo=true;
+              this.showMemberRelationship=false;
+            },
             editMemberShip:function () {
                this.showPage='showMemberRelationEdit';
+               this.showMembership=true;
+               this.showOptionalMember=false;
+                document.getElementById('editMemberShip').style.opacity='1';
+                $("#actionSheet").hide();
+                $('#iosMask').hide();
 
             },
             memberEdit2Member:function () {
                 this.showPage='showMember';
+                document.getElementById('editMemberShip').style.opacity='1';
+                $("#actionSheet").hide();
+                $('#iosMask').hide();
+            },
+            addSubMember:function () {
+               var thisVue = this;
+               $.ajax({
+                   type:'get',
+                   url:'/member/searchSiblings',
+                   data:{
+                       memberId:thisVue.upperMemberId
+                   },
+                   dataType:'json',
+                   cache:false
+               }).done(function (result) {
+                   console.log(result);
+                   thisVue.$set(thisVue, 'siblingsList', result.siblingsList);
+                   console.log(thisVue.siblingsList);
+                   thisVue.showOptionalMember=true;
+                   thisVue.showMembership=false;
+                   $("#actionSheet").hide();
+                   $('#iosMask').hide();
+
+               });
+            },
+            deleteLeader:function () {
+                var thisVue = this;
+                $.ajax({
+                    type:'get',
+                    url:'/member/deleteLeader',
+                    data:{
+                        memberId:thisVue.upperMemberId
+                    },
+                    dataType:'json',
+                    cache:false
+                }).done(function (result) {
+                    console.log(result);
+                    thisVue.showOptionalMember=false;
+                    thisVue.showMembership=false;
+                    thisVue.getMemberList();
+                    thisVue.showPage='showMember';
+                    $("#actionSheet").hide();
+                    $('#iosMask').hide();
+                });
+            },
+            membershipEditCheck:function () {
+                var thisVue = this;
+                var lowerMemberId = '';
+                for(var i=0;i<this.lowerMemberId.length;i++){
+                    lowerMemberId+=this.lowerMemberId[i]+",";
+                }
+                console.log(this.lowerMemberId);
+                $.ajax({
+                    type:'get',
+                    url:'member/addSubMember',
+                    data:{
+                        upperMemberId:thisVue.upperMemberId,
+                        lowerMemberId:lowerMemberId
+                    },
+                    dataType:'json',
+                    cache:false
+                }).done(function (result) {
+                    console.log(result);
+                    document.getElementById('editMemberShip').style.opacity='1';
+                    thisVue.showMembership=true;
+                    thisVue.showOptionalMember=false;
+                    thisVue.showPage='showMember';
+                    thisVue.getMemberList();
+                });
+            },
+            chooseGenderImg:function (gender) {
+                if(gender=='FEMALE')
+                    return "/images/customer/FEMALE.svg";
+                else
+                    return "/images/customer/MALE.svg";
+            },
+            showActionSheet:function (upperMemberId) {
+
+               this.upperMemberId = upperMemberId;
             }
 
         }
@@ -64,12 +163,9 @@ jQuery(document).ready(function () {
                 if(this.showSub)this.foldImg="/images/customer/unfold.svg";
                 else this.foldImg="/images/customer/fold.svg";
             },
-            addSubMemberNum:function (member) {
-                var tolNum;
-                while(!(member.subMemberList.length==0 || member.subMemberList===undefined)){
-                    tolNum += member.subMemberList.length;
-                }
-                return "下属 "+tolNum+" 人"
+            addSubMemberNum:function (memberNum) {
+
+                return "下属 "+memberNum+" 人"
             },
 
         }
@@ -99,26 +195,22 @@ jQuery(document).ready(function () {
                 if(this.showSub)this.foldImg="/images/customer/unfold.svg";
                 else this.foldImg="/images/customer/fold.svg";
             },
-            addSubMemberNum:function (member) {
-                var tolNum;
-                while(!(member.subMemberList.length==0 || member.subMemberList===undefined)){
-                    tolNum += member.subMemberList.length;
-                }
-                return "下属 "+tolNum+" 人"
+            addSubMemberNum:function (memberNum) {
+
+                return "下属 "+memberNum+" 人"
             },
-            addSubMember:function () {
-
+            addSubMember:function (upperMemberId) {
+                memberSettingVue.addSubMember(upperMemberId);
+            },
+            showActionSheet:function (upperMemberId) {
+                memberSettingVue.showActionSheet(upperMemberId);
             }
-
-
         }
     });
 
-
-
     var companyId = $("#companyId").val();
 
-    memberSettingVue.init();
+    memberSettingVue.init(companyId);
 
-    memberSettingVue.getMemberList(companyId);
+    memberSettingVue.getMemberList();
 });
