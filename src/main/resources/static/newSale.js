@@ -79,6 +79,10 @@ $(document).ready(function () {
                 this.showPage = 'saleStage';
             },
             'done1': function () {
+                if (this.selStage === ""){
+                    alert("不能为空！");
+                    return;
+                }
                 this.saleStage = this.selStage;
                 if (this.saleStage === ""){
                     alert("不能为空！");
