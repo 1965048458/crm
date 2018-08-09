@@ -27,4 +27,25 @@
             SET cu.leader_id = #{upperMemberId}
         WHERE cu.user_id = #{lowerMemberId}
     </update>
+    
+    <select id="searchSiblingsList" resultMap="memberMap">
+        SELECT * FROM company_user AS r1
+        LEFT JOIN crm_user AS r2
+            ON r1.crm_user_id = r2.crm_user_id
+        WHERE r1.company_id IN (
+            SELECT company_id FROM company_user
+            WHERE company_user.user_id = #{memberId}
+        );
+    </select>
+
+    <select id="getCompanyIdByMemberId" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT company_id FROM company_user
+        WHERE user_id = #{memberId};
+    </select>
+    
+    <update id="deleteLeader" parameterType="java.lang.String">
+        UPDATE company_user
+        SET leader_id=NULL
+        WHERE user_id=#{memberId};
+    </update>
 </mapper>

@@ -7,4 +7,8 @@ import java.util.List;
  */
 public interface MemberService {
     List<Member> searchMemberList(String companyId);
+
+    List<Member> searchSiblingsList(String memberId);
+
+    List<Member> searchSubMemberList(String userId);
 }
