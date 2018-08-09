@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class Opportunity {
     @Expose
-    private String opportunityId;
+    private Integer opportunityId;
     @Expose
     private String customerId;
     @Expose
@@ -24,12 +24,32 @@ public class Opportunity {
     private Date clinchDate;
     @Expose
     private double totalCoast;
+    @Expose
+    private String content;
+    @Expose
+    private String contactId;
 
-    public String getOpportunityId() {
+    public String getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Integer getOpportunityId() {
         return opportunityId;
     }
 
-    public void setOpportunityId(String opportunityId) {
+    public void setOpportunityId(Integer opportunityId) {
         this.opportunityId = opportunityId;
     }
 

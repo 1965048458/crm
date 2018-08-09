@@ -29,7 +29,6 @@ $(document).ready(function () {
                 }).done(function (result) {
                     if (result.successFlg) {
                         thisVue.$set(thisVue, 'customerList', result.customerList);
-                        thisVue.customerList = result.customerList;
                     } else {
                         thisVue.errMsg = result.errMsg;
                     }
