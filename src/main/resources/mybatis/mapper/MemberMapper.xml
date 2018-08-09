@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuebei.crm.member.MemberMapper">
+
+    <resultMap id="memberMap" type="com.xuebei.crm.member.Member">
+        <id column="user_id" property="memberId"/>
+        <result column="company_id" property="companyId"/>
+        <result column="user_type" property="memberType"/>
+        <result column="real_nm" property="memberName"/>
+        <result column="gender" property="memberGender"/>
+        <association property="leader" javaType="com.xuebei.crm.member.Member">
+            <id column="leader_id" property="memberId" />
+        </association>
+    </resultMap>
+
+    <select id="searchMemberList" resultMap="memberMap">
+        SELECT * FROM company_user AS r1
+        LEFT JOIN crm_user AS r2
+            ON r1.crm_user_id = r2.crm_user_id
+        WHERE r1.company_id = #{companyId};
+    </select>
+    
+    <update id="updateRelationship" parameterType="java.lang.String">
+        UPDATE company_user AS cu
+            SET cu.leader_id = #{upperMemberId}
+        WHERE cu.user_id = #{lowerMemberId}
+    </update>
+</mapper>

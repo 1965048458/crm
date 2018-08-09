@@ -83,7 +83,7 @@
 <div id="contactsInfoVue">
 
     <div class="top-bar">
-        <span class="pull-left" @click="back"><img src="/images/back_icon.svg"></span>
+        <span class="pull-left" onclick="history.back()"><img src="/images/back_icon.svg"></span>
         <span th:text="${contacts.getRealName()}"></span>
     </div>
 

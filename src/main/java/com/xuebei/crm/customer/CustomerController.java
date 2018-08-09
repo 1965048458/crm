@@ -299,7 +299,12 @@ public class CustomerController {
     }
 
     @RequestMapping("/organization")
-    public String organization(){return "customer/organization";}
+    public String organization(@RequestParam("customerId") String customerId,
+                               HttpServletRequest request,
+                               ModelMap modelMap){
+        modelMap.addAttribute("customerId",customerId);
+        return "customer/organization";
+    }
 
     @RequestMapping("/organization/show")
     public GsonView queryDepartment(@RequestParam("customerId") String customerId,
@@ -352,10 +357,10 @@ public class CustomerController {
     @RequestMapping("/organization/delayApply")
     public GsonView delayApply(@RequestParam("deptId") String deptId){
         GsonView gsonView = new GsonView();
-        customerService.enclosureDelayApply(deptId);
-//        EnclosureApply enclosureApply = new EnclosureApply();
-//        enclosureApply.setEnclosureApplyId(11);
-//        customerMapper.insertEnclosureDelayApply(enclosureApply);
+        //customerService.enclosureDelayApply(deptId);
+        EnclosureApply enclosureApply = new EnclosureApply();
+        enclosureApply.setEnclosureApplyId(11);
+        customerMapper.insertEnclosureDelayApply(enclosureApply);
         gsonView.addStaticAttribute("successFlg",true);
         //gsonView.addStaticAttribute("errMsg","申请延期失败");
         return gsonView;
@@ -410,7 +415,5 @@ public class CustomerController {
         modelMap.addAttribute("contacts", contacts);
         return "contactsInfo";
     }
-
-
 
 }
