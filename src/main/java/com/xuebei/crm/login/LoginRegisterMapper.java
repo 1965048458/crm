@@ -15,4 +15,10 @@ public interface LoginRegisterMapper {
     User searchTel(@Param("tel") String tel);
 
     void changePwd(@Param("tel") String tel, @Param("pwd") String pwd);
+
+    String queryRealName(String crmUserId);
+
+    String queryTel(String crmUserId);
+
+    User searchMessage(String crmUserId);
 }

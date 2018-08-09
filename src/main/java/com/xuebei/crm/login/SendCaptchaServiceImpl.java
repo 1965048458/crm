@@ -57,4 +57,26 @@ public class SendCaptchaServiceImpl implements SendCaptchaService{
             taobaoClient = new DefaultTaobaoClient(apiUrl, appKey, appSecret);
         return taobaoClient;
     }
+
+    public AlibabaAliqinFcSmsNumSendResponse sendAudit(String realName, String tel,String companyName,String result) throws ApiException {
+        String signName = "学呗课堂";
+        String templateCode = "SMS_141616864";
+        AlibabaAliqinFcSmsNumSendResponse rsp ;
+        AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
+        req.setExtend("");
+        req.setSmsType("normal");
+        req.setSmsFreeSignName(signName);
+//        Integer expireTime =900/ 60;
+        StringBuilder paramRlt = new StringBuilder();
+        paramRlt.append("{name:'").append(realName).append("',company:'")
+                .append(companyName).append("',result:'").append(result).append("'}");
+        req.setSmsParamString(paramRlt.toString());
+        req.setRecNum(tel);
+        req.setSmsTemplateCode(templateCode);
+        TaobaoClient client = getClient();
+        rsp = client.execute(req);
+
+        return rsp;
+
+    }
 }

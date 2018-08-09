@@ -9,4 +9,6 @@ import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
 public interface SendCaptchaService {
     public String randomNoSeq(int length);
     AlibabaAliqinFcSmsNumSendResponse sendCaptcha(String phoneNo, String captcha) throws ApiException;
+
+    AlibabaAliqinFcSmsNumSendResponse sendAudit(String realName, String tel,String companyName,String result) throws ApiException;
 }

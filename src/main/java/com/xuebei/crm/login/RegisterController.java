@@ -90,7 +90,7 @@ public class RegisterController {
                 } else {
                     Date now = new Date();
                     long c = (now.getTime() - start.getTime()) / 1000;
-                    if (c > 60) {
+                    if (c > 900) {
                         gsonView.addStaticAttribute(SUCCESS_FLG, false);
                         gsonView.addStaticAttribute(ERRMSG, "验证码已过期，请重新发送");
 

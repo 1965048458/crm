@@ -10,12 +10,36 @@
         <result property="companyName" column="com_nm"/>
     </resultMap>
 
+    <resultMap id="companyListMap" type="com.xuebei.crm.company.Company">
+        <id property="companyId" column="company_id"/>
+        <result property="companyName" column="com_nm"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <resultMap id="companyApplyMap" type="com.xuebei.crm.company.CompanyUser">
+        <id property="userId" column="user_id"/>
+        <result property="crmUserName" column="real_nm"/>
+        <result property="tel" column="tel"/>
+        <result property="createTs" column="create_ts"/>
+    </resultMap>
+
+
+    <select id="queryCompanyList" resultMap="companyListMap">
+        SELECT
+            c.company_id,
+            c.com_nm,
+            cu.status
+        FROM company c
+        INNER JOIN company_user cu ON c.company_id = cu.company_id
+        WHERE cu.crm_user_id=#{crmUserId};
+    </select>
+
     <select id="queryCompanyListByCrmUserId" resultMap="companyMap">
         SELECT
-            company.company_id,
-            com_nm
+        company.company_id,
+        com_nm
         FROM user_view
-            LEFT JOIN company ON user_view.company_id = company.company_id
+        LEFT JOIN company ON user_view.company_id = company.company_id
         WHERE user_view.crm_user_id = #{crmUserId};
     </select>
 
@@ -23,6 +47,12 @@
         SELECT user_id
         FROM user_view
         WHERE crm_user_id = #{crmUserId} AND company_id = #{companyId};
+    </select>
+
+    <select id="queryUserType" resultType="java.lang.String">
+        SELECT DISTINCT  user_type
+        FROM company_user
+        WHERE crm_user_id = #{crmUserId} ;
     </select>
 
     <select id="queryCompanyIdByUserId" resultType="java.lang.String">
@@ -79,5 +109,60 @@
         SELECT crm_user_id FROM crm_user
         WHERE real_nm = #{userName} AND TEL = #{tel}
     </select>
+
+    <select id="queryCompany" resultMap="companyMap">
+        SELECT company_id,com_nm FROM company WHERE
+        com_nm LIKE CONCAT('%', #{name}, '%')
+    </select>
+
+    <select id="queryCompanyComplete" resultMap="companyMap">
+        SELECT company_id,com_nm FROM company WHERE
+        com_nm = #{name} ;
+    </select>
+
+    <select id="queryApplyStatus" resultType="java.lang.String">
+        SELECT status FROM company_user WHERE
+        crm_user_id = #{crmUserId} AND company_id = #{companyId};
+    </select>
+
+    <select id="queryApplyStaff" resultMap="companyApplyMap">
+        select com.user_id,cu.real_nm, cu.tel,com.create_ts from crm_user cu
+         INNER JOIN company_user com ON com.crm_user_id = cu.crm_user_id AND com.company_id in (
+          select company_id from company_user where crm_user_id = #{crmUserId}
+          )
+          where cu.crm_user_id in (
+          select com.crm_user_id from company_user com where com.company_id in (
+          select company_id from company_user where crm_user_id = #{crmUserId}
+          ) AND status ='PENDING'
+          )
+    </select>
+
+    <update id="agreeApply" parameterType="java.lang.String">
+        UPDATE company_user as cu SET cu.update_ts= NOW(),
+       cu.status='PERMITTED',
+       cu.updater_id = #{crmUserId}
+        WHERE cu.user_id=#{userId};
+    </update>
+
+    <update id="refuseApply" parameterType="java.lang.String">
+        UPDATE company_user as cu SET cu.update_ts= NOW(),
+        cu.status='REFUSE',
+        cu.updater_id = #{crmUserId}
+        WHERE cu.user_id=#{userId};
+    </update>
+
+    <select id="queryCompanyName" resultType="java.lang.String">
+       select com_nm from company where company_id = (
+        select company_id from company_user where user_id = #{userId});
+    </select>
+
+    <select id="queryStatus" resultType="java.lang.String">
+        select status from company_user where user_id = #{userId};
+    </select>
+
+    <select id="queryCrmUserId" resultType="java.lang.String">
+        select crm_user_id from company_user where user_id = #{userId};
+    </select>
+
 
 </mapper>
