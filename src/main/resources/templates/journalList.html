@@ -55,8 +55,18 @@
             font-size: 15px;
             color: #0D0D0D;
         }
-        .line-block{
-            height:10px;
+
+        .sender-box {
+            width: auto;
+            padding: 5px 15px;
+        }
+
+        .sender-name {
+            font-size: 12px;
+        }
+
+        .line-block {
+            height: 10px;
             border: hidden;
         }
     </style>
@@ -74,9 +84,10 @@
                             <span class="center-ele"
                                   style="width: 91.5%;text-align:center;font-size: 20px;">工作日志</span>
                         <!--<span class="center-ele"-->
-                              <!--style="width: 10%;display:inline-block;height:40px;font-size: 30px; color: #00FFFF;"-->
-                              <!--@click="clickAddJournalButton">+</span>-->
-                        <span @click="clickAddJournalButton"  ><img src="/images/journal/添加日志.svg" style="margin-top:5px;"/></span>
+                        <!--style="width: 10%;display:inline-block;height:40px;font-size: 30px; color: #00FFFF;"-->
+                        <!--@click="clickAddJournalButton">+</span>-->
+                        <span @click="clickAddJournalButton"><img src="/images/journal/添加日志.svg"
+                                                                  style="margin-top:5px;"/></span>
                     </div>
                     <div id="addJournalChosenDialog" style="display: none" v-show="showAddJournalDialog">
                         <div class="weui-mask" @click="cancelAddJournalEvent"></div>
@@ -124,8 +135,6 @@
                                      src="/images/journal/filter.png"></span>
                         </div>
                     </div>
-
-
 
 
                     <div class="journal-list">
@@ -240,6 +249,15 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="blank" style="margin:40% auto auto auto; text-align:center; "
+                         v-if="journalList.length === 0">
+                        <p>
+                            <img src="/images/journal/日志空.svg" style="background: #FFFFFF;"/>
+                        </p>
+                        <p style="color: #CCCCCC; font-size: small">没有相关日志</p>
+                    </div>
+
                 </div>
 
                 <div id="journalDetail" v-show="showPage === 'journalDetail'">
@@ -294,13 +312,15 @@
                                                    v-text="'今日拜访' + (ind+1) + ':'"></label>
 
                                             <div class="weui-form-preview__value">
-                                            <div v-for="contacts in visitRecord.chosenContacts">
+                                                <div v-for="contacts in visitRecord.chosenContacts">
                                                     <span style="float: left;text-align:left;color: #555555;font-size: 14px"
                                                           v-text="contacts.totalName + '、'"></span>
                                                 </div>
                                             </div>
-                                            <p style="text-align: left;color: #555555;font-size: 14px" v-text="'拜访类型'+':'+' '+convertVisitType(visitRecord.visitType)"></p>
-                                            <p style="text-align: left;color: #555555;font-size: 14px" v-text="'拜访结果'+':'+' '+visitRecord.visitResult"></p>
+                                            <p style="text-align: left;color: #555555;font-size: 14px"
+                                               v-text="'拜访类型'+':'+' '+convertVisitType(visitRecord.visitType)"></p>
+                                            <p style="text-align: left;color: #555555;font-size: 14px"
+                                               v-text="'拜访结果'+':'+' '+visitRecord.visitResult"></p>
 
                                             <!--<span class="weui-form-preview__value" style="text-align: left;">-->
                                             <!--&lt;!&ndash;<p v-text="'今日拜访' + (ind+1) + ':'"></p>&ndash;&gt;-->
@@ -316,7 +336,7 @@
 
                                 <div class="weui-form-preview" v-for="patch in curJournal.journalPatches">
                                     <div class="weui-form-preview__bd" style="padding: 5px 0px">
-                                        <div class="weui-form-preview__item"  style="font-size: 12px;line-height: 17px">
+                                        <div class="weui-form-preview__item" style="font-size: 12px;line-height: 17px">
                                         <span class="weui-form-preview__value" style="text-align: left;">
                                              <label v-text="patch.createTs + ' ' + '补充'"
                                                     style="font-size: 12px;color: #BBBBBB">2018-07-26 13:01:59 补充</label>
@@ -353,13 +373,14 @@
 
                 <div class="container" id="journalFilter" style="display: none" v-show="showPage === 'filterDiv'">
                     <div class="page home js_show">
-                        <div class="weui-tab">
+                        <!--<div class="weui-tab">-->
                             <div class="weui-navbar" style="height: 40px;">
                                 <span @click="backToList" class="pull-left"
-                                      style="margin-left: 5px;margin-top: 5px"><img src="/images/back_icon.svg" style="margin-top:3px"/></span>
+                                      style="margin-left: 5px;margin-top: 5px"><img src="/images/back_icon.svg"
+                                                                                    style="margin-top:3px"/></span>
                                 <span class="center" style="font-size:20px;margin-left: 40%;margin-top: 3px">筛选日志</span>
                             </div>
-                            <div class="weui-tab__panel">
+                            <!--<div class="weui-tab__panel">-->
                                 <div class="page__bd">
                                     <div class="weui-cells ">
                                         <div class="weui-cell__hd">
@@ -405,19 +426,25 @@
                                     <hr class="line-block"/>
                                     <div class="weui-cells">
                                         <div class="weui-cell__hd">
-                                            <p class="weui-cells__title">按员工筛选</p>
+                                            <p class="weui-cells__title">按发送人筛选</p>
                                         </div>
-                                        <div class="weui-cell__bd weui-cells-form">
-                                            <div>
-                                                <span>&nbsp; &nbsp;</span>
-                                                <span style="display: inline-block;position: relative;">
-                                                    <img src="/images/icon_tabbar.png" alt="" class="weui-tabbar__icon">
-                                                    <p class="weui-tabbar__label">刘勇</p>
-                                                </span>
-                                                <span style="display: inline-block;position: relative;">
-                                                    <img src="/images/icon_tabbar.png" alt="" class="weui-tabbar__icon">
-                                                    <p class="weui-tabbar__label">添加</p>
-                                                </span>
+                                        <div class="weui-cells weui-cells_form">
+                                            <div class="weui-cell">
+                                                <div class="weui-cell__bd" style="text-align: center">
+                                                    <div v-for="(sender, index) in senders" :key="'senders_' + index"
+                                                         class="weui-grid member-box">
+                                                        <div class="weui-grid__icon">
+                                                            <img src="/images/defaultUserIcon.png" alt="">
+                                                        </div>
+                                                        <span class="sender-name" v-text="sender.crmUserName"></span>
+                                                    </div>
+                                                    <div class="weui-grid sender-box" @click="addSenders">
+                                                        <div class="weui-grid__icon">
+                                                            <img src="/images/journal/plus.png" alt="">
+                                                        </div>
+                                                        <span class="sender-name">添加</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -428,9 +455,9 @@
                                         </div>
                                         <div class="weui-cell__bd">
                                             <select class="weui-select" id="selectClient" v-model="client">
-                                                <option value="client_1">客户端1</option>
-                                                <option value="client_2">客户端2</option>
-                                                <option value="client_3">客户端3</option>
+                                                <option value="client_1">浙江大学</option>
+                                                <option value="client_2">浙江理工大学</option>
+                                                <option value="client_3">浙江工商大学</option>
                                             </select>
                                         </div>
                                     </div>
@@ -469,18 +496,6 @@
                                         </a>
                                     </div>
 
-                                    <!--<div class="weui-cell weui-cell_switch">-->
-                                        <!--<div class="weui-cell__bd">未读</div>-->
-                                        <!--<div class="weui-cell__ft">-->
-                                            <!--<label for="switchCP" class="weui-switch-cp">-->
-                                                <!--<input id="switchCP" v-model="isRead"-->
-                                                       <!--class="weui-switch-cp__input"-->
-                                                       <!--type="checkbox" checked="checked"/>-->
-                                                <!--<div class="weui-switch-cp__box"></div>-->
-                                            <!--</label>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-
                                     <div class="weui-flex">
                                         <div class="weui-flex__item">
                                             <div class="placeholder" style="visibility: hidden">weui</div>
@@ -510,8 +525,8 @@
 
 
                                 </div>
-                            </div>
-                        </div>
+                            <!--</div>-->
+                        <!--</div>-->
                     </div>
                 </div>
 

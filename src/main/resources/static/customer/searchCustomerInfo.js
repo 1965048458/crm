@@ -10,6 +10,7 @@ $(document).ready(function () {
             searchCustomer: true,
             customers: true,
             titleBar: true,
+            blank: false,
             searchWord: '',
             errMsg: undefined,
             customerList: [],
@@ -34,7 +35,7 @@ $(document).ready(function () {
                     }
                 });
             },
-            'backToInfo':function () {
+            'backToInfo': function () {
                 //this.customers = true;
             },
             'text': function () {
@@ -74,10 +75,18 @@ $(document).ready(function () {
                 setTimeout(function () {
                     $loadingToast.fadeOut(100);
                     //temp.showPage = 'invite';
-                    window.location.href = "/customer/customerInfo?customerId=" + customer.customerId + "&customerName=" +customer.customerName;
+                    window.location.href = "/customer/customerInfo?customerId=" + customer.customerId + "&customerName=" + customer.customerName;
                 }, 500);
             }
         },
+        watch: {
+            'customerList': function () {
+                //
+            },
+            'myCustomers': function () {
+                //
+            }
+        }
     });
     searchCustInfoVue.showResult();
 
