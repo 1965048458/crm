@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class Opportunity {
     @Expose
-    private String opportunityId;
+    private Integer opportunityId;
     @Expose
     private String customerId;
     @Expose
@@ -45,11 +45,11 @@ public class Opportunity {
         this.content = content;
     }
 
-    public String getOpportunityId() {
+    public Integer getOpportunityId() {
         return opportunityId;
     }
 
-    public void setOpportunityId(String opportunityId) {
+    public void setOpportunityId(Integer opportunityId) {
         this.opportunityId = opportunityId;
     }
 

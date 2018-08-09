@@ -32,7 +32,13 @@ public class OpportunityServiceImpl implements OpportunityService {
     }
 
     @Override
-    public void addSale(Opportunity opportunity) {
-        opportunityMapper.addSale(opportunity);
+    public Integer addSale(Opportunity opportunity) {
+        Integer opportunityId = opportunityMapper.addSale(opportunity);
+        return opportunityId;
+    }
+
+    @Override
+    public void addOpportunityContact(Integer opportunityId, String contactId) {
+        opportunityMapper.addOpportunityContact(opportunityId, contactId);
     }
 }

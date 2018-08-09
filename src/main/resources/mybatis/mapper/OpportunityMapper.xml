@@ -27,4 +27,13 @@
         )
     </insert>
 
+    <insert id="addOpportunityContact">
+        INSERT INTO `crmdb`.`opportunity_contacts` (
+            `sales_opportunity_id`, `contacts_id`
+        ) VALUES (
+            #{opportunityId},
+            #{contactId}
+        )
+    </insert>
+
 </mapper>

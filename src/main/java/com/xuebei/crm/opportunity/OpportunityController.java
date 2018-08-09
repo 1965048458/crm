@@ -41,7 +41,7 @@ public class OpportunityController {
     public GsonView getCustomers(HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
         GsonView gsonView = new GsonView();
-        List<Customer> customerList = opportunityService.getMyCustomers("57259d54f9994209a813e8ad2b297b3a");
+        List<Customer> customerList = opportunityService.getMyCustomers(userId);//test userId "57259d54f9994209a813e8ad2b297b3a"
         gsonView.addStaticAttribute("successFlg", true);
         gsonView.addStaticAttribute("customerList", customerList);
         return gsonView;
@@ -50,7 +50,7 @@ public class OpportunityController {
     @RequestMapping("addSale")
     public GsonView addSale(@RequestBody Opportunity opportunity){
         opportunityService.addSale(opportunity);
-
+        opportunityService.addOpportunityContact(opportunity.getOpportunityId(), opportunity.getContactId());
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;

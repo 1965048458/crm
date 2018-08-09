@@ -29,9 +29,10 @@ $(document).ready(function () {
             opportunityName: '',
             amount: '',
             customerId: '',
-            myCustomers: [],
-            showSub: true,
-            imgPath: "/images/customer/fold.svg",
+            myCustomers: [{
+                showSub: false,
+                imgPath: "/images/customer/fold.svg"
+            }],
             errMsg: '',
             keyWord: ''
         },
@@ -93,7 +94,19 @@ $(document).ready(function () {
                 this.showPage = 'customerContact';
                 this.showMyCustomers();
             },
+            'checkNull':function () {
+                if( this.contactId === "" || this.content === "" || this.amount === "" ||
+                this.saleStage === "" || this.opportunityName === "" || this.preDate === ""
+                || this.deliverDate === "" ){
+                    alert("以下选择均不能为空");
+                    return false;
+                }else
+                    return true;
+            },
             'add': function () {
+                if (!this.checkNull()){
+                    return;
+                }
                 var thisVue = this;
                 var postData = {
                     customerId: this.customerId,
@@ -117,7 +130,7 @@ $(document).ready(function () {
                         $('#toast').fadeIn(100);
                         setTimeout(function () {
                             $('#toast').fadeOut(100);
-                            //window.location = '/company/chooseCompany';
+                            window.location = '/opportunity/newSale';
                         }, 2000);
                     } else {
                         thisVue.errMsg = result.errMsg;
@@ -127,7 +140,7 @@ $(document).ready(function () {
             },
             'search': function () {
                 //this.customers = true;   逻辑待修改
-                window.location.href = "/customer/customer?customerName=" + this.keyWord;
+                //window.location.href = "/customer/customer?customerName=" + this.keyWord;
             },
             'text': function () {
                 $('#searchBar').addClass('weui-search-bar_focusing');
@@ -159,21 +172,26 @@ $(document).ready(function () {
                 }).done(function (result) {
                     if (result.successFlg) {
                         thisVue.$set(thisVue, 'myCustomers', result.customerList);
+                        for (var index = 0; index < thisVue.myCustomers.length; index++) {
+                            thisVue.$set(thisVue.myCustomers[index], 'showSub', false);
+                            thisVue.$set(thisVue.myCustomers[index], 'imgPath', "/images/customer/fold.svg");
+                        }
                     } else {
                         thisVue.errMsg = result.errMsg;
                     }
                 });
             },
-            'setImgPath': function () {
-                if (this.showSub == false) {
-                    this.imgPath = "/images/customer/fold.svg";
+            'setImgPath': function (index) {
+                if (this.myCustomers[index].showSub == false) {
+                    this.$set(this.myCustomers[index], 'imgPath', "/images/customer/fold.svg");
                 } else {
-                    this.imgPath = "/images/customer/unfold.svg";
+                    this.$set(this.myCustomers[index], 'imgPath', "/images/customer/unfold.svg");
                 }
             },
-            'changeSubFold': function () {
-                this.showSub = !this.showSub;
-                this.setImgPath();
+            'changeSubFold': function (index) {
+                var sub = this.myCustomers[index].showSub;
+                this.$set(this.myCustomers[index], 'showSub', !sub);
+                this.setImgPath(index);
             },
             'onTransferValue': function (customerInfo) {
                 this.temp = customerInfo;

@@ -209,17 +209,17 @@
         </div>
 
         <div class="customers">
-            <div class="weui-cells" v-for="cust in myCustomers">
-                <div class="weui-cell" @click="changeSubFold()">
+            <div class="weui-cells" v-for="(cust, index) in myCustomers">
+                <div class="weui-cell" @click="changeSubFold(index)">
                     <div class="weui-cell__bd" :id="cust.customerName">
                         <span class="pull-left" style="padding-right: 10px;">
-                            <img :src="imgPath">
+                            <img :src="myCustomers[index].imgPath">
                         </span>
                         <span class="pull-left" v-text="cust.customerName"
                               style="padding-right: 5px;color: #333333;font-size: 16px"></span>
                     </div>
                 </div>
-                <div class="customer-item" v-show="showSub" style="padding-left: 20px">
+                <div class="customer-item" v-show="myCustomers[index].showSub" style="padding-left: 20px">
                     <customer v-for="customer in cust.contacts" :customer="customer"
                               v-on:transfer_value="onTransferValue"></customer>
 
