@@ -53,4 +53,12 @@
         ( #{userId},#{tel},  #{pwd}, #{realName}, #{genderEnum}, #{mail},#{birth},
          "/images/journal/defaultUserIcon.png", NOW(), NOW())
     </insert>
+
+    <select id="queryUserIdByCompanyId" resultType="java.lang.String">
+        SELECT user_id
+        FROM company_user
+        WHERE crm_user_id = #{crmUserId}
+          AND company_id = #{companyId}
+            AND status = "PERMITTED";
+     </select>
 </mapper>

@@ -99,11 +99,12 @@
                     <span><img src="/images/next_page.svg"/></span>
                 </div>
             </div>
-            <div class="weui-cell">
+            <div class="weui-cell" @click="chooseOpportunity(index)">
                 <div class="weui-cell__bd">
-                    <label>拜访项目（还没有做）</label>
+                    <label>拜访商机</label>
                 </div>
                 <div>
+                    <span v-text="calculateOpportunityName(visit.opportunityId)"></span>
                     <span><img src="/images/next_page.svg"/></span>
                 </div>
             </div>
@@ -228,6 +229,27 @@
                 </div>
                 <div class="weui-cell__ft">
                     <input type="radio" class="weui-check" :value="'PHONE'" v-model="visitTypeTmp" id="phone">
+                    <i class="weui-icon-checked"></i>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <div v-show="showPage === 'selectOpportunity'" id="selectOpportunity">
+        <div class="top-bar">
+            <span @click="cancelSelectOpportunity" class="pull-left">取消</span>
+            <span>选择商机</span>
+            <span @click="confirmSelectOpportunity" class="pull-right">完成</span>
+        </div>
+
+        <div class="weui-cells_radio visit-type-sel" style="background:#ffffff;">
+            <label class="weui-cell weui-check__label" v-for="(opportunity, index) in opportunities">
+                <div class="weui-cell__bd">
+                    <p v-text="opportunity.opportunityName"></p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check" name="opportunity"
+                           :value="opportunity.opportunityId" v-model="opportunityTmp">
                     <i class="weui-icon-checked"></i>
                 </div>
             </label>

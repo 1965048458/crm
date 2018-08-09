@@ -23,6 +23,8 @@ public class JournalSearchParam {
 
     private Integer isMine;
 
+    private String childId;
+
     public Boolean getMy() {
         return isMy;
     }
@@ -103,5 +105,13 @@ public class JournalSearchParam {
 
     public void setSdId(String[] sdId) {
         this.sdId = sdId;
+    }
+
+    public String getChildId() {
+        return childId;
+    }
+
+    public void setChildId(String childId) {
+        this.childId = childId;
     }
 }

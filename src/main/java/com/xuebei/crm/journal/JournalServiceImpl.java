@@ -6,6 +6,9 @@ import com.xuebei.crm.customer.Customer;
 import com.xuebei.crm.customer.CustomerMapper;
 import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
+import com.xuebei.crm.opportunity.Opportunity;
+import com.xuebei.crm.project.Project;
+import com.xuebei.crm.project.ProjectMapper;
 import com.xuebei.crm.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,9 @@ public class JournalServiceImpl implements JournalService {
     @Autowired
     private CustomerMapper customerMapper;
 
+    @Autowired
+    private ProjectMapper projectMapper;
+
     /**
      * 创建一个新日志
      * 注意：调用该方法前，需要将 session 中 userId 装载入 journal 对象中(Not checked)
@@ -31,6 +37,11 @@ public class JournalServiceImpl implements JournalService {
     public void createJournal(Journal journal) throws InformationNotCompleteException, AuthenticationException {
         checkBasicInfo(journal);
         checkVisitRecords(journal.getVisitRecords());
+
+        Journal draft = journalMapper.findJournalDraft(journal.getUserId());
+        if (draft != null) {
+            journalMapper.deleteJournal(journal.getUserId(), journal.getJournalId());
+        }
 
         journalMapper.createJournal(journal);
         insertVisitRecords(journal.getJournalId(), journal.getVisitRecords());
@@ -145,9 +156,16 @@ public class JournalServiceImpl implements JournalService {
         }
 
         List<Journal> myJournal = journalMapper.searchMyJournal(param);
+
+        // 查询下属的日志
         List<Journal> receivedJournal = new ArrayList<>();
-        if (param.getUserId().equals("00284bca325c4e77b9f30c5671ec1c44")) {
-            receivedJournal = journalMapper.searchReceivedJournal(param);
+        Set<String> childs = getAllSubordinatesUserId(param.getUserId());
+        for (String childId: childs) {
+            if (childId.equals(param.getUserId())) {
+                continue;
+            }
+            param.setChildId(childId);
+            receivedJournal.addAll(journalMapper.searchReceivedJournal(param));
         }
 
         List<Journal> allJournalList = new ArrayList<>();
@@ -164,6 +182,8 @@ public class JournalServiceImpl implements JournalService {
             jn.setVisitRecords(journalMapper.queryVisitLogs(jn.getJournalId()));
             for (VisitRecord visitRecord: jn.getVisitRecords()) {
                 visitRecord.setChosenContacts(journalMapper.queryVisitContacts(visitRecord.getVisitId()));
+                visitRecord.setOpportunityName(projectMapper.queryOpportunityNameByOpportunityId(
+                        visitRecord.getOpportunityId()));
                 for (Contacts contacts: visitRecord.getChosenContacts()) {
                     ContactsDept contactsDept = customerMapper.queryContactsDept(contacts.getContactsId());
                     contacts.setTotalName(contactsDept.toString());
@@ -199,4 +219,46 @@ public class JournalServiceImpl implements JournalService {
         }
         return customerList;
     }
+
+    public Set<String> getAllSubordinatesUserId(String userId) {
+        Set<String> userSet = new HashSet<>();
+        Set<String> tSet = new HashSet<>();
+        tSet.add(userId);
+
+        while (!tSet.isEmpty()) {
+            Set<String> childsSet = new HashSet<>();
+            for (String si: tSet) {
+                List<String> childs = journalMapper.querySubordinatesByUserId(si);
+                for (String child: childs) {
+                    if (!userSet.contains(child) && !tSet.contains(child)) {
+                        childsSet.add(child);
+                    }
+                }
+            }
+            userSet.addAll(tSet);
+            tSet = childsSet;
+        }
+
+        return userSet;
+    }
+
+    public Set<Project> getAllSubordinatesProjects(Set<String> userGroup) {
+        // 这样实现目的是，防止以后查询projects的接口发生改变，发生碰撞
+        Set<Project> projectSet = new HashSet<>();
+        for (String userId: userGroup) {
+            List<Project> projects = projectMapper.queryProjectsByUserId(userId);
+            projectSet.addAll(projects);
+        }
+        return projectSet;
+    }
+
+    public Set<Opportunity> getAllSubordinatesOpportunity(Set<String> userGroup) {
+        Set<Opportunity> opportunitySet = new HashSet<>();
+        for (String userId: userGroup) {
+            List<Opportunity> opportunities = projectMapper.queryOpportunitiesByUserId(userId);
+            opportunitySet.addAll(opportunities);
+        }
+        return opportunitySet;
+    }
+
 }

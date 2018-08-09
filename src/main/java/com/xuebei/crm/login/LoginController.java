@@ -333,4 +333,20 @@ public class LoginController {
         return gsonView;
     }
 
+    @RequestMapping("/chooseCompany")
+    public GsonView loginWithCompany(@RequestParam("companyId") String companyId,
+                                     HttpServletRequest request) {
+        String crmUserId = (String)request.getSession().getAttribute("crmUserId");
+        if (crmUserId == null) {
+            return GsonView.createErrorView("用户未登陆");
+        }
+        String userId = loginRegisterMapper.queryUserIdByCompanyId(crmUserId, companyId);
+        if (userId == null) {
+            return GsonView.createErrorView("用户未加入公司或审核未通过");
+        } else {
+            request.getSession().setAttribute("userId", userId);
+            return GsonView.createSuccessView();
+        }
+    }
+
 }
