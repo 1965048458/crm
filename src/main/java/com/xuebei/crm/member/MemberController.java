@@ -24,7 +24,10 @@ public class MemberController {
     @RequestMapping()
     public String member(@RequestParam("companyId") String companyId,
                          ModelMap modelMap){
+        String companyName = memberMapper.getCompanyNameById(companyId);
         modelMap.addAttribute("companyId", companyId);
+        modelMap.addAttribute("companyName", companyName);
+
         return "memberSetting";
     }
 
@@ -56,8 +59,6 @@ public class MemberController {
         return gsonView;
     }
 
-
-
     @RequestMapping("searchSiblings")
     public GsonView searchSiblings(@RequestParam("memberId") String memberId){
         GsonView gsonView = new GsonView();
@@ -73,6 +74,28 @@ public class MemberController {
         List<Member> subMemberList = memberService.searchSubMemberList(userId);
         gsonView.addStaticAttribute("successFlg",true);
         gsonView.addStaticAttribute("subMemberList",subMemberList);
+        return gsonView;
+    }
+
+    @RequestMapping("memberInfo")
+    public GsonView getMemberInfoList(@RequestParam("companyId") String companyId){
+        GsonView gsonView = new GsonView();
+        List<Member> memberInfoList = memberMapper.searchMemberList(companyId);
+        gsonView.addStaticAttribute("successFlg",true);
+        gsonView.addStaticAttribute("memberInfoList",memberInfoList);
+        return gsonView;
+    }
+
+    @RequestMapping("deleteMember")
+    public GsonView deleteMember(@RequestParam("memberId") String ids){
+        GsonView gsonView = new GsonView();
+        String[] memberId = ids.split(",");
+        for(String id:memberId){
+           // memberMapper.deleteLeaderId(id);
+            memberMapper.deleteMember(id);
+
+        }
+        gsonView.addStaticAttribute("successFlg",true);
         return gsonView;
     }
 

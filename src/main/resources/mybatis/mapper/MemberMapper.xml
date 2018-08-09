@@ -48,4 +48,18 @@
         SET leader_id=NULL
         WHERE user_id=#{memberId};
     </update>
+    
+    <select id="getCompanyNameById" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT com_nm FROM company
+        WHERE company_id = #{companyId};
+    </select>
+
+    <!--<update id=""-->
+
+    <update id="deleteLeaderId" parameterType="java.lang.String">
+        UPDATE company_user
+        SET leader_id=NULL
+        WHERE leader_id=#{memberId};
+    </update>
+
 </mapper>

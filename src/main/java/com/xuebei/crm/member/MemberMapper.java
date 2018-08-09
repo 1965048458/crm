@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Mapper
 public interface MemberMapper {
-    List<Member> searchMemberList(@Param("companyId") String memberId);
+    List<Member> searchMemberList(@Param("companyId") String companyId);
 
     void updateRelationship(@Param("upperMemberId") String upperMemberId,
                             @Param("lowerMemberId") String lowerMemberId);
@@ -20,4 +20,10 @@ public interface MemberMapper {
     String getCompanyIdByMemberId(@Param("memberId") String memberId);
 
     void deleteLeader(@Param("memberId") String memberId);
+
+    String getCompanyNameById(@Param("companyId") String companyId);
+
+    void deleteMember(@Param("memberId") String memberId);
+
+    void deleteLeaderId(@Param("memberId") String memberId);
 }

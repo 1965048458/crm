@@ -300,9 +300,11 @@ public class CustomerController {
 
     @RequestMapping("/organization")
     public String organization(@RequestParam("customerId") String customerId,
+                               @RequestParam("customerName") String customerName,
                                HttpServletRequest request,
                                ModelMap modelMap){
         modelMap.addAttribute("customerId",customerId);
+        modelMap.addAttribute("customerName", customerName);
         return "customer/organization";
     }
 

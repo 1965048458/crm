@@ -81,14 +81,4 @@ $(document).ready(function () {
     });
     searchCustInfoVue.showResult();
 
-    $.ajax({
-        type: 'get',
-        url: '/customer/getMyCustomers',
-        dataType: 'json',
-        cache: false,
-        success: function (result) {
-            searchCustInfoVue.$set(searchCustInfoVue, 'myCustomers', result.myCustomers);
-        }
-    });
-
 });

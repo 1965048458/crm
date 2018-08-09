@@ -61,18 +61,18 @@
 
 <div id="organizationVue" >
     <input id="customerId" type="hidden" th:value="${customerId}">
+    <input id="customerName" type="hidden" th:value="${customerName}">
     <div class="page navbar js_show" v-show="showPage === 'showCustomerOrganization'">
         <div class="page__bd" style="height: 100%;">
             <div class="weui-tab">
                 <div class="top-bar center-box" style="border: hidden">
-                    <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;">返回</span>
-                    <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);">{{customer.customerName}}</span>
+                    <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;" @click="toCustomerList()">返回</span>
+                    <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);" v-text="customerName"></span>
                     <span class="pull-right" style="color: rgb(61, 168, 244); font-size: 16px;">编辑</span>
                 </div>
 
                 <div class="weui-navbar" style="position: relative;height: 40px;background-color: #ffffff">
-                    <div id="customerInfoBtn" class="weui-navbar__item" @click="switch2CustomerInfoPage"
-                         style="padding: 10px 0;border: hidden" onclick="console.log(11);">
+                    <div id="customerInfoBtn" class="weui-navbar__item" style="padding: 10px 0;border: hidden" @click="toCustomerInfo()">
                         客户信息
                     </div>
                     <div id="organizationInfoBtn" class="weui-navbar__item weui-bar__item_on" @click="switch2OrganizationInfoPage"
