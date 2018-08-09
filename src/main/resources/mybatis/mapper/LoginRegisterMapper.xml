@@ -11,14 +11,37 @@
         <result column="pwd" property="pwd"/>
     </resultMap>
 
+    <resultMap id="userMessage" type="com.xuebei.crm.user.User">
+        <id column="crm_user_id" property="CRMUserId"/>
+        <result column="tel" property="tel"/>
+        <result column="real_nm" property="realName"/>
+    </resultMap>
+
     <select id="searchTel" parameterType="string" resultMap="userMap">
         select * from crm_user
         WHERE tel=(#{tel})
     </select>
 
+    <select id="searchMessage" parameterType="string" resultMap="userMessage">
+        select * from crm_user
+        WHERE crm_user_id=(#{crmUserId})
+    </select>
+
     <select id="changePwd" parameterType="string" resultMap="userMap">
         UPDATE crm_user SET  pwd = (#{pwd})
         WHERE tel=(#{tel})
+    </select>
+
+    <select id="queryRealName" parameterType="string" resultType="java.lang.String">
+        SELECT real_nm
+        FROM crm_user
+        WHERE crm_user_id = #{crmUserId} ;
+    </select>
+
+    <select id="queryTel" parameterType="string" resultType="java.lang.String">
+        SELECT tel
+        FROM crm_user
+        WHERE crm_user_id = #{crmUserId} ;
     </select>
 
 

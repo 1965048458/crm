@@ -18,6 +18,8 @@ jQuery(document).ready(function () {
             time: 60,
             flag: true,
             birth:'',
+            title:'',
+
         },
         methods: {
             'login': function () {
@@ -33,7 +35,7 @@ jQuery(document).ready(function () {
                     cache: false
                 }).done(function (result) {
                     if (result.successFlg) {
-                        window.location = '/journal/toList';
+                        window.location.href = "/myAccount";
                     } else {
                         alert("用户名或密码不正确");
                     }
@@ -182,7 +184,7 @@ jQuery(document).ready(function () {
                         cache: false
                     }).done(function (result) {
                         if (result.successFlg) {
-                            window.location = '/company/chooseCompany';
+                            window.location.href = "/";
                         } else {
                             alert("信息填写错误，注册失败");
                         }

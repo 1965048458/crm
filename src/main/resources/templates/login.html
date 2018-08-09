@@ -12,101 +12,105 @@
 <body ontouchstart>
 
 <div id = "insertVue">
-    <div class="weui-flex" style=" visibility: hidden">
-        <div class="weui-flex__item">
-            <div class="placeholder">placeholder</div>
-        </div>
-    </div>
-    <div class="weui-flex" style=" visibility: hidden">
-        <div class="weui-flex__item">
-            <div class="placeholder">placeholder</div>
-        </div>
-    </div>
-    <div class="weui-flex" style=" visibility: hidden">
-        <div class="weui-flex__item">
-            <div class="placeholder">placeholder</div>
-        </div>
-    </div>
-    <div class="weui-flex" style=" visibility: hidden">
-        <div class="weui-flex__item">
-            <div class="placeholder">placeholder</div>
-        </div>
-    </div>
-    <div class="weui-flex">
-        <div class="weui-flex__item">
-            <div class="placeholder"></div>
-        </div>
-        <div class="weui-flex__item">
-            <div class="placeholder"style="text-align: center;">
-                <image src="/logo.jpg"></image>
+    <div id="login" >
+        <div class="weui-flex" style=" visibility: hidden">
+            <div class="weui-flex__item">
+                <div class="placeholder">placeholder</div>
             </div>
         </div>
-        <div class="weui-flex__item">
-            <div class="placeholder"></div>
+        <div class="weui-flex" style=" visibility: hidden">
+            <div class="weui-flex__item">
+                <div class="placeholder">placeholder</div>
+            </div>
         </div>
-    </div>
-    <div class="weui-flex" style=" visibility: hidden">
-        <div class="weui-flex__item">
-            <div class="placeholder">placeholder</div>
+        <div class="weui-flex" style=" visibility: hidden">
+            <div class="weui-flex__item">
+                <div class="placeholder">placeholder</div>
+            </div>
         </div>
-    </div>
-    <div class="weui-flex" style=" visibility: hidden">
-        <div class="weui-flex__item">
-            <div class="placeholder">placeholder</div>
+        <div class="weui-flex" style=" visibility: hidden">
+            <div class="weui-flex__item">
+                <div class="placeholder">placeholder</div>
+            </div>
         </div>
-    </div>
-    <div class="weui-flex" style=" visibility: hidden">
-        <div class="weui-flex__item">
-            <div class="placeholder">placeholder</div>
-        </div>
-    </div>
-
-    <div class="page__bd page__bd_spacing">
-        <div class="weui-cells weui-cells_form">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <input class="weui-input" type="number" placeholder="手机号" v-model="tel">
+        <div class="weui-flex">
+            <div class="weui-flex__item">
+                <div class="placeholder"></div>
+            </div>
+            <div class="weui-flex__item">
+                <div class="placeholder" style="text-align: center;">
+                    <image src="/logo.jpg"></image>
                 </div>
             </div>
-        </div>
-        <div class="weui-cells__tips" style=" display:none">
-        </div>
-        <div class="weui-cells weui-cells_form">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <input class="weui-input "  type="password" placeholder="输入密码" v-model="pwd">
-                </div>
+            <div class="weui-flex__item">
+                <div class="placeholder"></div>
             </div>
         </div>
-
+        <div class="weui-flex" style=" visibility: hidden">
+            <div class="weui-flex__item">
+                <div class="placeholder">placeholder</div>
+            </div>
+        </div>
+        <div class="weui-flex" style=" visibility: hidden">
+            <div class="weui-flex__item">
+                <div class="placeholder">placeholder</div>
+            </div>
+        </div>
         <div class="weui-flex" style=" visibility: hidden">
             <div class="weui-flex__item">
                 <div class="placeholder">placeholder</div>
             </div>
         </div>
 
-        <div class="hb_mar_top_40">
-            <button class="weui-btn weui-btn_primary" id=submit_btn  @click="login">登录</button>
-        </div>
-    </div>
+        <div class="page__bd page__bd_spacing">
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="number" placeholder="手机号" v-model="tel">
+                    </div>
+                </div>
+            </div>
+            <div class="weui-cells__tips" style=" display:none">
+            </div>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <input class="weui-input " type="password" placeholder="输入密码" v-model="pwd">
+                    </div>
+                </div>
+            </div>
 
-    <div class="weui-flex">
-        <div class="weui-flex__item">
-            <div class="placeholder">
-                <a href="javascript:findPwd();" class="weui-cell weui-cell_link">
-                    <div class="weui-cell__bd"style="text-align: left;float:left">忘记密码？</div>
-                </a>
+            <div class="weui-flex" style=" visibility: hidden">
+                <div class="weui-flex__item">
+                    <div class="placeholder">placeholder</div>
+                </div>
+            </div>
+
+            <div class="hb_mar_top_40">
+                <button class="weui-btn weui-btn_primary" id=submit_btn @click="login">登录</button>
             </div>
         </div>
 
-        <div class="weui-flex__item">
-            <div class="placeholder">
-                <a href="javascript:telRegister();" class="weui-cell weui-cell_link">
-                    <div class="weui-cell__bd"style="text-align: right ;float: right">新用户注册</div>
-                </a>
+        <div class="weui-flex">
+            <div class="weui-flex__item">
+                <div class="placeholder">
+                    <a href="javascript:findPwd();" class="weui-cell weui-cell_link">
+                        <div class="weui-cell__bd" style="text-align: left;float:left">忘记密码？</div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="weui-flex__item">
+                <div class="placeholder">
+                    <a href="javascript:telRegister();" class="weui-cell weui-cell_link">
+                        <div class="weui-cell__bd" style="text-align: right ;float: right">新用户注册</div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+
+
 </div>
 </body>
 <script>

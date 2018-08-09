@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>账号信息</title>
+
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css">
+
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css">
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/myAccount.js"></script>
+    <style>
+        .top-bar {
+            text-align: center;
+            background: #FFFFFF;
+        }
+
+        .pull-left {
+            float: left !important;
+        }
+
+        .pull-right {
+            float: right !important;
+        }
+    </style>
+</head>
+<body>
+<div id="myAccount">
+
+    <input type="hidden" th:value="${type}" id="type">
+    <input type="hidden" th:value="${realName}" id="realName">
+    <!--<input type="hidden" th:value="${applyStaffList}" id="applyStaffList">-->
+
+    <div id="manager" style="display: none" v-show="show==='manager'">
+        <div class="weui-panel weui-panel_access">
+            <div class="weui-panel__bd" style=" height: 90px;margin-top: 0px">
+                <a href="javascript:;" class="weui-media-box weui-media-box_appmsg"
+                   style=" height: 90px; padding: 0px ;">
+                    <div class="weui-media-box__hd" style=" height: 90px;width: 90px; margin-right: 0px; ">
+                        <img src="/images/journal/defaultUserIcon.png"
+                             style="width: 60px;height: 60px;  line-height: 5px;padding:15px"
+                             alt=""
+                             class="weui-tabbar__icon">
+                    </div>
+                    <div class="weui-media-box__bd" style="margin-right: 2em;">
+                        <p style="color: #333333;font-size: 16px">
+                        <h3>{{title}}</h3>
+                        </p>
+                    </div>
+
+                </a>
+            </div>
+        </div>
+
+
+        <div class="weui-cells">
+            <a class="weui-cell weui-cell_access" href="javascript:;">
+                <div class="weui-cell__bd">
+                    <p>旭日科技</p>
+                </div>
+                <div class="weui-cell__ft">
+                </div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:;" @click="staffAudit">
+                <div class="weui-cell__bd">
+                    <p>旭日人员审核&nbsp;<span>(</span><span style="color: #3DA8F4"
+                                                       th:text="${applyStaff}"></span><span>)</span>
+                    </p></div>
+                <div class="weui-cell__ft">
+                </div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:;" @click="accountSecurity">
+                <div class="weui-cell__bd">
+                    <p>账户与安全</p>
+                </div>
+                <div class="weui-cell__ft">
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div id="staff" style="display: none" v-show="show==='staff'">
+        <div class="weui-panel weui-panel_access">
+            <div class="weui-panel__bd" style=" height: 90px;margin-top: 0px">
+                <a href="javascript:;" class="weui-media-box weui-media-box_appmsg"
+                   style=" height: 90px; padding: 0px ;">
+                    <div class="weui-media-box__hd" style=" height: 90px;width: 90px; margin-right: 0px; ">
+                        <img src="/images/journal/defaultUserIcon.png"
+                             style="width: 60px;height: 60px;  line-height: 5px;padding:15px"
+                             alt=""
+                             class="weui-tabbar__icon">
+                    </div>
+                    <div class="weui-media-box__bd" style="margin-right: 2em;">
+                        <p style="color: #333333;font-size: 16px">
+                        <h3>{{title}}</h3>
+                        </p>
+                    </div>
+
+                </a>
+            </div>
+        </div>
+        <div class="weui-cells">
+            <a class="weui-cell weui-cell_access" href="javascript:;" @click="myCompany1">
+                <div class="weui-cell__bd">
+                    <p>我的公司</p>
+                </div>
+                <div class="weui-cell__ft">
+                </div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:;" @click="accountSecurity">
+                <div class="weui-cell__bd">
+                    <p>账户与安全</p>
+                </div>
+                <div class="weui-cell__ft">
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div id="myMessage" style="display: none" v-show="show==='myMessage'">
+
+        <div class="weui-tab">
+            <div class="weui-navbar">
+                <div id="titleBar1" class="weui-navbar__item top-bar" style="height: 28px; padding: 10px 10px;">
+                            <span @click="back" class="pull-left">
+                                <img src="/images/back_icon.svg" style="margin-top:7px;"/></span>
+                    <span class="center" style="font-size: 22px; margin-top: 1px">个人信息</span>
+                    <a>
+                                        <span class="pull-right" style="margin-top: 7px;"><img
+                                                src="/images/add.png"
+                                                style="width: 16px; height: 16px; display: block"/></span>
+                    </a>
+                </div>
+            </div>
+            <div class="weui-tab__panel">
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div id="check" style="display: none" v-show="show==='check'">
+        <div class="weui-tab">
+            <div class="weui-navbar">
+                <div id="titleBar2" class="weui-navbar__item top-bar" style="height: 28px; padding: 10px 10px;">
+                            <span @click="back" class="pull-left">
+                                <img src="/images/back_icon.svg" style="margin-top:7px;"/></span>
+                    <span class="center" style="font-size: 22px; margin-top: 1px">人员审核</span>
+                    <a>
+                                        <span class="pull-right" style="margin-top: 7px;display: none"><img
+                                                src="/images/add.png"
+                                                style="width: 16px; height: 16px; display: block"/></span>
+                    </a>
+                </div>
+            </div>
+            <div class="weui-tab__panel">
+
+                <div th:each="item : ${applyStaffList}">
+                    <div class="weui-panel weui-panel_access">
+                        <div class="weui-panel__bd" style=" height: 90px;margin-top: 0px">
+                            <a href="javascript:;" class="weui-media-box weui-media-box_appmsg"
+                               style=" height: 90px; padding: 0px ;">
+                                <div class="weui-media-box__hd" style=" height: 90px;width: 90px; margin-right: 0px; ">
+                                    <img src="/images/journal/defaultUserIcon.png"
+                                         style="width: 60px;height: 60px;  line-height: 5px;padding:15px"
+                                         alt=""
+                                         class="weui-tabbar__icon">
+                                </div>
+                                <div class="weui-media-box__bd" style="margin-right: 2em;">
+                                    <p style="color: #333333;font-size: 16px">
+                                    <p><span th:text=" ${item.getCrmUserName()}"></span>
+
+                                        <span style="float: right;font-size: 13px"
+                                              th:text="'申请时间：'+ ${item.getCreateTs()}"></span>
+                                    </p>
+                                    <p><span th:text=" '联系方式：'+ ${item.getTel()}"></span></p>
+
+                                    <p><span>职位：</span></p>
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="weui-cell">
+                            <input type="hidden" th:value="${item.getUserId()}" id="userId">
+                            <div class="weui-flex__item" style="text-align: center;border-right: groove"
+                                 @click="agree">
+                                <div class="placeholder">同意</div>
+                            </div>
+                            <div class="weui-flex__item" style="text-align: center" @click="refuse">
+                                <div class="placeholder">拒绝</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div id="count" style="display: none;" v-show="show==='count'">
+            <div class="weui-tab">
+                <div class="weui-navbar">
+                    <div id="titleBar3" class="weui-navbar__item top-bar" style="height: 28px; padding: 10px 10px;">
+                            <span @click="" class="pull-left">
+                                <img src="/images/back_icon.svg" style="margin-top:7px;"/></span>
+                        <span class="center" style="font-size: 22px; margin-top: 1px">账户与安全</span>
+                        <a>
+                                        <span class="pull-right" style="margin-top: 7px;display: none"><img
+                                                src="/images/add.png"
+                                                style="width: 16px; height: 16px; display: block"/></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="weui-tab__panel">
+
+                </div>
+            </div>
+        </div>
+
+        <div id="myCompany" style="display: none;" v-show="show==='myCompany'">
+            <div class="weui-tab">
+                <div class="weui-navbar">
+                    <div id="titleBar4" class="weui-navbar__item top-bar" style="height: 28px; padding: 10px 10px;">
+                            <span @click="back" class="pull-left">
+                                <img src="/images/back_icon.svg" style="margin-top:7px;"/></span>
+                        <span class="center" style="font-size: 22px; margin-top: 1px">我的公司</span>
+                        <a @click="addCompany">
+                                        <span class="pull-right" style="margin-top: 7px;"><img
+                                                src="/images/add.png"
+                                                style="width: 16px; height: 16px; display: block"/></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="weui-tab__panel">
+
+
+                    <div v-for="company in myCompany">
+                        <div class="weui-media-box weui-media-box_small-appmsg">
+                            <div class="weui-cells">
+                                <a class="weui-cell weui-cell_access" href="javascript:;">
+                                    <div class="weui-cell__hd"><img
+                                            src="/images/公司.svg" alt=""
+                                            style="width:40px;margin-right:5px;display:block">
+                                    </div>
+                                    <div class="weui-cell__bd weui-cell_primary">
+                                        <h4>{{company.companyName}}</h4>
+                                        <p>&nbsp;</p>
+                                    </div>
+                                    <span class="weui-cell__ft"></span>
+
+                                </a>
+                            </div>
+                            <div class="weui-cells weui-cells_form">
+                                <div class="weui-cell">
+                                    <div class="weui-cell__hd"><label
+                                            class="weui-label">{{companyStatus(company.status)}}</label></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="addCompany" style="display: none;" v-show="show==='addCompany'">
+            <div class="weui-tab">
+                <div class="weui-navbar">
+                    <div id="titleBar5" class="weui-navbar__item top-bar" style="height: 28px; padding: 10px 10px;">
+                            <span @click="back1" class="pull-left">
+                                <img src="/images/back_icon.svg" style="margin-top:7px;"/></span>
+                        <span class="center" style="font-size: 22px; margin-top: 1px">加入公司</span>
+
+                        <span style="color: dodgerblue;float: right;font-size: 18px; margin-top: 1px"
+                              @click="submit"> 提交 &nbsp; </span>
+
+                    </div>
+                </div>
+                <div class="weui-tab__panel">
+
+                    <div class="weui-cells">
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" placeholder="" name="input" v-model="name"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-cells">
+                        <div class="weui-cells__title">搜索结果</div>
+
+                        <div class="weui-cells weui-cells_radio" id="companyList">
+                            <label class="weui-cell weui-check__label" v-for="company in companyList">
+                                <div class="weui-cell__bd">
+                                    <p>{{company.companyName}}</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <input type="radio" class="weui-check" :value="company.companyName"
+                                           v-model="name">
+                                    <span class="weui-icon-checked"></span>
+                                </div>
+                            </label>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</body>
+</html>

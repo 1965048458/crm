@@ -11,6 +11,7 @@
     <script src="/lib/jquery-2.1.1.js"></script>
     <script src="/vue.v2.5.13.js"></script>
     <script src="/customer/customerInfo.js"></script>
+    <script src="/organization/showOrganization.js" charset="utf-8"></script>
     <style>
         .center-ele {
             display: inline-block;
@@ -33,6 +34,19 @@
         .weui-cells {
             margin-top: 0;
             padding: 0px;
+        }
+
+        .usr-img {
+            position: relative;
+            margin-right: 10px;
+            padding-left: 30px;
+            width: 25px;
+            display: block;
+
+        }
+
+        .page__bd_spacing {
+            padding-top: 10px;
         }
 
     </style>
@@ -149,7 +163,7 @@
     function orgDisplay() {
         location.href = '/customer/organization';//?customerId=' + ${customerId};
     }
-    
+
     function hLink() {
         return ;
     }

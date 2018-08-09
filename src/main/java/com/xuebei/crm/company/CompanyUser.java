@@ -26,6 +26,21 @@ public class CompanyUser {
     @Expose
     private String email;
 
+
+    @Expose
+    private String createTs;
+    public String getCreateTs() {
+        return createTs;
+    }
+
+    public void setCreateTs(String createTs) {
+        this.createTs = createTs;
+    }
+
+
+
+
+
     public String getDepartment() {
         return department;
     }
