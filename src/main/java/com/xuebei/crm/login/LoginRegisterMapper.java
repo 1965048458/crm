@@ -21,4 +21,7 @@ public interface LoginRegisterMapper {
     String queryTel(String crmUserId);
 
     User searchMessage(String crmUserId);
+
+    String queryUserIdByCompanyId(@Param("crmUserId") String crmUserId,
+                                  @Param("companyId") String companyId);
 }

@@ -4,11 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xuebei.crm.project.ProjectMapper">
+    
+    <resultMap id="projectMap" type="com.xuebei.crm.project.Project">
+        <id property="projectId" column="project_id"/>
+        <result property="projectNm" column="project_nm"/>
+    </resultMap>
+
+    <resultMap id="opportunityMap" type="com.xuebei.crm.opportunity.Opportunity">
+        <id property="opportunityId" column="sales_opportunity_id"/>
+        <result property="opportunityName" column="opportunity_nm"/>
+    </resultMap>
 
     <insert id="insertProject" parameterType="com.xuebei.crm.project.Project">
         INSERT INTO  project
         ( project_id, project_no, project_nm, background, project_content,
-        status_cd, deadline, priority, agent, sales_opportunity_id,  contract_id, user_id)
+        status_cd, deadline, priority, agent, sales_opportunity_id,  contract_id, user_id),
         VALUES
         ( #{projectId},#{projectNo},  #{projectNm}, #{backGround}, #{projectContent},
         #{status}, #{deadLine},#{priority}, #{agent}, #{opportunityId},
@@ -16,5 +26,22 @@
         )
     </insert>
 
+    <select id="queryProjectsByUserId" resultMap="projectMap">
+        SELECT project_id, project_nm
+        FROM project
+        WHERE user_id = #{userId};
+    </select>
+
+    <select id="queryOpportunitiesByUserId" resultMap="opportunityMap">
+        SELECT sales_opportunity_id, opportunity_nm
+        FROM sales_opportunity
+        WHERE user_id = #{userId};
+    </select>
+
+    <select id="queryOpportunityNameByOpportunityId" resultType="java.lang.String">
+        SELECT opportunity_nm
+        FROM sales_opportunity
+        WHERE sales_opportunity_id = #{opportunityId};
+    </select>
 
 </mapper>

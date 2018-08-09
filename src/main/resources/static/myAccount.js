@@ -168,6 +168,22 @@ jQuery(document).ready(function () {
                 });
 
             },
+            'intoCompany': function (companyId) {
+                jQuery.ajax({
+                    type: 'post',
+                    url: 'chooseCompany',
+                    data: {
+                        companyId: companyId
+                    },
+                    dataType: 'json',
+                    cache: false,
+                    success: function (result) {
+                        if (result.successFlg) {
+                            window.location = '/journal/toList';
+                        }
+                    }
+                });
+            }
         },
         watch: {
             'name': function () {

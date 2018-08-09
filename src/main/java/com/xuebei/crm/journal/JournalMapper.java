@@ -77,4 +77,8 @@ public interface JournalMapper {
     List<Contacts> queryContactsByCustomerId(@Param("customerId") String customerId);
 
     List<JournalPatch> queryJournalPatch(@Param("journalId") String journalId);
+
+    List<String> querySubordinatesByUserId(@Param("userId") String userId);
+
+
 }

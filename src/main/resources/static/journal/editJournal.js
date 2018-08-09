@@ -33,6 +33,8 @@ jQuery(document).ready(function () {
            visits: [],
            curVisit: {},
            receivers: [],
+           opportunityTmp: '',
+           opportunities: [],
            receiversTmp: [],
            customers: [{name: '浙江大学', contactsFold: true, contactsGroup:[{realName: '李四'}, {realName: '李五'}, {realName: '李六'}]},
                {name: '浙江工商大学', contactsFold: true, contactsGroup:[{realName:'张三'}, {realName: '张斯'}, {realName: '张武'}]}],
@@ -79,7 +81,7 @@ jQuery(document).ready(function () {
                this.visits.splice(index, 1);
            },
            'addVisit': function () {
-               this.visits.push({visitResult: '', visitType: 'VISIT',chosenContacts:[]});
+               this.visits.push({visitResult: '', visitType: 'VISIT',chosenContacts:[], opportunityId:''});
            },
            'addVisitContacts': function (index) {
                this.curVisit = this.visits[index];
@@ -168,6 +170,18 @@ jQuery(document).ready(function () {
                }
                return str;
            },
+           'calculateOpportunityName': function (opportunityId) {
+                if (opportunityId == null || opportunityId === '') {
+                    return "请选择";
+                }
+                for (var i in this.opportunities) {
+                    var o = this.opportunities[i];
+                    if (opportunityId === o.opportunityId) {
+                        return o.opportunityName;
+                    }
+                }
+                return "无";
+           },
            'queryContacts': function (contactsId) {
                for (var i in this.customers) {
                    var customer = this.customers[i];
@@ -178,6 +192,20 @@ jQuery(document).ready(function () {
                    }
                }
                return null;
+           },
+           'chooseOpportunity': function (index) {
+               this.curVisit = this.visits[index];
+               this.opportunityTmp = this.curVisit.opportunityId;
+               this.showPage = 'selectOpportunity';
+           },
+           'cancelSelectOpportunity': function () {
+               this.opportunityTmp = '';
+               this.showPage = 'journalPage';
+           },
+           'confirmSelectOpportunity': function () {
+               this.curVisit.opportunityId = this.opportunityTmp;
+               this.opportunityTmp = '';
+               this.showPage = 'journalPage';
            }
        },
        computed: {
@@ -208,6 +236,7 @@ jQuery(document).ready(function () {
             success: function(result) {
                 editJournalVue.$set(editJournalVue, 'colleagues', result.colleagues);
                 editJournalVue.$set(editJournalVue, 'customers', result.customer);
+                editJournalVue.$set(editJournalVue, 'opportunities', result.opportunities);
             }
         });
     } else {
@@ -222,6 +251,7 @@ jQuery(document).ready(function () {
                 editJournalVue.$set(editJournalVue, 'visits', result.journal.visitRecords);
                 editJournalVue.$set(editJournalVue, 'colleagues', result.colleagues);
                 editJournalVue.$set(editJournalVue, 'customers', result.customer);
+                editJournalVue.$set(editJournalVue, 'opportunities', result.opportunities);
                 console.log(editJournalVue.customers);
                 console.log(result.journal.receivers);
                 console.log(result.colleagues);

@@ -22,6 +22,7 @@
         <id property="visitId" column="visit_log_id"/>
         <result property="visitType" column="visit_type"/>
         <result property="visitResult" column="visit_result"/>
+        <result property="opportunityId" column="sales_opportunity_id"/>
     </resultMap>
 
     <resultMap id="userMap" type="com.xuebei.crm.user.User">
@@ -105,9 +106,9 @@
 
     <insert id="insertVisitLog" parameterType="com.xuebei.crm.journal.VisitRecord" useGeneratedKeys="true" keyColumn="visit_log_id" keyProperty="visitId">
         INSERT INTO visit_log
-        (visit_result, visit_type, journal_id)
+        (visit_result, visit_type, journal_id, sales_opportunity_id)
         VALUES
-            (#{visitResult}, #{visitType}, #{journalId})
+            (#{visitResult}, #{visitType}, #{journalId}, #{opportunityId})
     </insert>
 
     <select id="queryVisitLogs" resultMap="visitMap">
@@ -204,7 +205,7 @@
     <select id="searchReceivedJournal" resultMap="journalMap">
         SELECT j.*, u.real_nm  FROM journal j
         INNER JOIN user_view u ON j.user_id = u.user_id
-        WHERE j.user_id != #{userId}
+        WHERE j.user_id = #{childId}
         AND has_submitted = 1
         <if test="journalType != null">
             AND j.type_cd = #{journalType}
@@ -259,6 +260,11 @@
         SELECT *
 		FROM journal_patch
 		WHERE journal_id = #{journalId};
+    </select>
+
+    <select id="querySubordinatesByUserId" resultType="java.lang.String">
+        SELECT user_id FROM company_user
+		WHERE leader_id = #{userId};
     </select>
 
 </mapper>

@@ -2,6 +2,9 @@ package com.xuebei.crm.journal;
 
 import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
+import com.xuebei.crm.opportunity.Opportunity;
+import com.xuebei.crm.project.Project;
+import com.xuebei.crm.user.User;
 
 import java.util.*;
 
@@ -20,4 +23,10 @@ public interface JournalService {
     List  searchDatail(String journalId);
 
     List<JournalCustomer> getAllContacts(String companyId);
+
+    Set<String> getAllSubordinatesUserId(String userId);
+
+    Set<Project> getAllSubordinatesProjects(Set<String> userGroup);
+
+    Set<Opportunity> getAllSubordinatesOpportunity(Set<String> userGroup);
 }

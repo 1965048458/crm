@@ -137,6 +137,8 @@
                     </div>
 
 
+
+
                     <div class="journal-list">
                         <div class="weui-flex">
                             <div class="weui-flex__item">
@@ -317,10 +319,8 @@
                                                           v-text="contacts.totalName + '、'"></span>
                                                 </div>
                                             </div>
-                                            <p style="text-align: left;color: #555555;font-size: 14px"
-                                               v-text="'拜访类型'+':'+' '+convertVisitType(visitRecord.visitType)"></p>
-                                            <p style="text-align: left;color: #555555;font-size: 14px"
-                                               v-text="'拜访结果'+':'+' '+visitRecord.visitResult"></p>
+                                            <p style="text-align: left;color: #555555;font-size: 14px" v-text="'拜访类型'+':'+' '+convertVisitType(visitRecord.visitType)"></p>
+                                            <p style="text-align: left;color: #555555;font-size: 14px" v-text="'拜访结果'+':'+' '+visitRecord.visitResult"></p>
 
                                             <!--<span class="weui-form-preview__value" style="text-align: left;">-->
                                             <!--&lt;!&ndash;<p v-text="'今日拜访' + (ind+1) + ':'"></p>&ndash;&gt;-->
@@ -336,7 +336,7 @@
 
                                 <div class="weui-form-preview" v-for="patch in curJournal.journalPatches">
                                     <div class="weui-form-preview__bd" style="padding: 5px 0px">
-                                        <div class="weui-form-preview__item" style="font-size: 12px;line-height: 17px">
+                                        <div class="weui-form-preview__item"  style="font-size: 12px;line-height: 17px">
                                         <span class="weui-form-preview__value" style="text-align: left;">
                                              <label v-text="patch.createTs + ' ' + '补充'"
                                                     style="font-size: 12px;color: #BBBBBB">2018-07-26 13:01:59 补充</label>
