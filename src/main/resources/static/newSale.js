@@ -38,7 +38,7 @@ $(document).ready(function () {
         },
         methods: {
             'back': function () {
-                //todo
+                window.location = '/opportunity';
             },
             'showDatePicker': function () {
                 var thisVue = this;
@@ -79,22 +79,22 @@ $(document).ready(function () {
                 this.showPage = 'saleStage';
             },
             'done1': function () {
-                this.saleStage = this.selStage;
-                if (this.saleStage === ""){
-                    alert("不能为空！");
+                if (this.selStage === ""){
+                    alert("销售阶段不能为空！");
                     return;
                 }
+                this.saleStage = this.selStage;
                 this.showPage = 'basicInfo';
             },
             'done2': function () {
-                var str = this.temp.split(':')
+                if (this.temp === ""){
+                    alert("客户联系人不能为空！");
+                    return;
+                }
+                var str = this.temp.split(':');
                 this.contact = str[0];
                 this.contactId = str[1];
                 this.customerId = str[2];
-                if (this.contact === ""){
-                    alert("不能为空！");
-                    return;
-                }
                 console.log(this.contactId);
                 this.showPage = 'basicInfo';
             },
@@ -138,7 +138,7 @@ $(document).ready(function () {
                         $('#toast').fadeIn(100);
                         setTimeout(function () {
                             $('#toast').fadeOut(100);
-                            window.location = '/opportunity/newSale';
+                            window.location = '/opportunity';
                         }, 2000);
                     } else {
                         thisVue.errMsg = result.errMsg;
