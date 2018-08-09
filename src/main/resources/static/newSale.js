@@ -80,6 +80,10 @@ $(document).ready(function () {
             },
             'done1': function () {
                 this.saleStage = this.selStage;
+                if (this.saleStage === ""){
+                    alert("不能为空！");
+                    return;
+                }
                 this.showPage = 'basicInfo';
             },
             'done2': function () {
@@ -87,6 +91,10 @@ $(document).ready(function () {
                 this.contact = str[0];
                 this.contactId = str[1];
                 this.customerId = str[2];
+                if (this.contact === ""){
+                    alert("不能为空！");
+                    return;
+                }
                 console.log(this.contactId);
                 this.showPage = 'basicInfo';
             },
