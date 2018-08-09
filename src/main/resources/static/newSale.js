@@ -38,7 +38,7 @@ $(document).ready(function () {
         },
         methods: {
             'back': function () {
-                //todo
+                window.location = '/opportunity';
             },
             'showDatePicker': function () {
                 var thisVue = this;
@@ -138,7 +138,7 @@ $(document).ready(function () {
                         $('#toast').fadeIn(100);
                         setTimeout(function () {
                             $('#toast').fadeOut(100);
-                            window.location = '/opportunity/newSale';
+                            window.location = '/opportunity';
                         }, 2000);
                     } else {
                         thisVue.errMsg = result.errMsg;
