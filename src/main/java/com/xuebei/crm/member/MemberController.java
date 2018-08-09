@@ -1,6 +1,5 @@
 package com.xuebei.crm.member;
 
-import com.sun.javafx.sg.prism.NGShape;
 import com.xuebei.crm.dto.GsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
