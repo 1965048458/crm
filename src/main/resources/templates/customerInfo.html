@@ -58,13 +58,15 @@
             <span onclick="backToList()" class="pull-left"><img src="/images/back_icon.svg"
                                                                 style="margin-top:3px"/></span>
             <span class="center" th:text="${customerName}"></span>
+            <input type="hidden" id="customerId" th:value="${customerId}">
+            <input type="hidden" id="customerName" th:value="${customerName}">
         </div>
         <div class="weui-tab" style="margin-top: 10px;">
             <div class="weui-navbar">
                 <div href="#tab1" class="weui-navbar__item weui-bar__item_on">
                     <span class="center-ele">客户信息</span>
                 </div>
-                <div href="#tab2" class="weui-navbar__item" onclick="orgDisplay()">
+                <div href="#tab2" class="weui-navbar__item" @click="orgDisplay()">
                     <span class="center-ele">组织机构</span>
                 </div>
             </div>
@@ -160,9 +162,9 @@
         });
     });
 
-    function orgDisplay() {
-        location.href = '/customer/organization';//?customerId=' + ${customerId};
-    }
+//    function orgDisplay(customerId) {
+//        location.href = '/customer/organization?customerId='+customerId;
+//    }
 
     function hLink() {
         return ;

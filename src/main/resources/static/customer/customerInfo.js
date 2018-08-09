@@ -4,14 +4,19 @@
 var color = ["", "#2eff4e", "#2b79ff", "#ff7e24"];
 var percent = [0, 80, 75, 90];
 //window.onload =
-$(function () {
+$(document).ready(function ()  {
 
     var customerVue = new Vue({
         el: '#customerVue',
         data: {
-            customerName: ''
+            customerName: '',
+            customerId:''
         },
         methods: {
+            'init':function (customerId, customerName) {
+              this.customerId = customerId;
+              this.customerName = customerName;
+            },
             'getCustomerInfo': function () {
                 $.ajax({
                     type: 'get',
@@ -20,9 +25,20 @@ $(function () {
                     dataType: 'json',
                     cache: false
                 });
+            },
+            'orgDisplay':function () {
+                location.href = '/customer/organization?customerId='+this.customerId+'&customerName='+this.customerName;
             }
         }
     });
+
+    var customerId = $("#customerId").val();
+    var customerName = $("#customerName").val();
+
+    customerVue.init(customerId,customerName);
+
+    // customerVue.customerId = customerId;
+    // customerVue.customerName = customerName;
 
     for (var i = 1; i <= 3; i++) {
         var canvas = document.getElementById('canvas' + i),  //获取canvas元素

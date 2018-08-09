@@ -8,6 +8,8 @@ jQuery(document).ready(function () {
         el: '#organizationVue',
         data:function(){
             return{
+                customerId:'',
+                customerName:'',
                 showPage:'',
                 showOrganization: false,
                 showApplyDialog: false,
@@ -22,10 +24,6 @@ jQuery(document).ready(function () {
                 showDelayApplyDialog:false,
                 showDelayApplyErrDialog:false,
                 submitReasons:'',
-                customer:{
-                    customerId:'customerzju',
-                    customerName:'浙江大学',
-                },
                 warningDetails:{
                     deptId:'',
                     leftTime:'',
@@ -41,13 +39,23 @@ jQuery(document).ready(function () {
             };
         },
         methods: {
-            'searchOrganizations': function (customerId) {
+            'init':function (customerId, customerName) {
+                this.customerId=customerId;
+                this.customerName=customerName;
+            },
+            'toCustomerList':function () {
+                window.location='/customer/customerList';
+            },
+            'toCustomerInfo':function () {
+                window.location='/customer/customerInfo?customerId='+this.customerId+'&customerName='+this.customerName;
+            },
+            'searchOrganizations': function () {
                 var thisVue = this;
                 jQuery.ajax({
                     type: 'get',
                     url: '/customer/organization/show',
                     data: {
-                        customerId:customerId
+                        customerId:this.customerId
                     },
                     dataType: 'json',
                     cache: false
@@ -200,6 +208,7 @@ jQuery(document).ready(function () {
             }
         }
     });
+
     Vue.component('customer', {
         template: '#customer',
         props: ['customer'],
@@ -215,6 +224,7 @@ jQuery(document).ready(function () {
             };
         },
         methods: {
+
             'changeSubFold' : function (status) {
                 if(status == 'ENCLOSURE'){
                     this.showSub = false;
@@ -284,6 +294,7 @@ jQuery(document).ready(function () {
     });
 
     var customerId = $("#customerId").val();
-
-    organizationVue.searchOrganizations(customerId);
+    var customerName = $("#customerName").val();
+    organizationVue.init(customerId,customerName);
+    organizationVue.searchOrganizations();
 });

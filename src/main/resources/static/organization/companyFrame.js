@@ -8,22 +8,28 @@ jQuery(document).ready(function () {
         data:{
            showPage:'showMember',
             companyId:'',
+            companyName:'',
             memberList:[],
+            memberInfoList:[],
             siblingsList:[],
             showMemberRelationship:false,
             showMemberInfo:false,
             showMembership:false,
             showOptionalMember:false,
             lowerMemberId:[],
-            upperMemberId:''
+            upperMemberId:'',
+            flag:'',
+            deleteMember:[]
         },
         methods:{
-           init:function (companyId) {
+           init:function (companyId, companyName) {
                this.showPage='showMember';
+               this.companyName=companyName;
                this.companyId=companyId;
            },
            getMemberList:function () {
                var thisVue = this;
+               this.flag = 'relationship';
                $.ajax({
                    type:'get',
                    url:'/member/relationship',
@@ -39,17 +45,34 @@ jQuery(document).ready(function () {
                    thisVue.showMemberInfo=false;
                });
            },
-            getMemberInfo:function () {
-              this.showMemberInfo=true;
-              this.showMemberRelationship=false;
+            getMemberInfoList:function () {
+               var thisVue = this;
+               this.flag='information';
+               $.ajax({
+                  type:'get',
+                   url:'/member/memberInfo',
+                   data:{companyId:thisVue.companyId},
+                   dataType:'json',
+                   cache:false
+               }).done(function (result) {
+                   console.log(result);
+                   thisVue.$set(thisVue,'memberInfoList',result.memberInfoList);
+                   thisVue.showMemberInfo=true;
+                   thisVue.showMemberRelationship=false;
+               })
             },
-            editMemberShip:function () {
-               this.showPage='showMemberRelationEdit';
-               this.showMembership=true;
-               this.showOptionalMember=false;
+            editMember:function () {
+               if(this.flag=='relationship'){
+                   this.showPage='showMemberRelationEdit';
+                   this.showMembership=true;
+                   this.showOptionalMember=false;
+               }else {
+                   this.showPage='showMemberInfoEdit';
+               }
                 document.getElementById('editMemberShip').style.opacity='1';
                 $("#actionSheet").hide();
                 $('#iosMask').hide();
+
 
             },
             memberEdit2Member:function () {
@@ -57,6 +80,9 @@ jQuery(document).ready(function () {
                 document.getElementById('editMemberShip').style.opacity='1';
                 $("#actionSheet").hide();
                 $('#iosMask').hide();
+            },
+            memberInfo2Member:function () {
+                this.showPage='showMember';
             },
             addSubMember:function () {
                var thisVue = this;
@@ -133,8 +159,28 @@ jQuery(document).ready(function () {
             showActionSheet:function (upperMemberId) {
 
                this.upperMemberId = upperMemberId;
+            },
+            deleteMemberCheck:function () {
+                var ids = '';
+                for(var i=0;i<this.deleteMember.length;i++){
+                    ids+=this.deleteMember+',';
+                }
+                var thisVue = this;
+                $.ajax({
+                    type:'get',
+                    url:'/member/deleteMember',
+                    data:{memberId:ids},
+                    dataType:'json',
+                    cache:false
+                }).done(function (result) {
+                    console.log(result);
+                    thisVue.showPage='showMember';
+                    thisVue.getMemberList();
+                });
+            },
+            toContactDetail:function (memberId) {
+                window.location = '/customer/contactsInfo?contactsId='+memberId;
             }
-
         }
     });
 
@@ -167,6 +213,9 @@ jQuery(document).ready(function () {
 
                 return "下属 "+memberNum+" 人"
             },
+            toContactDetail:function (memberId) {
+                window.location = '/customer/contactsInfo?contactsId='+memberId;
+            }
 
         }
     });
@@ -204,13 +253,15 @@ jQuery(document).ready(function () {
             },
             showActionSheet:function (upperMemberId) {
                 memberSettingVue.showActionSheet(upperMemberId);
-            }
+            },
+
         }
     });
 
     var companyId = $("#companyId").val();
+    var companuName = $("#companyName").val();
 
-    memberSettingVue.init(companyId);
+    memberSettingVue.init(companyId,companuName);
 
     memberSettingVue.getMemberList();
 });
