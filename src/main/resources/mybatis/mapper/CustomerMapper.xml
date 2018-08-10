@@ -158,6 +158,12 @@
             customer_nm LIKE CONCAT('%', #{searchWord}, '%')
     </select>
 
+    <select id="queryCustomer" resultMap="customerMap">
+        SELECT *
+        FROM crm_customer
+        WHERE customer_id = #{customerId};
+    </select>
+
     <select id="getMyCustomers" resultMap="customerMap">
         SELECT c.*
         FROM crm_customer c
