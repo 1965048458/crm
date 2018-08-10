@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Organization</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="/weui.css">
+    <link rel="stylesheet" href="/example.css"/>
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/customer/editCustomer.js"></script>
+    <style>
+        .pull-left{
+            float: left!important;
+        }
+        .pull-right{
+            float: right!important;
+        }
+        .top-bar{
+            font-size: 18px;
+            text-align: center;
+            background: #ffffff;
+            border-bottom: solid 1px #DDDDDD ;
+            padding-left:15px;padding-right:15px;padding-top: 8px;padding-bottom: 8px
+        }
+        .center-box{
+            text-align: center;
+        }
+        .customer-item{
+            background-color: #FFFFFF;
+            line-height: 1.47058824;
+            font-size: 17px;
+            overflow: hidden;
+            position: relative;
+        }
+        .weui-cells{
+            margin-top: 0;
+            padding: 0px;
+        }
+        .usr-img{
+            position: relative;
+            margin-right: 10px;
+            padding-left: 30px;
+            width: 25px;
+            display: block;
+        }
+        .add-dept {
+            padding:0px 27px;
+        }
+        .add-dept-image {
+            height: 24px;
+            width: 24px;
+            padding-top: 15px;
+            padding-bottom: 11px;
+        }
+        .add-dept-font {
+            font-size: 14px;
+            color: #666666;
+            padding-top: 16px;
+            padding-bottom: 11px;
+        }
+        .dept-cell {
+            padding: 0px 15px;
+        }
+        .fold-image {
+            height: 24px;
+            width: 24px;
+            padding-top: 13px;
+            padding-bottom: 6px;
+        }
+        .dept-name-text {
+            padding-right: 5px;
+            color: #333333;
+            font-size: 16px;
+            padding-top: 14px;
+            padding-bottom: 13px;
+        }
+        .add-contacts-image {
+            height: 24px;
+            width: 24px;
+            padding-left: 15px;
+            padding-top: 13px;
+            padding-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="editCustomerVue">
+
+    <div class="top-bar center-box" style="border: hidden">
+        <!--<span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;" onclick="cancel()">取消</span>-->
+        <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);">编辑组织架构</span>
+        <span class="pull-right" style="color: rgb(61, 168, 244); font-size: 16px;" onclick="confirm()">完成</span>
+    </div>
+
+    <div class="add-dept">
+        <a th:href="'/customer/addTopDepartment?customerId='+${customerId}">
+        <span style="padding-right:13px;">
+            <img src="/images/customer/addTopDeptBtn.svg" class="add-dept-image"/>
+        </span>
+        <span class="add-dept-font">添加二级学院</span>
+        </a>
+    </div>
+
+    <div class="weui-cells" th:each="department: ${departments}">
+        <div class="weui-cell dept-cell">
+            <div class="weui-cell__bd">
+                <span th:onclick="'javascript:fold(\''+${department.getDeptId()}+'\')'">
+                    <span class="pull-left" style="padding-right: 10px;">
+                        <input th:id="'fold_value_' + ${department.getDeptId()}" type="hidden" value="false">
+                        <img th:id="'fold_img_' + ${department.getDeptId()}" src="/images/customer/fold.svg"
+                             class="fold-image">
+                    </span>
+                    <span th:text="${department.getDeptName()}" class="dept-name-text pull-left"></span>
+                </span>
+                <span class="pull-left dept-name-text" th:text="${department.showContactsNumber()}"></span>
+                <span class="pull-right">
+                    <a th:href="'/customer/addContactsPage?deptId=' + ${department.getDeptId()}">
+                        <img src="/images/customer/addContacts.svg" class="add-contacts-image">
+                    </a>
+                    <a th:href="'/customer/addSubDepartment?deptId=' + ${department.getDeptId()}">
+                        <img src="/images/customer/addSubOrg.svg" class="add-contacts-image"/>
+                    </a>
+                </span>
+            </div>
+        </div>
+        <div class="weui-cells" th:id="'dept_' + ${department.getDeptId()}" style="display:none;">
+            <div class="weui-cell" th:each="contacts: ${department.getContactsList()}">
+                <div class="weui-cell__hd" >
+                    <img th:if="${contacts.isMale()}" src="/images/customer/MALE.svg"
+                         style="width: 18px;height: 19px" class="usr-img">
+                    <img th:if="${contacts.isMale()==false}" src="/images/customer/FEMALE.svg"
+                         style="width: 18px;height: 19px" class="usr-img">
+                </div>
+                <div class="weui-cell__bd">
+                    <span th:text="${contacts.getRealName()}" style="color: #333333;font-size: 16px" ></span>
+                </div>
+            </div>
+            <div class="weui-cells" style="padding-left: 30px;">
+                <div class="weui-cells" th:each="subDepartment: ${department.getDepartmentList()}">
+                    <div class="weui-cell dept-cell">
+                        <div class="weui-cell__bd">
+                            <span th:onclick="'javascript:fold(\''+${subDepartment.getDeptId()}+'\')'">
+                                <span class="pull-left" style="padding-right: 10px;">
+                                    <input th:id="'fold_value_' + ${subDepartment.getDeptId()}" type="hidden" value="false">
+                                    <img th:id="'fold_img_' + ${subDepartment.getDeptId()}" src="/images/customer/fold.svg"
+                                         class="fold-image">
+                                </span>
+                                <span th:text="${subDepartment.getDeptName()}" class="dept-name-text pull-left"></span>
+                            </span>
+                            <span class="pull-left dept-name-text" th:text="${subDepartment.showContactsNumber()}"></span>
+                            <span class="pull-right">
+                                <a th:href="'/customer/addContactsPage?deptId=' + ${subDepartment.getDeptId()}">
+                                    <img src="/images/customer/addContacts.svg" class="add-contacts-image">
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="weui-cells" th:id="'dept_' + ${subDepartment.getDeptId()}" style="display: none;">
+                        <div class="weui-cell"  th:each="contacts: ${subDepartment.getContactsList()}">
+                            <div class="weui-cell__hd" >
+                                <img th:if="${contacts.isMale()}" src="/images/customer/MALE.svg"
+                                     style="width: 18px;height: 19px" class="usr-img">
+                                <img th:if="${contacts.isMale()==false}" src="/images/customer/FEMALE.svg"
+                                     style="width: 18px;height: 19px" class="usr-img">
+                            </div>
+                            <div class="weui-cell__bd">
+                                <span th:text="${contacts.getRealName()}" style="color: #333333;font-size: 16px" ></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function fold(deptId) {
+        var isFold = $('#fold_value_'+deptId).val();
+        if (isFold == 'true') {
+            $('#fold_value_'+deptId).val('false');
+            $('#fold_img_'+deptId).attr("src", '/images/customer/fold.svg');
+            $('#dept_'+deptId).css('display', 'none');
+        } else {
+            $('#fold_value_'+deptId).val('true');
+            $('#fold_img_'+deptId).attr("src", '/images/customer/unFold.svg');
+            $('#dept_'+deptId).css('display', 'block');
+        }
+    }
+
+    function confirm() {
+        window.location = '/customer/organization?'
+    }
+</script>
+
+</body>
+</html>

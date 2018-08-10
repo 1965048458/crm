@@ -30,6 +30,8 @@ public class Department {
     private OpenSeaWarning openSeaWarning;
     @Expose
     private Boolean canUnFold = false;
+    @Expose
+    private Integer contactNumber = 0;
 
     public Boolean getCanUnFold() {
         return canUnFold;
@@ -46,9 +48,6 @@ public class Department {
     public void setContactNumber(Integer contactNumber) {
         this.contactNumber = contactNumber;
     }
-
-    @Expose
-    private Integer contactNumber = 0;
 
     public void addContact(int contactNumber){
         this.contactNumber+=contactNumber;
@@ -161,4 +160,21 @@ public class Department {
 
         enclosureApplyList.add(enclosureApply);
     }
+
+//    public int getSize() {
+//        return size;
+//    }
+//
+//    public void setSize(int size) {
+//        this.size = size;
+//    }
+
+    public String showContactsNumber() {
+        if (contactNumber > 0) {
+            return "（" + contactNumber + "）";
+        } else {
+            return "";
+        }
+    }
+
 }

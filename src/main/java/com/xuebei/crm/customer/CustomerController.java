@@ -1,6 +1,5 @@
 package com.xuebei.crm.customer;
 
-import com.google.gson.Gson;
 import com.xuebei.crm.dto.GsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.xuebei.crm.utils.UUIDGenerator;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
-import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -36,9 +34,8 @@ public class CustomerController {
     private final static String DEPT_NAME_BLANK_ERROR_MSG = "部门名称不能为空";
 
 
-    // TODO: 最终完善登录功能并去掉
-    private String acquireUserId() {
-        return "00284bca325c4e77b9f30c5671ec1c44";
+    private String acquireUserId(HttpServletRequest request) {
+        return (String)request.getSession().getAttribute("userId");
     }
 
     @RequestMapping("add")
@@ -107,10 +104,10 @@ public class CustomerController {
         return "addSubDepartment";
     }
 
-    @RequestMapping("/addOrganizationPage")
-    public String addOrganizationPage() {
-        return "addTopOrg";
-    }
+//    @RequestMapping("/addOrganizationPage")
+//    public String addOrganizationPage() {
+//        return "addTopOrg";
+//    }
 
     /**
      * 添加 客户-顶级机构(二级学院) 信息
@@ -128,8 +125,9 @@ public class CustomerController {
     public GsonView addTopDepartment(@RequestParam("customerId") String customerId,
                                       @RequestParam("deptName") String deptName,
                                       @RequestParam(value = "website", required = false) String website,
-                                      @RequestParam(value = "profile", required = false) String profile) {
-        if (!customerService.isUserHasCustomer(acquireUserId(), customerId)) {
+                                      @RequestParam(value = "profile", required = false) String profile,
+                                      HttpServletRequest request) {
+        if (!customerService.isUserHasCustomer(acquireUserId(request), customerId)) {
             return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
         }
 
@@ -203,12 +201,13 @@ public class CustomerController {
 
     @RequestMapping("addContactsPage")
     public String addContactsPage(@RequestParam("deptId") String deptId,
-                                  ModelMap modelMap) {
+                                  ModelMap modelMap,
+                                  HttpServletRequest request) {
         modelMap.addAttribute("deptId", deptId);
 
         // 部门ID空 或 用户不能修改该部门（因为客户不属于用户的公司）
         Department dept = customerMapper.queryDepartmentById(deptId);
-        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(), dept.getCustomer().getCustomerId())) {
+        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(request), dept.getCustomer().getCustomerId())) {
             return "error/404";
         }
 
@@ -236,7 +235,8 @@ public class CustomerController {
     @RequestMapping("/action/addContacts")
     public GsonView addContacts(@RequestParam("deptId") String deptId,
                                 @RequestParam(value = "contactsTypeId", required = false) String contactsTypeId,
-                                Contacts contacts) {
+                                Contacts contacts,
+                                HttpServletRequest request) {
         final String TOP_DEPT_CONTACTS_TYPE_NOT_NULL_ERROR_MSG = "顶级机构中联系人不允许有职位";
         final String SUB_DEPT_CONTACTS_NULL_ERROR_MSG = "子机构中联系人需要有职位信息";
         final String REAL_NAME_BLANK_ERROR_MSG = "联系人姓名不能为空";
@@ -244,7 +244,7 @@ public class CustomerController {
 
         // 权限检查
         Department dept = customerMapper.queryDepartmentById(deptId);
-        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(), dept.getCustomer().getCustomerId())) {
+        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(request), dept.getCustomer().getCustomerId())) {
             return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
         }
 
@@ -285,9 +285,9 @@ public class CustomerController {
     }
 
     @RequestMapping("/action/getContactsTypeList")
-    public GsonView getContactsTypeList(@RequestParam("deptId") String deptId) {
+    public GsonView getContactsTypeList(@RequestParam("deptId") String deptId, HttpServletRequest request) {
         Department dept = customerMapper.queryDepartmentById(deptId);
-        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(), dept.getCustomer().getCustomerId())) {
+        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(request), dept.getCustomer().getCustomerId())) {
             return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
         }
         String customerId = dept.getCustomer().getCustomerId();
@@ -303,6 +303,11 @@ public class CustomerController {
                                @RequestParam("customerName") String customerName,
                                HttpServletRequest request,
                                ModelMap modelMap){
+        String userId = (String)request.getSession().getAttribute("userId");
+        if (userId == null) {
+            return "error/404";
+        }
+
         modelMap.addAttribute("customerId",customerId);
         modelMap.addAttribute("customerName", customerName);
         return "customer/organization";
@@ -416,6 +421,19 @@ public class CustomerController {
         modelMap.addAttribute("followUpRecords", followUpRecords);
         modelMap.addAttribute("contacts", contacts);
         return "contactsInfo";
+    }
+
+    @RequestMapping("/editCustomer")
+    public String editCustomerPage(HttpServletRequest request,
+                                   ModelMap modelMap) {
+        String customerId = "customerzju";
+
+        List<Department> deptList = customerService.queryDepartment(customerId, "001c52e79ee0484ca8158e926b5c05a3");
+
+        modelMap.addAttribute("customerId", customerId);
+        modelMap.addAttribute("departments", deptList);
+
+        return "editCustomer";
     }
 
 }
