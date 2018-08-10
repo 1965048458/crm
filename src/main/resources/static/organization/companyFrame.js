@@ -70,6 +70,7 @@ jQuery(document).ready(function () {
                    this.showPage='showMemberInfoEdit';
                }
                 document.getElementById('editMemberShip').style.opacity='1';
+                $('#actionAddSheet').hide();
                 $("#actionSheet").hide();
                 $('#iosMask').hide();
 
@@ -79,11 +80,12 @@ jQuery(document).ready(function () {
                 this.showPage='showMember';
                 this.lowerMemberId=[];
                 document.getElementById('editMemberShip').style.opacity='1';
+                $('#actionAddSheet').hide();
                 $("#actionSheet").hide();
                 $('#iosMask').hide();
             },
             'memberInfo2Member':function () {
-                this.showPage='showMember';
+               this.showPage='showMember';
             },
             'addSubMember':function () {
                var thisVue = this;
@@ -99,12 +101,20 @@ jQuery(document).ready(function () {
                    //console.log(result);
                    thisVue.$set(thisVue, 'siblingsList', result.siblingsList);
                    //console.log(thisVue.siblingsList);
+                   thisVue.showPage='showAddSubMember';
                    thisVue.showOptionalMember=true;
                    thisVue.showMembership=false;
+                   $('#actionAddSheet').hide();
                    $("#actionSheet").hide();
                    $('#iosMask').hide();
 
                });
+            },
+            'addSubMember2EditMember':function () {
+                this.getMemberList();
+                this.editMember();
+                //this.showPage='showMemberRelationEdit';
+                this.lowerMemberId=[];
             },
             'deleteLeader':function () {
                 var thisVue = this;
@@ -122,6 +132,7 @@ jQuery(document).ready(function () {
                     thisVue.showMembership=false;
                     thisVue.getMemberList();
                     thisVue.showPage='showMember';
+                    $('#actionAddSheet').hide();
                     $("#actionSheet").hide();
                     $('#iosMask').hide();
                 });
@@ -145,10 +156,9 @@ jQuery(document).ready(function () {
                 }).done(function (result) {
                     console.log(result);
                     document.getElementById('editMemberShip').style.opacity='1';
-                    thisVue.showMembership=true;
-                    thisVue.showOptionalMember=false;
-                    thisVue.showPage='showMember';
                     thisVue.getMemberList();
+                    thisVue.editMember();
+                    thisVue.lowerMemberId=[];
                 });
             },
             'chooseGenderImg':function (gender) {
@@ -157,9 +167,14 @@ jQuery(document).ready(function () {
                 else
                     return "/images/customer/MALE.svg";
             },
-            'showActionSheet':function (upperMemberId) {
+            'showActionSheet':function (upperMember) {
+               this.upperMemberId = upperMember.memberId;
+               if(upperMember.subMemberList.length==0){
+                   $('#actionSheet').show();$('#iosMask').show();
+               }else {
+                   $('#actionAddSheet').show();$('#iosMask').show();
+               }
 
-               this.upperMemberId = upperMemberId;
             },
             'deleteMemberCheck':function () {
                 var ids = '';
@@ -252,8 +267,8 @@ jQuery(document).ready(function () {
             addSubMember:function (upperMemberId) {
                 memberSettingVue.addSubMember(upperMemberId);
             },
-            showActionSheet:function (upperMemberId) {
-                memberSettingVue.showActionSheet(upperMemberId);
+            showActionSheet:function (upperMember) {
+                memberSettingVue.showActionSheet(upperMember);
             },
 
         }

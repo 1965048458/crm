@@ -114,8 +114,6 @@
                     <span class="pull-left" @click="memberEdit2Member()"
                           style="color: rgb(61, 168, 244); font-size: 16px;">取消</span>
                     <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);">编辑人员关系</span>
-                    <span class="pull-right" @click="membershipEditCheck()"
-                          style="color: rgb(61, 168, 244); font-size: 16px;">完成</span>
                 </div>
                 <div class="weui-tab__panel" style="padding-top: 0px" id="editMemberShip" v-show="showMembership">
                     <membership v-for="member in memberList" :member="member"></membership>
@@ -126,13 +124,54 @@
                 <div class="weui-actionsheet weui-actionsheet_toggle" style="display: none" id="actionSheet" >
                     <div class="weui-actionsheet__menu">
                         <div class="weui-actionsheet__cell" @click="addSubMember()">添加下属</div>
-                        <div class="weui-actionsheet__cell" @click="deleteLeader()">移除下属</div>
+                        <div class="weui-actionsheet__cell" @click="deleteLeader()">移除</div>
                     </div>
                     <div class="weui-actionsheet__action">
                         <div class="weui-actionsheet__cell" id="iosActionsheetCancel"
                              onclick="$('#actionSheet').hide();$('#iosMask').hide();
                          document.getElementById('editMemberShip').style.opacity='1';">取消</div>
                     </div>
+                </div>
+
+                <div class="weui-actionsheet weui-actionsheet_toggle" style="display: none" id="actionAddSheet" >
+                    <div class="weui-actionsheet__menu">
+                        <div class="weui-actionsheet__cell" @click="addSubMember()">添加下属</div>
+                    </div>
+                    <div class="weui-actionsheet__action">
+                        <div class="weui-actionsheet__cell"
+                             onclick="$('#actionAddSheet').hide();$('#iosMask').hide();
+                         document.getElementById('editMemberShip').style.opacity='1';">取消</div>
+                    </div>
+                </div>
+
+                <!--<div class="weui-tab__panel" style="padding-top: 0px" v-show="showOptionalMember">-->
+                    <!--<div class="weui-cells weui-cells_checkbox" v-for="member in siblingsList">-->
+                        <!--<label class="weui-cell weui-check__label">-->
+                            <!--<div class="weui-cell__hd">-->
+                                <!--<input type="checkbox" class="weui-check" name="checkbox1"-->
+                                       <!--:value="member.memberId" v-model="lowerMemberId">-->
+                                <!--<i class="weui-icon-checked"></i>-->
+                            <!--</div>-->
+                            <!--<div class="weui-cell__bd">-->
+                                <!--<p v-text="member.memberName"></p>-->
+                            <!--</div>-->
+                        <!--</label>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="page navbar js_show" v-show="showPage === 'showAddSubMember'">
+        <div class="page__bd" style="height: 100%;">
+            <div class="weui-tab">
+
+                <div class="top-bar center-box" style="border: hidden">
+                    <span class="pull-left" @click="addSubMember2EditMember()"
+                          style="color: rgb(61, 168, 244); font-size: 16px;">取消</span>
+                    <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);">添加下属</span>
+                    <span class="pull-right" @click="membershipEditCheck()"
+                          style="color: rgb(61, 168, 244); font-size: 16px;">完成</span>
                 </div>
 
                 <div class="weui-tab__panel" style="padding-top: 0px" v-show="showOptionalMember">
@@ -219,10 +258,9 @@
             <div class="weui-cell__bd" @click="changeSubFold()">
                 <img :src="foldImg"/>
             </div>
-            <div class="weui-cell__ft" @click="showActionSheet(member.memberId)"
-                 onclick="document.getElementById('editMemberShip').style.opacity='0.5';
-                 $('#actionSheet').show();$('#iosMask').show();">
-                <img src="/images/journal/plus.png" class="usr-img"/>
+            <div class="weui-cell__ft" @click="showActionSheet(member)"
+                 onclick="document.getElementById('editMemberShip').style.opacity='0.5';">
+                <img src="/images/more.svg" class="usr-img"/>
             </div>
         </div>
         <div class="weui-cells" v-show="showSub" style="padding-left: 20px">
