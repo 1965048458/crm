@@ -65,7 +65,7 @@ jQuery(document).ready(function () {
                if(this.flag=='relationship'){
                    this.showPage='showMemberRelationEdit';
                    this.showMembership=true;
-                   this.showOptionalMember=false;
+                   //this.showOptionalMember=false;
                }else {
                    this.showPage='showMemberInfoEdit';
                }
@@ -128,10 +128,14 @@ jQuery(document).ready(function () {
                     cache:false
                 }).done(function (result) {
                     console.log(result);
-                    thisVue.showOptionalMember=false;
-                    thisVue.showMembership=false;
+                    document.getElementById('editMemberShip').style.opacity='1';
                     thisVue.getMemberList();
-                    thisVue.showPage='showMember';
+                    thisVue.editMember();
+                    thisVue.lowerMemberId=[];
+                    // thisVue.showOptionalMember=false;
+                    // thisVue.showMembership=false;
+                    // thisVue.getMemberList();
+                    //thisVue.showPage='showMember';
                     $('#actionAddSheet').hide();
                     $("#actionSheet").hide();
                     $('#iosMask').hide();
@@ -169,10 +173,15 @@ jQuery(document).ready(function () {
             },
             'showActionSheet':function (upperMember) {
                this.upperMemberId = upperMember.memberId;
-               if(upperMember.subMemberList.length==0){
-                   $('#actionSheet').show();$('#iosMask').show();
-               }else {
+                //$('#actionSheet').show();$('#iosMask').show();
+
+
+               if(upperMember.leaderId == undefined){
                    $('#actionAddSheet').show();$('#iosMask').show();
+                   //
+               }else {
+                   //$('#actionAddSheet').show();$('#iosMask').show();
+                   $('#actionSheet').show();$('#iosMask').show();
                }
 
             },
@@ -270,6 +279,12 @@ jQuery(document).ready(function () {
             showActionSheet:function (upperMember) {
                 memberSettingVue.showActionSheet(upperMember);
             },
+            'chooseImgForLeader':function (member) {
+                if(member.leaderId == undefined)
+                    return "/images/addSubMember.svg";
+                else
+                    return "/images/more.svg";
+            }
 
         }
     });
