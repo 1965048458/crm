@@ -10,6 +10,7 @@
         <result column="user_type" property="memberType"/>
         <result column="real_nm" property="memberName"/>
         <result column="gender" property="memberGender"/>
+        <result column="leader_id" property="leaderId"/>
         <association property="leader" javaType="com.xuebei.crm.member.Member">
             <id column="leader_id" property="memberId" />
         </association>
