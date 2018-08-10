@@ -22,12 +22,12 @@ jQuery(document).ready(function () {
             deleteMember:[]
         },
         methods:{
-           init:function (companyId, companyName) {
+           'init':function (companyId, companyName) {
                this.showPage='showMember';
                this.companyName=companyName;
                this.companyId=companyId;
            },
-           getMemberList:function () {
+           'getMemberList':function () {
                var thisVue = this;
                this.flag = 'relationship';
                $.ajax({
@@ -45,7 +45,7 @@ jQuery(document).ready(function () {
                    thisVue.showMemberInfo=false;
                });
            },
-            getMemberInfoList:function () {
+            'getMemberInfoList':function () {
                var thisVue = this;
                this.flag='information';
                $.ajax({
@@ -61,30 +61,33 @@ jQuery(document).ready(function () {
                    thisVue.showMemberRelationship=false;
                })
             },
-            editMember:function () {
+            'editMember':function () {
                if(this.flag=='relationship'){
                    this.showPage='showMemberRelationEdit';
                    this.showMembership=true;
-                   this.showOptionalMember=false;
+                   //this.showOptionalMember=false;
                }else {
                    this.showPage='showMemberInfoEdit';
                }
                 document.getElementById('editMemberShip').style.opacity='1';
+                $('#actionAddSheet').hide();
                 $("#actionSheet").hide();
                 $('#iosMask').hide();
 
 
             },
-            memberEdit2Member:function () {
+            'memberEdit2Member':function () {
                 this.showPage='showMember';
+                this.lowerMemberId=[];
                 document.getElementById('editMemberShip').style.opacity='1';
+                $('#actionAddSheet').hide();
                 $("#actionSheet").hide();
                 $('#iosMask').hide();
             },
-            memberInfo2Member:function () {
-                this.showPage='showMember';
+            'memberInfo2Member':function () {
+               this.showPage='showMember';
             },
-            addSubMember:function () {
+            'addSubMember':function () {
                var thisVue = this;
                $.ajax({
                    type:'get',
@@ -95,17 +98,25 @@ jQuery(document).ready(function () {
                    dataType:'json',
                    cache:false
                }).done(function (result) {
-                   console.log(result);
+                   //console.log(result);
                    thisVue.$set(thisVue, 'siblingsList', result.siblingsList);
-                   console.log(thisVue.siblingsList);
+                   //console.log(thisVue.siblingsList);
+                   thisVue.showPage='showAddSubMember';
                    thisVue.showOptionalMember=true;
                    thisVue.showMembership=false;
+                   $('#actionAddSheet').hide();
                    $("#actionSheet").hide();
                    $('#iosMask').hide();
 
                });
             },
-            deleteLeader:function () {
+            'addSubMember2EditMember':function () {
+                this.getMemberList();
+                this.editMember();
+                //this.showPage='showMemberRelationEdit';
+                this.lowerMemberId=[];
+            },
+            'deleteLeader':function () {
                 var thisVue = this;
                 $.ajax({
                     type:'get',
@@ -117,15 +128,20 @@ jQuery(document).ready(function () {
                     cache:false
                 }).done(function (result) {
                     console.log(result);
-                    thisVue.showOptionalMember=false;
-                    thisVue.showMembership=false;
+                    document.getElementById('editMemberShip').style.opacity='1';
                     thisVue.getMemberList();
-                    thisVue.showPage='showMember';
+                    thisVue.editMember();
+                    thisVue.lowerMemberId=[];
+                    // thisVue.showOptionalMember=false;
+                    // thisVue.showMembership=false;
+                    // thisVue.getMemberList();
+                    //thisVue.showPage='showMember';
+                    $('#actionAddSheet').hide();
                     $("#actionSheet").hide();
                     $('#iosMask').hide();
                 });
             },
-            membershipEditCheck:function () {
+            'membershipEditCheck':function () {
                 var thisVue = this;
                 var lowerMemberId = '';
                 for(var i=0;i<this.lowerMemberId.length;i++){
@@ -144,23 +160,32 @@ jQuery(document).ready(function () {
                 }).done(function (result) {
                     console.log(result);
                     document.getElementById('editMemberShip').style.opacity='1';
-                    thisVue.showMembership=true;
-                    thisVue.showOptionalMember=false;
-                    thisVue.showPage='showMember';
                     thisVue.getMemberList();
+                    thisVue.editMember();
+                    thisVue.lowerMemberId=[];
                 });
             },
-            chooseGenderImg:function (gender) {
+            'chooseGenderImg':function (gender) {
                 if(gender=='FEMALE')
                     return "/images/customer/FEMALE.svg";
                 else
                     return "/images/customer/MALE.svg";
             },
-            showActionSheet:function (upperMemberId) {
+            'showActionSheet':function (upperMember) {
+               this.upperMemberId = upperMember.memberId;
+                //$('#actionSheet').show();$('#iosMask').show();
 
-               this.upperMemberId = upperMemberId;
+
+               if(upperMember.leaderId == undefined){
+                   $('#actionAddSheet').show();$('#iosMask').show();
+                   //
+               }else {
+                   //$('#actionAddSheet').show();$('#iosMask').show();
+                   $('#actionSheet').show();$('#iosMask').show();
+               }
+
             },
-            deleteMemberCheck:function () {
+            'deleteMemberCheck':function () {
                 var ids = '';
                 for(var i=0;i<this.deleteMember.length;i++){
                     ids+=this.deleteMember+',';
@@ -175,10 +200,10 @@ jQuery(document).ready(function () {
                 }).done(function (result) {
                     console.log(result);
                     thisVue.showPage='showMember';
-                    thisVue.getMemberList();
+                    thisVue.getMemberInfoList();
                 });
             },
-            toContactDetail:function (memberId) {
+            'toContactDetail':function (memberId) {
                 window.location = '/customer/contactsInfo?contactsId='+memberId;
             }
         }
@@ -251,9 +276,15 @@ jQuery(document).ready(function () {
             addSubMember:function (upperMemberId) {
                 memberSettingVue.addSubMember(upperMemberId);
             },
-            showActionSheet:function (upperMemberId) {
-                memberSettingVue.showActionSheet(upperMemberId);
+            showActionSheet:function (upperMember) {
+                memberSettingVue.showActionSheet(upperMember);
             },
+            'chooseImgForLeader':function (member) {
+                if(member.leaderId == undefined)
+                    return "/images/addSubMember.svg";
+                else
+                    return "/images/more.svg";
+            }
 
         }
     });

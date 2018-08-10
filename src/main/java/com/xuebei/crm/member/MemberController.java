@@ -67,15 +67,6 @@ public class MemberController {
         return gsonView;
     }
 
-    @RequestMapping("subMemberList")
-    public GsonView subMemberList(@RequestParam("userId") String userId){
-        GsonView gsonView = new GsonView();
-        List<Member> subMemberList = memberService.searchSubMemberList(userId);
-        gsonView.addStaticAttribute("successFlg",true);
-        gsonView.addStaticAttribute("subMemberList",subMemberList);
-        return gsonView;
-    }
-
     @RequestMapping("memberInfo")
     public GsonView getMemberInfoList(@RequestParam("companyId") String companyId){
         GsonView gsonView = new GsonView();
@@ -90,9 +81,8 @@ public class MemberController {
         GsonView gsonView = new GsonView();
         String[] memberId = ids.split(",");
         for(String id:memberId){
-           // memberMapper.deleteLeaderId(id);
+            memberMapper.deleteLeaderId(id);
             memberMapper.deleteMember(id);
-
         }
         gsonView.addStaticAttribute("successFlg",true);
         return gsonView;

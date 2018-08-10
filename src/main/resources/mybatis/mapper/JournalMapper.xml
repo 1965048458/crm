@@ -216,6 +216,11 @@
         <if test="endTime != null">
             AND j.create_ts &lt; #{endTime}
         </if>
+        <if test="senderIds != null">
+            <foreach collection="sdId" item="item" index="index" separator=" ">
+                OR j.user_id = #{item}
+            </foreach>
+        </if>
 
     </select>
 
