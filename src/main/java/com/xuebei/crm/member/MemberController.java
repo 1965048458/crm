@@ -81,9 +81,8 @@ public class MemberController {
         GsonView gsonView = new GsonView();
         String[] memberId = ids.split(",");
         for(String id:memberId){
-           // memberMapper.deleteLeaderId(id);
+            memberMapper.deleteLeaderId(id);
             memberMapper.deleteMember(id);
-
         }
         gsonView.addStaticAttribute("successFlg",true);
         return gsonView;

@@ -67,7 +67,7 @@
             <div class="weui-tab">
 
                 <div class="top-bar center-box" style="border: hidden">
-                    <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;" onclick="history.back()">返回</span>
+                    <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;" >返回</span>
                     <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);">{{companyName}}</span>
                     <span class="pull-right" @click="editMember()"
                           style="color: rgb(61, 168, 244); font-size: 16px;">编辑</span>
@@ -164,19 +164,18 @@
                     <span class="pull-right" style="color: rgb(61, 168, 244); font-size: 16px;" @click="deleteMemberCheck()">完成</span>
                 </div>
                 <div class="weui-tab__panel" style="padding-top: 0px" >
-                    <h1>正在开发……</h1>
-                    <!--<div class="weui-cells weui-cells_checkbox" v-for="member in memberInfoList">-->
-                        <!--<label class="weui-cell weui-check__label">-->
-                            <!--<div class="weui-cell__hd">-->
-                                <!--<input type="checkbox" class="weui-check" name="checkbox1"-->
-                                       <!--:value="member.memberId" v-model="deleteMember">-->
-                                <!--<i class="weui-icon-checked"></i>-->
-                            <!--</div>-->
-                            <!--<div class="weui-cell__bd">-->
-                                <!--<p v-text="member.memberName"></p>-->
-                            <!--</div>-->
-                        <!--</label>-->
-                    <!--</div>-->
+                    <div class="weui-cells weui-cells_checkbox" v-for="member in memberInfoList">
+                        <label class="weui-cell weui-check__label">
+                            <div class="weui-cell__hd">
+                                <input type="checkbox" class="weui-check" name="checkbox1"
+                                       :value="member.memberId" v-model="deleteMember">
+                                <i class="weui-icon-checked"></i>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <p v-text="member.memberName"></p>
+                            </div>
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
