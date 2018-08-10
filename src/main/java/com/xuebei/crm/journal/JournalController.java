@@ -248,9 +248,11 @@ public class JournalController {
     }
 
     @RequestMapping("subMemberList")
-    public GsonView subMemberList(@RequestParam("userId") String userId){
+    public GsonView subMemberList(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String userId = (String)session.getAttribute("userId");
         GsonView gsonView = new GsonView();
-        List<Member> subMemberList = memberService.searchSubMemberList(userId);
+        List<Member> subMemberList = memberService.searchSubMemberList(userId);//"0022287b3f7a404d8fcca44aa76842c2"
         gsonView.addStaticAttribute("successFlg",true);
         gsonView.addStaticAttribute("subMemberList",subMemberList);
         return gsonView;

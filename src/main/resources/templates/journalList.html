@@ -419,7 +419,7 @@
                                         <div class="weui-cells weui-cells_form">
                                             <div class="weui-cell">
                                                 <div class="weui-cell__bd" style="text-align: center">
-                                                    <div v-for="(sender, index) in senders" :key="'senders_' + index"
+                                                    <div v-for="(sender, index) in sendersName" :key="'senders_' + index"
                                                          class="weui-grid sender-box">
                                                         <div class="weui-grid__icon">
                                                             <img src="/images/defaultUserIcon.png" alt="">
@@ -518,9 +518,29 @@
                     </div>
                 </div>
 
-                <!--<div id="selSender" v-show="showPage === 'selSender">-->
-                    <!--<div></div>-->
-                <!--</div>-->
+                <div id="selSender" v-show="showPage === 'selSender'">
+                    <div class="top-bar center-box" style="border: hidden">
+                    <span class="pull-left" @click="backToFilter"
+                          style="color: rgb(61, 168, 244); font-size: 16px;">取消</span>
+                        <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);">选择发送人</span>
+                        <span class="pull-right" @click="finish"
+                              style="color: rgb(61, 168, 244); font-size: 16px;">完成</span>
+                    </div>
+                    <div class="subMember">
+                        <div class="weui-cells weui-cells_checkbox" v-for="member in subMemberList">
+                            <label class="weui-cell weui-check__label">
+                                <div class="weui-cell__hd">
+                                    <input type="checkbox" class="weui-check" name="checkbox1"
+                                           :value="member.memberId + ',' + member.memberName" v-model="tempSenders">
+                                    <i class="weui-icon-checked"></i>
+                                </div>
+                                <div class="weui-cell__bd">
+                                    <p v-text="member.memberName"></p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="js_dialog" id="iosDialog2" style="opacity: 1;display: none" v-show="showErrMsg">
                     <div class="weui-mask"></div>

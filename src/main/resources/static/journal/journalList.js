@@ -13,7 +13,10 @@ jQuery(document).ready(function () {
             curJournal: {
                 user: {}
             },
-            senders: [],
+            subMemberList: [],
+            sendersId: [],
+            sendersName: [],
+            tempSenders: [],
             showRead: true,
             journalType: "",
             client: "",
@@ -90,27 +93,45 @@ jQuery(document).ready(function () {
             },
             'searchFilter': function () {
                 //this.isReadTo0_1 = this.bool2Digit(!this.isRead),
+                var senderIds = "";
+                for (var i = 0; i < this.sendersId.length; i++) {
+                    senderIds += this.sendersId[i] + ',';
+                }
                 var data = {
                     //userId:"00284bca325c4e77b9f30c5671ec1c44",
                     journalType: this.journalType,
                     client: this.client,
                     project: this.project,
                     startTime: this.startTime,
+                    senderIds: senderIds,
                     endTime: this.endTime,
                     isRead: Number(!this.isRead)
                 };
                 this.searchList(data);
             },
-            'addSenders':function () {
-                // var thisVue = this;
-                // $.ajax({
-                //     type:'get',
-                //     url:'',
-                //     //data:
-                // });
+            'addSenders': function () {
+                var thisVue = this;
+                $.ajax({
+                    type: 'get',
+                    url: '/journal/subMemberList',
+                    data: {},
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    thisVue.$set(thisVue, 'subMemberList', result.subMemberList);
+                    thisVue.showPage = 'selSender';
+                });
             },
-            'finish':function () {
-                //
+            'backToFilter': function () {
+                this.showPage = 'filterDiv';
+            },
+            'finish': function () {
+                for (var i = 0; i < this.tempSenders.length; i++) {
+                    var str = this.tempSenders[i].split(',');
+                    this.sendersId[i] = str[0];
+                    this.sendersName[i] = str[1];
+                }
+                this.showPage = 'filterDiv';
             },
             'loadDetail': function (journalId) {
                 // var thisVue = this;

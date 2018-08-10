@@ -3,6 +3,7 @@ package com.xuebei.crm.member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,17 +75,22 @@ public class MemberServiceImpl implements MemberService {
             memberMap.put(member.getMemberId(), member);
         }
         for (Member member : memberList) {
-            if (member.getLeader().getMemberId() == userId) {
-                memberTree.add(member);
-            } else {
-                String leaderId = member.getLeader().getMemberId();
-                Member leaderMember = memberMap.get(leaderId);
-                leaderMember.addSubMember(member);
-                leaderMember.addSubMemberNum(1);
-                while (leaderMember.getLeader() != null) {
-                    leaderMember = memberMap.get(leaderMember.getLeader().getMemberId());
-                    leaderMember.addSubMemberNum(1);
+
+            if (member.getMemberId().equals(userId) || member.getLeader() == null){
+                continue;
+            }
+
+            Member temp = member;
+            while (temp != null &&  !temp.getMemberId().equals(userId) ){
+                if (temp.getLeader() != null){
+                    String leaderId = temp.getLeader().getMemberId();
+                    temp = memberMap.get(leaderId);
+                }else{
+                    break;
                 }
+            }
+            if (temp != null && temp.getMemberId().equals(userId)){
+                memberTree.add(member);
             }
         }
         return memberTree;
