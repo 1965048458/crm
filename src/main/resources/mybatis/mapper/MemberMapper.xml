@@ -19,13 +19,15 @@
         SELECT * FROM company_user AS r1
         LEFT JOIN crm_user AS r2
             ON r1.crm_user_id = r2.crm_user_id
-        WHERE r1.company_id = #{companyId};
+        WHERE r1.company_id = #{companyId}
+        AND r1.is_delete=0;
     </select>
     
     <update id="updateRelationship" parameterType="java.lang.String">
         UPDATE company_user AS cu
             SET cu.leader_id = #{upperMemberId}
         WHERE cu.user_id = #{lowerMemberId}
+        AND cu.is_delete=0;
     </update>
     
     <select id="searchSiblingsList" resultMap="memberMap">
@@ -35,18 +37,21 @@
         WHERE r1.company_id IN (
             SELECT company_id FROM company_user
             WHERE company_user.user_id = #{memberId}
+            AND company_user.is_delete=0
         );
     </select>
 
     <select id="getCompanyIdByMemberId" parameterType="java.lang.String" resultType="java.lang.String">
         SELECT company_id FROM company_user
-        WHERE user_id = #{memberId};
+        WHERE user_id = #{memberId}
+        AND is_delete=0;
     </select>
     
     <update id="deleteLeader" parameterType="java.lang.String">
         UPDATE company_user
         SET leader_id=NULL
-        WHERE user_id=#{memberId};
+        WHERE user_id=#{memberId}
+        AND is_delete=0;
     </update>
     
     <select id="getCompanyNameById" parameterType="java.lang.String" resultType="java.lang.String">
@@ -54,7 +59,11 @@
         WHERE company_id = #{companyId};
     </select>
 
-    <!--<update id=""-->
+    <update id="deleteMember" parameterType="java.lang.String">
+        UPDATE company_user
+        SET is_delete=1
+        WHERE user_id=#{memberId};
+    </update>
 
     <update id="deleteLeaderId" parameterType="java.lang.String">
         UPDATE company_user

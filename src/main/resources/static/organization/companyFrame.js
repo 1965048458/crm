@@ -175,7 +175,7 @@ jQuery(document).ready(function () {
                 }).done(function (result) {
                     console.log(result);
                     thisVue.showPage='showMember';
-                    thisVue.getMemberList();
+                    thisVue.getMemberInfoList();
                 });
             },
             toContactDetail:function (memberId) {
