@@ -22,12 +22,12 @@ jQuery(document).ready(function () {
             deleteMember:[]
         },
         methods:{
-           init:function (companyId, companyName) {
+           'init':function (companyId, companyName) {
                this.showPage='showMember';
                this.companyName=companyName;
                this.companyId=companyId;
            },
-           getMemberList:function () {
+           'getMemberList':function () {
                var thisVue = this;
                this.flag = 'relationship';
                $.ajax({
@@ -45,7 +45,7 @@ jQuery(document).ready(function () {
                    thisVue.showMemberInfo=false;
                });
            },
-            getMemberInfoList:function () {
+            'getMemberInfoList':function () {
                var thisVue = this;
                this.flag='information';
                $.ajax({
@@ -61,7 +61,7 @@ jQuery(document).ready(function () {
                    thisVue.showMemberRelationship=false;
                })
             },
-            editMember:function () {
+            'editMember':function () {
                if(this.flag=='relationship'){
                    this.showPage='showMemberRelationEdit';
                    this.showMembership=true;
@@ -75,16 +75,17 @@ jQuery(document).ready(function () {
 
 
             },
-            memberEdit2Member:function () {
+            'memberEdit2Member':function () {
                 this.showPage='showMember';
+                this.lowerMemberId=[];
                 document.getElementById('editMemberShip').style.opacity='1';
                 $("#actionSheet").hide();
                 $('#iosMask').hide();
             },
-            memberInfo2Member:function () {
+            'memberInfo2Member':function () {
                 this.showPage='showMember';
             },
-            addSubMember:function () {
+            'addSubMember':function () {
                var thisVue = this;
                $.ajax({
                    type:'get',
@@ -95,9 +96,9 @@ jQuery(document).ready(function () {
                    dataType:'json',
                    cache:false
                }).done(function (result) {
-                   console.log(result);
+                   //console.log(result);
                    thisVue.$set(thisVue, 'siblingsList', result.siblingsList);
-                   console.log(thisVue.siblingsList);
+                   //console.log(thisVue.siblingsList);
                    thisVue.showOptionalMember=true;
                    thisVue.showMembership=false;
                    $("#actionSheet").hide();
@@ -105,7 +106,7 @@ jQuery(document).ready(function () {
 
                });
             },
-            deleteLeader:function () {
+            'deleteLeader':function () {
                 var thisVue = this;
                 $.ajax({
                     type:'get',
@@ -125,7 +126,7 @@ jQuery(document).ready(function () {
                     $('#iosMask').hide();
                 });
             },
-            membershipEditCheck:function () {
+            'membershipEditCheck':function () {
                 var thisVue = this;
                 var lowerMemberId = '';
                 for(var i=0;i<this.lowerMemberId.length;i++){
@@ -150,17 +151,17 @@ jQuery(document).ready(function () {
                     thisVue.getMemberList();
                 });
             },
-            chooseGenderImg:function (gender) {
+            'chooseGenderImg':function (gender) {
                 if(gender=='FEMALE')
                     return "/images/customer/FEMALE.svg";
                 else
                     return "/images/customer/MALE.svg";
             },
-            showActionSheet:function (upperMemberId) {
+            'showActionSheet':function (upperMemberId) {
 
                this.upperMemberId = upperMemberId;
             },
-            deleteMemberCheck:function () {
+            'deleteMemberCheck':function () {
                 var ids = '';
                 for(var i=0;i<this.deleteMember.length;i++){
                     ids+=this.deleteMember+',';
@@ -178,7 +179,7 @@ jQuery(document).ready(function () {
                     thisVue.getMemberInfoList();
                 });
             },
-            toContactDetail:function (memberId) {
+            'toContactDetail':function (memberId) {
                 window.location = '/customer/contactsInfo?contactsId='+memberId;
             }
         }
