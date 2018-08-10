@@ -4,6 +4,8 @@ import com.xuebei.crm.company.CompanyMapper;
 import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
+import com.xuebei.crm.member.Member;
+import com.xuebei.crm.member.MemberService;
 import com.xuebei.crm.opportunity.Opportunity;
 import com.xuebei.crm.project.Project;
 import com.xuebei.crm.project.ProjectMapper;
@@ -26,6 +28,9 @@ public class JournalController {
 
     @Autowired
     private CompanyMapper companyMapper;
+
+    @Autowired
+    private MemberService memberService;
 
     @Autowired
     private JournalService journalService;
@@ -242,13 +247,14 @@ public class JournalController {
         return GsonView.createSuccessView();
     }
 
-    @RequestMapping("/test")
-    public GsonView getUserList(@RequestParam("userId") String userId) {
-        Set<String> cs = journalService.getAllSubordinatesUserId(userId);
-        Set<Opportunity> opportunities = journalService.getAllSubordinatesOpportunity(cs);
+    @RequestMapping("subMemberList")
+    public GsonView subMemberList(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String userId = (String)session.getAttribute("userId");
         GsonView gsonView = new GsonView();
-        gsonView.addStaticAttribute("projects", opportunities);
-        gsonView.addStaticAttribute("users", cs);
+        List<Member> subMemberList = memberService.searchSubMemberList(userId);//"0022287b3f7a404d8fcca44aa76842c2"
+        gsonView.addStaticAttribute("successFlg",true);
+        gsonView.addStaticAttribute("subMemberList",subMemberList);
         return gsonView;
     }
 
