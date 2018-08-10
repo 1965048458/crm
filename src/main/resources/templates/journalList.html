@@ -205,18 +205,6 @@
                                 </div>
                             </div>
 
-                            <!--<div class="weui-form-preview" v-for="(visitRecord, ind) in journal.visitRecords">-->
-                            <!--<div class="weui-form-preview__bd">-->
-                            <!--<div class="weui-form-preview__item" style="font-size: .8em;">-->
-                            <!--<span class="weui-form-preview__value" style="text-align: left;">-->
-                            <!--<p v-text="'今日拜访' + (ind+1) + ':'"></p>-->
-                            <!--<p v-for="contacts in visitRecord.chosenContacts">-->
-                            <!--<span v-text="contacts.totalName"></span>-->
-                            <!--</p>-->
-                            <!--</span>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <!--</div>-->
 
                             <div class="weui-form-preview" v-for="patch in journal.journalPatches">
                                 <div class="weui-form-preview__bd" style="padding: 5px">
@@ -432,11 +420,11 @@
                                             <div class="weui-cell">
                                                 <div class="weui-cell__bd" style="text-align: center">
                                                     <div v-for="(sender, index) in senders" :key="'senders_' + index"
-                                                         class="weui-grid member-box">
+                                                         class="weui-grid sender-box">
                                                         <div class="weui-grid__icon">
                                                             <img src="/images/defaultUserIcon.png" alt="">
                                                         </div>
-                                                        <span class="sender-name" v-text="sender.crmUserName"></span>
+                                                        <span class="sender-name" v-text="sender"></span>
                                                     </div>
                                                     <div class="weui-grid sender-box" @click="addSenders">
                                                         <div class="weui-grid__icon">
@@ -530,9 +518,9 @@
                     </div>
                 </div>
 
-                <div id="selSender" v-show="showPage === 'selSender">
-                    <div></div>
-                </div>
+                <!--<div id="selSender" v-show="showPage === 'selSender">-->
+                    <!--<div></div>-->
+                <!--</div>-->
 
                 <div class="js_dialog" id="iosDialog2" style="opacity: 1;display: none" v-show="showErrMsg">
                     <div class="weui-mask"></div>
