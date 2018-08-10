@@ -13,6 +13,8 @@ jQuery(document).ready(function () {
             curJournal: {
                 user: {}
             },
+            customers: [],
+            projects: [],
             subMemberList: [],
             sendersId: [],
             sendersName: [],
@@ -100,7 +102,7 @@ jQuery(document).ready(function () {
                 var data = {
                     //userId:"00284bca325c4e77b9f30c5671ec1c44",
                     journalType: this.journalType,
-                    client: this.client,
+                    customer: this.client,
                     project: this.project,
                     startTime: this.startTime,
                     senderIds: senderIds,
@@ -170,6 +172,23 @@ jQuery(document).ready(function () {
                 this.showAddJournalDialog = false;
             },
             'toFilter': function () {
+                var thisVue = this;
+                $.ajax({
+                    type: 'get',
+                    url: '/journal/customerAndProjects',
+                    data: {},
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        thisVue.$set(thisVue, 'customers', result.customers);
+                        thisVue.$set(thisVue, 'projects', result.opportunities);
+                        console.log(result);
+                    } else {
+                        thisVue.errMsg = result.errMsg;
+                        thisVue.showErrMsg = true;
+                    }
+                });
                 this.showPage = 'filterDiv';
             },
             'quit': function () {

@@ -448,9 +448,8 @@
                                 </div>
                                 <div class="weui-cell__bd">
                                     <select class="weui-select" id="selectClient" v-model="client">
-                                        <option value="client_1">浙江大学</option>
-                                        <option value="client_2">浙江理工大学</option>
-                                        <option value="client_3">浙江工商大学</option>
+                                        <option :value="customer.customerId" v-for="customer in customers"
+                                                v-text="customer.name"></option>
                                     </select>
                                 </div>
                             </div>
@@ -461,9 +460,7 @@
                                 </div>
                                 <div class="weui-cell__bd">
                                     <select class="weui-select" id="selectProject" v-model="project">
-                                        <option value="project_1">项目1</option>
-                                        <option value="project_2">项目2</option>
-                                        <option value="project_3">项目3</option>
+                                        <option v-for="pj in projects" :value="pj.opportunityId" v-text="pj.opportunityName"></option>
                                     </select>
                                 </div>
                             </div>
