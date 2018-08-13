@@ -98,21 +98,24 @@
                 </div>
 
 
-                <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
-                    <div class="weui-media-box__hd">
-                        <img class="weui-media-box__thumb" src="/images/opportunity/AStage.svg"
-                             style="width: 40px;height: 40px;margin-top: 10px" alt="">
-                    </div>
-                    <div class="weui-media-box__bd">
-                        <label class="weui-media-box__title" style="font-size: 15px;color: #333333;">虚拟仿真中心建设</label>
-                        <p class="weui-media-box__desc" style="font-size: 12px;color: #888888;">浙江大学
-                            <label class="pull-right" style="font-size: 12px;color: #101010;"> 2018-06-29</label>
-                        </p>
-                        <p class="weui-media-box__desc" style="font-size: 12px;color: #A0B4BB;">拿到老师手机及微信号
-                            <label class="pull-right" style="font-size: 15px;color: #A0B4BB;"> 1200.00元</label>
-                        </p>
-                    </div>
-                </a>
+                <div v-for="opportunity in opportunityList">
+                    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+                        <div class="weui-media-box__hd">
+                            <img class="weui-media-box__thumb" src="/images/opportunity/AStage.svg"
+                                 style="width: 40px;height: 40px;margin-top: 10px" alt="">
+                        </div>
+                        <div class="weui-media-box__bd">
+                            <label class="weui-media-box__title"
+                                   style="font-size: 15px;color: #333333;">虚拟仿真中心建设</label>
+                            <p class="weui-media-box__desc" style="font-size: 12px;color: #888888;">浙江大学
+                                <label class="pull-right" style="font-size: 12px;color: #101010;"> 2018-06-29</label>
+                            </p>
+                            <p class="weui-media-box__desc" style="font-size: 12px;color: #A0B4BB;">拿到老师手机及微信号
+                                <label class="pull-right" style="font-size: 15px;color: #A0B4BB;"> 1200.00元</label>
+                            </p>
+                        </div>
+                    </a>
+                </div>
 
 
                 <div id="sortPage" style="display:none;" v-show="showSortPage">
@@ -124,7 +127,8 @@
                                     <p style="font-size: 14px;color: #101010;">按创建时间正序</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <input type="radio" class="weui-check" name="timeSort" id="x11"/>
+                                    <input type="radio" class="weui-check" name="timeSort" id="x11"
+                                           value="positive" v-model="sortMode"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
                             </label>
@@ -133,7 +137,8 @@
                                     <p style="font-size: 14px;color: #101010;">按创建时间倒序</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <input type="radio" class="weui-check" name="timeSort" id="x12"/>
+                                    <input type="radio" class="weui-check" name="timeSort" id="x12"
+                                           value="negative" v-model="sortMode"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
                             </label>

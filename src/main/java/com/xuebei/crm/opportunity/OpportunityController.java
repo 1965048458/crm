@@ -59,4 +59,12 @@ public class OpportunityController {
         return gsonView;
     }
 
+    @RequestMapping("queryOpportunity")
+    public GsonView queryOpportunity(HttpServletRequest request){
+        String userId = (String) request.getSession().getAttribute("userId");
+        GsonView gsonView = new GsonView();
+
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
 }
