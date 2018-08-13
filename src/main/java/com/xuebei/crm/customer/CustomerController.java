@@ -100,6 +100,9 @@ public class CustomerController {
     @RequestMapping("/addSubDepartment")
     public String addSubDepartment(@RequestParam("deptId") String deptId,
                                    ModelMap modelMap) {
+
+        Department department = customerMapper.queryDepartmentById(deptId);
+        modelMap.addAttribute("customerId", department.getCustomer().getCustomerId());
         modelMap.addAttribute("parentDeptId", deptId);
         return "addSubDepartment";
     }
@@ -203,6 +206,8 @@ public class CustomerController {
     public String addContactsPage(@RequestParam("deptId") String deptId,
                                   ModelMap modelMap,
                                   HttpServletRequest request) {
+        Department department = customerMapper.queryDepartmentById(deptId);
+        modelMap.addAttribute("customerId", department.getCustomer().getCustomerId());
         modelMap.addAttribute("deptId", deptId);
 
         // 部门ID空 或 用户不能修改该部门（因为客户不属于用户的公司）
@@ -300,7 +305,6 @@ public class CustomerController {
 
     @RequestMapping("/organization")
     public String organization(@RequestParam("customerId") String customerId,
-                               @RequestParam("customerName") String customerName,
                                HttpServletRequest request,
                                ModelMap modelMap){
         String userId = (String)request.getSession().getAttribute("userId");
@@ -308,8 +312,9 @@ public class CustomerController {
             return "error/404";
         }
 
-        modelMap.addAttribute("customerId",customerId);
-        modelMap.addAttribute("customerName", customerName);
+        Customer customer = customerMapper.queryCustomer(customerId);
+        modelMap.addAttribute("customerId", customerId);
+        modelMap.addAttribute("customerName", customer.getCustomerName());
         return "customer/organization";
     }
 
