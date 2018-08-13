@@ -35,7 +35,7 @@ jQuery(document).ready(function () {
                 deptList:'',
                 errMsg:'',
                 searchList:[],
-                searchWord:'',
+                searchWord:''
             };
         },
         methods: {
@@ -71,6 +71,9 @@ jQuery(document).ready(function () {
                         thisVue.showErrMsg = true;
                     }
                 });
+            },
+            'toModifyPage': function () {
+                window.location = '/customer/editCustomer?customerId='+jQuery('#customerId').val();
             },
             'switch2CustomerInfoPage':function () {
                 $('#customerInfoBtn').attr("class","weui-navbar__item weui-bar__item_on");
