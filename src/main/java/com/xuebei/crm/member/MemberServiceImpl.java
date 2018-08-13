@@ -76,7 +76,7 @@ public class MemberServiceImpl implements MemberService {
         }
         for (Member member : memberList) {
 
-            if (member.getMemberId().equals(userId) || member.getLeader() == null){
+            if (member == null || member.getMemberId().equals(userId)  ){
                 continue;
             }
 
