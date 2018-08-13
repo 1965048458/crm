@@ -123,7 +123,7 @@
                                     <p style="font-size: 14px;color: #101010;">按创建时间正序</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <input type="radio" class="weui-check" name="radio1" id="x11"/>
+                                    <input type="radio" class="weui-check" name="timeSort" id="x11"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
                             </label>
@@ -132,7 +132,7 @@
                                     <p style="font-size: 14px;color: #101010;">按创建时间倒序</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <input type="radio" class="weui-check" name="radio1" id="x12"/>
+                                    <input type="radio" class="weui-check" name="timeSort" id="x12"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
                             </label>
@@ -149,7 +149,7 @@
                                     <p style="font-size: 14px;color: #101010;">筛选场景</p>
                                 </div>
                                 <div class="weui-cell__ft" style="display: none">
-                                    <input type="radio" class="weui-check" name="radio1" id="filter1" value="scene"
+                                    <input type="radio" class="weui-check" name="filter" id="filter1" value="scene"
                                            v-model="filterCondition"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
@@ -160,7 +160,7 @@
                                     <p style="font-size: 14px;color: #101010;">创建日期</p>
                                 </div>
                                 <div class="weui-cell__ft" style="display: none">
-                                    <input type="radio" class="weui-check" name="radio1" value="date"
+                                    <input type="radio" class="weui-check" name="filter" value="date"
                                            v-model="filterCondition"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
@@ -170,7 +170,7 @@
                                     <p style="font-size: 14px;color: #101010;">创建人</p>
                                 </div>
                                 <div class="weui-cell__ft" style="display: none">
-                                    <input type="radio" class="weui-check" name="radio1" value="creator"
+                                    <input type="radio" class="weui-check" name="filter" value="creator"
                                            v-model="filterCondition"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
@@ -180,7 +180,7 @@
                                     <p style="font-size: 14px;color: #101010;">销售阶段</p>
                                 </div>
                                 <div class="weui-cell__ft" style="display: none">
-                                    <input type="radio" class="weui-check" name="radio1" value="stage"
+                                    <input type="radio" class="weui-check" name="filter" value="stage"
                                            v-model="filterCondition"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
@@ -190,7 +190,7 @@
                                     <p style="font-size: 14px;color: #101010;">客户名称</p>
                                 </div>
                                 <div class="weui-cell__ft" style="display: none">
-                                    <input type="radio" class="weui-check" name="radio1" value="customer"
+                                    <input type="radio" class="weui-check" name="filter" value="customer"
                                            v-model="filterCondition"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
@@ -214,7 +214,7 @@
                                     <p style="font-size: 14px;color: #101010;">全部</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <input type="radio" class="weui-check" name="radio1"/>
+                                    <input type="radio" class="weui-check" name="scene"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
 
@@ -224,7 +224,7 @@
                                     <p style="font-size: 14px;color: #101010;">我负责的商机</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <input type="radio" class="weui-check" name="radio1"/>
+                                    <input type="radio" class="weui-check" name="scene"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
                             </label>
@@ -233,7 +233,7 @@
                                     <p style="font-size: 14px;color: #101010;">下属负责的商机</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <input type="radio" class="weui-check" name="radio1"/>
+                                    <input type="radio" class="weui-check" name="scene"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
                             </label>
@@ -250,7 +250,7 @@
                                     <p style="font-size: 14px;color: #101010;">不限</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <input type="radio" class="weui-check" name="radio1"/>
+                                    <input type="radio" class="weui-check" name="date"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
                             </label>
@@ -285,7 +285,7 @@
                                     <p style="font-size: 14px;color: #101010;">不限</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <input type="radio" class="weui-check" name="radio1"/>
+                                    <input type="radio" class="weui-check" name="creator"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
                             </label>
@@ -309,7 +309,7 @@
                                     <p style="font-size: 14px;color: #101010;">不限</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <input type="radio" class="weui-check" name="radio1"/>
+                                    <input type="radio" class="weui-check" name="stage"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
                             </label>
@@ -319,7 +319,7 @@
                                     <p style="font-size: 14px;color: #101010;">A&nbsp;拿到老师手机及微信号</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <input type="radio" class="weui-check" name="radio1"/>
+                                    <input type="radio" class="weui-check" name="stage"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
                             </label><label class="weui-cell weui-check__label">
@@ -327,7 +327,7 @@
                                 <p style="font-size: 14px;color: #101010;">B&nbsp;提交方案</p>
                             </div>
                             <div class="weui-cell__ft">
-                                <input type="radio" class="weui-check" name="radio1"/>
+                                <input type="radio" class="weui-check" name="stage"/>
                                 <span class="weui-icon-checked"></span>
                             </div>
                         </label><label class="weui-cell weui-check__label">
@@ -335,7 +335,7 @@
                                 <p style="font-size: 14px;color: #101010;">C&nbsp;以我方提供参数挂标</p>
                             </div>
                             <div class="weui-cell__ft">
-                                <input type="radio" class="weui-check" name="radio1"/>
+                                <input type="radio" class="weui-check" name="stage"/>
                                 <span class="weui-icon-checked"></span>
                             </div>
                         </label><label class="weui-cell weui-check__label">
@@ -343,7 +343,7 @@
                                 <p style="font-size: 14px;color: #101010;">D&nbsp;中标</p>
                             </div>
                             <div class="weui-cell__ft">
-                                <input type="radio" class="weui-check" name="radio1"/>
+                                <input type="radio" class="weui-check" name="stage"/>
                                 <span class="weui-icon-checked"></span>
                             </div>
                         </label><label class="weui-cell weui-check__label">
@@ -351,7 +351,7 @@
                                 <p style="font-size: 14px;color: #101010;">输单</p>
                             </div>
                             <div class="weui-cell__ft">
-                                <input type="radio" class="weui-check" name="radio1"/>
+                                <input type="radio" class="weui-check" name="stage"/>
                                 <span class="weui-icon-checked"></span>
                             </div>
                         </label>
@@ -368,7 +368,7 @@
                                     <p style="font-size: 14px;color: #101010;">不限</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <input type="radio" class="weui-check" name="radio1"/>
+                                    <input type="radio" class="weui-check" name="customer"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
                             </label>
