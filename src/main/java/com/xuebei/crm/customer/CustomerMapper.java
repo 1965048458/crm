@@ -38,6 +38,8 @@ public interface CustomerMapper {
 
     List<Customer> queryCustomerInfo(@Param("searchWord") String searchWord);
 
+    Customer queryCustomer(@Param("customerId") String customerId);
+
     List<Department> queryDepartment(@Param("customerId") String customerId);
 
     List<Contacts> queryContacts(@Param("customerId") String customerId);

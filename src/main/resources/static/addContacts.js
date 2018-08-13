@@ -19,7 +19,7 @@ jQuery(document).ready(function () {
             officeAddr: '',
             profile: '',
             specialRelationship: '',
-            destLocation: "/customer/organization",
+            destLocation: "/customer/editCustomer?customerId=" + jQuery('#customerId').val(),
             contactsTypeList: []
         },
         methods: {
@@ -57,7 +57,7 @@ jQuery(document).ready(function () {
                     cache: false
                 }).done(function (result){
                     if (result.successFlg) {
-                        window.location = thisVue.location;
+                        window.location = thisVue.destLocation;
                     } else {
                         thisVue.errMsg = result.errMsg;
                         thisVue.showErrMsg = true;

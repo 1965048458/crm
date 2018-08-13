@@ -166,7 +166,11 @@
     <select id="searchMyJournal" resultMap="journalMap">
         SELECT j.*, u.real_nm FROM journal j
         INNER JOIN user_view u ON j.user_id = u.user_id
-        WHERE j.user_id = #{userId}
+        LEFT JOIN visit_log vl ON j.journal_id = vl.journal_id
+        INNER JOIN visit_contacts vc ON vl.visit_log_id = vc.visit_log_id
+        INNER JOIN contacts c ON vc.contacts_id = c.contacts_id
+        INNER JOIN contacts_type ct ON c.contacts_type_id = ct.contacts_type_id
+        WHERE has_submitted = 1 AND j.user_id = #{userId}
         <if test="journalType != null">
             AND j.type_cd = #{journalType}
         </if>
@@ -176,7 +180,12 @@
         <if test="endTime != null">
             AND j.create_ts &lt; #{endTime}
         </if>
-        AND has_submitted = 1
+        <if test="customer != null and customer != ''">
+            AND ct.customer_id = #{customer}
+        </if>
+        <if test="project != null and project != ''">
+            AND vl.sales_opportunity_id = #{project}
+        </if>
     </select>
 
     <select id="searchJournal" resultMap="journalMap">
@@ -205,7 +214,11 @@
     <select id="searchReceivedJournal" resultMap="journalMap">
         SELECT j.*, u.real_nm  FROM journal j
         INNER JOIN user_view u ON j.user_id = u.user_id
-        WHERE j.user_id = #{childId}
+        LEFT JOIN visit_log vl ON j.journal_id = vl.journal_id
+        INNER JOIN visit_contacts vc ON vl.visit_log_id = vc.visit_log_id
+        INNER JOIN contacts c ON vc.contacts_id = c.contacts_id
+        INNER JOIN contacts_type ct ON c.contacts_type_id = ct.contacts_type_id
+        WHERE j.user_id != #{userId}
         AND has_submitted = 1
         <if test="journalType != null">
             AND j.type_cd = #{journalType}
@@ -216,12 +229,19 @@
         <if test="endTime != null">
             AND j.create_ts &lt; #{endTime}
         </if>
-        <if test="senderIds != null">
-            <foreach collection="sdId" item="item" index="index" separator=" ">
-                OR j.user_id = #{item}
-            </foreach>
-        </if>
 
+        AND (
+        j.user_id IN
+        <foreach collection="sdId" item="sender" index="i" open="(" close=")" separator=",">
+            #{sender}
+        </foreach>)
+
+        <if test="customer != null and customer != ''">
+            AND ct.customer_id = #{customer}
+        </if>
+        <if test="project != null and project != ''">
+            AND vl.sales_opportunity_id = #{project}
+        </if>
     </select>
 
     <update id="receiverDeleteJournal">

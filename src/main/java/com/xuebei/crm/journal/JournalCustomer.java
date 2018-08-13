@@ -6,7 +6,7 @@ import com.xuebei.crm.customer.Contacts;
 import java.util.List;
 
 public class JournalCustomer {
-
+    @Expose
     private String customerId;
     @Expose
     private String name;

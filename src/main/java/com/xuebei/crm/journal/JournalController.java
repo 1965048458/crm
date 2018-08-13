@@ -7,8 +7,6 @@ import com.xuebei.crm.exception.InformationNotCompleteException;
 import com.xuebei.crm.member.Member;
 import com.xuebei.crm.member.MemberService;
 import com.xuebei.crm.opportunity.Opportunity;
-import com.xuebei.crm.project.Project;
-import com.xuebei.crm.project.ProjectMapper;
 import com.xuebei.crm.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -197,6 +196,7 @@ public class JournalController {
 
     @RequestMapping("/list")
     public GsonView list(JournalSearchParam param, HttpServletRequest request){
+
         HttpSession session = request.getSession();
         String userId = (String)session.getAttribute("userId");
         param.setUserId(userId);
@@ -255,6 +255,22 @@ public class JournalController {
         List<Member> subMemberList = memberService.searchSubMemberList(userId);//"0022287b3f7a404d8fcca44aa76842c2"
         gsonView.addStaticAttribute("successFlg",true);
         gsonView.addStaticAttribute("subMemberList",subMemberList);
+        return gsonView;
+    }
+
+    @RequestMapping("/customerAndProjects")
+    public GsonView getCustomerProjects(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String userId = (String) session.getAttribute("userId");
+        String companyId = companyMapper.queryCompanyIdByUserId(userId);
+        Set<String> userSet = new HashSet<>();
+        userSet.add(userId);
+        GsonView gsonView = new GsonView();
+        List<JournalCustomer> customers = journalService.getAllContacts(companyId);
+        Set<Opportunity> opportunities = journalService.getAllSubordinatesOpportunity(userSet);
+        gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("customers", customers);
+        gsonView.addStaticAttribute("opportunities", opportunities);
         return gsonView;
     }
 

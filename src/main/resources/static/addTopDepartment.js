@@ -13,7 +13,7 @@ jQuery(document).ready(function () {
         },
         methods: {
             'cancelAddTopDepartment': function() {
-                window.location = '/customer/customerListPage';
+                window.location = '/customer/editCustomer?customerId=' + jQuery('#customerId').val();
             },
             'confirmAddTopDepartment': function() {
                 var vue = this;
@@ -29,7 +29,7 @@ jQuery(document).ready(function () {
                     dataType: "json",
                     success: function (result) {
                         if (result.successFlg) {
-                            window.location = "/customer/customerListPage";
+                            window.location = '/customer/editCustomer?customerId=' + jQuery('#customerId').val();
                         } else {
                             vue.$set(vue, 'errMsg', result.errMsg);
                             vue.$set(vue, 'showErrMsg', true);
