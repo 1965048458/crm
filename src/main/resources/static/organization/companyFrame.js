@@ -86,6 +86,7 @@ jQuery(document).ready(function () {
             },
             'memberInfo2Member':function () {
                this.showPage='showMember';
+               this.deleteMember=[];
             },
             'addSubMember':function () {
                var thisVue = this;
@@ -200,6 +201,7 @@ jQuery(document).ready(function () {
                 }).done(function (result) {
                     console.log(result);
                     thisVue.showPage='showMember';
+                    this.deleteMember=[]
                     thisVue.getMemberInfoList();
                 });
             },
