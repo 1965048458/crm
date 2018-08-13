@@ -69,7 +69,6 @@ public class LoginController {
         gsonView.addStaticAttribute("user", user);
 
 
-
         return gsonView;
     }
 
@@ -85,11 +84,11 @@ public class LoginController {
     public GsonView staffAuditCheck(HttpServletRequest request) {
 
         GsonView gsonView = new GsonView();
-        String crmUserId = (String) request.getSession().getAttribute("crmUserId");
+        String userId = (String) request.getSession().getAttribute("userId");
 
 //        String userType = companyMapper.queryUserType(crmUserId);
 
-        List<CompanyUser> companyUsers = companyMapper.queryApplyStaff(crmUserId);
+        List<CompanyUser> companyUsers = companyMapper.queryApplyStaff(userId);
         gsonView.addStaticAttribute(SUCCESS_FLG, true);
 
         gsonView.addStaticAttribute("companyUsers", companyUsers);
@@ -97,34 +96,60 @@ public class LoginController {
         return gsonView;
     }
 
+    @RequestMapping("/administrator")
+    public String administrator(ModelMap modelMap, HttpServletRequest request) {
+        String userId = (String) request.getSession().getAttribute("userId");
+        List<CompanyUser> companyUsers = companyMapper.queryApplyStaff(userId);
+        String companyName = companyMapper.queryCompanyName(userId);
+        String companyId = companyMapper.queryCompanyIdByUserId(userId);
+        modelMap.addAttribute("companyName", companyName);
+        modelMap.addAttribute("companyId", companyId);
+        if (companyUsers == null) {
+            modelMap.addAttribute("applyStaff", "0");
+        } else {
+            modelMap.addAttribute("applyStaff", companyUsers.size());
+        }
+        return "administrator";
+    }
 
     @RequestMapping("/myAccount")
     public String myAccount(ModelMap modelMap, HttpServletRequest request) {
         String crmUserId = (String) request.getSession().getAttribute("crmUserId");
 
-        String userType = companyMapper.queryUserType(crmUserId);
+//        String userType = companyMapper.queryUserType(crmUserId);
+        String userType = "staff";
         String realName = loginRegisterMapper.queryRealName(crmUserId);
 
-        if(userType != null) {
-            if (userType.equals("ADMIN")) {
-                List<CompanyUser> companyUsers = companyMapper.queryApplyStaff(crmUserId);
-                if (companyUsers == null) {
-                    modelMap.addAttribute("applyStaff", "0");
-                } else {
-                    modelMap.addAttribute("applyStaff", companyUsers.size());
-                    modelMap.addAttribute("applyStaffList", companyUsers);
-
-                }
-            }
-        }
+//        if(userType != null) {
+//            if (userType.equals("ADMIN")) {
+//                List<CompanyUser> companyUsers = companyMapper.queryApplyStaff(crmUserId);
+//                if (companyUsers == null) {
+//                    modelMap.addAttribute("applyStaff", "0");
+//                } else {
+//                    modelMap.addAttribute("applyStaff", companyUsers.size());
+//                    modelMap.addAttribute("applyStaffList", companyUsers);
+//
+//                }
+//            }
+//        }
         modelMap.addAttribute("realName", realName);
         modelMap.addAttribute("type", userType);
         return "myAccount";
     }
 
-
     @RequestMapping("/myCompany")
-    public GsonView myCompany(HttpServletRequest request) {
+    public String  myCompany(HttpServletRequest request) {
+        String crmUserId = (String) request.getSession().getAttribute("crmUserId");
+        if(crmUserId!= null) {
+
+            return "myCompany";
+        }
+
+        return "error/500";
+    }
+
+    @RequestMapping("/myCompany/query")
+    public GsonView myCompanyQuery(HttpServletRequest request) {
         GsonView gsonView = new GsonView();
         String crmUserId = (String) request.getSession().getAttribute("crmUserId");
 
@@ -135,29 +160,27 @@ public class LoginController {
     }
 
     @RequestMapping("/agreeApply")
-    public GsonView agreeApply(@RequestParam("userId")String userId,HttpServletRequest request) {
+    public GsonView agreeApply(@RequestParam("userId") String userId, HttpServletRequest request) {
         GsonView gsonView = new GsonView();
         String crmUserId = companyMapper.queryCrmUserId(userId);
-        companyMapper.agreeApply(userId,crmUserId);
-
-
+        companyMapper.agreeApply(userId, crmUserId);
 
 
         String realName = loginRegisterMapper.queryRealName(crmUserId);
         String tel = loginRegisterMapper.queryTel(crmUserId);
 //        String  tel ="13777875102";
-        String  companyName=companyMapper.queryCompanyName(userId);
-        String  result = companyMapper.queryStatus(userId);
+        String companyName = companyMapper.queryCompanyName(userId);
+        String result = companyMapper.queryStatus(userId);
 
-        if(result.equals("PERMITTED")){
+        if (result.equals("PERMITTED")) {
             result = "审核通过";
-        }else if(result.equals("REFUSE")){
+        } else if (result.equals("REFUSE")) {
             result = "审核未通过";
         }
 
         AlibabaAliqinFcSmsNumSendResponse rsp;
         try {
-            rsp = sendCaptchaService.sendAudit(realName, tel,companyName,result);
+            rsp = sendCaptchaService.sendAudit(realName, tel, companyName, result);
         } catch (ApiException e) {
             gsonView.addStaticAttribute(SUCCESS_FLG, false);
             gsonView.addStaticAttribute(ERRMSG, "短信发送失败");
@@ -175,26 +198,26 @@ public class LoginController {
     }
 
     @RequestMapping("/refuseApply")
-    public GsonView refuseApply(@RequestParam("userId")String userId,HttpServletRequest request) {
+    public GsonView refuseApply(@RequestParam("userId") String userId, HttpServletRequest request) {
         GsonView gsonView = new GsonView();
         String crmUserId = companyMapper.queryCrmUserId(userId);
-        companyMapper.refuseApply(userId,crmUserId);
+        companyMapper.refuseApply(userId, crmUserId);
 
         String realName = loginRegisterMapper.queryRealName(crmUserId);
         String tel = loginRegisterMapper.queryTel(crmUserId);
 //        String  tel ="13777875102";
-        String  companyName=companyMapper.queryCompanyName(userId);
-        String  result = companyMapper.queryStatus(userId);
+        String companyName = companyMapper.queryCompanyName(userId);
+        String result = companyMapper.queryStatus(userId);
 
-        if(result.equals("PERMITTED")){
+        if (result.equals("PERMITTED")) {
             result = "审核通过";
-        }else if(result.equals("REFUSE")){
+        } else if (result.equals("REFUSE")) {
             result = "审核未通过";
         }
 
         AlibabaAliqinFcSmsNumSendResponse rsp;
         try {
-            rsp = sendCaptchaService.sendAudit(realName, tel,companyName,result);
+            rsp = sendCaptchaService.sendAudit(realName, tel, companyName, result);
         } catch (ApiException e) {
             gsonView.addStaticAttribute(SUCCESS_FLG, false);
             gsonView.addStaticAttribute(ERRMSG, "短信发送失败");
@@ -209,7 +232,6 @@ public class LoginController {
         }
         return gsonView;
     }
-
 
 
     @RequestMapping("/searchCompany")
@@ -229,7 +251,7 @@ public class LoginController {
         GsonView gsonView = new GsonView();
         String crmUserId = (String) request.getSession().getAttribute("crmUserId");
         Company company = companyMapper.queryCompanyComplete(name);
-        if(company != null) {
+        if (company != null) {
             String status = companyMapper.queryApplyStatus(crmUserId, company.getCompanyId());
             if (status == null) {
                 String userId = UUIDGenerator.genUUID();
@@ -237,17 +259,17 @@ public class LoginController {
 
                 request.getSession().setAttribute("userId", userId);
                 gsonView.addStaticAttribute(SUCCESS_FLG, true);
-            } else if(status.equals("PENDING")){
+            } else if (status.equals("PENDING")) {
                 gsonView.addStaticAttribute(SUCCESS_FLG, false);
                 gsonView.addStaticAttribute(ERRMSG, "已申请加入公司，等待审核！");
-            }else if(status.equals("PERMITTED")){
+            } else if (status.equals("PERMITTED")) {
                 gsonView.addStaticAttribute(SUCCESS_FLG, false);
                 gsonView.addStaticAttribute(ERRMSG, "已加入公司，请勿重复加入！");
-            }else if (status.equals("REFUSE")){
+            } else if (status.equals("REFUSE")) {
                 gsonView.addStaticAttribute(SUCCESS_FLG, false);
                 gsonView.addStaticAttribute(ERRMSG, "申请被拒绝！");
             }
-        }else {
+        } else {
             gsonView.addStaticAttribute(SUCCESS_FLG, false);
             gsonView.addStaticAttribute(ERRMSG, "请输入正确的公司名称！");
 
@@ -336,7 +358,8 @@ public class LoginController {
     @RequestMapping("/chooseCompany")
     public GsonView loginWithCompany(@RequestParam("companyId") String companyId,
                                      HttpServletRequest request) {
-        String crmUserId = (String)request.getSession().getAttribute("crmUserId");
+        GsonView gsonView = new GsonView();
+        String crmUserId = (String) request.getSession().getAttribute("crmUserId");
         if (crmUserId == null) {
             return GsonView.createErrorView("用户未登陆");
         }
@@ -345,7 +368,13 @@ public class LoginController {
             return GsonView.createErrorView("用户未加入公司或审核未通过");
         } else {
             request.getSession().setAttribute("userId", userId);
-            return GsonView.createSuccessView();
+            String userType = companyMapper.queryUserType(userId);
+            if (userType.equals("ADMIN")) {
+                gsonView.addStaticAttribute("ADMIN", true);
+                return gsonView;
+            } else {
+                return GsonView.createSuccessView();
+            }
         }
     }
 
