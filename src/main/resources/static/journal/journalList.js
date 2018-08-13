@@ -175,6 +175,7 @@ jQuery(document).ready(function () {
             },
             'toFilter': function () {
                 this.journalType = '';
+                this.client = '';
                 var thisVue = this;
                 $.ajax({
                     type: 'get',
