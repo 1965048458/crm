@@ -14,6 +14,7 @@ $(document).ready(function () {
             showPage: '',
             filterCondition: '',
             filterValue: '',
+            sortMode:'positive',
             sceneValue: 'all',
             dateValue: 'all',
             dateValueStart: '',
@@ -23,28 +24,26 @@ $(document).ready(function () {
             stageValue: 'all',
             customerValue: 'all',
             customerValueIn: '',
+            opportunityList:'',
 
             titleBar: true,
             searchCustomer: true,
             customers: true,
             searchWord: '',
             errMsg: undefined,
-            customerList: []
+
         },
         methods: {
             'showResult': function () {
                 var thisVue = this;
                 $.ajax({
                     type: 'get',
-                    url: '/customer/queryCustomer',
-                    data: {
-                        searchWord: thisVue.searchWord,
-                    },
+                    url: '/opportunity/queryOpportunity',
                     dataType: 'json',
                     cache: false
                 }).done(function (result) {
                     if (result.successFlg) {
-                        thisVue.$set(thisVue, 'customerList', result.customerList);
+                        thisVue.$set(thisVue, 'opportunityList', result.opportunityList);
                     } else {
                         thisVue.errMsg = result.errMsg;
                     }
@@ -162,5 +161,5 @@ $(document).ready(function () {
             },
         }
     });
-
+    opportunityVue.showResult();
 });
