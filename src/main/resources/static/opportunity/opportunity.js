@@ -50,6 +50,9 @@ $(document).ready(function () {
                     }
                 })
             },
+            'add':function () {
+                window.location = "/opportunity/newSale";
+            },
             'sort': function () {
                 if (this.imgFilter == '/images/opportunity/筛选已选中.svg') {
                     this.showFilterPage = false;
