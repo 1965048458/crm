@@ -176,6 +176,11 @@ public class JournalServiceImpl implements JournalService {
         if (param.getIsMine() != null && param.getIsMine() == 1 ){
             allJournalList.removeAll(receivedJournal);
         }
+        //按下属筛选时移除我的日志
+        if (param.getSenderIds() != null && param.getSenderIds().length() != 0){
+            allJournalList.removeAll(myJournal);
+        }
+
         allJournalList.sort((journal1, journal2)-> journal1.getCreateTs().before(journal2.getCreateTs())?1:-1);
         //统计日志有多少人已读
         for (Journal jn : allJournalList  ) {

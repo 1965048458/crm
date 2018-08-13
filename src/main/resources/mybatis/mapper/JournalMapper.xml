@@ -170,7 +170,7 @@
         INNER JOIN visit_contacts vc ON vl.visit_log_id = vc.visit_log_id
         INNER JOIN contacts c ON vc.contacts_id = c.contacts_id
         INNER JOIN contacts_type ct ON c.contacts_type_id = ct.contacts_type_id
-        WHERE j.user_id = #{userId}
+        WHERE has_submitted = 1 AND j.user_id = #{userId}
         <if test="journalType != null">
             AND j.type_cd = #{journalType}
         </if>
@@ -186,7 +186,6 @@
         <if test="project != null and project != ''">
             AND vl.sales_opportunity_id = #{project}
         </if>
-        AND has_submitted = 1
     </select>
 
     <select id="searchJournal" resultMap="journalMap">
@@ -231,11 +230,11 @@
             AND j.create_ts &lt; #{endTime}
         </if>
 
-        AND
+        AND (
         j.user_id IN
         <foreach collection="sdId" item="sender" index="i" open="(" close=")" separator=",">
             #{sender}
-        </foreach>
+        </foreach>)
 
         <if test="customer != null and customer != ''">
             AND ct.customer_id = #{customer}
