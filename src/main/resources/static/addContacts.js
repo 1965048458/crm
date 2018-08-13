@@ -24,6 +24,21 @@ jQuery(document).ready(function () {
             contactsTypeList: []
         },
         methods: {
+            'updateContactsTypes': function () {
+                jQuery.ajax({
+                    type: 'get',
+                    url: '/customer/action/getContactsTypeList',
+                    data: {
+                        deptId: jQuery('#deptId').val()
+                    },
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result.successFlg) {
+                            addContactsVue.$set(addContactsVue, 'contactsTypeList', result.contactsTypes);
+                        }
+                    }
+                });
+            },
             'cancelAddContacts': function () {
                 window.location = this.destLocation;
             },
@@ -89,6 +104,29 @@ jQuery(document).ready(function () {
                 this.showAddContactsType = false;
             },
             'confirmAddContactsType': function () {
+
+                var thisVue = this;
+
+                jQuery.ajax({
+                    type: 'post',
+                    url: '/customer/action/addContactsType',
+                    data: {
+                        customerId: jQuery('#customerId').val(),
+                        contactsTypeName: jQuery('#newContactsTypeName').val()
+                    },
+                    dataType: 'json',
+                    cache: false,
+                    success: function (result) {
+                        if (result.successFlg) {
+                            thisVue.updateContactsTypes();
+                        } else {
+                            thisVue.errMsg=result.errMsg;
+                            thisVue.showErrMsg = true;
+                        }
+                    }
+                });
+
+
                 this.showAddContactsType = false;
             }
         },
@@ -114,17 +152,7 @@ jQuery(document).ready(function () {
         }
     });
 
-    jQuery.ajax({
-        type: 'get',
-        url: '/customer/action/getContactsTypeList',
-        data: {
-            deptId: jQuery('#deptId').val()
-        },
-        dataType: 'json',
-        success: function (result) {
-            if (result.successFlg) {
-                addContactsVue.$set(addContactsVue, 'contactsTypeList', result.contactsTypes);
-            }
-        }
-    });
+    addContactsVue.updateContactsTypes();
+
+
 });

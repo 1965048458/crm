@@ -450,4 +450,16 @@ public class CustomerController {
         return "editCustomer";
     }
 
+    @RequestMapping("/action/addContactsType")
+    public GsonView insertContactsType(@RequestParam("customerId") String customerId,
+                                       @RequestParam("contactsTypeName") String contactsTypeName) {
+        customerId = customerId.trim();
+        Boolean isExist = customerMapper.isContactsTypeExist(customerId, contactsTypeName);
+        if (isExist) {
+            return GsonView.createErrorView("已经有同名的联系人职位");
+        }
+        customerMapper.insertContactsType(customerId, contactsTypeName);
+        return GsonView.createSuccessView();
+    }
+
 }
