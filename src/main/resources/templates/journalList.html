@@ -120,9 +120,6 @@
                             <span @click="searchAll">全部</span>
                         </div>
                         <div class="weui-navbar__item">
-                            <span @click="searchUnRead">未读<span v-text=""></span></span>
-                        </div>
-                        <div class="weui-navbar__item">
                             <span @click="searchMine">我的</span>
                         </div>
                         <div class="weui-navbar__item">
@@ -157,7 +154,7 @@
                                 <div class="placeholder" style="visibility: hidden">weui</div>
                             </div>
                         </div>
-                        <div id="resultTip" style="background: #38A4F2; width: 100%; height: 34px; display: none; margin-top: 3px">
+                        <div id="resultTip" style="background: #38A4F2; width: 100%; height: auto; display: none; margin-top: 3px">
                             <p style="color: #FFFFFF; font-size: 12px; padding: 8px 8px;" v-text="tip"></p>
                         </div>
                         <div class="journal-box" v-for="journal in journalList">
@@ -450,7 +447,7 @@
                                 </div>
                                 <div class="weui-cell__bd">
                                     <select class="weui-select" id="selectClient" v-model="client">
-                                        <option :value="customer.customerId" v-for="customer in customers"
+                                        <option :value="customer.customerId +','+customer.name" v-for="customer in customers"
                                                 v-text="customer.name"></option>
                                     </select>
                                 </div>
@@ -462,7 +459,8 @@
                                 </div>
                                 <div class="weui-cell__bd">
                                     <select class="weui-select" id="selectProject" v-model="project">
-                                        <option v-for="pj in projects" :value="pj.opportunityId" v-text="pj.opportunityName"></option>
+                                        <option v-for="pj in projects" :value="pj.opportunityId+','+pj.opportunityName"
+                                                v-text="pj.opportunityName"></option>
                                     </select>
                                 </div>
                             </div>
