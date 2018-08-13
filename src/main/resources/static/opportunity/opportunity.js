@@ -64,9 +64,6 @@ $(document).ready(function () {
                     this.imgSort = "/images/opportunity/排序未选中.svg";
                 }
             },
-            'add':function () {
-                window.location = "/opportunity/newSale";
-            },
             'filter': function () {
                 if (this.imgSort == '/images/opportunity/排序已选中.svg') {
                     this.showSortPage = false;
@@ -125,6 +122,7 @@ $(document).ready(function () {
             },
             'finish': function () {
                 this.showFilterPage = false;
+                this.imgFilter ='/images/opportunity/筛选未选中.svg';
                 this.filterCondition = '';
             },
             'reset': function () {
