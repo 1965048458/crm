@@ -1,6 +1,7 @@
 var TYPE_NAMES = {
     'DAILY': '日报',
-    'WEEKLY': '周报'
+    'WEEKLY': '周报',
+    'MONTHLY': '月报'
 };
 
 jQuery(document).ready(function () {
@@ -26,6 +27,7 @@ jQuery(document).ready(function () {
             startTime: "",
             endTime: "",
             isRead: "",
+            tip: '',
             errMsg: "",
             showErrMsg: false
         },
@@ -109,7 +111,29 @@ jQuery(document).ready(function () {
                     endTime: this.endTime
                     // isRead: Number(!this.isRead)
                 };
+                this.tip = this.mergeTip(senderIds);
+                $('#resultTip').show();
                 this.searchList(data);
+            },
+            'mergeTip': function (senderIds) {
+                var mergeTip = '';
+                if (senderIds != '') {
+                    mergeTip += senderIds + ';';
+                } else {
+                    mergeTip += senderIds + this.startTime;
+                }
+                if (this.endTime != '' && this.client != '') {
+                    mergeTip += '到' + this.endTime + '与' + this.client;
+                } else {
+                    mergeTip += this.endTime;
+                }
+                mergeTip += this.client;
+                if (this.project != '') {
+                    mergeTip += this.project + '的';
+                } else {
+                    mergeTip += this.project;
+                }
+                return mergeTip + "未读" + TYPE_NAMES[this.journalType];
             },
             'addSenders': function () {
                 var thisVue = this;

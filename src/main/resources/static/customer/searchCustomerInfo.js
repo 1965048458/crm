@@ -78,16 +78,17 @@ $(document).ready(function () {
                     window.location.href = "/customer/customerInfo?customerId=" + customer.customerId + "&customerName=" + customer.customerName;
                 }, 500);
             }
-        },
-        watch: {
-            'customerList': function () {
-                //
-            },
-            'myCustomers': function () {
-                //
-            }
         }
     });
     searchCustInfoVue.showResult();
 
+    $.ajax({
+        type: 'get',
+        url: '/customer/getMyCustomers',
+        dataType: 'json',
+        cache: false,
+        success: function (result) {
+            searchCustInfoVue.$set(searchCustInfoVue, 'myCustomers', result.myCustomers);
+        }
+    });
 });
