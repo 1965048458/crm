@@ -97,9 +97,6 @@ public class JournalControllerTest {
                 .andExpect(jsonPath("journalList").exists())
                 .andExpect(jsonPath("successFlg").value(true));
 
-        //验证执行journalService.searchJournal后是否返回一个List<Journal>
-        when(journalService.searchJournal(param)).thenReturn(journalList);
-
         //验证方法执行次数
         verify(journalService,times(1)).searchJournal(any(JournalSearchParam.class));
 

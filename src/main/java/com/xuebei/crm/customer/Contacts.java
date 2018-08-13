@@ -270,4 +270,8 @@ public class Contacts {
         }
     }
 
+    public Boolean isMale() {
+        return gender == GenderEnum.MALE;
+    }
+
 }

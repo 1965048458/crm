@@ -271,4 +271,5 @@ public class CustomerServiceImpl implements CustomerService {
         Department parentDept = customerMapper.queryDepartmentById(parentDeptId);
         return customerMapper.isDepartNameExist(parentDept.getCustomer().getCustomerId(), deptName);
     }
+
 }
