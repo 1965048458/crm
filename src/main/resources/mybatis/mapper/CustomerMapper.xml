@@ -466,4 +466,10 @@
         ORDER BY (journal.create_ts) DESC;
     </select>
 
+    <insert id="insertCustomerCompanyRelation">
+        INSERT INTO company_customer
+        (company_id, customer_id)
+        VALUES( #{companyId}, #{customerId});
+    </insert>
+
 </mapper>

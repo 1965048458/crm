@@ -25,13 +25,18 @@
         .pull-right {
             float: right!important;
         }
+        .add-contacts-type-input {
+            height: 40px;
+            border: 1px solid #BBB5B5;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
 
 <div id="addContactsVue">
 
-    <input type="hidden" id="customerId" th:vaule="${customerId}"/>
+    <input type="hidden" id="customerId" th:value="${customerId}"/>
     <input id="deptId" type="hidden" th:value="${deptId}">
     <input id="isTopDept" type="hidden" th:value="${isTopDept}">
 
@@ -205,6 +210,7 @@
                 </div>
             </label>
         </div>
+        <span @click="clickAddContactsType">添加联系人职位</span>
     </div>
 
     <div class="js_dialog" id="iosDialog2" style="opacity: 1;" v-show="showErrMsg">
@@ -216,6 +222,22 @@
             </div>
         </div>
     </div>
+
+    <div class="js_dialog" id="iosDialog3" style="opacity: 1;" v-show="showAddContactsType">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__hd"><strong class="weui-dialog__title">添加职位</strong></div>
+            <div class="weui-dialog__bd">
+                <input id="newContactsTypeName" class="weui-input add-contacts-type-input" placeholder="请输入职位"/>
+            </div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" @click="cancelAddContactsType">取消</a>
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click="confirmAddContactsType">确定</a>
+            </div>
+        </div>
+    </div>
+
+
 
 </div>
 
