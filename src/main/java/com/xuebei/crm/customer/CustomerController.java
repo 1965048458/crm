@@ -406,10 +406,10 @@ public class CustomerController {
 
     @RequestMapping("/customerInfo")
     public String customerInfo(@RequestParam("customerId")String customerId,
-                               @RequestParam("customerName") String customerName,
                                ModelMap modelMap){
+        Customer customer = customerMapper.queryCustomer(customerId);
         modelMap.addAttribute("customerId", customerId);
-        modelMap.addAttribute("customerName", customerName);
+        modelMap.addAttribute("customerName", customer.getCustomerName());
         return "customerInfo";
     }
 

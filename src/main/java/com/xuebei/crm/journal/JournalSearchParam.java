@@ -14,6 +14,16 @@ public class JournalSearchParam {
     private String[] sdId;
 
     private String customer;
+    private String project;
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String project) {
+        this.project = project;
+    }
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startTime;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

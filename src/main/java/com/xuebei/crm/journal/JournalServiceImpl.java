@@ -157,16 +157,16 @@ public class JournalServiceImpl implements JournalService {
 
         List<Journal> myJournal = journalMapper.searchMyJournal(param);
 
-        // 查询下属的日志
-        List<Journal> receivedJournal = new ArrayList<>();
-        Set<String> childs = getAllSubordinatesUserId(param.getUserId());
-        for (String childId: childs) {
-            if (childId.equals(param.getUserId())) {
-                continue;
-            }
-            param.setChildId(childId);
-            receivedJournal.addAll(journalMapper.searchReceivedJournal(param));
+        // 当未选择发送人，则找到所有下属作为筛选目标
+        if (param.getSdId() == null || param.getSdId().length == 0) {
+            Set<String> childs = getAllSubordinatesUserId(param.getUserId());
+            String[] childsArray = new String[childs.size()];
+            childs.toArray(childsArray);
+            param.setSdId(childsArray);
         }
+
+        // 查询下属的日志
+        List<Journal> receivedJournal = journalMapper.searchReceivedJournal(param);
 
         List<Journal> allJournalList = new ArrayList<>();
 
