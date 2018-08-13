@@ -15,4 +15,6 @@ public interface OpportunityMapper {
     Integer addSale(Opportunity opportunity);
 
     void addOpportunityContact(@Param("opportunityId") Integer opportunityId, @Param("contactId") String contactId);
+
+    List<Opportunity> queryOpportunity(OpportunitySearchParam opportunitySearchParam);
 }

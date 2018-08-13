@@ -41,4 +41,11 @@ public class OpportunityServiceImpl implements OpportunityService {
     public void addOpportunityContact(Integer opportunityId, String contactId) {
         opportunityMapper.addOpportunityContact(opportunityId, contactId);
     }
+
+    @Override
+    public List<Opportunity> queryOpportunity(OpportunitySearchParam opportunitySearchParam){
+        List<Opportunity> opportunities = opportunityMapper.queryOpportunity(opportunitySearchParam) ;
+        return opportunities;
+    }
+
 }
