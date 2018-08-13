@@ -98,42 +98,48 @@ jQuery(document).ready(function () {
             'searchFilter': function () {
                 //this.isReadTo0_1 = this.bool2Digit(!this.isRead),
                 var senderIds = "";
+                var clientId = '', clientName = '',
+                    projectId = '', projectName = '';
                 for (var i = 0; i < this.sendersId.length; i++) {
                     senderIds += this.sendersId[i] + ',';
+                }
+                if (this.client != ''){
+                    var c = this.client.split(',');
+                    clientId = c[0];
+                    clientName = c[1];
+                }
+                if(this.project != ''){
+                    var p = this.project.split(',');
+                    projectId = p[0];
+                    projectName = p[1];
                 }
                 var data = {
                     //userId:"00284bca325c4e77b9f30c5671ec1c44",
                     journalType: this.journalType,
-                    customer: this.client,
-                    project: this.project,
+                    customer: clientId,
+                    project: projectId,
                     startTime: this.startTime,
                     senderIds: senderIds,
                     endTime: this.endTime
                     // isRead: Number(!this.isRead)
                 };
-                this.tip = this.mergeTip(senderIds);
+                this.tip = this.mergeTip(clientName, projectName);
                 $('#resultTip').show();
                 this.searchList(data);
             },
-            'mergeTip': function (senderIds) {
+            'mergeTip': function ( clientName, projectName) {
                 var mergeTip = '';
-                if (senderIds != '') {
-                    mergeTip += senderIds + ';';
-                } else {
-                    mergeTip += senderIds + this.startTime;
+                for(var i = 0; i < this.sendersName.length; i++){
+                    mergeTip += this.sendersName[i] + ',';
                 }
-                if (this.endTime != '' && this.client != '') {
-                    mergeTip += '到' + this.endTime + '与' + this.client;
+                if (this.startTime!= '' && this.endTime != '') {
+                    mergeTip += this.startTime + '到' + this.endTime ;
+                    mergeTip += clientName != ''? '与' + clientName: '';
                 } else {
-                    mergeTip += this.endTime;
+                    mergeTip += this.startTime + this.endTime + clientName ;
                 }
-                mergeTip += this.client;
-                if (this.project != '') {
-                    mergeTip += this.project + '的';
-                } else {
-                    mergeTip += this.project;
-                }
-                return mergeTip + "未读" + TYPE_NAMES[this.journalType];
+                mergeTip += projectName;
+                return mergeTip + ((TYPE_NAMES[this.journalType] != null) ? '的' + TYPE_NAMES[this.journalType] : '');
             },
             'addSenders': function () {
                 var thisVue = this;
@@ -200,6 +206,8 @@ jQuery(document).ready(function () {
             'toFilter': function () {
                 this.journalType = '';
                 this.client = '';
+                this.project = '';
+                this.startTime = this.endTime = '';
                 var thisVue = this;
                 $.ajax({
                     type: 'get',

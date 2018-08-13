@@ -30,6 +30,33 @@ public class Opportunity {
     private String contactId;
     @Expose
     private String userId;
+    @Expose
+    private String create_ts;
+    @Expose
+    private String updater_id;
+    @Expose
+    private String update_ts;
+
+    public String getUpdater_id() {
+        return updater_id;
+    }
+
+    public void setUpdater_id(String updater_id) {
+        this.updater_id = updater_id;
+    }
+
+    public String getUpdate_ts() {
+        return update_ts;
+    }
+
+    public void setUpdate_ts(String update_ts) {
+        this.update_ts = update_ts;
+    }
+
+
+
+
+
 
     public String getUserId() {
         return userId;
@@ -117,5 +144,13 @@ public class Opportunity {
 
     public void setTotalCoast(double totalCoast) {
         this.totalCoast = totalCoast;
+    }
+
+    public String getCreate_ts() {
+        return create_ts;
+    }
+
+    public void setCreate_ts(String create_ts) {
+        this.create_ts = create_ts;
     }
 }

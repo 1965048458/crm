@@ -378,4 +378,14 @@ public class LoginController {
         }
     }
 
+    @RequestMapping("registerSuccess")
+    public String registerSuccess(HttpServletRequest request) {
+        String crmUserId = (String) request.getSession().getAttribute("crmUserId");
+        if(crmUserId != null){
+            return "registerSuccess";
+        }else{
+            return "error/500";
+        }
+    }
+
 }

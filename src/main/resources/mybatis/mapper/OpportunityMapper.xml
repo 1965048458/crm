@@ -15,7 +15,7 @@
         INSERT INTO `crmdb`.`sales_opportunity` (
             `customer_id`, `opportunity_nm`,
             `sales_status`, `amount`, `check_date`, `clinch_date`,
-             `content`, `user_id`
+             `content`, `user_id`, `create_ts`, `updater_id`, `update_ts`
         ) VALUES (
             #{customerId},
             #{opportunityName},
@@ -24,7 +24,10 @@
             #{checkDate},
             #{clinchDate},
             #{content},
-            #{userId}
+            #{userId},
+            NOW(),
+            NULL ,
+            NOW()
         )
     </insert>
 
