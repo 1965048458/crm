@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>账号信息</title>
+
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css">
+
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css">
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/myCompany.js"></script>
+    <style>
+        .top-bar {
+            text-align: center;
+            background: #FFFFFF;
+        }
+
+        .pull-left {
+            float: left !important;
+        }
+
+        .pull-right {
+            float: right !important;
+        }
+    </style>
+</head>
+<body>
+<div id="myCompany">
+    <div id="myCompany1" style="display: none;" v-show="show==='myCompany'">
+         <div class="weui-tab">
+            <div class="weui-navbar">
+                <div id="titleBar4" class="weui-navbar__item top-bar" style="height: 28px; padding: 10px 10px;">
+                            <span @click="back" class="pull-left">
+                                <img src="/images/back_icon.svg" style="margin-top:7px;"/></span>
+                    <span class="center" style="font-size: 22px; margin-top: 1px">我的公司</span>
+                    <a @click="addCompany">
+                                        <span class="pull-right" style="margin-top: 7px;"><img
+                                                src="/images/add.png"
+                                                style="width: 16px; height: 16px; display: block"/></span>
+                    </a>
+                </div>
+            </div>
+            <div class="weui-tab__panel">
+
+
+                <div v-for="company in myCompany">
+                    <div class="weui-media-box weui-media-box_small-appmsg">
+                        <div class="weui-cells">
+                            <a class="weui-cell weui-cell_access" href="javascript:;"
+                               @click="intoCompany(company.companyId)">
+                                <div class="weui-cell__hd"><img
+                                        src="/images/公司.svg" alt=""
+                                        style="width:40px;margin-right:5px;display:block">
+                                </div>
+                                <div class="weui-cell__bd weui-cell_primary">
+                                    <h4>{{company.companyName}}</h4>
+                                    <p>&nbsp;</p>
+                                </div>
+                                <span class="weui-cell__ft"></span>
+
+                            </a>
+                        </div>
+                        <div class="weui-cells weui-cells_form">
+                            <div class="weui-cell" >
+                                <div class="weui-cell__bd">
+                                    <label class="weui-label" style="float: left">{{companyStatus(company.status)}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="addCompany" style="display: none;" v-show="show==='addCompany'">
+        <div class="weui-tab">
+            <div class="weui-navbar">
+                <div id="titleBar5" class="weui-navbar__item top-bar" style="height: 28px; padding: 10px 10px;">
+                            <span @click="back1" class="pull-left">
+                                <img src="/images/back_icon.svg" style="margin-top:7px;"/></span>
+                    <span class="center" style="font-size: 22px; margin-top: 1px">加入公司</span>
+
+                    <span style="color: dodgerblue;float: right;font-size: 18px; margin-top: 1px"
+                          @click="submit"> 提交 &nbsp; </span>
+
+                </div>
+            </div>
+            <div class="weui-tab__panel">
+
+                <div class="weui-cells">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" placeholder="" name="input" v-model="name"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="weui-cells">
+                    <div class="weui-cells__title">搜索结果</div>
+
+                    <div class="weui-cells weui-cells_radio" id="companyList">
+                        <label class="weui-cell weui-check__label" v-for="company in companyList">
+                            <div class="weui-cell__bd">
+                                <p>{{company.companyName}}</p>
+                            </div>
+                            <div class="weui-cell__ft">
+                                <input type="radio" class="weui-check" :value="company.companyName"
+                                       v-model="name">
+                                <span class="weui-icon-checked"></span>
+                            </div>
+                        </label>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

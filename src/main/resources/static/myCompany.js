@@ -10,12 +10,12 @@ var TYPE_NAMES = {
     'REFUSE': '审核未通过',
 };
 jQuery(document).ready(function () {
-    var myAccount = new Vue({
-        el: '#myAccount',
+    var myCompany = new Vue({
+        el: '#myCompany',
         data: {
             realName: '',
             tel: '',
-            show: '',
+            show: 'myCompany',
             title: '',
             type: '',
             myCompany: '',
@@ -27,14 +27,20 @@ jQuery(document).ready(function () {
         },
 
         methods: {
-            'init': function () {
-                var thisVue = this;
-                thisVue.show = 'staff';
-                thisVue.title = $("#realName").val();
-            },
-
             'myCompany1': function () {
-                window.location.href = "/myCompany";
+                var thisVue = this;
+                jQuery.ajax({
+                    type: 'get',
+                    url: '/myCompany/query',
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        thisVue.$set(thisVue, 'myCompany', result.myCompany);
+                        thisVue.show = 'myCompany';
+                    }
+
+                })
             },
             'staffAudit': function () {
                 window.location.href = "/staffAudit";
@@ -43,14 +49,7 @@ jQuery(document).ready(function () {
                 window.location.href = "/accountSecurity";
             },
             'back': function () {
-                var thisVue = this;
-                if (thisVue.type == 'ADMIN') {
-                    thisVue.show = 'manager';
-                    thisVue.title = $("#realName").val() + '管理员';
-                } else {
-                    thisVue.show = 'staff';
-                    thisVue.title = $("#realName").val();
-                }
+                window.location.href = "/myAccount";
             },
             'back1': function () {
                 var thisVue = this;
@@ -175,5 +174,5 @@ jQuery(document).ready(function () {
             }
         }
     });
-    myAccount.init();
+    myCompany.myCompany1();
 })
