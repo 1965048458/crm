@@ -132,10 +132,11 @@ jQuery(document).ready(function () {
                 for(var i = 0; i < this.sendersName.length; i++){
                     mergeTip += this.sendersName[i] + ',';
                 }
-                if (this.startTime!= '' && this.endTime != '' && this.client != '') {
-                    mergeTip += this.startTime + '到' + this.endTime + '与' + clientName;
+                if (this.startTime!= '' && this.endTime != '') {
+                    mergeTip += this.startTime + '到' + this.endTime ;
+                    mergeTip += clientName != ''? '与' + clientName: '';
                 } else {
-                    mergeTip += this.startTime + this.endTime + clientName;
+                    mergeTip += this.startTime + this.endTime + clientName ;
                 }
                 mergeTip += projectName;
                 return mergeTip + ((TYPE_NAMES[this.journalType] != null) ? '的' + TYPE_NAMES[this.journalType] : '');
@@ -206,6 +207,7 @@ jQuery(document).ready(function () {
                 this.journalType = '';
                 this.client = '';
                 this.project = '';
+                this.startTime = this.endTime = '';
                 var thisVue = this;
                 $.ajax({
                     type: 'get',
