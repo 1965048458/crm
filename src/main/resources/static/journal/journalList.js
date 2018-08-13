@@ -106,8 +106,8 @@ jQuery(document).ready(function () {
                     project: this.project,
                     startTime: this.startTime,
                     senderIds: senderIds,
-                    endTime: this.endTime,
-                    isRead: Number(!this.isRead)
+                    endTime: this.endTime
+                    // isRead: Number(!this.isRead)
                 };
                 this.searchList(data);
             },
@@ -128,6 +128,8 @@ jQuery(document).ready(function () {
                 this.showPage = 'filterDiv';
             },
             'finish': function () {
+                this.sendersId = [];
+                this.sendersName = [];
                 for (var i = 0; i < this.tempSenders.length; i++) {
                     var str = this.tempSenders[i].split(',');
                     this.sendersId[i] = str[0];
@@ -172,6 +174,7 @@ jQuery(document).ready(function () {
                 this.showAddJournalDialog = false;
             },
             'toFilter': function () {
+                this.journalType = '';
                 var thisVue = this;
                 $.ajax({
                     type: 'get',

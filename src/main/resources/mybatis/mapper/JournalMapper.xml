@@ -180,10 +180,10 @@
         <if test="endTime != null">
             AND j.create_ts &lt; #{endTime}
         </if>
-        <if test="customer != null">
+        <if test="customer != null and customer != ''">
             AND ct.customer_id = #{customer}
         </if>
-        <if test="project != null">
+        <if test="project != null and project != ''">
             AND vl.sales_opportunity_id = #{project}
         </if>
         AND has_submitted = 1
@@ -230,18 +230,17 @@
         <if test="endTime != null">
             AND j.create_ts &lt; #{endTime}
         </if>
-        <if test="senderIds != null">
-            AND (
-            1 = 0
-            <foreach collection="sdId" item="item" index="index" separator=" ">
-                OR j.user_id = #{item}
-            </foreach>
-            )
-        </if>
-        <if test="customer != null">
+
+        AND
+        j.user_id IN
+        <foreach collection="sdId" item="sender" index="i" open="(" close=")" separator=",">
+            #{sender}
+        </foreach>
+
+        <if test="customer != null and customer != ''">
             AND ct.customer_id = #{customer}
         </if>
-        <if test="project != null">
+        <if test="project != null and project != ''">
             AND vl.sales_opportunity_id = #{project}
         </if>
     </select>

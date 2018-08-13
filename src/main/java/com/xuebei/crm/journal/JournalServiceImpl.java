@@ -151,7 +151,7 @@ public class JournalServiceImpl implements JournalService {
     @Override
     public List<Journal> searchJournal(JournalSearchParam param) {
         ///分解发送人字符串
-        if (param.getSenderIds() != "" && param.getSenderIds() != null){
+        if (param.getSenderIds() != null && !param.getSenderIds().equals("")){
             param.setSdId(param.getSenderIds().trim().split(","));
         }
 
