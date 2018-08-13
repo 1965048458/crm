@@ -61,7 +61,7 @@ public class RegisterController {
         user.setMail(mail);
         user.setBirth(birth);
         registerService.insertUser(user);
-        request.getSession().setAttribute("crmUserId", user.getCRMUserId());
+        request.getSession().setAttribute("crmUserId", user.getUserId());
         gsonView.addStaticAttribute(SUCCESS_FLG, true);
         request.getSession().removeAttribute(CAPTCHA);
         request.getSession().removeAttribute(CAPTCHA_CREATE_TS);

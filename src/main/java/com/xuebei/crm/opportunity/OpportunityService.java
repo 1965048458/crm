@@ -14,5 +14,5 @@ public interface OpportunityService
 
     void addOpportunityContact(Integer opportunityId,  String contactId);
 
-
+    List<Opportunity> queryOpportunity(OpportunitySearchParam opportunitySearchParam);
 }
