@@ -54,6 +54,12 @@
         .page__bd_spacing{
             padding-top: 10px;
         }
+        .narvi-bar {
+            z-index: 9999;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
 
     </style>
 </head>
@@ -64,24 +70,23 @@
     <input id="customerName" type="hidden" th:value="${customerName}">
     <div class="page navbar js_show" v-show="showPage === 'showCustomerOrganization'">
         <div class="page__bd" style="height: 100%;">
-            <div class="weui-tab">
-                <div class="top-bar center-box" style="border: hidden">
-                    <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;" @click="toCustomerList()">返回</span>
-                    <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);" v-text="customerName"></span>
-                    <span class="pull-right" style="color: rgb(61, 168, 244); font-size: 16px;" @click="toModifyPage()">编辑</span>
-                </div>
-
-                <div class="weui-navbar" style="position: relative;height: 40px;background-color: #ffffff">
-                    <div id="customerInfoBtn" class="weui-navbar__item" style="padding: 10px 0;border: hidden" @click="toCustomerInfo()">
-                        客户信息
+            <div>
+                <div class="narvi-bar">
+                    <div class="top-bar center-box" style="border: hidden">
+                        <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;" @click="toCustomerList()">返回</span>
+                        <span class="center-ele"
+                              style="font-size: 18px; color: rgb(51, 51, 51);" v-text="customerName"></span>
+                        <span class="pull-right" style="color: rgb(61, 168, 244); font-size: 16px;" @click="toModifyPage()">编辑</span>
                     </div>
-                    <div id="organizationInfoBtn" class="weui-navbar__item weui-bar__item_on" @click="switch2OrganizationInfoPage"
-                         style="padding: 10px 0;border: hidden" >
-                        组织机构
+                    <div class="weui-navbar" style="position: relative;height: 40px;background-color: #ffffff">
+                        <div id="customerInfoBtn" class="weui-navbar__item" style="padding: 10px 0;border: hidden" @click="toCustomerInfo()">
+                            客户信息
+                        </div>
+                        <div id="organizationInfoBtn" class="weui-navbar__item weui-bar__item_on" @click="switch2OrganizationInfoPage"
+                             style="padding: 10px 0;border: hidden" >
+                            组织机构
+                        </div>
                     </div>
-                </div>
-
-                <div class="weui-tab__panel" style="padding-top: 0px" >
                     <div class="weui-search-bar" id="searchBar" >
                         <div class="weui-search-bar__form">
                             <div class="weui-search-bar__box">
@@ -112,6 +117,9 @@
                         </div>
                     </div>
 
+                </div>
+
+                <div style="padding-top: 130px" >
                     <div v-show="showOrganization">
                         <div class="customer-item">
                             <customer v-for="customer in customerList" :customer="customer"></customer>
