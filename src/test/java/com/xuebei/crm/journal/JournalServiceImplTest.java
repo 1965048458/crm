@@ -4,7 +4,6 @@ import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
 import com.xuebei.crm.user.User;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -32,7 +31,6 @@ public class JournalServiceImplTest {
 
 
     @Test
-    @Ignore
     public void testModifyJournal() throws AuthenticationException, InformationNotCompleteException {
         Journal journal = new Journal();
         String userId = "jhskdf21340987";
@@ -51,16 +49,13 @@ public class JournalServiceImplTest {
         journalService.modifyJournal(journal);
 
         verify(journalMapper).updateJournal(journal);
-        verify(journalMapper).deleteJournalReceiver(journal.getJournalId());
     }
 
     @Test
-    @Ignore
     public void testSearchJournal(){
 
         JournalSearchParam param = new JournalSearchParam();
         param.setUserId("12345");
-        List<Journal> journalList = new ArrayList<>();
         List<Journal> Journals = new ArrayList<>();
         Journal journal = new Journal();
         journal.setJournalId("2");
@@ -71,7 +66,7 @@ public class JournalServiceImplTest {
         when(journalMapper.searchMyJournal(param)).thenReturn(Journals);
         when(journalMapper.searchReceivedJournal(param)).thenReturn(Journals);
 
-        journalList = journalService.searchJournal(param);
+        List<Journal> journalList = journalService.searchJournal(param);
 
         Assert.assertNotNull(journalList);
         Assert.assertEquals(2, journalList.size());
@@ -92,13 +87,12 @@ public class JournalServiceImplTest {
         user.setUserId("123423");
         List<User> userList = new ArrayList<>();
         userList.add(user);
-        List result = new ArrayList();
 
         when(journalMapper.searchJournal(jId)).thenReturn(journal);
         when(journalMapper.searchRead(jId)).thenReturn(userList);
         when(journalMapper.searchUnread(jId)).thenReturn(userList);
 
-        result = journalService.searchDatail(jId);
+        List result = journalService.searchDatail(jId);
 
         Assert.assertNotNull(result);
         Assert.assertEquals(3,result.size());
