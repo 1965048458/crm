@@ -167,8 +167,15 @@
     <select id="getMyCustomers" resultMap="customerMap">
         SELECT c.*
         FROM crm_customer c
-            RIGHT JOIN crm_user u ON c.creator_id = u.crm_user_id
-        WHERE u.crm_user_id = #{userId}
+            LEFT JOIN company_user cu ON c.creator_id = cu.user_id
+        WHERE cu.user_id = #{userId}
+    </select>
+
+    <select id="getCommonCustomers" resultMap="customerMap">
+        SELECT c.*
+        FROM crm_customer c
+        LEFT JOIN company_user cu ON c.creator_id = cu.user_id
+        WHERE cu.user_id is NULL OR cu.user_id != #{userId}
     </select>
 
     <select id="queryDepartmentById" resultMap="deptMap">
@@ -242,10 +249,10 @@
             cu.customer_nm,
             cu.customer_id
         FROM contacts c
-            INNER JOIN customer_dept cd ON c.customer_dept_id = cd.customer_dept_id
-            INNER JOIN contacts_type ct ON ct.contacts_type_id = c.contacts_type_id
-            INNER JOIN crm_customer cu ON ct.customer_id = cu.customer_id
-        WHERE cd.customer_id = #{customerId} AND ct.customer_id = #{customerId}
+            LEFT JOIN customer_dept cd ON c.customer_dept_id = cd.customer_dept_id
+            LEFT JOIN contacts_type ct ON ct.contacts_type_id = c.contacts_type_id
+            LEFT JOIN crm_customer cu ON cd.customer_id = cu.customer_id
+        WHERE cd.customer_id = #{customerId}
     </select>
 
     <insert id="insertEnclosureApply" parameterType="com.xuebei.crm.customer.EnclosureApply">
