@@ -73,19 +73,19 @@
             <div class="narvi-bar">
                 <div class="top-bar center-box" style="border: hidden">
                     <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;" @click="toCustomerList()">返回</span>
-                    <span class="center-ele"
-                          style="font-size: 18px; color: rgb(51, 51, 51);" v-text="customerName"></span>
+                    <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);" v-text="customerName"></span>
                     <span class="pull-right" style="color: rgb(61, 168, 244); font-size: 16px;" @click="toModifyPage()">编辑</span>
                 </div>
                 <div class="weui-navbar" style="position: relative;height: 40px;background-color: #ffffff">
                     <div id="customerInfoBtn" class="weui-navbar__item" style="padding: 10px 0;border: hidden" @click="toCustomerInfo()">
                         客户信息
                     </div>
-                    <div id="organizationInfoBtn" class="weui-navbar__item weui-bar__item_on" @click="switch2OrganizationInfoPage"
+                    <div id="organizationInfoBtn" class="weui-navbar__item weui-bar__item_on"
                          style="padding: 10px 0;border: hidden" >
                         组织机构
                     </div>
                 </div>
+
                 <div class="weui-search-bar" id="searchBar" >
                     <div class="weui-search-bar__form">
                         <div class="weui-search-bar__box">
@@ -102,6 +102,7 @@
                     </div>
                     <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel" @click="cancel">取消</a>
                 </div>
+
                 <div class="weui-cells searchbar-result" id="searchResult" style="display: none">
                     <div class="weui-cells weui-cells_radio">
                         <label class="weui-cell weui-check__label" v-for="searchItem in searchList.filter(filterList)">
@@ -109,7 +110,7 @@
                                 <p v-text="searchItem"></p>
                             </div>
                             <div class="weui-cell__ft">
-                                <input type="radio" class="weui-check" v-bind:value="searchItem" v-model="searchWord">
+                                <input type="radio" class="weui-check" :value="searchItem" v-model="searchWord">
                             </div>
                         </label>
                     </div>
@@ -314,7 +315,7 @@
                 <div class="weui-cell__bd">
                     <span v-text="contact.realName" style="color: #333333;font-size: 16px" ></span>
                     <span v-text="addTypeName(contact)" :id="'type_name_label_'+contact.contactsId"
-                        style="padding-left: 5px;color: #B2B2B2;font-size: 13px;border-style: solid;border-width: thin"></span>
+                        style="color: #B2B2B2;font-size: 13px;border:solid thin"></span>
                 </div>
             </div>
             <div class="weui-cells" style="padding-left: 30px">
