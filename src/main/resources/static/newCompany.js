@@ -11,6 +11,7 @@ $(document).ready(function () {
             members: [],
             name: '',
             tel: '',
+            companyList: [],
             companyName: ''
         },
         methods: {
@@ -20,18 +21,24 @@ $(document).ready(function () {
             'backToMe': function () {
                 window.location.href = '/company/chooseCompany';
             },
+            'filterList': function (company) {
+                return company.companyName.indexOf(this.companyName) != -1;
+            },
             'back': function () {
                 this.showPage = 'main';
             },
             'create': function () {
                 var thisVue = this;
-                if (this.companyName === "" || this.members.length < 3){
+                if (this.companyName === "" || this.members.length < 2) {
                     $('.weui-toptips').css('display', 'block');
                     setTimeout(function () {
                         $('.weui-toptips').css('display', 'none');
-                    }, 2000);
+                    }, 1000);
                     return;
                 }
+
+                //if()
+
                 var postData = {
                     companyId: '',
                     companyName: this.companyName,
@@ -94,4 +101,24 @@ $(document).ready(function () {
             }
         }
     });
+
+    $.ajax({
+        type: 'get',
+        url: '/company/getCompanyNames',
+        data:{
+            word: createVue.companyName
+        },
+        dataType: 'json',
+        cache: false,
+        success: function (result) {
+            createVue.$set(createVue, 'companyList', result.companyList);
+        }
+    });
+
+    $('.weui-input').on('click',function () {
+        $('#searchResult').show();
+    }).on('blur', function () {
+        $('#searchResult').hide();
+    });
+
 });
