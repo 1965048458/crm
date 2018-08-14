@@ -3,6 +3,7 @@ package com.xuebei.crm.opportunity;
 import com.google.gson.annotations.Expose;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2018/7/23.
@@ -32,6 +33,8 @@ public class Opportunity {
     private String contactId;
     @Expose
     private String userId;
+    @Expose
+    private List<String> subUserId;
     @Expose
     private String create_ts;
     @Expose
@@ -63,8 +66,13 @@ public class Opportunity {
         this.customerName = customerName;
     }
 
+    public List<String> getSubUserId() {
+        return subUserId;
+    }
 
-
+    public void setSubUserId(List<String> subUserId) {
+        this.subUserId = subUserId;
+    }
 
     public String getUserId() {
         return userId;

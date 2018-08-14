@@ -34,12 +34,12 @@ $(document).ready(function () {
 
         },
         methods: {
-            'showResult': function () {
+            'showResult': function (data) {
                 var thisVue = this;
                 $.ajax({
                     type: 'get',
                     url: '/opportunity/queryOpportunity',
-
+                    data:data,
                     dataType: 'json',
                     cache: false
                 }).done(function (result) {
@@ -49,6 +49,19 @@ $(document).ready(function () {
                         thisVue.errMsg = result.errMsg;
                     }
                 })
+            },
+            'imgSrc' : function(data){
+                if(data =='A阶段'){
+                    return '/images/opportunity/Astage.svg';
+                }else if(data =='B阶段'){
+                    return '/images/opportunity/Bstage.svg';
+                }else if(data =='C阶段'){
+                    return '/images/opportunity/Cstage.svg';
+                }else if(data =='D阶段'){
+                    return '/images/opportunity/Dstage.svg';
+                }else if(data =='输单'){
+                    return '/images/opportunity/loseOrder.svg';
+                }
             },
             'add':function () {
                 window.location = "/opportunity/newSale";
@@ -66,6 +79,41 @@ $(document).ready(function () {
                     this.showSortPage = false;
                     this.imgSort = "/images/opportunity/排序未选中.svg";
                 }
+            },
+            'sortAsc': function(){
+                var creator ='';
+                if(this.creatorV ==''){
+                    creator = this.creatorValue;
+                }else{
+                    creator = this.creatorV;
+                }
+                var data = {
+                    sortMode:'ASC',
+                    userId: creator,
+                    customerName:this.customerValueIn,
+                    createStart: this.dateValueStart,
+                    createEnd: this.dateValueEnd,
+                    salesStatus: this.stageValue,
+                };
+                this.showResult(data);
+            },
+            'sortDesc': function(){
+                var creator ='';
+                if(this.creatorV ==''){
+                    creator = this.creatorValue;
+                }else{
+                    creator = this.creatorV;
+                }
+                var data = {
+                    sortMode:'DESC',
+                    userId: creator,
+                    customerName:this.customerValueIn,
+                    createStart: this.dateValueStart,
+                    createEnd: this.dateValueEnd,
+                    salesStatus: this.stageValue,
+                };
+                console.log(data);
+                this.showResult(data);
             },
             'filter': function () {
                 if (this.imgSort == '/images/opportunity/排序已选中.svg') {
@@ -133,16 +181,22 @@ $(document).ready(function () {
                 this.showFilterPage = false;
                 this.imgFilter ='/images/opportunity/筛选未选中.svg';
                 this.filterCondition = '';
+                var creator ='';
+                if(this.creatorV ==''){
+                    creator = this.creatorValue;
+                }else{
+                    creator = this.creatorV;
+                }
                 var data = {
                     sortMode:this.sortMode,
-                    userId: this.creatorV,
+                    userId: creator,
                     customerName:this.customerValueIn,
                     createStart: this.dateValueStart,
                     createEnd: this.dateValueEnd,
                     salesStatus: this.stageValue,
                 };
-                console.log(this.dateValueStart);
-                this.showResult();
+                console.log(data);
+                this.showResult(data);
             },
             'reset': function () {
                 this.sceneValue = 'all';
