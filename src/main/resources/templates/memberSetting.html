@@ -50,8 +50,11 @@
             display: block;
 
         }
-        .page__bd_spacing{
-            padding-top: 10px;
+        .narvi-bar {
+            z-index: 9999;
+            position: fixed;
+            top: 0;
+            width: 100%;
         }
 
     </style>
@@ -64,15 +67,14 @@
 
     <div class="page navbar js_show" v-show="showPage === 'showMember'">
         <div class="page__bd" style="height: 100%;" >
-            <div class="weui-tab">
-
+            <div class="narvi-bar">
                 <div class="top-bar center-box" style="border: hidden">
-                    <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;" onclick="history.back()">返回</span>
+                    <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;"
+                          onclick="history.back()">返回</span>
                     <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);">{{companyName}}</span>
                     <span class="pull-right" @click="editMember()"
                           style="color: rgb(61, 168, 244); font-size: 16px;">编辑</span>
                 </div>
-
                 <div class="weui-navbar" style="position: relative;height: 40px;background-color: #ffffff">
                     <div id="memberShipBtn" class="weui-navbar__item weui-bar__item_on" @click="getMemberList()"
                          style="padding: 10px 0;border: hidden" >
@@ -83,13 +85,27 @@
                         人员信息
                     </div>
                 </div>
-
-                <div class="weui-tab__panel" style="padding-top: 0px" v-show="showMemberRelationship" >
+                <div class="weui-search-bar" >
+                    <form class="weui-search-bar__form">
+                        <div class="weui-search-bar__box">
+                            <i class="weui-icon-search"></i>
+                            <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
+                            <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+                        </div>
+                        <label class="weui-search-bar__label" id="searchText">
+                            <i class="weui-icon-search"></i>
+                            <span>搜索</span>
+                        </label>
+                    </form>
+                    <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+                </div>
+            </div>
+            <div style="padding-top: 128px">
+                <div class="weui-tab__panel" v-show="showMemberRelationship" >
                     <member v-for="member in memberList" :member="member"></member>
 
                 </div>
-
-                <div class="weui-tab__panel" style="padding-top: 0px" v-show="showMemberInfo">
+                <div class="weui-tab__panel" v-show="showMemberInfo">
                     <div class="weui-cells" v-for="member in memberInfoList">
                         <div class="weui-cell" :id="member.memberId" >
                             <div class="weui-cell__hd">
@@ -101,21 +117,21 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
-
     <div class="page navbar js_show" v-show="showPage === 'showMemberRelationEdit'">
         <div class="page__bd" style="height: 100%;">
-            <div class="weui-tab">
+            <div class="narvi-bar">
                 <div class="top-bar center-box" style="border: hidden">
                     <span class="pull-left" @click="memberEdit2Member()"
                           style="color: rgb(61, 168, 244); font-size: 16px;">返回</span>
                     <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);">编辑人员关系</span>
                 </div>
-                <div class="weui-tab__panel" style="padding-top: 0px" id="editMemberShip" v-show="showMembership">
+            </div>
+            <div style="padding-top: 44px">
+                <div class="weui-tab__panel"  id="editMemberShip" v-show="showMembership">
                     <membership v-for="member in memberList" :member="member"></membership>
                 </div>
 
@@ -150,8 +166,7 @@
 
     <div class="page navbar js_show" v-show="showPage === 'showAddSubMember'">
         <div class="page__bd" style="height: 100%;">
-            <div class="weui-tab">
-
+            <div class="narvi-bar">
                 <div class="top-bar center-box" style="border: hidden">
                     <span class="pull-left" @click="addSubMember2EditMember()"
                           style="color: rgb(61, 168, 244); font-size: 16px;">取消</span>
@@ -159,8 +174,9 @@
                     <span class="pull-right" @click="membershipEditCheck()"
                           style="color: rgb(61, 168, 244); font-size: 16px;">完成</span>
                 </div>
-
-                <div class="weui-tab__panel" style="padding-top: 0px" >
+            </div>
+            <div style="padding-top: 44px">
+                <div class="weui-tab__panel">
                     <div class="weui-cells weui-cells_checkbox" v-for="member in siblingsList">
                         <label class="weui-cell weui-check__label">
                             <div class="weui-cell__hd">
@@ -179,15 +195,16 @@
     </div>
 
     <div class="page navbar js_show" v-show="showPage === 'showMemberInfoEdit'">
-
         <div class="page__bd" style="height: 100%" >
-            <div class="weui-tab">
+            <div class="narvi-bar">
                 <div class="top-bar center-box" style="border: hidden">
                     <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;" @click="memberInfo2Member()">取消</span>
                     <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);">编辑人员信息</span>
                     <span class="pull-right" style="color: rgb(61, 168, 244); font-size: 16px;" @click="deleteMemberCheck()">删除</span>
                 </div>
-                <div class="weui-tab__panel" style="padding-top: 0px" >
+            </div>
+            <div style="padding-top: 44px" >
+                <div class="weui-tab__panel" >
                     <div class="weui-cells weui-cells_checkbox" v-for="member in memberInfoList">
                         <label class="weui-cell weui-check__label">
                             <div class="weui-cell__hd">
@@ -203,7 +220,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 </div>

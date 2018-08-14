@@ -7,7 +7,6 @@
     <!-- 引入 WeUI -->
     <link rel="stylesheet" href="/weui.css"/>
     <link rel="stylesheet" href="/example.css">
-
     <script src="/lib/jquery-2.1.1.js"></script>
     <script src="/vue.v2.5.13.js"></script>
     <script src="/applyProjectSupport.js"></script>
@@ -23,6 +22,7 @@
 </head>
 <body>
 <div id="newProject">
+
     <div class="weui-flex">
         <div class="weui-flex__item">
             <div class="placeholder"></div>
@@ -79,7 +79,7 @@
         <div class="weui-cell">
             <div class="weui-cell__bd">
                 <label class="weui-label" style="white-space:nowrap">支持描述</label>
-                <textarea class="weui-textarea" placeholder="请输入对项目支持的详细描述" rows="12" v-model="background"></textarea>
+                <textarea class="weui-textarea" placeholder="请输入对项目支持的详细描述" rows="10" v-model="background"></textarea>
             </div>
         </div>
     </div>
@@ -93,6 +93,7 @@
             <div class="weui-cell__ft">可选</div>
         </a>
     </div>
+
     <div class="weui-flex">
         <div class="weui-flex__item">
             <div class="placeholder" style="visibility:hidden">weui</div>
@@ -104,6 +105,7 @@
             <button class="weui-btn weui-btn_primary" id=submit_btn @click="submit">提交</button>
         </div>
     </div>
+
 </div>
 </body>
 </html>

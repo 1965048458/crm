@@ -70,78 +70,73 @@
     <input id="customerName" type="hidden" th:value="${customerName}">
     <div class="page navbar js_show" v-show="showPage === 'showCustomerOrganization'">
         <div class="page__bd" style="height: 100%;">
-            <div>
-                <div class="narvi-bar">
-                    <div class="top-bar center-box" style="border: hidden">
-                        <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;" @click="toCustomerList()">返回</span>
-                        <span class="center-ele"
-                              style="font-size: 18px; color: rgb(51, 51, 51);" v-text="customerName"></span>
-                        <span class="pull-right" style="color: rgb(61, 168, 244); font-size: 16px;" @click="toModifyPage()">编辑</span>
+            <div class="narvi-bar">
+                <div class="top-bar center-box" style="border: hidden">
+                    <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;" @click="toCustomerList()">返回</span>
+                    <span class="center-ele"
+                          style="font-size: 18px; color: rgb(51, 51, 51);" v-text="customerName"></span>
+                    <span class="pull-right" style="color: rgb(61, 168, 244); font-size: 16px;" @click="toModifyPage()">编辑</span>
+                </div>
+                <div class="weui-navbar" style="position: relative;height: 40px;background-color: #ffffff">
+                    <div id="customerInfoBtn" class="weui-navbar__item" style="padding: 10px 0;border: hidden" @click="toCustomerInfo()">
+                        客户信息
                     </div>
-                    <div class="weui-navbar" style="position: relative;height: 40px;background-color: #ffffff">
-                        <div id="customerInfoBtn" class="weui-navbar__item" style="padding: 10px 0;border: hidden" @click="toCustomerInfo()">
-                            客户信息
-                        </div>
-                        <div id="organizationInfoBtn" class="weui-navbar__item weui-bar__item_on" @click="switch2OrganizationInfoPage"
-                             style="padding: 10px 0;border: hidden" >
-                            组织机构
-                        </div>
+                    <div id="organizationInfoBtn" class="weui-navbar__item weui-bar__item_on" @click="switch2OrganizationInfoPage"
+                         style="padding: 10px 0;border: hidden" >
+                        组织机构
                     </div>
-                    <div class="weui-search-bar" id="searchBar" >
-                        <div class="weui-search-bar__form">
-                            <div class="weui-search-bar__box">
-                                <i class="weui-icon-search"></i>
-                                <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索"
-                                       @keyup.enter="search" v-model="searchWord" required="">
-                                <a href="javascript:" class="weui-icon-clear" id="searchClear" @click="clear"></a>
+                </div>
+                <div class="weui-search-bar" id="searchBar" >
+                    <div class="weui-search-bar__form">
+                        <div class="weui-search-bar__box">
+                            <i class="weui-icon-search"></i>
+                            <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索"
+                                   @keyup.enter="search" v-model="searchWord" required="">
+                            <a href="javascript:" class="weui-icon-clear" id="searchClear" @click="clear"></a>
+                        </div>
+                        <label class="weui-search-bar__label" id="searchText" @click="text"
+                               style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                            <i class="weui-icon-search"></i>
+                            <span>搜索</span>
+                        </label>
+                    </div>
+                    <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel" @click="cancel">取消</a>
+                </div>
+                <div class="weui-cells searchbar-result" id="searchResult" style="display: none">
+                    <div class="weui-cells weui-cells_radio">
+                        <label class="weui-cell weui-check__label" v-for="searchItem in searchList.filter(filterList)">
+                            <div class="weui-cell__bd">
+                                <p v-text="searchItem"></p>
                             </div>
-                            <label class="weui-search-bar__label" id="searchText" @click="text"
-                                   style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                                <i class="weui-icon-search"></i>
-                                <span>搜索</span>
-                            </label>
-                        </div>
-                        <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel" @click="cancel">取消</a>
+                            <div class="weui-cell__ft">
+                                <input type="radio" class="weui-check" v-bind:value="searchItem" v-model="searchWord">
+                            </div>
+                        </label>
                     </div>
+                </div>
+            </div>
 
-                    <div class="weui-cells searchbar-result" id="searchResult" style="display: none">
-                        <div class="weui-cells weui-cells_radio">
-                            <label class="weui-cell weui-check__label" v-for="searchItem in searchList.filter(filterList)">
-                                <div class="weui-cell__bd">
-                                    <p v-text="searchItem"></p>
-                                </div>
-                                <div class="weui-cell__ft">
-                                    <input type="radio" class="weui-check" v-bind:value="searchItem" v-model="searchWord">
-                                </div>
-                            </label>
-                        </div>
+            <div style="padding-top: 130px" >
+                <div v-show="showOrganization">
+                    <div class="customer-item">
+                        <customer v-for="customer in customerList" :customer="customer"></customer>
                     </div>
-
                 </div>
 
-                <div style="padding-top: 130px" >
-                    <div v-show="showOrganization">
-                        <div class="customer-item">
-                            <customer v-for="customer in customerList" :customer="customer"></customer>
+                <div class="js_dialog" id="iosDialog" style="opacity: 1;display: none" v-show="showApplyDialog">
+                    <div class="weui-mask"></div>
+                    <div class="weui-dialog">
+                        <div class="weui-dialog__bd" >
+                            <h1>提示</h1>
+                        </div>
+                        <div class="weui-dialog__bd">
+                            <p>是否申请"{{applyDeptName}}"</p>
+                        </div>
+                        <div class="weui-dialog__ft">
+                            <a @click="dialogCheck()" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+                            <a @click="dialogQuit()" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
                         </div>
                     </div>
-
-                    <div class="js_dialog" id="iosDialog" style="opacity: 1;display: none" v-show="showApplyDialog">
-                        <div class="weui-mask"></div>
-                        <div class="weui-dialog">
-                            <div class="weui-dialog__bd" >
-                                <h1>提示</h1>
-                            </div>
-                            <div class="weui-dialog__bd">
-                                <p>是否申请"{{applyDeptName}}"</p>
-                            </div>
-                            <div class="weui-dialog__ft">
-                                <a @click="dialogCheck()" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
-                                <a @click="dialogQuit()" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
