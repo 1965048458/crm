@@ -38,7 +38,7 @@
             #{content},
             #{userId},
             NOW(),
-            NULL ,
+            #{userId} ,
             NOW()
         )
     </insert>

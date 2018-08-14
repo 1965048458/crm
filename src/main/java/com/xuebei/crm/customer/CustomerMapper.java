@@ -70,8 +70,20 @@ public interface CustomerMapper {
 
     List<Customer> getMyCustomers(@Param("userId") String userId);
 
+    List<Customer> getCommonCustomers(@Param("userId") String userId);
+
     List<FollowUpRecord> queryFollowUpRecordsByContactsId(@Param("contactsId") String contactsId);
 
     String lastFollowTs(@Param("customerId") String customerId);
+
+    Integer insertCustomerCompanyRelation(@Param("customerId") String customerId,
+                                          @Param("companyId") String companyId);
+
+
+    Integer insertContactsType(@Param("customerId") String customerId,
+                               @Param("contactsTypeName") String contactsType);
+
+    Boolean isContactsTypeExist(@Param("customerId") String customerId,
+                                @Param("contactsTypeName") String contactsTypeNa);
 
 }

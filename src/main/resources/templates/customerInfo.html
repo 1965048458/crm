@@ -25,7 +25,8 @@
             background: #FFFFFF;
             font-size: 18px;
             text-align: center;
-            padding: 10px 10px;
+            height: 40px;
+            padding-top: 8px;
         }
 
         .pull-left {
@@ -43,14 +44,14 @@
 <div class="center-box">
     <div id="customerVue" class="page navbar js_show">
         <div class="top-bar">
-            <span onclick="backToList()" class="pull-left"><img src="/images/back_icon.svg"
-                                                                style="margin-top:3px"/></span>
+            <span onclick="backToList()" class="pull-left">
+                <img src="/images/back_icon.svg" style="margin-top:5px; margin-left: 12px;"/></span>
             <span class="center" th:text="${customerName}"></span>
             <input type="hidden" id="customerId" th:value="${customerId}">
-            <input type="hidden" id="customerName" th:value="${customerName}">
+            <!--<input type="hidden" id="customerName" th:value="${customerName}">-->
         </div>
-        <div class="weui-tab" style="margin-top: 10px;">
-            <div class="weui-navbar">
+        <div class="weui-tab" style="margin-top: 0px;">
+            <div class="weui-navbar" style="height: 44px;font-size: 15px; background: #FFFFFF">
                 <div href="#tab1" class="weui-navbar__item weui-bar__item_on">
                     <span class="center-ele">客户信息</span>
                 </div>
@@ -58,7 +59,7 @@
                     <span class="center-ele">组织机构</span>
                 </div>
             </div>
-            <div class="weui-tab__panel">
+            <div class="weui-tab__panel"  style="background: #FFFFFF">
                 <div id="tab1" class="weui-tab__content" style="display: block;">
                     <div class="center-ele">
                         <div class="weui-media-box weui-media-box_text">
@@ -149,10 +150,6 @@
             $(jQuery(this).attr("href")).show().siblings('.weui-tab__content').hide();
         });
     });
-
-//    function orgDisplay(customerId) {
-//        location.href = '/customer/organization?customerId='+customerId;
-//    }
 
     function hLink() {
         return ;

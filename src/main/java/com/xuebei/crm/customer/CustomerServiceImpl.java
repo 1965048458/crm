@@ -58,14 +58,15 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> queryCustomerInfo(String searchWord) {
 
+        List<Customer> customerList = new ArrayList<>();
         try {
-            List<Customer> customerList = customerMapper.queryCustomerInfo(searchWord);
+            customerList = customerMapper.queryCustomerInfo(searchWord);
             for (Customer customer : customerList) {
                 customer.setLastTs(lastFollowTs(customer.getCustomerId()));
             }
             return customerList;
         } catch (Exception e) {
-            return null;
+            return customerList;
         }
     }
 
@@ -235,16 +236,32 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> getMyCustomers(String userId) {
 
+        List<Customer> customerList = new ArrayList<>();
         try {
-            List<Customer> customerList = customerMapper.getMyCustomers(userId);
+            customerList = customerMapper.getMyCustomers(userId);
             for (Customer customer : customerList) {
                 customer.setLastTs(lastFollowTs(customer.getCustomerId()));
             }
             return customerList;
         } catch (Exception e) {
-            return null;
+            return customerList;
         }
 
+    }
+
+    @Override
+    public List<Customer> getCommonCustomers(String userId) {
+
+        List<Customer> customerList = new ArrayList<>();
+        try {
+            customerList = customerMapper.getCommonCustomers(userId);
+            for (Customer customer : customerList) {
+                customer.setLastTs(lastFollowTs(customer.getCustomerId()));
+            }
+            return customerList;
+        } catch (Exception e) {
+            return customerList;
+        }
     }
 
     @Override

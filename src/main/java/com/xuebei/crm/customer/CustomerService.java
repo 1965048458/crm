@@ -16,7 +16,7 @@ public interface CustomerService {
     void newSchool(String customer_id,String name,String schoolType,String profile,
                    String website,String creator_id,String create_ts,String updater_id,String update_ts);
 
-    List<Customer> queryCustomerInfo(String searchWord) throws ParseException;
+    List<Customer> queryCustomerInfo(String searchWord);
 
     List<Department> queryDepartment(String customerId,String userId);
 
@@ -26,7 +26,9 @@ public interface CustomerService {
 
     List<String> searchSchool(String keyword);
 
-    List<Customer> getMyCustomers(String userId) throws ParseException;
+    List<Customer> getMyCustomers(String userId);
+
+    List<Customer> getCommonCustomers(String userId);
 
     Boolean isDepartmentNameDuplicated(String customerId, String deptName);
 

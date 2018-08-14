@@ -14,7 +14,8 @@ $(document).ready(function () {
             searchWord: '',
             errMsg: undefined,
             customerList: [],
-            myCustomers: []
+            myCustomers: [],
+            commonCustomers: []
         },
         methods: {
             'showResult': function () {
@@ -30,6 +31,8 @@ $(document).ready(function () {
                 }).done(function (result) {
                     if (result.successFlg) {
                         thisVue.$set(thisVue, 'customerList', result.customerList);
+                        thisVue.$set(thisVue, 'myCustomers', result.myCustomers);
+                        thisVue.$set(thisVue, 'commonCustomers', result.commonCustomers);
                     } else {
                         thisVue.errMsg = result.errMsg;
                     }
@@ -75,20 +78,10 @@ $(document).ready(function () {
                 setTimeout(function () {
                     $loadingToast.fadeOut(100);
                     //temp.showPage = 'invite';
-                    window.location.href = "/customer/customerInfo?customerId=" + customer.customerId + "&customerName=" + customer.customerName;
+                    window.location.href = "/customer/customerInfo?customerId=" + customer.customerId;
                 }, 500);
             }
         }
     });
     searchCustInfoVue.showResult();
-
-    $.ajax({
-        type: 'get',
-        url: '/customer/getMyCustomers',
-        dataType: 'json',
-        cache: false,
-        success: function (result) {
-            searchCustInfoVue.$set(searchCustInfoVue, 'myCustomers', result.myCustomers);
-        }
-    });
 });

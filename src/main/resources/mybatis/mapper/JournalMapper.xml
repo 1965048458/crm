@@ -164,12 +164,12 @@
     </select>
 
     <select id="searchMyJournal" resultMap="journalMap">
-        SELECT j.*, u.real_nm FROM journal j
-        INNER JOIN user_view u ON j.user_id = u.user_id
+        SELECT DISTINCT j.*, u.real_nm FROM journal j
+        LEFT JOIN user_view u ON j.user_id = u.user_id
         LEFT JOIN visit_log vl ON j.journal_id = vl.journal_id
-        INNER JOIN visit_contacts vc ON vl.visit_log_id = vc.visit_log_id
-        INNER JOIN contacts c ON vc.contacts_id = c.contacts_id
-        INNER JOIN contacts_type ct ON c.contacts_type_id = ct.contacts_type_id
+        LEFT JOIN visit_contacts vc ON vl.visit_log_id = vc.visit_log_id
+        LEFT JOIN contacts c ON vc.contacts_id = c.contacts_id
+        LEFT JOIN contacts_type ct ON c.contacts_type_id = ct.contacts_type_id
         WHERE has_submitted = 1 AND j.user_id = #{userId}
         <if test="journalType != null">
             AND j.type_cd = #{journalType}
@@ -212,12 +212,12 @@
 
 
     <select id="searchReceivedJournal" resultMap="journalMap">
-        SELECT j.*, u.real_nm  FROM journal j
-        INNER JOIN user_view u ON j.user_id = u.user_id
+        SELECT distinct j.*, u.real_nm  FROM journal j
+        LEFT JOIN user_view u ON j.user_id = u.user_id
         LEFT JOIN visit_log vl ON j.journal_id = vl.journal_id
-        INNER JOIN visit_contacts vc ON vl.visit_log_id = vc.visit_log_id
-        INNER JOIN contacts c ON vc.contacts_id = c.contacts_id
-        INNER JOIN contacts_type ct ON c.contacts_type_id = ct.contacts_type_id
+        LEFT JOIN visit_contacts vc ON vl.visit_log_id = vc.visit_log_id
+        LEFT JOIN contacts c ON vc.contacts_id = c.contacts_id
+        LEFT JOIN contacts_type ct ON c.contacts_type_id = ct.contacts_type_id
         WHERE j.user_id != #{userId}
         AND has_submitted = 1
         <if test="journalType != null">

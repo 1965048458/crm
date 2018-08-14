@@ -1,7 +1,5 @@
 package com.xuebei.crm.company;
 
-import com.google.gson.Gson;
-import com.xuebei.crm.customer.Customer;
 import com.xuebei.crm.dto.GsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

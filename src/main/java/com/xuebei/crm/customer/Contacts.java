@@ -196,6 +196,14 @@ public class Contacts {
         return NOT_FILLED;
     }
 
+    public String showContactsType() {
+        if (contactsType == null || contactsType.getTypeName() == null) {
+            return "无职位信息";
+        } else {
+            return contactsType.getTypeName();
+        }
+    }
+
     public String showGender() {
         if (gender == null) {
             return NOT_FILLED;
