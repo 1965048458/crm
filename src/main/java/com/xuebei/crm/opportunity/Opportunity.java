@@ -13,6 +13,8 @@ public class Opportunity {
     @Expose
     private String customerId;
     @Expose
+    private String customerName;
+    @Expose
     private String opportunityName;
     @Expose
     private String salesStatus;
@@ -53,7 +55,13 @@ public class Opportunity {
         this.update_ts = update_ts;
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
 
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
 
 

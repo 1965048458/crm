@@ -13,6 +13,7 @@
     <resultMap id="opportunityMap" type="com.xuebei.crm.opportunity.Opportunity">
         <id property="opportunityId" column="sales_opportunity_id"/>
         <result property="customerId" column="customer_id"/>
+        <result property="customerName" column="customer_nm"/>
         <result property="opportunityName" column="opportunity_nm"/>
         <result property="salesStatus" column="sales_status"/>
         <result property="amount" column="amount"/>
@@ -53,7 +54,9 @@
     </insert>
 
     <select id="queryOpportunity" resultMap="opportunityMap">
-       SELECT  * FROM sales_opportunity
+       SELECT  s.sales_opportunity_id,s.customer_id,c.customer_nm,s.opportunity_nm,s.sales_status,s.amount,s.user_id,s.create_ts FROM sales_opportunity s
+        LEFT JOIN crmdb.crm_customer c ON c.customer_id = s.customer_id
+
         <if test="createStart != null">
             AND create_ts > #{createStart}
         </if>
