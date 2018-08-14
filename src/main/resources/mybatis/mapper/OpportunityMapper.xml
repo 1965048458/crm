@@ -56,27 +56,35 @@
     <select id="queryOpportunity" resultMap="opportunityMap">
        SELECT  s.sales_opportunity_id,s.customer_id,c.customer_nm,s.opportunity_nm,s.sales_status,s.amount,s.user_id,s.create_ts FROM sales_opportunity s
         LEFT JOIN crmdb.crm_customer c ON c.customer_id = s.customer_id
-
+        WHERE 1 =1
         <if test="createStart != null">
-            AND create_ts > #{createStart}
+            AND s.create_ts > #{createStart}
         </if>
         <if test="createEnd != null">
-            AND create_ts &lt;  #{createEnd}
-        </if>
-        <if test="userId != null and userId != ''">
-            AND user_id = #{userId}
+            AND s.create_ts &lt;  #{createEnd}
         </if>
         <if test="salesStatus != null and salesStatus != 'all'">
-            AND sales_status = #{salesStatus}
+            AND s.sales_status = #{salesStatus}
         </if>
         <if test="customerName != null and customerName != ''">
-            AND customer_id = #{customerName}
+            AND c.customer_nm LIKE CONCAT('%', #{customerName}, '%')
         </if>
-        <if test="scene != null and scene != ''">
-            AND user_id = #{scene}
+        <if test="userId != null and userId != 'all'">
+            AND s.user_id = #{userId}
         </if>
-        <if test="sortMode != null and sortMode != ''">
-            ORDER BY create_ts #{sortMode}
+        <if test="subUserId!= null">
+            AND s.user_id IN
+            <foreach item="subUserId" collection="subUserId" open="(" separator="," close=")">
+                #{subUserId}
+            </foreach>
+
+        </if>
+
+        <if test="sortMode == 'ASC'">
+            ORDER BY s.create_ts ASC
+        </if>
+        <if test="sortMode == 'DESC'">
+            ORDER BY s.create_ts DESC
         </if>
 
     </select>
