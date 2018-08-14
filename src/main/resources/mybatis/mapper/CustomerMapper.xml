@@ -246,10 +246,10 @@
             cu.customer_nm,
             cu.customer_id
         FROM contacts c
-            INNER JOIN customer_dept cd ON c.customer_dept_id = cd.customer_dept_id
-            INNER JOIN contacts_type ct ON ct.contacts_type_id = c.contacts_type_id
-            INNER JOIN crm_customer cu ON ct.customer_id = cu.customer_id
-        WHERE cd.customer_id = #{customerId} AND ct.customer_id = #{customerId}
+            LEFT JOIN customer_dept cd ON c.customer_dept_id = cd.customer_dept_id
+            LEFT JOIN contacts_type ct ON ct.contacts_type_id = c.contacts_type_id
+            LEFT JOIN crm_customer cu ON cd.customer_id = cu.customer_id
+        WHERE cd.customer_id = #{customerId};
     </select>
 
     <insert id="insertEnclosureApply" parameterType="com.xuebei.crm.customer.EnclosureApply">
