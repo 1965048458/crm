@@ -25,7 +25,7 @@
 
     <insert id="addSale" parameterType="com.xuebei.crm.opportunity.Opportunity"
             useGeneratedKeys="true" keyColumn="sales_opportunity_id" keyProperty="opportunityId">
-        INSERT INTO `crmdb`.`sales_opportunity` (
+        INSERT INTO `sales_opportunity` (
             `customer_id`, `opportunity_nm`,
             `sales_status`, `amount`, `check_date`, `clinch_date`,
              `content`, `user_id`, `create_ts`, `updater_id`, `update_ts`
@@ -45,7 +45,7 @@
     </insert>
 
     <insert id="addOpportunityContact">
-        INSERT INTO `crmdb`.`opportunity_contacts` (
+        INSERT INTO `opportunity_contacts` (
             `sales_opportunity_id`, `contacts_id`
         ) VALUES (
             #{opportunityId},
@@ -55,7 +55,7 @@
 
     <select id="queryOpportunity" resultMap="opportunityMap">
        SELECT  s.sales_opportunity_id,s.customer_id,c.customer_nm,s.opportunity_nm,s.sales_status,s.amount,s.user_id,s.create_ts FROM sales_opportunity s
-        LEFT JOIN crmdb.crm_customer c ON c.customer_id = s.customer_id
+        LEFT JOIN crm_customer c ON c.customer_id = s.customer_id
         WHERE 1 =1
         <if test="createStart != null">
             AND s.create_ts > #{createStart}

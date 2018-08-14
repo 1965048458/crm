@@ -63,7 +63,7 @@
     </select>
 
     <insert id="joinCompany">
-        INSERT INTO `crmdb`.`company_user` (
+        INSERT INTO `company_user` (
             `user_id`,
             `user_type`,
             `crm_user_id`,
@@ -87,7 +87,7 @@
     </insert>
 
     <insert id="addCompany">
-        INSERT INTO `crmdb`.`company` (
+        INSERT INTO `company` (
             `company_id`,
             `com_nm`,
             `creator_id`,
