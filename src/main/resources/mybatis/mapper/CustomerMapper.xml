@@ -64,6 +64,10 @@
         <result property="officeAddr" column="office_address"/>
         <result property="profile" column="profile"/>
         <result property="specialRelationship" column="special_relationship"/>
+        <association property="contactsType" javaType="com.xuebei.crm.customer.ContactsType">
+            <id property="contactsTypeId" column="contacts_type_id"/>
+            <result property="typeName" column="type_name"/>
+        </association>
     </resultMap>
 
     <resultMap id="visitMap" type="com.xuebei.crm.customer.Visit">
@@ -453,8 +457,8 @@
     </select>
 
     <select id="queryContactsById" resultMap="contactsDetailMap">
-        SELECT *
-        FROM contacts c
+        SELECT c.*, d.type_name
+        FROM contacts c LEFT JOIN contacts_type d ON c.contacts_type_id = d.contacts_type_id
         WHERE contacts_id = #{contactsId};
     </select>
 
@@ -471,6 +475,24 @@
             LEFT JOIN user_view ON journal.user_id = user_view.user_id
         WHERE contacts_id = #{contactsId}
         ORDER BY (journal.create_ts) DESC;
+    </select>
+
+    <insert id="insertCustomerCompanyRelation">
+        INSERT INTO company_customer
+        (company_id, customer_id)
+        VALUES( #{companyId}, #{customerId});
+    </insert>
+
+    <insert id="insertContactsType">
+        INSERT INTO contacts_type
+        (customer_id, type_name)
+        VALUES( #{customerId}, #{contactsTypeName} );
+    </insert>
+
+    <select id="isContactsTypeExist" resultType="java.lang.Boolean">
+        SELECT COUNT(contacts_type_id)
+        FROM contacts_type
+        WHERE customer_id = #{customerId} AND type_name = #{contactsTypeName};
     </select>
 
 </mapper>

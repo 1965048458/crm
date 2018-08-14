@@ -76,4 +76,14 @@ public interface CustomerMapper {
 
     String lastFollowTs(@Param("customerId") String customerId);
 
+    Integer insertCustomerCompanyRelation(@Param("customerId") String customerId,
+                                          @Param("companyId") String companyId);
+
+
+    Integer insertContactsType(@Param("customerId") String customerId,
+                               @Param("contactsTypeName") String contactsType);
+
+    Boolean isContactsTypeExist(@Param("customerId") String customerId,
+                                @Param("contactsTypeName") String contactsTypeNa);
+
 }
