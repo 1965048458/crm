@@ -392,10 +392,16 @@ public class CustomerController {
     }
 
     @RequestMapping("/queryCustomer")
-    public GsonView queryCustomerInfo(@RequestParam("searchWord") String keyword){
+    public GsonView queryCustomerInfo(@RequestParam("searchWord") String keyword,
+                                      HttpServletRequest request){
+        String userId = (String) request.getSession().getAttribute("userId");
+        List<Customer> myCustomers = customerService.getMyCustomers(userId);
         List<Customer> customerList = customerService.queryCustomerInfo(keyword);
+        List<Customer> commonCustomers = customerService.getCommonCustomers(userId);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("commonCustomers", commonCustomers);
+        gsonView.addStaticAttribute("myCustomers", myCustomers);
         gsonView.addStaticAttribute("customerList", customerList);
         return gsonView;
     }

@@ -1,5 +1,6 @@
 package com.xuebei.crm;
 
+import com.xuebei.crm.company.CompanyControllerTest;
 import com.xuebei.crm.customer.CustomerControllerTest;
 import com.xuebei.crm.customer.CustomerServiceImplTest;
 import com.xuebei.crm.journal.JournalControllerTest;
@@ -17,7 +18,8 @@ import org.junit.runners.Suite;
         CustomerServiceImplTest.class,
         JournalControllerTest.class,
         JournalServiceImplTest.class,
-        OpportunityServiceImplTest.class
+        OpportunityServiceImplTest.class,
+        CompanyControllerTest.class
 })
 public class CrmTestSuite {
 }
