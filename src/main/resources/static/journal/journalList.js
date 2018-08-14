@@ -252,6 +252,10 @@ jQuery(document).ready(function () {
                 jQuery("#patchButtonDiv_" + journalId).css("display", "block");
                 jQuery("#patchDiv_" + journalId).css("display", "none");
             },
+            'patchCancelSubmit': function (journalId) {
+                jQuery("#patchButtonDiv_" + journalId).css("display", "block");
+                jQuery("#patchDiv_" + journalId).css("display", "none");
+            },
             'convertVisitType': function (ty) {
                 var str = '错误';
                 if (ty === 'VISIT') {
