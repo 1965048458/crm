@@ -14,7 +14,7 @@ $(document).ready(function () {
             showPage: '',
             filterCondition: '',
             filterValue: '',
-            sortMode:'positive',
+            sortMode:'ASC',
             sceneValue: 'all',
             dateValue: 'all',
             dateValueStart: '',
@@ -39,6 +39,7 @@ $(document).ready(function () {
                 $.ajax({
                     type: 'get',
                     url: '/opportunity/queryOpportunity',
+
                     dataType: 'json',
                     cache: false
                 }).done(function (result) {
@@ -74,7 +75,7 @@ $(document).ready(function () {
                 }
                 if (this.imgFilter == '/images/opportunity/筛选未选中.svg') {
                     this.showFilterPage = true;
-                    this.filterCondition = 'scene';
+                    this.filterCondition = 'creator';
                     this.imgFilter = "/images/opportunity/筛选已选中.svg";
                     this.imgSort = "/images/opportunity/排序未选中.svg";
                 } else {
@@ -115,6 +116,12 @@ $(document).ready(function () {
             'creatorChecked': function () {
                 this.creatorV = '';
             },
+            'creatorChecked1': function () {
+                this.creatorV = '';
+            },
+            'creatorChecked2': function () {
+                this.creatorV = '';
+            },
             'dateChecked': function () {
                 this.dateValueStart = '';
                 this.dateValueEnd = '';
@@ -126,6 +133,16 @@ $(document).ready(function () {
                 this.showFilterPage = false;
                 this.imgFilter ='/images/opportunity/筛选未选中.svg';
                 this.filterCondition = '';
+                var data = {
+                    sortMode:this.sortMode,
+                    userId: this.creatorV,
+                    customerName:this.customerValueIn,
+                    createStart: this.dateValueStart,
+                    createEnd: this.dateValueEnd,
+                    salesStatus: this.stageValue,
+                };
+                console.log(this.dateValueStart);
+                this.showResult();
             },
             'reset': function () {
                 this.sceneValue = 'all';
@@ -155,9 +172,10 @@ $(document).ready(function () {
             'creatorV': function () {
                 if (this.creatorV != '') {
                     this.creatorValue = '';
-                } else {
-                    this.creatorValue = 'all';
                 }
+                //  else {
+                //     this.creatorValue = 'all';
+                // }
             },
         }
     });

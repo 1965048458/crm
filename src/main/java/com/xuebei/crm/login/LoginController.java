@@ -292,14 +292,6 @@ public class LoginController {
             if (user.getPwd().equals(pwd)) {
                 request.getSession().setAttribute("crmUserId", user.getCRMUserId());
                 gsonView.addStaticAttribute(SUCCESS_FLG, true);
-
-//                final String companyId = "eb4fd11d472249359eb6acef2e5bf8e5";
-//                String userId = companyMapper.queryUserId(user.getCRMUserId(), companyId);
-//                if (userId == null) {
-//                    userId = UUIDGenerator.genUUID();
-//                    companyMapper.joinCompany(user.getCRMUserId(), userId, companyId);
-//                }
-//                request.getSession().setAttribute("userId", userId);
             } else {
                 gsonView.addStaticAttribute(SUCCESS_FLG, false);
             }

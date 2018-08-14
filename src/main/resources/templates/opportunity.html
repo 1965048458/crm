@@ -36,14 +36,14 @@
         }
 
         .filterSelect {
-            position: absolute;;
+            position: absolute;
             top: 70px;;
             width: 100%;
             z-index: 99999;
         }
 
         .filterItem {
-            position: absolute;;
+            position: absolute;
             top: 70px;
             left: 124px;
             width: 70%;
@@ -51,10 +51,10 @@
         }
 
         .filterDetail {
-            position: absolute;;
+            position: absolute;
             top: 70px;
-            left: 30%;
-            width: 70%;
+            left: 25%;
+            width: 75%;
             z-index: 99999;
         }
     </style>
@@ -63,24 +63,24 @@
 <div id="opportunityVue">
     <div class="page tabbar js_show">
         <div class="weui-tab">
-            <div class="weui-navbar" style="height: 50px;">
-                <div id="titleBar" class="weui-navbar__item top-bar" style=" padding: 10px 10px;">
-
-
-                <span class="pull-left" style="margin-top: 7px">&nbsp;
-                      <img src="/images/back_icon.svg"/></span>
-                    <span style="width: 76%;text-align: center;font-size: 20px;margin-top: 5px ">商机</span>
-
-                    <span style="float:right;margin-top: 7px" @click="add">&nbsp;
-                      <img src="/images/journal/添加日志.svg"/></span>
-                    <span style="float:right;margin-top: 7px;margin-right: 10px">&nbsp;
-                      <img src="/images/search.svg"/></span>
-                </div>
-
-            </div>
-
 
             <div class="weui-tab__panel">
+
+                <div class="weui-navbar" style="height: 50px;">
+                    <div id="titleBar" class="weui-navbar__item top-bar" style=" padding: 10px 10px;">
+                    <span class="pull-left" style="margin-top: 7px">&nbsp;
+                      <img src="/images/back_icon.svg"/></span>
+                        <span style="width: 76%;text-align: center;font-size: 20px;margin-top: 5px ">商机</span>
+
+                        <span style="float:right;margin-top: 7px" @click="add">&nbsp;
+                      <img src="/images/journal/添加日志.svg"/></span>
+                        <span style="float:right;margin-top: 7px;margin-right: 10px">&nbsp;
+                      <img src="/images/search.svg"/></span>
+                    </div>
+                </div>
+
+
+                <div style="height: 50px"></div>
                 <div class="weui-flex">
                     <div class="weui-flex__item" style="text-align: center;height: 35px;padding-top: 5px">
                         <span @click="sort">
@@ -99,22 +99,32 @@
 
 
                 <div v-for="opportunity in opportunityList">
-                    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
-                        <div class="weui-media-box__hd">
-                            <img class="weui-media-box__thumb" src="/images/opportunity/AStage.svg"
-                                 style="width: 40px;height: 40px;margin-top: 10px" alt="">
-                        </div>
-                        <div class="weui-media-box__bd">
-                            <label class="weui-media-box__title"
-                                   style="font-size: 15px;color: #333333;">虚拟仿真中心建设</label>
-                            <p class="weui-media-box__desc" style="font-size: 12px;color: #888888;">浙江大学
-                                <label class="pull-right" style="font-size: 12px;color: #101010;"> 2018-06-29</label>
-                            </p>
-                            <p class="weui-media-box__desc" style="font-size: 12px;color: #A0B4BB;">拿到老师手机及微信号
-                                <label class="pull-right" style="font-size: 15px;color: #A0B4BB;"> 1200.00元</label>
-                            </p>
-                        </div>
-                    </a>
+
+                    <div class="weui-panel weui-panel_access">
+
+                        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
+                           style="padding: 8px 10px ;">
+                            <div class="weui-media-box__hd">
+                                <img class="weui-media-box__thumb" src="/images/opportunity/AStage.svg"
+                                     style="width: 40px;height: 40px;margin-top: 10px" alt="">
+                            </div>
+                            <div class="weui-media-box__bd">
+                                <label class="weui-media-box__title"
+                                       style="font-size: 15px;color: #333333;">{{opportunity.opportunityName}}</label>
+                                <p class="weui-media-box__desc" style="font-size: 12px;color: #888888;">
+                                    {{opportunity.customerId}}
+                                    <label class="pull-right" style="font-size: 12px;color: #101010;">
+                                        {{opportunity.create_ts}}</label>
+                                </p>
+                                <p class="weui-media-box__desc" style="font-size: 12px;color: #A0B4BB;">
+                                    {{opportunity.salesStatus}}
+                                    <label class="pull-right" style="font-size: 15px;color: #A0B4BB;">
+                                        {{opportunity.amount}}元</label>
+                                </p>
+                            </div>
+                        </a>
+
+                    </div>
                 </div>
 
 
@@ -128,7 +138,7 @@
                                 </div>
                                 <div class="weui-cell__ft">
                                     <input type="radio" class="weui-check" name="timeSort" id="x11"
-                                           value="positive" v-model="sortMode"/>
+                                           value="ASC" v-model="sortMode"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
                             </label>
@@ -138,7 +148,7 @@
                                 </div>
                                 <div class="weui-cell__ft">
                                     <input type="radio" class="weui-check" name="timeSort" id="x12"
-                                           value="negative" v-model="sortMode"/>
+                                           value="DESC" v-model="sortMode"/>
                                     <span class="weui-icon-checked"></span>
                                 </div>
                             </label>
@@ -150,38 +160,19 @@
                     <div class="weui-mask" @click="cancelMask" style="position: absolute;top: 30%;"></div>
                     <div class="filterSelect">
                         <div class="weui-cells weui-cells_radio">
-                            <label id="scene" class="weui-cell weui-check__label" @click="filterScene">
-                                <div class="weui-cell__bd">
-                                    <p style="font-size: 14px;color: #101010;">筛选场景</p>
-                                </div>
-                                <div class="weui-cell__ft" style="display: none">
-                                    <input class="weui-check" name="filter"
-                                    />
-                                    <span class="weui-icon-checked"></span>
-                                </div>
-
-                            </label>
-                            <label id="date" class="weui-cell weui-check__label" @click="filterDate">
-                                <div class="weui-cell__bd">
-                                    <p style="font-size: 14px;color: #101010;">创建日期</p>
-                                </div>
-                                <div class="weui-cell__ft" style="display: none">
-                                    <input class="weui-check" name="filter"/>
-                                    <span class="weui-icon-checked"></span>
-                                </div>
-                            </label>
+                            <!--<label id="scene" class="weui-cell weui-check__label" @click="filterScene">-->
+                            <!--<div class="weui-cell__bd">-->
+                            <!--<p style="font-size: 14px;color: #101010;">筛选场景</p>-->
+                            <!--</div>-->
+                            <!--<div class="weui-cell__ft" style="display: none">-->
+                            <!--<input class="weui-check" name="filter"-->
+                            <!--/>-->
+                            <!--<span class="weui-icon-checked"></span>-->
+                            <!--</div>-->
+                            <!--</label>-->
                             <label id="creator" class="weui-cell weui-check__label" @click="filterCreator">
                                 <div class="weui-cell__bd">
                                     <p style="font-size: 14px;color: #101010;">创建人</p>
-                                </div>
-                                <div class="weui-cell__ft" style="display: none">
-                                    <input class="weui-check" name="filter"/>
-                                    <span class="weui-icon-checked"></span>
-                                </div>
-                            </label>
-                            <label id="stage" class="weui-cell weui-check__label" @click="filterStage">
-                                <div class="weui-cell__bd">
-                                    <p style="font-size: 14px;color: #101010;">销售阶段</p>
                                 </div>
                                 <div class="weui-cell__ft" style="display: none">
                                     <input class="weui-check" name="filter"/>
@@ -197,7 +188,27 @@
                                     <span class="weui-icon-checked"></span>
                                 </div>
                             </label>
-                            <div style="height: 75px"></div>
+                            <label id="date" class="weui-cell weui-check__label" @click="filterDate">
+                                <div class="weui-cell__bd">
+                                    <p style="font-size: 14px;color: #101010;">创建日期</p>
+                                </div>
+                                <div class="weui-cell__ft" style="display: none">
+                                    <input class="weui-check" name="filter"/>
+                                    <span class="weui-icon-checked"></span>
+                                </div>
+                            </label>
+
+                            <label id="stage" class="weui-cell weui-check__label" @click="filterStage">
+                                <div class="weui-cell__bd">
+                                    <p style="font-size: 14px;color: #101010;">销售阶段</p>
+                                </div>
+                                <div class="weui-cell__ft" style="display: none">
+                                    <input class="weui-check" name="filter"/>
+                                    <span class="weui-icon-checked"></span>
+                                </div>
+                            </label>
+
+                            <div style="height: 120px"></div>
                             <div style="height: 40px">
                                 <a style="float:right; margin-right: 15px" href="javascript:;" @click="finish"
                                    class="weui-btn weui-btn_mini weui-btn_primary">完成</a>
@@ -209,44 +220,44 @@
                     </div>
                 </div>
 
-                <div id="filterScene" style="display:none;" v-show="filterCondition === 'scene'">
-                    <div class="filterDetail">
-                        <div class="weui-cells weui-cells_radio">
-                            <label class="weui-cell weui-check__label" for="scene1">
-                                <div class="weui-cell__bd">
-                                    <p style="font-size: 14px;color: #101010;">全部</p>
-                                </div>
-                                <div class="weui-cell__ft">
-                                    <input id="scene1" type="radio" class="weui-check" name="selectScene" value="all"
-                                           v-model="sceneValue"/>
-                                    <span class="weui-icon-checked"></span>
-                                </div>
+                <!--<div id="filterScene" style="display:none;" v-show="filterCondition === 'scene'">-->
+                <!--<div class="filterDetail">-->
+                <!--<div class="weui-cells weui-cells_radio">-->
+                <!--<label class="weui-cell weui-check__label" for="scene1">-->
+                <!--<div class="weui-cell__bd">-->
+                <!--<p style="font-size: 14px;color: #101010;">全部</p>-->
+                <!--</div>-->
+                <!--<div class="weui-cell__ft">-->
+                <!--<input id="scene1" type="radio" class="weui-check" name="selectScene" value="all"-->
+                <!--v-model="sceneValue"/>-->
+                <!--<span class="weui-icon-checked"></span>-->
+                <!--</div>-->
 
-                            </label>
-                            <label class="weui-cell weui-check__label" for="scene2">
-                                <div class="weui-cell__bd">
-                                    <p style="font-size: 14px;color: #101010;">我负责的商机</p>
-                                </div>
-                                <div class="weui-cell__ft">
-                                    <input id="scene2" type="radio" class="weui-check" name="selectScene" value="mine"
-                                           v-model="sceneValue"/>
-                                    <span class="weui-icon-checked"></span>
-                                </div>
-                            </label>
-                            <label class="weui-cell weui-check__label" for="scene3">
-                                <div class="weui-cell__bd">
-                                    <p style="font-size: 14px;color: #101010;">下属负责的商机</p>
-                                </div>
-                                <div class="weui-cell__ft">
-                                    <input id="scene3" type="radio" class="weui-check" name="selectScene" value="sub"
-                                           v-model="sceneValue"/>
-                                    <span class="weui-icon-checked"></span>
-                                </div>
-                            </label>
-                            <div style="height: 135px"></div>
-                        </div>
-                    </div>
-                </div>
+                <!--</label>-->
+                <!--<label class="weui-cell weui-check__label" for="scene2">-->
+                <!--<div class="weui-cell__bd">-->
+                <!--<p style="font-size: 14px;color: #101010;">我负责的商机</p>-->
+                <!--</div>-->
+                <!--<div class="weui-cell__ft">-->
+                <!--<input id="scene2" type="radio" class="weui-check" name="selectScene" value="mine"-->
+                <!--v-model="sceneValue"/>-->
+                <!--<span class="weui-icon-checked"></span>-->
+                <!--</div>-->
+                <!--</label>-->
+                <!--<label class="weui-cell weui-check__label" for="scene3">-->
+                <!--<div class="weui-cell__bd">-->
+                <!--<p style="font-size: 14px;color: #101010;">下属负责的商机</p>-->
+                <!--</div>-->
+                <!--<div class="weui-cell__ft">-->
+                <!--<input id="scene3" type="radio" class="weui-check" name="selectScene" value="sub"-->
+                <!--v-model="sceneValue"/>-->
+                <!--<span class="weui-icon-checked"></span>-->
+                <!--</div>-->
+                <!--</label>-->
+                <!--<div style="height: 135px"></div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
 
                 <div id="filterDate" style="display:none;" v-show="filterCondition === 'date'">
                     <div class="filterDetail">
@@ -265,22 +276,22 @@
 
                             <div class="weui-cell" @click="removeChecked">
                                 <div class="weui-cell__hd">
-                                    <label class="weui-label" style="font-size: 14px;color: #101010;">开始时间</label>
+                                    <label class="weui-label" style="font-size: 14px;color: #101010;width: 80px">开始时间</label>
                                 </div>
                                 <div class="weui-cell__bd">
                                     <input class="weui-input" type="date" style="font-size: 14px;color: #101010;"
-                                           value="" v-model="dateValueStart"/>
+                                            v-model="dateValueStart"/>
                                 </div>
                             </div>
 
 
                             <div class="weui-cell" @click="removeChecked">
                                 <div class="weui-cell__hd">
-                                    <label class="weui-label" style="font-size: 14px;color: #101010;">结束时间</label>
+                                    <label class="weui-label" style="font-size: 14px;color: #101010;width: 80px">结束时间</label>
                                 </div>
                                 <div class="weui-cell__bd">
                                     <input class="weui-input" type="date" style="font-size: 14px;color: #101010;"
-                                           value="" v-model="dateValueEnd"/>
+                                            v-model="dateValueEnd"/>
                                 </div>
                             </div>
                             <div style="height: 135px"></div>
@@ -293,7 +304,7 @@
                         <div class="weui-cells weui-cells_radio">
                             <label class="weui-cell weui-check__label" for="creatorCheck" @click="creatorChecked">
                                 <div class="weui-cell__bd">
-                                    <p style="font-size: 14px;color: #101010;">不限</p>
+                                    <p style="font-size: 14px;color: #101010;">全部</p>
                                 </div>
                                 <div class="weui-cell__ft">
                                     <input id="creatorCheck" type="radio" class="weui-check" name="selectCreator"
@@ -302,17 +313,36 @@
                                     <span class="weui-icon-checked"></span>
                                 </div>
                             </label>
-
+                            <label class="weui-cell weui-check__label" @click="creatorChecked1">
+                                <div class="weui-cell__bd">
+                                    <p style="font-size: 14px;color: #101010;">我负责的商机</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <input id="mine" type="radio" class="weui-check" name="selectCreator" value="mine"
+                                           v-model="creatorValue"/>
+                                    <span class="weui-icon-checked"></span>
+                                </div>
+                            </label>
+                            <label class="weui-cell weui-check__label" @click="creatorChecked2">
+                                <div class="weui-cell__bd">
+                                    <p style="font-size: 14px;color: #101010;">下属负责的商机</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <input id="subs" type="radio" class="weui-check" name="selectCreator" value="sub"
+                                           v-model="creatorValue"/>
+                                    <span class="weui-icon-checked"></span>
+                                </div>
+                            </label>
                             <a class="weui-cell weui-cell_access" href="javascript:;" @click="removeChecked1">
                                 <div class="weui-cell__bd">
-                                    <input id="creatorChoose" class="weui-input" type="text" placeholder="请选择"
+                                    <input id="creatorChoose" class="weui-input" type="text" placeholder="选择创建人"
                                            style="font-size: 14px;color: #101010;" readonly="readonly"
                                            v-model="creatorV"/>
                                     <!--<div class="placeholder" style="font-size: 14px;color:grey;"> {{creatorValueC}}</div>-->
                                 </div>
                                 <div class="weui-cell__ft"></div>
                             </a>
-                            <div style="height: 185px"></div>
+                            <div style="height: 90px"></div>
                         </div>
                     </div>
                 </div>
@@ -411,7 +441,10 @@
                 </div>
             </div>
         </div>
+
     </div>
+
+
     <div class="weui-tabbar">
         <a href="/customer/customerList" class="weui-tabbar__item">
             <img src="/images/bottom/customer_1.svg" class="weui-tabbar__icon">

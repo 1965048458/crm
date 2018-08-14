@@ -60,10 +60,12 @@ public class OpportunityController {
     }
 
     @RequestMapping("queryOpportunity")
-    public GsonView queryOpportunity(HttpServletRequest request){
+    public GsonView queryOpportunity(OpportunitySearchParam opportunitySearchParam,
+                                     HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
         GsonView gsonView = new GsonView();
-
+        List<Opportunity> opportunities = opportunityService.queryOpportunity(opportunitySearchParam);
+        gsonView.addStaticAttribute("opportunityList", opportunities);
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }

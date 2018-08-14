@@ -10,6 +10,18 @@
         <result property="companyName" column="com_nm"/>
     </resultMap>
 
+    <resultMap id="opportunityMap" type="com.xuebei.crm.opportunity.Opportunity">
+        <id property="opportunityId" column="sales_opportunity_id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="opportunityName" column="opportunity_nm"/>
+        <result property="salesStatus" column="sales_status"/>
+        <result property="amount" column="amount"/>
+        <result property="userId" column="user_id"/>
+        <result property="create_ts" column="create_ts"/>
+
+    </resultMap>
+
+
     <insert id="addSale" parameterType="com.xuebei.crm.opportunity.Opportunity"
             useGeneratedKeys="true" keyColumn="sales_opportunity_id" keyProperty="opportunityId">
         INSERT INTO `crmdb`.`sales_opportunity` (
@@ -39,5 +51,31 @@
             #{contactId}
         )
     </insert>
+
+    <select id="queryOpportunity" resultMap="opportunityMap">
+       SELECT  * FROM sales_opportunity
+        <if test="createStart != null">
+            AND create_ts > #{createStart}
+        </if>
+        <if test="createEnd != null">
+            AND create_ts &lt;  #{createEnd}
+        </if>
+        <if test="userId != null and userId != ''">
+            AND user_id = #{userId}
+        </if>
+        <if test="salesStatus != null and salesStatus != 'all'">
+            AND sales_status = #{salesStatus}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            AND customer_id = #{customerName}
+        </if>
+        <if test="scene != null and scene != ''">
+            AND user_id = #{scene}
+        </if>
+        <if test="sortMode != null and sortMode != ''">
+            ORDER BY create_ts #{sortMode}
+        </if>
+
+    </select>
 
 </mapper>
