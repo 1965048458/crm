@@ -23,7 +23,7 @@ public interface CompanyMapper {
 
     String getUserId(@Param("userName") String userName, @Param("tel") String tel);
 
-    String queryUserType(@Param("crmUserId") String crmUserId);
+    String queryUserType(@Param("userId") String userId);
 
     List<Company> queryCompanyList(@Param("crmUserId") String crmUserId);
 
@@ -35,7 +35,7 @@ public interface CompanyMapper {
     String queryApplyStatus(@Param("crmUserId") String crmUserId,
                             @Param("companyId") String companyId);
 
-    List<CompanyUser> queryApplyStaff(@Param("crmUserId") String crmUserId);
+    List<CompanyUser> queryApplyStaff(@Param("userId") String userId);
 
     void agreeApply(@Param("userId") String userId,
                     @Param("crmUserId") String crmUserId);

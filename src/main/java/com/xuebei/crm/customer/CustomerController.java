@@ -1,5 +1,6 @@
 package com.xuebei.crm.customer;
 
+import com.xuebei.crm.company.CompanyMapper;
 import com.xuebei.crm.dto.GsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.xuebei.crm.utils.UUIDGenerator;
@@ -19,6 +20,9 @@ public class CustomerController {
 
     @Autowired
     private CustomerMapper customerMapper;
+
+    @Autowired
+    private CompanyMapper companyMapper;
 
     @RequestMapping("searchCustInfo")
     public String searchInfo(){
@@ -56,7 +60,7 @@ public class CustomerController {
         }else {
 
             String customer_id = UUIDGenerator.genUUID();
-            String creator_id = (String) request.getSession().getAttribute("crmUserId");
+            String creator_id = (String) request.getSession().getAttribute("userId");
             String create_ts = "";
             String updater_id = creator_id;
             String update_ts = "";
@@ -74,6 +78,10 @@ public class CustomerController {
             } else {
                 customerService.newSchool(customer_id, name, schoolType, profile, website, creator_id, create_ts, updater_id, update_ts);
             }
+
+            String companyId = companyMapper.queryCompanyIdByUserId(creator_id);
+            customerMapper.insertCustomerCompanyRelation(customer_id, companyId);
+
             gsonView.addStaticAttribute("successFlg", true);
         }
         return gsonView;
@@ -429,16 +437,29 @@ public class CustomerController {
     }
 
     @RequestMapping("/editCustomer")
-    public String editCustomerPage(HttpServletRequest request,
+    public String editCustomerPage(@RequestParam("customerId") String customerId,
+                                   HttpServletRequest request,
                                    ModelMap modelMap) {
-        String customerId = "customerzju";
+        String userId = (String)request.getSession().getAttribute("userId");
 
-        List<Department> deptList = customerService.queryDepartment(customerId, "001c52e79ee0484ca8158e926b5c05a3");
+        List<Department> deptList = customerService.queryDepartment(customerId, userId);
 
         modelMap.addAttribute("customerId", customerId);
         modelMap.addAttribute("departments", deptList);
 
         return "editCustomer";
+    }
+
+    @RequestMapping("/action/addContactsType")
+    public GsonView insertContactsType(@RequestParam("customerId") String customerId,
+                                       @RequestParam("contactsTypeName") String contactsTypeName) {
+        customerId = customerId.trim();
+        Boolean isExist = customerMapper.isContactsTypeExist(customerId, contactsTypeName);
+        if (isExist) {
+            return GsonView.createErrorView("已经有同名的联系人职位");
+        }
+        customerMapper.insertContactsType(customerId, contactsTypeName);
+        return GsonView.createSuccessView();
     }
 
 }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>账号信息</title>
+
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css">
+
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css">
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/administrator.js"></script>
+    <style>
+        .top-bar {
+            text-align: center;
+            background: #FFFFFF;
+        }
+
+        .pull-left {
+            float: left !important;
+        }
+
+        .pull-right {
+            float: right !important;
+        }
+    </style>
+</head>
+<body>
+<div id="administrator">
+
+    <input type="hidden" th:value="${companyId}" id="companyId">
+
+    <div class="weui-tab">
+        <div class="weui-navbar">
+            <div id="titleBar" class="weui-navbar__item top-bar" style="height: 28px; padding: 10px 10px;">
+                            <span @click="back" class="pull-left">
+                                <img src="/images/back_icon.svg" style="margin-top:7px;"/></span>
+                <span class="center" style="font-size: 22px; margin-top: 1px">管理员</span>
+                <a>
+                    <span class="pull-right" style="margin-top: 7px;display: none">
+                        <img src="/images/add.png" style="width: 16px; height: 16px; display: block"/>
+                    </span>
+                </a>
+            </div>
+        </div>
+        <div class="weui-tab__panel">
+
+            <div class="weui-media-box weui-media-box_small-appmsg">
+                <div class="weui-cells">
+                    <a class="weui-cell weui-cell_access" href="javascript:;" @click="enter">
+                        <div class="weui-cell__hd"><img
+                                src="/images/公司.svg" alt=""
+                                style="width:40px;margin-right:5px;display:block">
+                        </div>
+                        <div class="weui-cell__bd weui-cell_primary">
+                            <h4><span th:text="${companyName}"></span></h4>
+                        </div>
+                        <div class="weui-cell__ft">
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="weui-cells">
+                <a class="weui-cell weui-cell_access" href="javascript:;" @click="staffAudit">
+                    <div class="weui-cell__bd">
+                        <p>人员审核&nbsp;<span>(</span>
+                            <span style="color: #3DA8F4" th:text="${applyStaff}"></span>
+                            <span>)</span>
+                        </p>
+                    </div>
+                    <div class="weui-cell__ft">
+                    </div>
+                </a>
+                <a class="weui-cell weui-cell_access" :href="'/member?companyId='+companyId" >
+                    <div class="weui-cell__bd">
+                        <p></span>上下级管理</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

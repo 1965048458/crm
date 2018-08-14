@@ -184,7 +184,7 @@ jQuery(document).ready(function () {
                         cache: false
                     }).done(function (result) {
                         if (result.successFlg) {
-                            window.location.href = "/";
+                            window.location.href = "/registerSuccess";
                         } else {
                             alert("信息填写错误，注册失败");
                         }

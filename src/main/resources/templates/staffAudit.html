@@ -74,13 +74,16 @@
                             </a>
                         </div>
 
-                        <div class="weui-cell">
-                            <div class="weui-flex__item" style="text-align: center;border-right: groove"
+                        <div class="weui-cell" style="padding: 8px 20px">
+                            <div class="weui-flex__item" style="text-align: center;"
                                  @click="agree(applyStaff.userId)">
-                                <div class="placeholder">同意</div>
+                                <div class="placeholder" style="text-align: center">
+                                    <a href="javascript:;" class="weui-btn weui-btn_plain-primary" style="margin-right: 10px">同意</a>
+                                    </div>
                             </div>
                             <div class="weui-flex__item" style="text-align: center" @click="refuse(applyStaff.userId)">
-                                <div class="placeholder">拒绝</div>
+                                <div class="placeholder">
+                                    <a href="javascript:;" class="weui-btn weui-btn_plain-default" style="margin-left: 10px">拒绝</a></div>
                             </div>
 
                         </div>

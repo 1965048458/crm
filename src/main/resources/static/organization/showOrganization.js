@@ -6,37 +6,35 @@ jQuery(document).ready(function () {
 
     var organizationVue = new Vue({
         el: '#organizationVue',
-        data:function(){
-            return{
-                customerId:'',
-                customerName:'',
-                showPage:'',
-                showOrganization: false,
-                showApplyDialog: false,
-                customerList: '',
-                departmentList:'',
-                applyDeptName:'',
-                applyDeptId:'',
-                applyReasons:'',
-                showSubmitDialog:false,
-                showSubmitErrDialog:false,
-                showSearchResult:false,
-                showDelayApplyDialog:false,
-                showDelayApplyErrDialog:false,
-                submitReasons:'',
-                warningDetails:{
-                    deptId:'',
-                    leftTime:'',
-                    warnedOrganization:'',
-                    createdTime:'',
-                    times:'',
-                    lastTime:''
-                },
-                deptList:'',
-                errMsg:'',
-                searchList:[],
-                searchWord:''
-            };
+        data:{
+            customerId:'',
+            customerName:'',
+            showPage:'',
+            showOrganization: false,
+            showApplyDialog: false,
+            customerList: '',
+            departmentList:'',
+            applyDeptName:'',
+            applyDeptId:'',
+            applyReasons:'',
+            showSubmitDialog:false,
+            showSubmitErrDialog:false,
+            showSearchResult:false,
+            showDelayApplyDialog:false,
+            showDelayApplyErrDialog:false,
+            submitReasons:'',
+            warningDetails:{
+                deptId:'',
+                leftTime:'',
+                warnedOrganization:'',
+                createdTime:'',
+                times:'',
+                lastTime:''
+            },
+            deptList:'',
+            errMsg:'',
+            searchList:[],
+            searchWord:''
         },
         methods: {
             'init':function (customerId, customerName) {
@@ -209,7 +207,8 @@ jQuery(document).ready(function () {
                 this.showOrganization = true;
                 $('#searchInput').blur();
             }
-        }
+        },
+        components:{}
     });
 
     Vue.component('customer', {
@@ -293,6 +292,15 @@ jQuery(document).ready(function () {
             'toContactDetail':function (contactsId) {
                 window.location = '/customer/contactsInfo?contactsId='+contactsId;
             },
+            'addTypeName':function (contact) {
+                if(contact.typeName == undefined || contact.typeName==''){
+                    $("#type_name_label_"+contact.contactsId).css("border","hidden");
+                    return '';
+                }else {
+                    return contact.typeName;
+                }
+                
+            }
         }
     });
 

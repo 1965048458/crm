@@ -13,4 +13,6 @@ public interface OpportunityService
     Integer addSale(Opportunity opportunity);
 
     void addOpportunityContact(Integer opportunityId,  String contactId);
+
+    List<Opportunity> queryOpportunity(OpportunitySearchParam opportunitySearchParam);
 }

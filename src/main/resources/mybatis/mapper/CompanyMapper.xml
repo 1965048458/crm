@@ -20,6 +20,7 @@
         <id property="userId" column="user_id"/>
         <result property="crmUserName" column="real_nm"/>
         <result property="tel" column="tel"/>
+        <result property="companyId" column="company_id"/>
         <result property="createTs" column="create_ts"/>
     </resultMap>
 
@@ -50,9 +51,9 @@
     </select>
 
     <select id="queryUserType" resultType="java.lang.String">
-        SELECT DISTINCT  user_type
+        SELECT  user_type
         FROM company_user
-        WHERE crm_user_id = #{crmUserId} ;
+        WHERE user_id = #{userId};
     </select>
 
     <select id="queryCompanyIdByUserId" resultType="java.lang.String">
@@ -126,15 +127,11 @@
     </select>
 
     <select id="queryApplyStaff" resultMap="companyApplyMap">
-        select com.user_id,cu.real_nm, cu.tel,com.create_ts from crm_user cu
-         INNER JOIN company_user com ON com.crm_user_id = cu.crm_user_id AND com.company_id in (
-          select company_id from company_user where crm_user_id = #{crmUserId}
-          )
-          where cu.crm_user_id in (
-          select com.crm_user_id from company_user com where com.company_id in (
-          select company_id from company_user where crm_user_id = #{crmUserId}
-          ) AND status ='PENDING'
-          )
+       select com.user_id,cu.real_nm, cu.tel,com.create_ts,com.company_id from crm_user cu
+         INNER JOIN company_user com ON com.crm_user_id = cu.crm_user_id AND com.company_id =(select
+			company_id from company_user where user_id =#{userId} AND
+          user_type = 'ADMIN')
+         where com.status = 'PENDING'
     </select>
 
     <update id="agreeApply" parameterType="java.lang.String">

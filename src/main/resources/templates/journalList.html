@@ -81,7 +81,7 @@
 
 <div class="page tabbar js_show">
     <div class="weui-tab">
-        <div class="weui-tab__panel">
+        <div class="weui-tab__panel" style="background: #FFFFFF">
             <div id="journalVue">
                 <div id="journalList" v-show="showPage === 'journalList'">
 
@@ -120,9 +120,6 @@
                             <span @click="searchAll">全部</span>
                         </div>
                         <div class="weui-navbar__item">
-                            <span @click="searchUnRead">未读<span v-text=""></span></span>
-                        </div>
-                        <div class="weui-navbar__item">
                             <span @click="searchMine">我的</span>
                         </div>
                         <div class="weui-navbar__item">
@@ -141,7 +138,6 @@
                         </div>
                     </div>
 
-
                     <div class="journal-list">
                         <div class="weui-flex">
                             <div class="weui-flex__item">
@@ -157,6 +153,9 @@
                             <div class="weui-flex__item">
                                 <div class="placeholder" style="visibility: hidden">weui</div>
                             </div>
+                        </div>
+                        <div id="resultTip" style="background: #38A4F2; width: 100%; height: auto; display: none; margin-top: 3px">
+                            <p style="color: #FFFFFF; font-size: 12px; padding: 8px 8px;" v-text="tip"></p>
                         </div>
                         <div class="journal-box" v-for="journal in journalList">
                             <div class="weui-panel__bd" style=" height: 40px">
@@ -246,7 +245,7 @@
                     <div class="blank" style="margin:20% auto auto auto; text-align:center; "
                          v-if="journalList.length === 0">
                         <p>
-                            <img src="/images/journal/日志空.svg" style="background: #FFFFFF;"/>
+                            <img src="/images/journal/日志空.svg"/>
                         </p>
                         <p style="color: #CCCCCC; font-size: small">没有相关日志</p>
                     </div>
@@ -448,7 +447,7 @@
                                 </div>
                                 <div class="weui-cell__bd">
                                     <select class="weui-select" id="selectClient" v-model="client">
-                                        <option :value="customer.customerId" v-for="customer in customers"
+                                        <option :value="customer.customerId +','+customer.name" v-for="customer in customers"
                                                 v-text="customer.name"></option>
                                     </select>
                                 </div>
@@ -460,7 +459,8 @@
                                 </div>
                                 <div class="weui-cell__bd">
                                     <select class="weui-select" id="selectProject" v-model="project">
-                                        <option v-for="pj in projects" :value="pj.opportunityId" v-text="pj.opportunityName"></option>
+                                        <option v-for="pj in projects" :value="pj.opportunityId+','+pj.opportunityName"
+                                                v-text="pj.opportunityName"></option>
                                     </select>
                                 </div>
                             </div>
@@ -580,6 +580,22 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript" class="tabbar js_show">
+    $(function () {
+        $('.weui-navbar__item').on('click', function () {
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+        });
+    });
+</script>
 </body>
+
+<script>
+    $(function () {
+        $('.weui-navbar__item').on('click', function () {
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+            $('#resultTip').hide();
+        });
+    });
+</script>
+
 </html>
