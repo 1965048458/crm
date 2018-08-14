@@ -1,9 +1,12 @@
 package com.xuebei.crm.opportunity;
 
 
+import com.google.gson.annotations.Expose;
+import com.xuebei.crm.member.Member;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 public class OpportunitySearchParam {
     //我负责的商机/下属负责的商机
@@ -21,8 +24,28 @@ public class OpportunitySearchParam {
     private Date createStart;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createEnd;
+    @Expose
+    private List<String> subUserId;
+
+
+    public List<String> getSubUserId() {
+        return subUserId;
+    }
+
+    public void setSubUserId(List<String> subUserId) {
+        this.subUserId = subUserId;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date update_ts;
+    private Date updateTime;
 
     public String getScene() {
         return scene;
@@ -80,11 +103,5 @@ public class OpportunitySearchParam {
         this.createEnd = createEnd;
     }
 
-    public Date getUpdate_ts() {
-        return update_ts;
-    }
 
-    public void setUpdate_ts(Date update_ts) {
-        this.update_ts = update_ts;
-    }
 }

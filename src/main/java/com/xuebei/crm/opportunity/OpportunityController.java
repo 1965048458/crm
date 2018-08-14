@@ -2,6 +2,8 @@ package com.xuebei.crm.opportunity;
 
 import com.xuebei.crm.customer.Customer;
 import com.xuebei.crm.dto.GsonView;
+import com.xuebei.crm.member.Member;
+import com.xuebei.crm.member.MemberServiceImpl;
 import com.xuebei.crm.user.User;
 import com.xuebei.crm.utils.UUIDGenerator;
 import org.apache.ibatis.annotations.Param;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static com.xuebei.crm.login.LoginController.SUCCESS_FLG;
@@ -26,6 +30,8 @@ public class OpportunityController {
 
     @Autowired
     private OpportunityService opportunityService;
+    @Autowired
+    private MemberServiceImpl memberService;
 
     @RequestMapping("")
     public String opportunity() {
@@ -64,6 +70,20 @@ public class OpportunityController {
                                      HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
         GsonView gsonView = new GsonView();
+        if(opportunitySearchParam.getUserId()!= null ){
+            if(opportunitySearchParam.getUserId().equals("mine")){
+                opportunitySearchParam.setUserId(userId);
+            }else if( opportunitySearchParam.getUserId().equals("sub")){
+                opportunitySearchParam.setUserId("all");
+                List<Member> members = memberService.searchSubMemberList(userId);
+                Iterator<Member> it = members.iterator();
+                List<String> subUserId = new ArrayList<>();
+                while(it.hasNext()){
+                     subUserId.add(it.next().getMemberId());
+                }
+                opportunitySearchParam.setSubUserId(subUserId);
+            }
+        }
         List<Opportunity> opportunities = opportunityService.queryOpportunity(opportunitySearchParam);
         gsonView.addStaticAttribute("opportunityList", opportunities);
         gsonView.addStaticAttribute("successFlg", true);
