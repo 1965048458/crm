@@ -23,17 +23,18 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void addCompany(String companyName, List<CompanyUser> companyUsers) {
         String companyId = UUIDGenerator.genUUID();
-        companyMapper.addCompany(companyId, companyName);
-
         String crmUserId;
         String userId ;
         for (CompanyUser user: companyUsers
              ) {
             userId = UUIDGenerator.genUUID();
             crmUserId = companyMapper.getUserId(user.getCrmUserName(), user.getTel());
+            if (crmUserId == null || crmUserId.equals("")){
+                return;
+            }
             companyMapper.joinCompany(crmUserId, userId, companyId);
         }
-
+        companyMapper.addCompany(companyId, companyName);
     }
 
     @Override
