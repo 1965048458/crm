@@ -37,7 +37,12 @@ $(document).ready(function () {
                     return;
                 }
 
-                //if()
+                for(var i = 0; i < this.companyList.length; i++){
+                    if(this.companyList[i].companyName == this.companyName){
+                        alert("不能创建已创建的公司!");
+                        return;
+                    }
+                }
 
                 var postData = {
                     companyId: '',
