@@ -98,6 +98,34 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<repositories>
+		<repository>
+			<id>maven-aliyun-cn</id>
+			<name>Aliyun Mirror</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>walkclass-nexus</id>
+			<url>http://47.96.188.208:8081/nexus/content/repositories/releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>walkclass-thirdparty</id>
+			<url>http://47.96.188.208:8081/nexus/content/repositories/thirdparty/</url>
+		</repository>
+		<repository>
+			<id>aliyun-nexus</id>
+			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>getui-nexus</id>
+			<url>http://mvn.gt.igexin.com/nexus/content/repositories/releases/</url>
+		</repository>
+	</repositories>
 
 </project>
