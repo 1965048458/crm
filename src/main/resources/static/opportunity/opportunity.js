@@ -52,6 +52,7 @@ $(document).ready(function () {
                         thisVue.$set(thisVue, 'opportunityList', result.opportunityList);
                     } else {
                         thisVue.errMsg = result.errMsg;
+                        alert(thisVue.errMsg);
                     }
                 })
             },
