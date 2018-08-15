@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -70,22 +71,42 @@ public class OpportunityController {
                                      HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
         GsonView gsonView = new GsonView();
-        if(opportunitySearchParam.getUserId()!= null ){
+        if(opportunitySearchParam.getUserId()!= null && !opportunitySearchParam.getUserId().equals("")){
             if(opportunitySearchParam.getUserId().equals("mine")){
                 opportunitySearchParam.setUserId(userId);
             }else if( opportunitySearchParam.getUserId().equals("sub")){
                 opportunitySearchParam.setUserId("all");
                 List<Member> members = memberService.searchSubMemberList(userId);
-                Iterator<Member> it = members.iterator();
                 List<String> subUserId = new ArrayList<>();
-                while(it.hasNext()){
-                     subUserId.add(it.next().getMemberId());
+                Iterator<Member> it = members.iterator();
+                if(!members.isEmpty()) {
+                    while (it.hasNext()) {
+                        subUserId.add(it.next().getMemberId());
+                    }
+                    opportunitySearchParam.setSubUserId(subUserId);
+                }else{
+                    subUserId.add("0");
+                    opportunitySearchParam.setSubUserId(subUserId);
                 }
-                opportunitySearchParam.setSubUserId(subUserId);
             }
         }
+
+        if(opportunitySearchParam.getSubUser() != null && !opportunitySearchParam.getSubUser().equals("")){
+            opportunitySearchParam.setChooseSubUser((opportunitySearchParam.getSubUser().split(",")));
+       }
+
         List<Opportunity> opportunities = opportunityService.queryOpportunity(opportunitySearchParam);
         gsonView.addStaticAttribute("opportunityList", opportunities);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
+
+    @RequestMapping("subMemberList")
+    public GsonView subMemberList(HttpServletRequest request){
+        String userId = (String) request.getSession().getAttribute("userId");
+        GsonView gsonView = new GsonView();
+        List<Member> members = memberService.searchSubMemberList(userId);
+        gsonView.addStaticAttribute("subMemberList", members);
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }

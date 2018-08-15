@@ -69,13 +69,20 @@
         <if test="customerName != null and customerName != ''">
             AND c.customer_nm LIKE CONCAT('%', #{customerName}, '%')
         </if>
-        <if test="userId != null and userId != 'all'">
+        <if test="userId != null and userId != 'all' and userId !=''">
             AND s.user_id = #{userId}
         </if>
-        <if test="subUserId!= null">
+        <if test="subUserId!= null  ">
             AND s.user_id IN
             <foreach item="subUserId" collection="subUserId" open="(" separator="," close=")">
                 #{subUserId}
+            </foreach>
+
+        </if>
+        <if test="subUser != null and subUser != '' ">
+            AND s.user_id IN
+            <foreach item="subUser" collection="chooseSubUser" open="(" separator="," close=")">
+                #{subUser}
             </foreach>
 
         </if>
