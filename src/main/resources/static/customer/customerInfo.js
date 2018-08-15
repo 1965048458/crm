@@ -27,7 +27,7 @@ $(document).ready(function ()  {
                 });
             },
             'orgDisplay':function () {
-                location.href = '/customer/organization?customerId='+this.customerId+'&customerName='+this.customerName;
+                location.href = '/customer/organization?customerId='+this.customerId;
             }
         }
     });
