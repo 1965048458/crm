@@ -11,7 +11,7 @@ $(document).ready(function () {
             imgFilter: '/images/opportunity/筛选未选中.svg',
             showSortPage: false,
             showFilterPage: false,
-            showPage: '',
+            showPage: 'opportunity',
             filterCondition: '',
             filterValue: '',
             sortMode:'ASC',
@@ -25,6 +25,11 @@ $(document).ready(function () {
             customerValue: 'all',
             customerValueIn: '',
             opportunityList:'',
+            subMemberList: [],
+            tempSub:[],
+            subUserId:[],
+            subsName:[],
+            subUser:'',
 
             titleBar: true,
             searchCustomer: true,
@@ -81,15 +86,10 @@ $(document).ready(function () {
                 }
             },
             'sortAsc': function(){
-                var creator ='';
-                if(this.creatorV ==''){
-                    creator = this.creatorValue;
-                }else{
-                    creator = this.creatorV;
-                }
                 var data = {
                     sortMode:'ASC',
-                    userId: creator,
+                    userId: this.creatorValue,
+                    subUser: this.subUser,
                     customerName:this.customerValueIn,
                     createStart: this.dateValueStart,
                     createEnd: this.dateValueEnd,
@@ -98,15 +98,10 @@ $(document).ready(function () {
                 this.showResult(data);
             },
             'sortDesc': function(){
-                var creator ='';
-                if(this.creatorV ==''){
-                    creator = this.creatorValue;
-                }else{
-                    creator = this.creatorV;
-                }
                 var data = {
                     sortMode:'DESC',
-                    userId: creator,
+                    userId: this.creatorValue,
+                    subUser: this.subUser,
                     customerName:this.customerValueIn,
                     createStart: this.dateValueStart,
                     createEnd: this.dateValueEnd,
@@ -159,16 +154,36 @@ $(document).ready(function () {
             },
             'removeChecked1': function () {
                 this.creatorValue = '';
-                this.creatorV = '汪峰';
+                var thisVue = this;
+                $.ajax({
+                    type: 'get',
+                    url: '/opportunity/subMemberList',
+                    data: {},
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        thisVue.$set(thisVue, 'subMemberList', result.subMemberList);
+                        thisVue.showPage = 'selectCreator';
+                    }
+                });
+
+                //this.creatorV = '汪峰';
             },
             'creatorChecked': function () {
                 this.creatorV = '';
+                this.subUser = '';
+                this.tempSub =[];
             },
             'creatorChecked1': function () {
                 this.creatorV = '';
+                this.subUser ='';
+                this.tempSub =[];
             },
             'creatorChecked2': function () {
                 this.creatorV = '';
+                this.subUser = '';
+                this.tempSub =[];
             },
             'dateChecked': function () {
                 this.dateValueStart = '';
@@ -181,15 +196,10 @@ $(document).ready(function () {
                 this.showFilterPage = false;
                 this.imgFilter ='/images/opportunity/筛选未选中.svg';
                 this.filterCondition = '';
-                var creator ='';
-                if(this.creatorV ==''){
-                    creator = this.creatorValue;
-                }else{
-                    creator = this.creatorV;
-                }
                 var data = {
                     sortMode:this.sortMode,
-                    userId: creator,
+                    userId: this.creatorValue,
+                    subUser: this.subUser,
                     customerName:this.customerValueIn,
                     createStart: this.dateValueStart,
                     createEnd: this.dateValueEnd,
@@ -208,7 +218,30 @@ $(document).ready(function () {
                 this.dateValueEnd = '';
                 this.creatorV = '';
                 this.customerValueIn='';
-            }
+                this.subUser ='';
+                this.tempSub =[];
+            },
+            'backToFilter': function(){
+                this.showPage ='opportunity';
+                this.tempSub =[];
+            },
+            'submit': function(){
+                this.subUserId = [];
+                this.subsName = [];
+
+                for (var i = 0; i < this.tempSub.length; i++) {
+                    var str = this.tempSub[i].split(',');
+                    this.subUserId[i] = str[0];
+                    this.subsName[i] = str[1];
+                }
+                var tempId = '';
+                for(var i = 0; i < this.subUserId.length; i++){
+                    tempId += this.subUserId[i] + ',';
+                }
+                this.subUser = tempId;
+                this.creatorV= this.subsName;
+                this.showPage ='opportunity';
+            },
         },
         watch: {
             'filterCondition': function () {

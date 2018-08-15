@@ -10,4 +10,8 @@ public interface CompanyService {
     void insertMember(CompanyUser companyUser);
 
     void addCompany(String companyName, List<CompanyUser> companyUsers);
+
+    CompanyUser getUserInfo(String crmUserId);
+
+    List<Company> queryCompany(String word);
 }

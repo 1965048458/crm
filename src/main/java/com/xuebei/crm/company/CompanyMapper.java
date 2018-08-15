@@ -23,6 +23,8 @@ public interface CompanyMapper {
 
     String getUserId(@Param("userName") String userName, @Param("tel") String tel);
 
+    CompanyUser getUserInfo(@Param("crmUserId") String crmUserId);
+
     String queryUserType(@Param("userId") String userId);
 
     List<Company> queryCompanyList(@Param("crmUserId") String crmUserId);

@@ -28,6 +28,26 @@ public class OpportunitySearchParam {
     private List<String> subUserId;
 
 
+    private String subUser;
+
+    private String [] chooseSubUser;
+
+    public String[] getChooseSubUser() {
+        return chooseSubUser;
+    }
+
+    public void setChooseSubUser(String[] chooseSubUser) {
+        this.chooseSubUser = chooseSubUser;
+    }
+
+    public String getSubUser() {
+        return subUser;
+    }
+
+    public void setSubUser(String subUser) {
+        this.subUser = subUser;
+    }
+
     public List<String> getSubUserId() {
         return subUserId;
     }
