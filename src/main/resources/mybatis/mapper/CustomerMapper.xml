@@ -200,7 +200,7 @@
     </select>
 
     <insert id="insertContacts" parameterType="com.xuebei.crm.customer.Contacts">
-        INSERT INTO `crmdb`.`contacts` (
+        INSERT INTO `contacts` (
             `contacts_id`,
             `customer_dept_id`,
             `real_nm`,
