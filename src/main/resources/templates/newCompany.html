@@ -23,7 +23,7 @@
             text-align: center;
         }
 
-        .weui-label{
+        .weui-label {
             text-align: left;
         }
 
@@ -64,6 +64,22 @@
                         <input class="weui-input" placeholder="请填写真实名称" v-model="companyName">
                     </div>
                 </div>
+                <div class="weui-tab__panel" id="searchResult"
+                     style="display: none; margin-left: 80px; position:fixed; z-index: 9999; background: #ffffff; with: 100%;">
+                    <p class="weui-cell" style="color: #CE3C39">以下公司已被创建，不能再创建</p>
+                    <label class="weui-cell weui-check__label"
+                           v-for="company in companyList.filter(filterList)">
+                        <div class="weui-cell__bd">
+                            <p style="color: #ff1fae" v-text="company.companyName"></p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <!--<input type="text" v-bind:value="company.companyName" v-model="companyName">-->
+                        </div>
+                    </label>
+                    <br>
+                    <br>
+                    <br>
+                </div>
                 <div class="position">
                     <a class="weui-cell weui-cell_access" @click="selPost">
                         <label class="weui-label">我的职务</label>
@@ -74,7 +90,6 @@
                     </a>
                 </div>
             </div>
-
             <div class="weui-cells__title">3人即可创建公司，赶快邀请同事加入你的公司吧</div>
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">

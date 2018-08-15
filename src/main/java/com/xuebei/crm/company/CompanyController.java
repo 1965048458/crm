@@ -74,7 +74,9 @@ public class CompanyController {
                                HttpServletRequest request){
         String crmUserId = (String) request.getSession().getAttribute("crmUserId");
         String companyName = company.getCompanyName();
+        CompanyUser me = companyService.getUserInfo(crmUserId);
         List<CompanyUser> companyUserList = company.getCompanyUserList();
+        companyUserList.add(me);
         companyService.addCompany(companyName, companyUserList);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg", true);
@@ -84,6 +86,14 @@ public class CompanyController {
     @RequestMapping("/addMember")
     public void insertMember(CompanyUser companyUser){
         companyService.insertMember(companyUser);
+    }
+
+    @RequestMapping("/getCompanyNames")
+    public GsonView getCompanyNames(@RequestParam("word")String word){
+        GsonView gsonView = new GsonView();
+        List<Company> companies = companyService.queryCompany(word);
+        gsonView.addStaticAttribute("companyList", companies);
+        return gsonView;
     }
 
     @RequestMapping("/memberDetail")

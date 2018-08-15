@@ -24,6 +24,11 @@
         <result property="createTs" column="create_ts"/>
     </resultMap>
 
+    <resultMap id="userMap" type="com.xuebei.crm.company.CompanyUser">
+        <id property="crmUserId" column="crm_user_id"/>
+        <result property="crmUserName" column="real_nm"/>
+        <result property="tel" column="TEL"/>
+    </resultMap>
 
     <select id="queryCompanyList" resultMap="companyListMap">
         SELECT
@@ -63,7 +68,7 @@
     </select>
 
     <insert id="joinCompany">
-        INSERT INTO `crmdb`.`company_user` (
+        INSERT INTO `company_user` (
             `user_id`,
             `user_type`,
             `crm_user_id`,
@@ -87,7 +92,7 @@
     </insert>
 
     <insert id="addCompany">
-        INSERT INTO `crmdb`.`company` (
+        INSERT INTO `company` (
             `company_id`,
             `com_nm`,
             `creator_id`,
@@ -109,6 +114,11 @@
     <select id="getUserId" resultType="java.lang.String">
         SELECT crm_user_id FROM crm_user
         WHERE real_nm = #{userName} AND TEL = #{tel}
+    </select>
+    
+    <select id="getUserInfo" resultMap="userMap">
+        SELECT real_nm, TEL, crm_user_id FROM crm_user
+        WHERE crm_user.crm_user_id = #{crmUserId}
     </select>
 
     <select id="queryCompany" resultMap="companyMap">
