@@ -10,12 +10,12 @@
 
     <script src="/lib/jquery-2.1.1.js"></script>
     <script src="/vue.v2.5.13.js"></script>
-    <script src="/newProject.js"></script>
+    <script src="/project/newProject.js"></script>
     <style>
         .top-bar {
             background: #ffffff;
             text-align: center;
-            padding: 10px 15px;
+            padding: 10px 10px;
         }
 
         .center-ele {
@@ -38,7 +38,7 @@
             <div class="weui-navbar" style="height: 50px">
                 <div class="weui-navbar__item">
 
-                <span class="pull-left" style="margin-top: 8px;margin-left: 8px">
+                <span class="pull-left" style="margin-top: 8px;margin-left: 8px" @click="back">
                 <img src="/images/back_icon.svg"/></span>
                     <span class="center-ele" style="font-size: 20px;text-align: center;padding-bottom: 8px">新建项目</span>
                     <div style="float:right;height:40px;">
