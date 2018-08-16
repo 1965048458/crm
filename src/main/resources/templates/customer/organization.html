@@ -120,7 +120,15 @@
             <div style="padding-top: 130px" >
                 <div v-show="showOrganization">
                     <div class="customer-item">
-                        <customer v-for="customer in customerList" :customer="customer"></customer>
+                        <div v-if="customerList.length != 0">
+                            <customer v-for="customer in customerList" :customer="customer"></customer>
+                        </div>
+                        <div v-else>
+                            <img src="/images/customer/开发中.svg">
+                            <h1>还未添加任何客户！！</h1>
+                        </div>
+
+
                     </div>
                 </div>
 

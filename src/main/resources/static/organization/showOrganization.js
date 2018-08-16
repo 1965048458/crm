@@ -37,11 +37,6 @@ jQuery(document).ready(function () {
             searchWord:'',
         },
         methods: {
-            goto:function () {
-                var offset = $('#二级专业').offset().top - $(document).scrollTop();
-                window.scrollBy(0, offset);
-                console.log(offset);
-            },
             'init':function (customerId, customerName) {
                 this.customerId=customerId;
                 this.customerName=customerName;
