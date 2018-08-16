@@ -81,7 +81,7 @@ jQuery(document).ready(function () {
             'switch2OrganizationInfoPage':function () {
                 $('#organizationInfoBtn').attr("class","weui-navbar__item weui-bar__item_on");
                 $('#customerInfoBtn').attr("class","weui-navbar__item");
-                this.searchOrganizations(this.customer.customerId);
+                // this.searchOrganizations(this.customer.customerId);
                 this.showPage='showCustomerOrganization';
             },
             'apply':function (name,id) {
