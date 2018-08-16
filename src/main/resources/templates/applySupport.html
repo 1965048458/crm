@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>WeUI</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css"/>
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/opportunity/applySupport.js"></script>
+    <style>
+        .plan-title {
+            background-color: #FFFFFF;
+            line-height: 1.47058824;
+            font-size: 17px;
+            overflow: hidden;
+            position: relative;
+        }
+        .weui-cells:before,.receiver-box:after, .receiver-box:before {
+            border: none;
+        }
+        .top-bar {
+            background: #ffffff;
+            text-align: center;
+            padding: 10px 15px;
+        }
+        .pull-left {
+            float: left!important;
+        }
+        .pull-right {
+            float: right!important;
+        }
+        .visit-type-sel{
+            background: #ffffff;
+            border-top: solid 2px #DDDDDD;
+        }
+        .receiver-box {
+            width: auto;
+            padding: 5px 15px;
+        }
+        .receiver-name {
+            font-size: 12px;
+        }
+        .addVisit-img {
+            padding: 8px 15px;
+            width: 25px;
+            height: 25px;
+        }
+    </style>
+</head>
+
+<body >
+
+<div id="applySupportVue">
+
+    <div v-show="showPage == 'mainPage'">
+        <div class="top-bar center-box" style="border: hidden">
+            <span @click="backToList" class="pull-left"><img src="/images/back_icon.svg" style="margin-top:3px"/></span>
+            <span class="center-ele" style="font-size: 18px; color: #101010;">申请项目支持</span>
+        </div>
+
+        <div class="weui-cells">
+            <a class="weui-cell weui-cell_access" href="javascript:;" @Click="chooseGender">
+                <div class="weui-cell__bd">
+                    <p>支持类型</p>
+                </div>
+                <div class="weui-cell__ft">未选择</div>
+            </a>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">执行者</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input  class="weui-input" style="text-align: right;" placeholder="根据支持类型由管理员配置" v-model="realName">
+                </div>
+            </div>
+            <a class="weui-cell weui-cell_access" href="javascript:;" @Click="chooseGender">
+                <div class="weui-cell__bd">
+                    <p>截止日期</p>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="date"/>
+                </div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:;" @Click="chooseGender">
+                <div class="weui-cell__bd">
+                    <p>优先级</p>
+                </div>
+                <div class="weui-cell__ft" v-text="genderString">未选择</div>
+            </a>
+        </div>
+
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell" style="padding-bottom: 0">
+                <div class="plan-title"><p>支持描述</p></div>
+            </div>
+            <div class="weui-cells weui-cells_form" style="margin-top: 0;">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" rows="5" style="font-size: 15px" placeholder="请输入对项目支持的详细描述"
+                              v-model="officeAddr"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div id="buttonDiv" style="padding:0px 15px;">
+            <a href="javascript:;" class="weui-btn weui-btn_primary">确定</a>
+        </div>
+    </div>
+
+    <div v-show="showPage=='supportTypePage'">
+
+    </div>
+
+</div>
+
+
+
+</body>
+</html>
