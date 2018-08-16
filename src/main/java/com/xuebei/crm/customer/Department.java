@@ -32,6 +32,26 @@ public class Department {
     private Boolean canUnFold = false;
     @Expose
     private Integer contactNumber = 0;
+    @Expose
+    private EnclosureApply enclosureApply;
+    @Expose
+    private String applyByOthers;
+
+    public String getApplyByOthers() {
+        return applyByOthers;
+    }
+
+    public void setApplyByOthers(String applyByOthers) {
+        this.applyByOthers = applyByOthers;
+    }
+
+    public EnclosureApply getEnclosureApply() {
+        return enclosureApply;
+    }
+
+    public void setEnclosureApply(EnclosureApply enclosureApply) {
+        this.enclosureApply = enclosureApply;
+    }
 
     public Boolean getCanUnFold() {
         return canUnFold;

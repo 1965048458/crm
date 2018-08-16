@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuebei.crm.department.DeptMapper">
+    
+    <resultMap id="deptMap" type="com.xuebei.crm.customer.Department">
+        <id property="deptId" column="customer_dept_id"/>
+        <result property="deptName" column="department_nm"/>
+        <result property="applyByOthers" column="ap_by_others"/>
+        <association property="enclosureApply" column="com.xuebei.crm.customer.EnclosureApply">
+            <id property="enclosureApplyId" column="enclosure_applyId"/>
+            <result property="userId" column="user_id"/>
+            <result property="startTime" column="apply_start_ts"/>
+            <result property="endTime" column="apply_end_ts"/>
+            <result property="statusCd" column=""/>
+            <result property="updateTime" column="update_ts"/>
+            <result property="enclosureByOthers" column="en_by_others"/>
+            <result property="applyByOthers" column="ap_by_others"/>
+        </association>
+    </resultMap>
+
+    <select id="searchDepts" resultMap="deptMap">
+        select r2.* from
+            (select r.* from
+                (select d.*, a.update_ts,a.status_cd,a.user_id,a.apply_start_ts, a.apply_end_ts,
+                     (select count(*) from enclosure_apply b
+                     where b.customer_dept_id = d.customer_dept_id
+                           and b.user_id != #{userId}
+                           and status_cd = "permitted") as en_by_others,
+                     (select count(*) from enclosure_apply b
+                     where b.customer_dept_id = d.customer_dept_id
+                           and b.user_id != #{userId}
+                           and status_cd = "applying") as ap_by_others
+                 from customer_dept d
+                     inner join enclosure_apply a on d.customer_dept_id = a.customer_dept_id
+                 where d.customer_id= #{customerId}
+                       and a.user_id = #{userId}
+                 order by a.update_ts desc) as r
+            group by r.customer_dept_id) as r2
+        where r2.en_by_others=0;
+    </select>
+
+    <select id="searchOthersDepts" resultMap="deptMap">
+        select r1.* from
+            (select a.department_nm,a.customer_id,b.*
+             from customer_dept as a
+                 inner join enclosure_apply as b on a.customer_dept_id = b.customer_dept_id
+             where (b.status_cd = 'permitted' or b.status_cd = 'applying')
+                   and a.customer_id = #{customerId}
+                   and b.user_id != #{userId}
+             order by b.update_ts desc) as r1
+        group by r1.customer_dept_id,r1.user_id
+    </select>
+    
+    <select id="searchMyDepts" resultMap="deptMap">
+        select r1.* from
+            (select a.department_nm,a.customer_id,b.*
+             from customer_dept as a
+                 inner join enclosure_apply as b on a.customer_dept_id = b.customer_dept_id
+             where (b.status_cd = 'permitted' or b.status_cd = 'applying')
+                   and a.customer_id = #{customerId}
+                   and b.user_id = #{userId}
+             order by b.update_ts desc) as r1
+        group by r1.customer_dept_id,r1.user_id
+    </select>
+
+</mapper>
