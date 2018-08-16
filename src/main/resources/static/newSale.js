@@ -104,7 +104,7 @@ $(document).ready(function () {
             'checkNull':function () {
                 if( this.contactId === "" ||
                 this.saleStage === "" || this.opportunityName === "" ){
-                    alert("以下选择均不能为空");
+                    alert("以下带星号内容均为必填项！");
                     return false;
                 }else{
                     if(this.preDate === "请选择"){
@@ -144,7 +144,7 @@ $(document).ready(function () {
                         setTimeout(function () {
                             $('#toast').fadeOut(100);
                             window.location = '/opportunity';
-                        }, 2000);
+                        }, 1000);
                     } else {
                         thisVue.errMsg = result.errMsg;
                         thisVue.showErrMsg = true;
