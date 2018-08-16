@@ -319,9 +319,8 @@ public class CustomerController {
         if (userId == null) {
             return "error/404";
         }
-
         Customer customer = customerMapper.queryCustomer(customerId);
-        modelMap.addAttribute("customerId", customerId);
+        modelMap.addAttribute("customerId", customer.getCustomerId());
         modelMap.addAttribute("customerName", customer.getCustomerName());
         return "customer/organization";
     }
