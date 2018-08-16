@@ -138,8 +138,7 @@
 <script type="text/javascript">
     $(function () {
         $('.weui-navbar__item').on('click', function () {
-            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').css("border-bottom", "none");
-            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').css("color", "#999999");
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').css("border-bottom", "none").css("color", "#999999");
             $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
             $('div.weui-bar__item_on').css("border-bottom", "inset rgba(56, 164, 242, 1)").css("color", "rgba(56, 164, 242, 1)");
         });
