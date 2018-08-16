@@ -4,6 +4,7 @@ import com.xuebei.crm.user.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,4 +18,14 @@ public interface OpportunityMapper {
     void addOpportunityContact(@Param("opportunityId") Integer opportunityId, @Param("contactId") String contactId);
 
     List<Opportunity> queryOpportunity(OpportunitySearchParam opportunitySearchParam);
+
+    Opportunity opportunityDetail(String opportunityId);
+
+    String queryOpportunityCreator(String opportunityId);
+
+    void modifyOpportunity(Opportunity opportunity);
+
+    void addModificationRecord(@Param("opportunityId") int opportunityId, @Param("userId") String userId);
+
+    List<OpportunityModify> queryModifyRecord(@Param("opportunityId")int opportunityId);
 }

@@ -15,4 +15,15 @@ public interface OpportunityService
     void addOpportunityContact(Integer opportunityId,  String contactId);
 
     List<Opportunity> queryOpportunity(OpportunitySearchParam opportunitySearchParam);
+
+    Opportunity opportunityDetail(String opportunityId);
+
+    String queryOpportunityCreator(String opportunityId);
+
+    void modifyOpportunity(Opportunity opportunity);
+
+    void addModificationRecord(int opportunityId, String userId);
+
+    List<OpportunityModify> queryModifyRecord(@Param("opportunityId")int opportunityId);
+
 }

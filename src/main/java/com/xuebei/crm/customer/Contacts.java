@@ -10,6 +10,8 @@ public class Contacts {
     @Expose
     private String departmentId;
     @Expose
+    private String departmentName;
+    @Expose
     private String totalName;
 
     public String getDepartmentId() {
@@ -194,6 +196,14 @@ public class Contacts {
 
     public static String getNotFilled() {
         return NOT_FILLED;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     public String showContactsType() {

@@ -25,7 +25,6 @@ $(document).ready(function () {
             temp: '',
             contactId: '',
             content: '',
-            saleName: '',
             opportunityName: '',
             amount: '',
             customerId: '',
