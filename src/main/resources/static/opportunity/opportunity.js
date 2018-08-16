@@ -58,13 +58,13 @@ $(document).ready(function () {
             },
             'imgSrc' : function(data){
                 if(data =='A阶段'){
-                    return '/images/opportunity/Astage.svg';
+                    return '/images/opportunity/AStage.svg';
                 }else if(data =='B阶段'){
-                    return '/images/opportunity/Bstage.svg';
+                    return '/images/opportunity/BStage.svg';
                 }else if(data =='C阶段'){
-                    return '/images/opportunity/Cstage.svg';
+                    return '/images/opportunity/CStage.svg';
                 }else if(data =='D阶段'){
-                    return '/images/opportunity/Dstage.svg';
+                    return '/images/opportunity/DStage.svg';
                 }else if(data =='输单'){
                     return '/images/opportunity/loseOrder.svg';
                 }
