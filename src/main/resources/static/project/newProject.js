@@ -10,6 +10,9 @@ jQuery(document).ready(function () {
             background: '',
         },
         methods: {
+            'back':function () {
+                window.location = '/project/projectList';
+            },
             'submit':function () {
                 if(this.name ==''|| this.content =='' || this.agent ==''){
                     alert("内容填写不完整！");

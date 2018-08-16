@@ -71,7 +71,7 @@
         <div class="list">
             <div class="weui-cells">
                 <div class="weui-cell">基本信息</div>
-                <label style="margin-left: 15px"><span style="color: red">*</span>制作内容</label>
+                <label style="margin-left: 15px">制作内容</label>
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
                         <input class="weui-input" type="text" placeholder="请填写制作内容" v-model="content">
@@ -79,7 +79,7 @@
                 </div>
                 <a class="weui-cell weui-cell_access" @click="showDatePicker">
                     <div class="weui-cell__bd">
-                        <p><span style="color: red">*</span>预估挂标日期</p>
+                        <p>预估挂标日期</p>
                     </div>
                     <div class="weui-cell__ft">
                         <span v-text="preDate"></span>
@@ -87,7 +87,7 @@
                 </a>
                 <a class="weui-cell weui-cell_access" @click="deliverDatePicker">
                     <div class="weui-cell__bd">
-                        <p><span style="color: red">*</span>交付日期</p>
+                        <p>交付日期</p>
                     </div>
                     <div class="weui-cell__ft">
                         <span v-text="deliverDate"></span>
@@ -103,8 +103,7 @@
                 </a>
 
                 <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label"><span
-                            style="color: red">*</span>金额(元)</label></div>
+                    <div class="weui-cell__hd"><label class="weui-label">金额(元)</label></div>
                     <div class="weui-cell__bd">
                         <input class="weui-input" type="number" placeholder="        请输入项目金额" v-model="amount">
                     </div>

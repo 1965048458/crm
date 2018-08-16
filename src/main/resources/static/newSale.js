@@ -25,7 +25,6 @@ $(document).ready(function () {
             temp: '',
             contactId: '',
             content: '',
-            saleName: '',
             opportunityName: '',
             amount: '',
             customerId: '',
@@ -103,13 +102,19 @@ $(document).ready(function () {
                 this.showMyCustomers();
             },
             'checkNull':function () {
-                if( this.contactId === "" || this.content === "" || this.amount === "" ||
-                this.saleStage === "" || this.opportunityName === "" || this.preDate === ""
-                || this.deliverDate === "" ){
+                if( this.contactId === "" ||
+                this.saleStage === "" || this.opportunityName === "" ){
                     alert("以下选择均不能为空");
                     return false;
-                }else
+                }else{
+                    if(this.preDate === "请选择"){
+                        this.preDate = '';
+                    }
+                    if (this.deliverDate === "请选择"){
+                        this.deliverDate = '';
+                    }
                     return true;
+                }
             },
             'add': function () {
                 if (!this.checkNull()){
