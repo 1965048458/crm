@@ -243,6 +243,23 @@ $(document).ready(function () {
                 this.creatorV= this.subsName;
                 this.showPage ='opportunity';
             },
+            'detail': function(data){
+                var thisVue = this;
+                $.ajax({
+                    type: 'post',
+                    url: '/opportunity/opportunityToDetail',
+                    data:{
+                        opportunityId:data,
+                    },
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        window.location = "opportunity/detail";
+                    }
+                })
+
+            },
         },
         watch: {
             'filterCondition': function () {

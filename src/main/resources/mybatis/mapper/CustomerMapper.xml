@@ -93,6 +93,17 @@
         <result property="realName" column="real_nm"/>
     </resultMap>
 
+    <resultMap id="opportunityDetailMap" type="com.xuebei.crm.customer.Contacts">
+        <id property="contactsId" column="contacts_id"/>
+        <result property="departmentId" column="customer_dept_id"/>
+        <result property="realName" column="real_nm"/>
+        <result property="gender" column="gender"/>
+        <result property="typeName" column="type_name"/>
+        <result property="departmentName" column="department_nm"/>
+        <result property="customerName" column="customer_nm"/>
+        <result property="customerId" column="customer_id"/>
+    </resultMap>
+
     <select id="isUserHasCustomer" resultType="java.lang.Boolean">
         SELECT COUNT(company_customer.customer_id)
         FROM company_user
@@ -494,5 +505,26 @@
         FROM contacts_type
         WHERE customer_id = #{customerId} AND type_name = #{contactsTypeName};
     </select>
+    
+    <select id="queryOpportunityDetail"  resultMap="opportunityDetailMap">
+         SELECT
+            c.contacts_id,
+            c.customer_dept_id,
+            c.real_nm,
+            ct.type_name,
+            cd.department_nm,
+            cu.customer_nm,
+            cu.customer_id
+        FROM contacts c
+            LEFT JOIN customer_dept cd ON c.customer_dept_id = cd.customer_dept_id
+            LEFT JOIN contacts_type ct ON ct.contacts_type_id = c.contacts_type_id
+            LEFT JOIN crm_customer cu ON cd.customer_id = cu.customer_id
+        WHERE
+        c.customer_dept_id = (select c.customer_dept_id from contacts c where c.contacts_id =
+        (select oc.contacts_id from opportunity_contacts oc where oc.sales_opportunity_id = #{opportunityId} ))
+         and c.contacts_id = (select oc.contacts_id from opportunity_contacts oc where oc.sales_opportunity_id = #{opportunityId} )
+    </select>
+
+
 
 </mapper>

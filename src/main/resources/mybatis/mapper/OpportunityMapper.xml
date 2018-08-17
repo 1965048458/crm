@@ -10,6 +10,23 @@
         <result property="companyName" column="com_nm"/>
     </resultMap>
 
+    <resultMap id="modifyRecord" type="com.xuebei.crm.opportunity.OpportunityModify">
+        <id property="opportunityId" column="sales_opportunity_id"/>
+        <result property="opportunityName" column="opportunity_nm"/>
+        <result property="customerName" column="customer_nm"/>
+        <result property="realName" column="real_nm"/>
+        <result property="createTime" column="time_stamp"/>
+    </resultMap>
+
+    <resultMap id="visitMap" type="com.xuebei.crm.journal.VisitRecord">
+        <id property="visitId" column="visit_log_id"/>
+        <result property="journalId" column="journal_id"/>
+        <result property="visitType" column="visit_type"/>
+        <result property="updateTime" column="update_ts"/>
+        <result property="realName" column="real_nm"/>
+        <result property="visitResult" column="visit_result"/>
+    </resultMap>
+
     <resultMap id="opportunityMap" type="com.xuebei.crm.opportunity.Opportunity">
         <id property="opportunityId" column="sales_opportunity_id"/>
         <result property="customerId" column="customer_id"/>
@@ -19,6 +36,10 @@
         <result property="amount" column="amount"/>
         <result property="userId" column="user_id"/>
         <result property="create_ts" column="create_ts"/>
+        <result property="checkDate" column="check_date"/>
+        <result property="clinchDate" column="clinch_date"/>
+        <result property="updater_id" column="updater_id"/>
+        <result property="update_ts" column="update_ts"/>
 
     </resultMap>
 
@@ -54,14 +75,16 @@
     </insert>
 
     <select id="queryOpportunity" resultMap="opportunityMap">
-       SELECT  s.sales_opportunity_id,s.customer_id,c.customer_nm,s.opportunity_nm,s.sales_status,s.amount,s.user_id,s.create_ts FROM sales_opportunity s
+        SELECT
+        s.sales_opportunity_id,s.customer_id,c.customer_nm,s.opportunity_nm,s.sales_status,s.amount,s.user_id,s.create_ts
+        FROM sales_opportunity s
         LEFT JOIN crm_customer c ON c.customer_id = s.customer_id
         WHERE 1 =1
         <if test="createStart != null">
             AND s.create_ts > #{createStart}
         </if>
         <if test="createEnd != null">
-            AND s.create_ts &lt;  #{createEnd}
+            AND s.create_ts &lt; #{createEnd}
         </if>
         <if test="salesStatus != null and salesStatus != 'all'">
             AND s.sales_status = #{salesStatus}
@@ -93,7 +116,66 @@
         <if test="sortMode == 'DESC'">
             ORDER BY s.create_ts DESC
         </if>
+    </select>
 
+    <select id="opportunityDetail" resultMap="opportunityMap">
+         SELECT  s.*,c.customer_nm,cu.real_nm FROM sales_opportunity s
+        LEFT JOIN crm_customer c ON c.customer_id = s.customer_id
+        LEFT JOIN crm_user cu on cu.crm_user_id = (select cus.crm_user_id from company_user cus where cus.user_id = s.user_id)
+        WHERE s.sales_opportunity_id = #{opportunityId}
+    </select>
+
+    <select id="queryOpportunityCreator" resultType="java.lang.String">
+        select cu.real_nm  from crm_user cu where cu.crm_user_id =
+        (select cp.crm_user_id from company_user cp  where cp.user_id =
+        (select so.user_id from sales_opportunity so where
+        so.sales_opportunity_id = #{opportunityId}
+        ))
+    </select>
+
+    <insert id="modifyOpportunity" parameterType="com.xuebei.crm.opportunity.Opportunity">
+        UPDATE sales_opportunity SET
+         opportunity_nm =#{opportunityName},
+         sales_status=#{salesStatus},
+         amount = #{amount},
+         check_date=#{checkDate},
+         clinch_date =#{clinchDate},
+         content=#{content},
+         updater_id= #{userId} ,
+         update_ts= NOW()
+        WHERE sales_opportunity_id =#{opportunityId}
+    </insert>
+
+    <insert id="addModificationRecord">
+        INSERT INTO opportunity_modification_record (
+            sales_opportunity_id, user_id, real_nm, time_stamp, comment
+        ) VALUES (
+            #{opportunityId},
+            #{userId},
+            (select cu.real_nm from crm_user cu where cu.crm_user_id =(
+             select cp.crm_user_id from company_user cp where
+             cp.user_id = #{userId}
+              )),
+            NOW(),
+            NULL
+        )
+    </insert>
+
+    <select id="queryModifyRecord" resultMap="modifyRecord">
+        select om.sales_opportunity_id,so.opportunity_nm,om.real_nm,cc.customer_nm,om.time_stamp
+        from opportunity_modification_record om
+        inner join sales_opportunity so on so.sales_opportunity_id = om.sales_opportunity_id
+        inner join crm_customer cc on cc.customer_id = so.customer_id
+        where om.sales_opportunity_id = #{opportunityId}
+    </select>
+
+    <select id="queryVisitRecord" resultMap="visitMap">
+        select j.journal_id,vl.visit_log_id,j.user_id,cu.real_nm,j.update_ts,vl.visit_result,vl.visit_type
+        from journal j
+        left join visit_log  vl on j.journal_id = vl.journal_id
+        left join crm_user cu on cu.crm_user_id = (select c.crm_user_id from company_user c where c.user_id =j.user_id)
+        where j.has_submitted = 1
+        and vl.sales_opportunity_id = #{opportunityId}
     </select>
 
 </mapper>

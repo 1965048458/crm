@@ -1,8 +1,12 @@
 package com.xuebei.crm.opportunity;
 
 import com.google.gson.annotations.Expose;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 
 /**
@@ -22,8 +26,10 @@ public class Opportunity {
     @Expose
     private double amount;
     @Expose
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date checkDate;
     @Expose
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date clinchDate;
     @Expose
     private double totalCoast;
@@ -36,11 +42,16 @@ public class Opportunity {
     @Expose
     private List<String> subUserId;
     @Expose
-    private String create_ts;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date create_ts;
     @Expose
     private String updater_id;
     @Expose
-    private String update_ts;
+    private Date update_ts;
+    @Expose
+    private String checkDateString;
+    @Expose
+    private String clinchDateString;
 
     public String getUpdater_id() {
         return updater_id;
@@ -50,13 +61,7 @@ public class Opportunity {
         this.updater_id = updater_id;
     }
 
-    public String getUpdate_ts() {
-        return update_ts;
-    }
 
-    public void setUpdate_ts(String update_ts) {
-        this.update_ts = update_ts;
-    }
 
     public String getCustomerName() {
         return customerName;
@@ -162,11 +167,37 @@ public class Opportunity {
         this.totalCoast = totalCoast;
     }
 
-    public String getCreate_ts() {
+    public Date getCreate_ts() {
         return create_ts;
     }
 
-    public void setCreate_ts(String create_ts) {
+    public void setCreate_ts(Date create_ts) {
         this.create_ts = create_ts;
+    }
+
+    public Date getUpdate_ts() {
+        return update_ts;
+    }
+
+    public void setUpdate_ts(Date update_ts) {
+        this.update_ts = update_ts;
+    }
+
+    public String getCheckDateString() {
+        SimpleDateFormat builder = new SimpleDateFormat("yyyy-MM-dd");
+        return builder.format(this.checkDate);
+    }
+
+    public void setCheckDateString(String checkDateString) {
+       this.checkDateString = checkDateString;
+    }
+
+    public String getClinchDateString() {
+        SimpleDateFormat builder = new SimpleDateFormat("yyyy-MM-dd");
+        return builder.format(this.clinchDate);
+    }
+
+    public void setClinchDateString(String clinchDateString) {
+        this.clinchDateString = clinchDateString;
     }
 }
