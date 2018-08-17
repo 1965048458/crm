@@ -93,7 +93,26 @@
                 </div>
 
                 <div class="weui-tab__panel" style="padding-top: 82px; background: #FFFFFF;">
-                    <div class="projectList weui-panel weui-panel_access" v-for="project in projectList">
+                    <div class="weui-search-bar" id="searchBar" v-show="searchBar" style="display: none;">
+                        <div class="weui-search-bar__form">
+                            <div class="weui-search-bar__box">
+                                <i class="weui-icon-search"></i>
+                                <input type="text" class="weui-search-bar__input" id="searchInput"
+                                       placeholder="搜索" v-model="keyWord">
+                                <a href="javascript:" class="weui-icon-clear" id="searchClear"
+                                   @click="clear"></a>
+                            </div>
+                            <label class="weui-search-bar__label" id="searchText" @click="text"
+                                   style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                                <i class="weui-icon-search"></i>
+                                <span>搜索</span>
+                            </label>
+                        </div>
+                        <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel"
+                           @click="cancel">取消</a>
+                    </div>
+
+                    <div class="projectList weui-panel weui-panel_access" v-for="project in projectList.filter(filterProject)">
                         <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
                            style="padding: 8px 10px ;">
                             <div class="weui-media-box__bd">
@@ -116,7 +135,7 @@
                     <div class="blank" style="margin:20% auto auto auto; text-align:center; "
                          v-if="projectList.length === 0">
                         <p>
-                            <img src="/images/project/项目空.svg"/>
+                            <img src="/images/project/no_project.svg"/>
                         </p>
                         <p style="color: #CCCCCC; font-size: small">还没有项目，快去添加吧</p>
                     </div>
@@ -221,7 +240,7 @@
                             <span class="weui-icon-checked"></span>
                         </div>
                     </label>
-                    <label class="weui-cell weui-check__label" @click="creatorChecked1">
+                    <label class="weui-cell weui-check__label" @click="creatorChecked">
                         <div class="weui-cell__bd">
                             <p style="font-size: 14px;color: #101010;">我</p>
                         </div>
@@ -232,7 +251,7 @@
                             <span class="weui-icon-checked"></span>
                         </div>
                     </label>
-                    <label class="weui-cell weui-check__label" @click="creatorChecked2">
+                    <label class="weui-cell weui-check__label" @click="creatorChecked">
                         <div class="weui-cell__bd">
                             <p style="font-size: 14px;color: #101010;">我的下属</p>
                         </div>

@@ -3,6 +3,8 @@ $(document).ready(function () {
         el: '#projectVue',
         data: {
             showPage: 'projectList',
+            searchBar: false,
+            keyWord: '',
             stages: ['未开始', '未交付', '交付及回款', '已结束'],
             filterPage: false,
             filterCondition: '',
@@ -28,7 +30,7 @@ $(document).ready(function () {
                 $.ajax({
                     type: 'get',
                     url: '/opportunity/queryOpportunity',
-                    data:data,
+                    data: data,
                     dataType: 'json',
                     cache: false
                 }).done(function (result) {
@@ -47,9 +49,33 @@ $(document).ready(function () {
                 window.location = '/project/new';
             },
             'search': function () {
-                //
+                this.imgFilter = '/images/opportunity/筛选未选中.svg';
+                this.filterPage = false;
+                this.filterCondition = '';
+                this.searchBar = !this.searchBar;
+            },
+            'filterProject':function (project) {
+                return project.projectName.indexOf(this.keyWord) != -1;
+            },
+            'text': function () {
+                $('#searchBar').addClass('weui-search-bar_focusing');
+                //$('#searchText').focus();
+            },
+            'cancelSearch': function () {
+                this.keyWord = "";
+                $('#searchBar').removeClass('weui-search-bar_focusing');
+            },
+            'clear': function () {
+                this.keyWord = "";
+                $('#searchInput').focus();
+            },
+            'cancel': function () {
+                this.cancelSearch();
+                $('#searchInput').blur();
+                this.searchBar = false;
             },
             'filter': function () {
+                this.searchBar = false;
                 this.imgFilter = "/images/opportunity/筛选已选中.svg";
                 this.filterPage = true;
                 this.filterCondition = 'creator';
@@ -94,16 +120,6 @@ $(document).ready(function () {
                 this.subUser = '';
                 this.tempSub = [];
             },
-            'creatorChecked1': function () {
-                this.creatorV = '';
-                this.subUser = '';
-                this.tempSub = [];
-            },
-            'creatorChecked2': function () {
-                this.creatorV = '';
-                this.subUser = '';
-                this.tempSub = [];
-            },
             'customerChecked': function () {
                 this.customerValueIn = '';
             },
@@ -130,12 +146,12 @@ $(document).ready(function () {
             },
             'finish': function () {
                 this.filterPage = false;
-                this.imgFilter ='/images/opportunity/筛选未选中.svg';
+                this.imgFilter = '/images/opportunity/筛选未选中.svg';
                 this.filterCondition = '';
                 var data = {
                     userId: this.creatorValue,
                     subUser: this.subUser,
-                    customerName:this.customerValueIn,
+                    customerName: this.customerValueIn,
                     createStart: this.dateValueStart,
                     createEnd: this.dateValueEnd,
                     salesStatus: this.stageValue,
@@ -151,9 +167,9 @@ $(document).ready(function () {
                 this.dateValueStart = '';
                 this.dateValueEnd = '';
                 this.creatorV = '';
-                this.customerValueIn='';
-                this.subUser ='';
-                this.tempSub =[];
+                this.customerValueIn = '';
+                this.subUser = '';
+                this.tempSub = [];
             },
             'submit': function () {
                 this.subUserId = [];
