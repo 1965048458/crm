@@ -3,7 +3,7 @@ $(document).ready(function () {
         el: '#projectVue',
         data: {
             showPage: 'projectList',
-            imgFilter: '/images/opportunity/筛选未选中.svg',
+            imgFilter: '/images/opportunity/filterUnchecked.svg',
             projectList: []
         },
         methods: {
@@ -17,16 +17,16 @@ $(document).ready(function () {
                 //
             },
             'filter':function () {
-                this.imgFilter = "/images/opportunity/筛选已选中.svg";
+                this.imgFilter = "/images/opportunity/filterChecked.svg";
             },
             'all':function () {
-                this.imgFilter = '/images/opportunity/筛选未选中.svg';
+                this.imgFilter = '/images/opportunity/filterUnchecked.svg';
             },
             'before':function () {
-                this.imgFilter = '/images/opportunity/筛选未选中.svg';
+                this.imgFilter = '/images/opportunity/filterUnchecked.svg';
             },
             'after':function () {
-                this.imgFilter = '/images/opportunity/筛选未选中.svg';
+                this.imgFilter = '/images/opportunity/filterUnchecked.svg';
             }
         }
     });
