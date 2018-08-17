@@ -1,6 +1,17 @@
 /**
  * Created by Administrator on 2018/7/17.
  */
+function handleTime(time) {
+    if (time < 10)
+        return "0" + time;
+    else
+        return time;
+}
+var TYPE_NAMES = {
+    'VISIT': '日常拜访',
+    'OFFLINE': '线下拜访',
+    'PHONE': '电话拜访'
+};
 
 $(document).ready(function () {
 
@@ -14,7 +25,7 @@ $(document).ready(function () {
             showPage: 'opportunity',
             filterCondition: '',
             filterValue: '',
-            sortMode:'ASC',
+            sortMode: 'ASC',
             sceneValue: 'all',
             dateValue: 'all',
             dateValueStart: '',
@@ -24,12 +35,12 @@ $(document).ready(function () {
             stageValue: 'all',
             customerValue: 'all',
             customerValueIn: '',
-            opportunityList:'',
+            opportunityList: '',
             subMemberList: [],
-            tempSub:[],
-            subUserId:[],
-            subsName:[],
-            subUser:'',
+            tempSub: [],
+            subUserId: [],
+            subsName: [],
+            subUser: '',
 
             titleBar: true,
             searchCustomer: true,
@@ -37,7 +48,31 @@ $(document).ready(function () {
             searchWord: '',
             errMsg: undefined,
 
-            showNull:'',
+            showNull: '',
+
+
+            show: 'home',
+            showDetailPage: 'detailPage',
+            opportunity: '',
+            contact: '',
+            currentOppoId: '',
+
+            ind: ['A', 'B', 'C', 'D'],
+            stages: ['拿到老师手机及微信号', '提交方案', '以我方提供参数挂标', '中标'],
+            preDate: '请选择',
+            deliverDate: '请选择',
+            saleStage: '请选择',
+            selStage: '',
+            content: '',
+            opportunityName: '',
+            amount: '',
+
+            creatorName: '',
+
+            modifyRecord: '',
+            visitRecords: '',
+
+            opportunityId: '',
 
         },
         methods: {
@@ -46,16 +81,16 @@ $(document).ready(function () {
                 $.ajax({
                     type: 'get',
                     url: '/opportunity/queryOpportunity',
-                    data:data,
+                    data: data,
                     dataType: 'json',
                     cache: false
                 }).done(function (result) {
                     if (result.successFlg) {
                         thisVue.$set(thisVue, 'opportunityList', result.opportunityList);
-                        if(result.opportunityList == null || result.opportunityList ==''){
+                        if (result.opportunityList == null || result.opportunityList == '') {
                             thisVue.showNull = 'null';
-                        }else{
-                            thisVue.showNull ='';
+                        } else {
+                            thisVue.showNull = '';
                         }
                     } else {
                         thisVue.errMsg = result.errMsg;
@@ -63,20 +98,20 @@ $(document).ready(function () {
                     }
                 })
             },
-            'imgSrc' : function(data){
-                if(data =='A阶段'){
+            'imgSrc': function (data) {
+                if (data == 'A阶段') {
                     return '/images/opportunity/AStage.svg';
-                }else if(data =='B阶段'){
+                } else if (data == 'B阶段') {
                     return '/images/opportunity/BStage.svg';
-                }else if(data =='C阶段'){
+                } else if (data == 'C阶段') {
                     return '/images/opportunity/CStage.svg';
-                }else if(data =='D阶段'){
+                } else if (data == 'D阶段') {
                     return '/images/opportunity/DStage.svg';
-                }else if(data =='输单'){
+                } else if (data == '输单') {
                     return '/images/opportunity/loseOrder.svg';
                 }
             },
-            'add':function () {
+            'add': function () {
                 window.location = "/opportunity/newSale";
             },
             'sort': function () {
@@ -93,24 +128,24 @@ $(document).ready(function () {
                     this.imgSort = "/images/opportunity/sortUnchecked.svg";
                 }
             },
-            'sortAsc': function(){
+            'sortAsc': function () {
                 var data = {
-                    sortMode:'ASC',
+                    sortMode: 'ASC',
                     userId: this.creatorValue,
                     subUser: this.subUser,
-                    customerName:this.customerValueIn,
+                    customerName: this.customerValueIn,
                     createStart: this.dateValueStart,
                     createEnd: this.dateValueEnd,
                     salesStatus: this.stageValue,
                 };
                 this.showResult(data);
             },
-            'sortDesc': function(){
+            'sortDesc': function () {
                 var data = {
-                    sortMode:'DESC',
+                    sortMode: 'DESC',
                     userId: this.creatorValue,
                     subUser: this.subUser,
-                    customerName:this.customerValueIn,
+                    customerName: this.customerValueIn,
                     createStart: this.dateValueStart,
                     createEnd: this.dateValueEnd,
                     salesStatus: this.stageValue,
@@ -181,17 +216,17 @@ $(document).ready(function () {
             'creatorChecked': function () {
                 this.creatorV = '';
                 this.subUser = '';
-                this.tempSub =[];
+                this.tempSub = [];
             },
             'creatorChecked1': function () {
                 this.creatorV = '';
-                this.subUser ='';
-                this.tempSub =[];
+                this.subUser = '';
+                this.tempSub = [];
             },
             'creatorChecked2': function () {
                 this.creatorV = '';
                 this.subUser = '';
-                this.tempSub =[];
+                this.tempSub = [];
             },
             'dateChecked': function () {
                 this.dateValueStart = '';
@@ -202,13 +237,13 @@ $(document).ready(function () {
             },
             'finish': function () {
                 this.showFilterPage = false;
-                this.imgFilter ='/images/opportunity/filterUnchecked.svg';
+                this.imgFilter = '/images/opportunity/filterUnchecked.svg';
                 this.filterCondition = '';
                 var data = {
-                    sortMode:this.sortMode,
+                    sortMode: this.sortMode,
                     userId: this.creatorValue,
                     subUser: this.subUser,
-                    customerName:this.customerValueIn,
+                    customerName: this.customerValueIn,
                     createStart: this.dateValueStart,
                     createEnd: this.dateValueEnd,
                     salesStatus: this.stageValue,
@@ -225,15 +260,15 @@ $(document).ready(function () {
                 this.dateValueStart = '';
                 this.dateValueEnd = '';
                 this.creatorV = '';
-                this.customerValueIn='';
-                this.subUser ='';
-                this.tempSub =[];
+                this.customerValueIn = '';
+                this.subUser = '';
+                this.tempSub = [];
             },
-            'backToFilter': function(){
-                this.showPage ='opportunity';
-                this.tempSub =[];
+            'backToFilter': function () {
+                this.showPage = 'opportunity';
+                this.tempSub = [];
             },
-            'submit': function(){
+            'submit': function () {
                 this.subUserId = [];
                 this.subsName = [];
 
@@ -243,30 +278,193 @@ $(document).ready(function () {
                     this.subsName[i] = str[1];
                 }
                 var tempId = '';
-                for(var i = 0; i < this.subUserId.length; i++){
+                for (var i = 0; i < this.subUserId.length; i++) {
                     tempId += this.subUserId[i] + ',';
                 }
                 this.subUser = tempId;
-                this.creatorV= this.subsName;
-                this.showPage ='opportunity';
+                this.creatorV = this.subsName;
+                this.showPage = 'opportunity';
             },
-            'detail': function(data){
+            'detail': function (data) {
+                var thisVue = this;
+                thisVue.opportunityId = data;
+                thisVue.showDetailResult();
+                thisVue.showPage = 'toDetail';
+            },
+
+
+            'showDetailResult': function () {
                 var thisVue = this;
                 $.ajax({
-                    type: 'post',
-                    url: '/opportunity/opportunityToDetail',
+                    type: 'get',
+                    url: '/opportunity/opportunityDetail',
                     data:{
-                        opportunityId:data,
+                        opportunityId:thisVue.opportunityId,
                     },
                     dataType: 'json',
                     cache: false
                 }).done(function (result) {
                     if (result.successFlg) {
-                        window.location = "opportunity/detail";
+                        thisVue.$set(thisVue, 'opportunity', result.opportunity);
+                        thisVue.$set(thisVue, 'currentOppoId', result.opportunityId);
+                        thisVue.$set(thisVue, 'creatorName', result.creatorName);
+                        if (result.contact != null) {
+                            thisVue.$set(thisVue, 'contact', result.contact);
+                        }
                     }
                 })
+            },
+            'detailShow': function () {
+                $("#detailBox").css('border-bottom', 'solid 2px #38A4F2');
+                $("#detail").css('color', '#38A4F2');
+                $("#relevantBox").removeAttr("style");
+                $("#relevant").css('color', 'black');
+                $("#modifBox").removeAttr("style");
+                $("#modif").css('color', 'black');
+                this.showDetailPage = 'detailPage';
+            },
+            'relevant': function () {
+                $("#relevantBox").css('border-bottom', 'solid 2px #38A4F2');
+                $("#relevant").css('color', '#38A4F2');
+                $("#detailBox").removeAttr("style");
+                $("#detail").css('color', 'black');
+                $("#modifBox").removeAttr("style");
+                $("#modif").css('color', 'black');
+                var thisVue = this;
+                $.ajax({
+                    type: 'post',
+                    url: '/opportunity/opportunityVisitRecord',
+                    data: {
+                        opportunityId: thisVue.opportunity.opportunityId,
+                    },
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        thisVue.$set(thisVue, 'visitRecords', result.visitRecords);
+                        thisVue.showDetailPage = 'relevantPage';
+                    }
+                })
+            },
+            'visitType': function (type) {
+                return TYPE_NAMES[type];
+            },
+            'modification': function () {
+                $("#modifBox").css('border-bottom', 'solid 2px #38A4F2');
+                $("#modif").css('color', '#38A4F2');
+                $("#relevantBox").removeAttr("style");
+                $("#relevant").css('color', 'black');
+                $("#detailBox").removeAttr("style");
+                $("#detail").css('color', 'black');
+                var thisVue = this;
+                $.ajax({
+                    type: 'post',
+                    url: '/opportunity/modificationRecord',
+                    data: {
+                        opportunityId: thisVue.opportunity.opportunityId,
+                    },
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        thisVue.$set(thisVue, 'modifyRecord', result.modificationRecord);
+                        thisVue.showDetailPage = 'modifPage';
+                    }
+                })
+            },
+            'back': function () {
+                this.showPage = 'opportunity';
+            },
+            'modif': function () {
+                this.show = 'modif';
+                this.preDate = this.opportunity.checkDateString;
+                this.deliverDate = this.opportunity.clinchDateString;
+                this.saleStage = this.opportunity.salesStatus;
+                this.content = this.opportunity.content;
+                this.opportunityName = this.opportunity.opportunityName;
+                this.amount = this.opportunity.amount;
+            },
+            'modifBack': function () {
+                this.show = 'home';
+            },
+            'detailSubmit': function () {
+                var thisVue = this;
+                var postData = {
+                    opportunityId: thisVue.opportunity.opportunityId,
+                    opportunityName: this.opportunityName,
+                    salesStatus: this.saleStage,
+                    amount: this.amount,
+                    checkDate: this.preDate,
+                    clinchDate: this.deliverDate,
+                    content: this.content,
+                };
+                $.ajax({
+                    type: 'post',
+                    url: '/opportunity/modification',
+                    data: JSON.stringify(postData),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        $('#toast').fadeIn(100);
+                        setTimeout(function () {
+                            $('#toast').fadeOut(100);
+                            thisVue.showDetailResult();
+                            thisVue.show = 'home';
+                        }, 1000);
+                    }
+                });
 
             },
+            'showDatePicker': function () {
+                var thisVue = this;
+                const nowDate = new Date();
+                weui.datePicker({
+                    start: 1990,
+                    end: 2030,
+                    defaultValue: [nowDate.getFullYear(), nowDate.getMonth() + 1, nowDate.getDate()],
+                    onChange: function (result) {
+                        console.log(result);
+                    },
+                    onConfirm: function (result) {
+                        thisVue.preDate = result[0] + '-' + handleTime(result[1]) + '-' + handleTime(result[2]);
+                        console.log(result);
+                    }
+                });
+            },
+            'deliverDatePicker': function () {
+                var thisVue = this;
+                const nowDate = new Date();
+                weui.datePicker({
+                    start: 1990,
+                    end: 2030,
+                    defaultValue: [nowDate.getFullYear(), nowDate.getMonth() + 1, nowDate.getDate()],
+                    onChange: function (result) {
+                        console.log(result);
+                    },
+                    onConfirm: function (result) {
+                        thisVue.deliverDate = result[0] + '-' + handleTime(result[1]) + '-' + handleTime(result[2]);
+                        console.log(result);
+                    }
+                });
+            },
+            'selSaleStage': function () {
+                this.show = 'saleStage';
+            },
+            'chooseBack': function () {
+                this.show = 'modif';
+            },
+            'done1': function () {
+                if (this.selStage === "") {
+                    alert("销售阶段不能为空！");
+                    return;
+                }
+                this.saleStage = this.selStage;
+                this.show = 'modif';
+            },
+
+
         },
         watch: {
             'filterCondition': function () {
@@ -286,6 +484,8 @@ $(document).ready(function () {
                     this.creatorValue = '';
                 }
             },
+
+
         }
     });
     opportunityVue.showResult();

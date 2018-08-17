@@ -16,7 +16,7 @@ $(document).ready(function () {
         el: '#opportunityDetailVue',
         data: {
             show: 'home',
-            showPage: 'detailPage',
+            showDetailPage: 'detailPage',
             opportunity: '',
             contact: '',
             currentOppoId: '',
@@ -37,7 +37,7 @@ $(document).ready(function () {
             visitRecords:'',
         },
         methods: {
-            'showResult': function () {
+            'showDetailResult': function () {
                 var thisVue = this;
                 $.ajax({
                     type: 'get',
@@ -55,14 +55,14 @@ $(document).ready(function () {
                     }
                 })
             },
-            'detail': function () {
+            'detailShow': function () {
                 $("#detailBox").css('border-bottom', 'solid 2px #38A4F2');
                 $("#detail").css('color', '#38A4F2');
                 $("#relevantBox").removeAttr("style");
                 $("#relevant").css('color', 'black');
                 $("#modifBox").removeAttr("style");
                 $("#modif").css('color', 'black');
-                this.showPage = 'detailPage';
+                this.showDetailPage = 'detailPage';
             },
             'relevant': function () {
                 $("#relevantBox").css('border-bottom', 'solid 2px #38A4F2');
@@ -83,7 +83,7 @@ $(document).ready(function () {
                 }).done(function (result) {
                     if (result.successFlg) {
                         thisVue.$set(thisVue, 'visitRecords', result.visitRecords);
-                        thisVue.showPage = 'relevantPage';
+                        thisVue.showDetailPage = 'relevantPage';
                     }
                 })
             },
@@ -109,7 +109,7 @@ $(document).ready(function () {
                 }).done(function (result) {
                     if (result.successFlg) {
                         thisVue.$set(thisVue, 'modifyRecord', result.modificationRecord);
-                        thisVue.showPage = 'modifPage';
+                        thisVue.showDetailPage = 'modifPage';
                     }
                 })
             },
@@ -128,7 +128,7 @@ $(document).ready(function () {
             'modifBack': function () {
                 this.show = 'home';
             },
-            'submit': function () {
+            'detailSubmit': function () {
                 var thisVue = this;
                 var postData = {
                     opportunityId:thisVue.opportunity.opportunityId,
@@ -151,7 +151,7 @@ $(document).ready(function () {
                         $('#toast').fadeIn(100);
                         setTimeout(function () {
                             $('#toast').fadeOut(100);
-                            thisVue.showResult();
+                            thisVue.showDetailResult();
                             thisVue.show = 'home';
                         }, 1000);
                     }
@@ -214,6 +214,6 @@ $(document).ready(function () {
             },
         }
     });
-    opportunityDetailVue.showResult();
+    opportunityDetailVue.showDetailResult();
 
 });
