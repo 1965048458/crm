@@ -1,7 +1,10 @@
 package com.xuebei.crm.opportunity;
 
+import com.xuebei.crm.customer.Contacts;
 import com.xuebei.crm.customer.Customer;
+import com.xuebei.crm.customer.CustomerServiceImpl;
 import com.xuebei.crm.dto.GsonView;
+import com.xuebei.crm.journal.VisitRecord;
 import com.xuebei.crm.member.Member;
 import com.xuebei.crm.member.MemberServiceImpl;
 import com.xuebei.crm.user.User;
