@@ -3,6 +3,8 @@ $(document).ready(function () {
         el: '#projectVue',
         data: {
             showPage: 'projectList',
+            imgFilter: '/images/opportunity/filterUnchecked.svg',
+            projectList: []
             searchBar: false,
             keyWord: '',
             stages: ['未开始', '未交付', '交付及回款', '已结束'],
@@ -74,22 +76,30 @@ $(document).ready(function () {
                 $('#searchInput').blur();
                 this.searchBar = false;
             },
+            'filter':function () {
+                this.imgFilter = "/images/opportunity/filterChecked.svg";
             'filter': function () {
                 this.searchBar = false;
                 this.imgFilter = "/images/opportunity/筛选已选中.svg";
                 this.filterPage = true;
                 this.filterCondition = 'creator';
             },
+            'all':function () {
+                this.imgFilter = '/images/opportunity/filterUnchecked.svg';
             'all': function () {
                 this.imgFilter = '/images/opportunity/筛选未选中.svg';
                 this.filterPage = false;
                 this.filterCondition = '';
             },
+            'before':function () {
+                this.imgFilter = '/images/opportunity/filterUnchecked.svg';
             'before': function () {
                 this.imgFilter = '/images/opportunity/筛选未选中.svg';
                 this.filterPage = false;
                 this.filterCondition = '';
             },
+            'after':function () {
+                this.imgFilter = '/images/opportunity/filterUnchecked.svg';
             'after': function () {
                 this.imgFilter = '/images/opportunity/筛选未选中.svg';
                 this.filterPage = false;
