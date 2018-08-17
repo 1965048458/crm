@@ -165,7 +165,17 @@ public class JournalController {
 
         try {
             if (journalId == null) {
-                Journal journal = journalMapper.findJournalDraft(acquireUserId(request));
+                List<Journal> journalList = journalMapper.findJournalDraft(acquireUserId(request));
+                Journal journal = null;
+                if (journalList.size() > 1) {
+                    int size = journalList.size();
+                    for (int i = 0; i < size-1; i++) {
+                        String id = journalList.get(i).getJournalId();
+                        journalService.deleteJournalById(acquireUserId(request), id);
+                    }
+                }
+                if (journalList.size() > 0)
+                    journal = journalList.get(journalList.size() - 1);
                 if (journal != null) {
                     modelMap.addAttribute("journalType", journal.getType());
                     modelMap.addAttribute("journalId", journal.getJournalId());

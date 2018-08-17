@@ -115,4 +115,12 @@ public class OpportunityController {
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }
+
+    @RequestMapping("applySupport")
+    public String applySupport(ModelMap modelMap) {
+        SupportTypeEnum[] supportTypes = SupportTypeEnum.values();
+        modelMap.addAttribute("supportTypes", supportTypes);
+
+        return "applySupport";
+    }
 }
