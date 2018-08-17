@@ -78,6 +78,9 @@
         SELECT
         s.sales_opportunity_id,s.customer_id,c.customer_nm,s.opportunity_nm,s.sales_status,s.amount,s.user_id,s.create_ts
         FROM sales_opportunity s
+        inner join company_user cu on cu.user_id in(select cu.user_id from company_user cu where cu.company_id =
+        (select cu.company_id from company_user cu where cu.user_id =#{scene})
+        ) and cu.user_id = s.user_id
         LEFT JOIN crm_customer c ON c.customer_id = s.customer_id
         WHERE 1 =1
         <if test="createStart != null">

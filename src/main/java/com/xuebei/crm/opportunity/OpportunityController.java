@@ -80,6 +80,7 @@ public class OpportunityController {
     public GsonView queryOpportunity(OpportunitySearchParam opportunitySearchParam,
                                      HttpServletRequest request) {
         String userId = (String) request.getSession().getAttribute("userId");
+        opportunitySearchParam.setScene(userId);
         GsonView gsonView = new GsonView();
         if (opportunitySearchParam.getUserId() != null && !opportunitySearchParam.getUserId().equals("")) {
             if (opportunitySearchParam.getUserId().equals("mine")) {
