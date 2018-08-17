@@ -261,9 +261,6 @@ $(document).ready(function () {
                 if (this.creatorV != '') {
                     this.creatorValue = '';
                 }
-                //  else {
-                //     this.creatorValue = 'all';
-                // }
             },
         }
     });
