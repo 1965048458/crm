@@ -34,7 +34,7 @@ jQuery(document).ready(function () {
             deptList:'',
             errMsg:'',
             searchList:[],
-            searchWord:''
+            searchWord:'',
         },
         methods: {
             'init':function (customerId, customerName) {
@@ -45,7 +45,7 @@ jQuery(document).ready(function () {
                 window.location='/customer/customerList';
             },
             'toCustomerInfo':function () {
-                window.location='/customer/customerInfo?customerId='+this.customerId+'&customerName='+this.customerName;
+                window.location='/customer/customerInfo?customerId='+this.customerId;
             },
             'searchOrganizations': function () {
                 var thisVue = this;
@@ -81,7 +81,7 @@ jQuery(document).ready(function () {
             'switch2OrganizationInfoPage':function () {
                 $('#organizationInfoBtn').attr("class","weui-navbar__item weui-bar__item_on");
                 $('#customerInfoBtn').attr("class","weui-navbar__item");
-                this.searchOrganizations(this.customer.customerId);
+                // this.searchOrganizations(this.customer.customerId);
                 this.showPage='showCustomerOrganization';
             },
             'apply':function (name,id) {
@@ -145,7 +145,7 @@ jQuery(document).ready(function () {
                     type:'post',
                     url:'/customer/organization/delayApply',
                     data:{
-                        deptId:deptId,
+                        deptId:deptId
                     },
                     dataType:'json',
                     cache:false
@@ -170,14 +170,18 @@ jQuery(document).ready(function () {
                 this.showDelayApplyErrDialog = false;
                 this.showPage = 'showCustomerOrganization';
             },
+
+            /**
+             * 搜索
+             * */
             search:function () {
                 console.log(this.searchWord);
-                //var target = this.searchWord
                 var target  = "#" + this.searchWord;
+                var offset = $(target).offset().top - jQuery(document).scrollTop();
+                window.scrollBy(0, offset);
+                console.log(offset);
                 this.showOrganization = true;
-
                 this.cancelSearch();
-                jQuery(target).HoverTreeScroll(1000);
             },
             text:function () {
                 $('#searchBar').addClass('weui-search-bar_focusing');
@@ -206,9 +210,16 @@ jQuery(document).ready(function () {
                 this.cancelSearch();
                 this.showOrganization = true;
                 $('#searchInput').blur();
-            }
-        },
-        components:{}
+            },
+            /*
+            searchDone:function (searchItem) {
+                this.clear();
+                this.cancel();
+                this.cancelSearch();
+                this.hideSearchResult();
+                console.log(searchItem);
+            }*/
+        }
     });
 
     Vue.component('customer', {

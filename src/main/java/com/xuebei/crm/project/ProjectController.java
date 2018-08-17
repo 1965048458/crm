@@ -81,4 +81,9 @@ public class ProjectController {
         return "applyProjectSupport";
     }
 
+    @RequestMapping("/projectList")
+    public String project(){
+        return "projectList";
+    }
+
 }

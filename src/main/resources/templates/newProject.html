@@ -10,12 +10,14 @@
 
     <script src="/lib/jquery-2.1.1.js"></script>
     <script src="/vue.v2.5.13.js"></script>
-    <script src="/newProject.js"></script>
+    <script src="/weui.min.js"></script>
+    <script src="/project/newProject.js"></script>
     <style>
         .top-bar {
-            background: #ffffff;
+            background: #FFFFFF;
             text-align: center;
-            padding: 10px 15px;
+            padding: 10px 10px;
+            font-size: large;
         }
 
         .center-ele {
@@ -26,19 +28,44 @@
             float: left !important;
         }
 
+        .pull-right {
+            float: right !important;
+        }
+
         .edgeButton {
             color: dodgerblue;
         }
+        .weui-cells {
+            margin-top: 0;
+            padding: 0px;
+        }
+
+        .customer-item {
+            background-color: #FFFFFF;
+            line-height: 1.47058824;
+            font-size: 17px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .usr-img {
+            position: relative;
+            margin-right: 10px;
+            padding-left: 30px;
+            width: 25px;
+            display: block;
+        }
+
     </style>
 </head>
 <body>
 <div id="newProject">
     <div class="page tabbar js_show">
-        <div class="weui-tab">
+        <div class="weui-tab" v-show="showPage === 'addProject'">
             <div class="weui-navbar" style="height: 50px">
                 <div class="weui-navbar__item">
 
-                <span class="pull-left" style="margin-top: 8px;margin-left: 8px">
+                <span class="pull-left" style="margin-top: 8px;margin-left: 8px" @click="back">
                 <img src="/images/back_icon.svg"/></span>
                     <span class="center-ele" style="font-size: 20px;text-align: center;padding-bottom: 8px">新建项目</span>
                     <div style="float:right;height:40px;">
@@ -58,7 +85,6 @@
                 <div class="weui-cell">
                     <div class="weui-cell__hd">
                         <label class="weui-label">
-
                             <label style="color: red">*</label><label>项目内容</label>
                         </label>
                     </div>
@@ -70,74 +96,74 @@
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">代理商</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="text" placeholder="请输入代理商名称(可选)" v-model="agent"/>
+                        <input class="weui-input" type="text" placeholder="请输入代理商名称(选填)" v-model="agent"/>
                     </div>
                 </div>
 
-                <a class="weui-cell weui-cell_access">
+                <a class="weui-cell weui-cell_access" @click="showDatePicker">
                     <div class="weui-cell__hd">
                         <label class="weui-label">
-
                             <label style="color: red">*</label><label>交付日期</label>
                         </label>
                     </div>
                     <div class="weui-cell__bd">
-                        &nbsp; {{person}}
+                        &nbsp;
                     </div>
-                    <div class="weui-cell__ft">请选择</div>
+                    <div class="weui-cell__ft">{{deadLine}}</div>
                 </a>
 
-                <a class="weui-cell weui-cell_access">
+                <a class="weui-cell weui-cell_access" @click="selStatus">
                     <div class="weui-cell__hd">
                         <label class="weui-label">
-
-                            <label style="color: red">*</label><label>项目状态</label>
+                            <label>项目状态</label>
                         </label>
                     </div>
                     <div class="weui-cell__bd">
-                        &nbsp; {{person}}
+                        &nbsp;
                     </div>
-                    <div class="weui-cell__ft">请选择</div>
+                    <div class="weui-cell__ft">{{status}}</div>
                 </a>
 
                 <div class="weui-cell">
                     <div class="weui-cell__hd">
                         <label class="weui-label">
-
                             <label style="color: red">*</label><label>金额(元)</label>
                         </label>
                     </div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="text" placeholder="填输入项目金额" v-model="content"/>
+                        <input class="weui-input" type="text" placeholder="填输入项目金额" v-model="amount"/>
                     </div>
                 </div>
 
 
-                <a class="weui-cell weui-cell_access">
-                    <div class="weui-cell__hd">
-                        <label class="weui-label">
-
-                            <label style="color: red">*</label><label>客户及联系人</label>
-                        </label>
-                    </div>
+                <a class="weui-cell weui-cell_access" @click="selContact">
                     <div class="weui-cell__bd">
-                        &nbsp; {{person}}
+                        <p><span style="color: red">*</span>客户及联系人</p>
+                        <p style="color: grey" v-text="contact"></p>
                     </div>
-                    <div class="weui-cell__ft">请选择</div>
+                    <div class="weui-cell__ft"></div>
                 </a>
 
                 <div class="weui-cell">
                     <div class="weui-cell__hd">
                         <label class="weui-label">
-
                             <label style="color: red">*</label><label>项目名称</label>
                         </label>
                     </div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="text" placeholder="填输入项目名称" v-model="content"/>
+                        <input class="weui-input" type="text" placeholder="填输入项目名称" v-model="name"/>
                     </div>
                 </div>
 
+                <!--BEGIN toast-->
+                <div id="toast" style="display: none;">
+                    <div class="weui-mask_transparent"></div>
+                    <div class="weui-toast">
+                        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                        <p class="weui-toast__content">新建成功</p>
+                    </div>
+                </div>
+                <!--end toast-->
 
                 <!--<div class="weui-cells__title">项目背景</div>-->
                 <!--<div class="weui-cells weui-cells_form">-->
@@ -149,25 +175,115 @@
                 <!--</div>-->
                 <!--</div>-->
 
-                <div class="weui-flex" style=" visibility: hidden">
-                    <div class="weui-flex__item">
-                        <div class="placeholder">placeholder</div>
-                    </div>
-                </div>
-                <div class="weui-flex" style=" visibility: hidden">
-                    <div class="weui-flex__item">
-                        <div class="placeholder">placeholder</div>
-                    </div>
-                </div>
-                <div class="page__bd page__bd_spacing">
-                    <div class="hb_mar_top_40">
-                        <button class="weui-btn weui-btn_primary" id=submit_btn @click="submit">立即创建</button>
-                    </div>
-                </div>
+                <!--<div class="weui-flex" style=" visibility: hidden">-->
+                    <!--<div class="weui-flex__item">-->
+                        <!--<div class="placeholder">placeholder</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="weui-flex" style=" visibility: hidden">-->
+                    <!--<div class="weui-flex__item">-->
+                        <!--<div class="placeholder">placeholder</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="page__bd page__bd_spacing">-->
+                    <!--<div class="hb_mar_top_40">-->
+                        <!--<button class="weui-btn weui-btn_primary" id=submit_btn @click="submit">立即创建</button>-->
+                    <!--</div>-->
+                <!--</div>-->
 
+            </div>
+        </div>
+
+        <div id="status" v-show="showPage === 'status'" style="display: none">
+            <div class="top-bar">
+            <span @click="backToInfo" class="pull-left">
+                <img src="/images/back_icon.svg"
+                     style="margin-top:5px;"/></span>
+                <span class="center" style="margin-top: 3px;">选择项目状态</span>
+                <span class="pull-right" style="margin-top: 0px; color: #28b3ff"
+                      @click="done1"> 完成 &nbsp; </span>
+            </div>
+            <div class="weui-cells weui-cells_radio">
+                <label class="weui-cell weui-check__label" v-for="(stage, index) in stages">
+                    <div class="weui-cell__bd">
+                        <p v-text="stage"></p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" class="weui-check"
+                               :value="stage"
+                               v-model="selStage">
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div id="customerContact" v-show="showPage === 'customerContact'" style="display: none">
+            <div class="top-bar">
+            <span @click="backToInfo" class="pull-left">
+                <img src="/images/back_icon.svg"
+                     style="margin-top:8px;"/></span>
+                <span class="center" style="margin-top: 3px;">选择客户及联系人</span>
+                <span class="pull-right" style="margin-top: 3px; color: #28b3ff"
+                      @click="done2"> 完成 &nbsp;
+            </span>
+            </div>
+            <div class="customers">
+                <div class="weui-cells" v-for="(cust, index) in myCustomers">
+                    <div class="weui-cell" @click="changeSubFold(index)">
+                        <div class="weui-cell__bd" :id="cust.customerName">
+                        <span class="pull-left" style="padding-right: 10px;">
+                            <img :src="cust.imgPath">
+                        </span>
+                            <span class="pull-left" v-text="cust.customerName"
+                                  style="padding-right: 5px;color: #333333;font-size: 16px"></span>
+                        </div>
+                    </div>
+                    <div class="customer-item" v-show="cust.showSub" style="padding-left: 20px">
+                        <customer v-for="customer in cust.contacts" :customer="customer"
+                                  v-on:transfer_value="onTransferValue"></customer>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 </body>
+
+<script type="text/x-template" id="customer">
+    <div class="weui-cells">
+        <div class="weui-cell" @click="changeSubFold()">
+            <div class="weui-cell__bd" :id="customer.deptName">
+                <span class="pull-left" style="padding-right: 10px;">
+                    <img :src="imgPath">
+                </span>
+                <span class="pull-left" v-text="customer.deptName"
+                      style="padding-right: 5px;color: #333333;font-size: 16px"></span>
+                <span class="pull-left" v-text="addNumBrackets(customer.contactNumber)"
+                      style="color: #333333;font-size: 16px"></span>
+            </div>
+        </div>
+        <div class="weui-cells weui-cells_radio" v-show="showSub">
+            <label class="weui-cell weui-check__label" v-for="contact in customer.contactsList" :id="contact.realName">
+                <div class="weui-cell__hd">
+                    <img :src="checkGender(contact.gender)" style="width: 18px;height: 19px" class="usr-img">
+                </div>
+                <div class="weui-cell__bd">
+                    <span v-text="contact.realName" style="color: #333333;font-size: 16px"></span>
+                    <span style="padding-left: 5px;color: #B2B2B2;font-size: 13px; border: solid thin;">{{contact.typeName}}</span>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check" name="radio"
+                           :value="contact.totalName" v-model="customerInfo">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <div class="weui-cells" style="padding-left: 30px">
+                <customer v-for="subCustomer in customer.departmentList" :customer="subCustomer"
+                          v-on:transfer_value="onTransferValue"></customer>
+            </div>
+        </div>
+    </div>
+</script>
 </html>

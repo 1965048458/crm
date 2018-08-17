@@ -102,13 +102,19 @@ $(document).ready(function () {
                 this.showMyCustomers();
             },
             'checkNull':function () {
-                if( this.contactId === "" || this.content === "" || this.amount === "" ||
-                this.saleStage === "" || this.opportunityName === "" || this.preDate === ""
-                || this.deliverDate === "" ){
-                    alert("以下选择均不能为空");
+                if( this.contactId === "" ||
+                this.saleStage === "" || this.opportunityName === "" ){
+                    alert("以下带星号内容均为必填项！");
                     return false;
-                }else
+                }else{
+                    if(this.preDate === "请选择"){
+                        this.preDate = '';
+                    }
+                    if (this.deliverDate === "请选择"){
+                        this.deliverDate = '';
+                    }
                     return true;
+                }
             },
             'add': function () {
                 if (!this.checkNull()){
@@ -138,7 +144,7 @@ $(document).ready(function () {
                         setTimeout(function () {
                             $('#toast').fadeOut(100);
                             window.location = '/opportunity';
-                        }, 2000);
+                        }, 1000);
                     } else {
                         thisVue.errMsg = result.errMsg;
                         thisVue.showErrMsg = true;

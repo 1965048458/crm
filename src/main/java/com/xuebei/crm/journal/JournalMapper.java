@@ -23,7 +23,7 @@ public interface JournalMapper {
     Integer deleteJournal(@Param("userId") String userId,
                           @Param("journalId") String journalId);
 
-    Journal findJournalDraft(@Param("userId") String userId);
+    List<Journal> findJournalDraft(@Param("userId") String userId);
 
     // functions for table visit_log
     Integer deleteVisitLog(@Param("journalId") String journalId);

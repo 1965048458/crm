@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>项目</title>
+
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css">
+
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/project/project.js"></script>
+
+    <style>
+        .pull-left {
+            float: left !important;
+        }
+
+        .pull-right {
+            float: right !important;
+        }
+
+        .top-bar {
+            background: #FFFFFF;
+            text-align: center;
+            padding: 7px 10px;
+            font-size: 18px;
+        }
+
+        .center-box {
+            text-align: center;
+        }
+
+        .navi-bar {
+            z-index: 9999;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="projectVue">
+    <div id="projectList" v-show="showPage === 'projectList'">
+        <div class="page tabbar js_show" style="height: 100%">
+            <div class="weui-tab">
+                <div class="navi-bar">
+                    <div class="top-bar center-box">
+                        <span @click="back" class="pull-left">
+                            <img src="/images/back_icon.svg"
+                                 style="margin-top:7px;"/></span>
+                        <span class="center" style="margin-top: 3px;">项目</span>
+                        <span style="float:right;margin-top: 6px" @click="add">&nbsp;
+                            <img src="/images/journal/添加日志.svg"/></span>
+                        <span style="float:right;margin-top: 7px;margin-right: 10px" @click="search">&nbsp;
+                            <img src="/images/search.svg"/></span>
+                    </div>
+
+                    <div class="weui-navbar" style="position: relative;height: 40px;background-color: #F9F9F9;
+                            font-size: 15px; color: #999999;">
+                        <div class="weui-navbar__item weui-bar__item_on" @click="all"
+                             style="border-bottom: inset rgba(56, 164, 242, 1); color: rgba(56, 164, 242, 1)">
+                            全部
+                        </div>
+                        <div class="weui-navbar__item" @click="before">
+                            交付前
+                        </div>
+                        <div class="weui-navbar__item" @click="after">
+                            交付后
+                        </div>
+                        <div class="weui-navbar__item" @click="filter">
+                            筛选<img :src='imgFilter'>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-tab__panel" style="padding-top: 82px; background: #FFFFFF;">
+                    <div class="projectList weui-panel weui-panel_access" v-for="project in projectList">
+                        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
+                           style="padding: 8px 10px ;">
+                            <div class="weui-media-box__bd">
+                                <label class="weui-media-box__title"
+                                       style="font-size: 15px;color: #333333; width: auto;">{{project.projectNm}}</label>
+                                <p class="weui-media-box__desc" style="font-size: 12px;color: #888888;">
+                                    {{project.customerName}}
+                                    <label class="pull-right" style="font-size: 12px;color: #101010;">
+                                        {{project.deadLine}}</label>
+                                </p>
+                                <p class="weui-media-box__desc" style="font-size: 12px;color: #A0B4BB;">
+                                    {{project.status}}
+                                    <label class="pull-right" style="font-size: 15px;color: #A0B4BB;">
+                                        {{project.amount}}元</label>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="blank" style="margin:20% auto auto auto; text-align:center; "
+                         v-if="projectList.length === 0">
+                        <p>
+                            <img src="/images/project/项目空.svg"/>
+                        </p>
+                        <p style="color: #CCCCCC; font-size: small">还没有项目，快去添加吧</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="weui-tabbar">
+            <a href="/customer/customerList" class="weui-tabbar__item">
+                <img src="/images/bottom/customer_1.svg" class="weui-tabbar__icon">
+                <p class="weui-tabbar__label">客户</p>
+            </a>
+            <a href="/opportunity" class="weui-tabbar__item">
+                <img src="/images/bottom/opportunity_1.svg" class="weui-tabbar__icon">
+                <p class="weui-tabbar__label">商机</p>
+            </a>
+            <a href="/journal/toList" class="weui-tabbar__item">
+                <img src="/images/bottom/journal_1.svg" class="weui-tabbar__icon">
+                <p class="weui-tabbar__label">日志</p>
+            </a>
+            <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
+                <img src="/images/bottom/project_2.svg" class="weui-tabbar__icon">
+                <p class="weui-tabbar__label">项目</p>
+            </a>
+            <a href="javascript:;" class="weui-tabbar__item" id="tabbarMine">
+                <img src="/images/bottom/mine_1.svg" class="weui-tabbar__icon">
+                <p class="weui-tabbar__label">我的</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script type="text/javascript">
+    $(function () {
+        $('.weui-navbar__item').on('click', function () {
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').css("border-bottom", "none").css("color", "#999999");
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+            $('div.weui-bar__item_on').css("border-bottom", "inset rgba(56, 164, 242, 1)").css("color", "rgba(56, 164, 242, 1)");
+        });
+    });
+</script>
+</html>
