@@ -4,6 +4,7 @@ import com.xuebei.crm.customer.Customer;
 import com.xuebei.crm.customer.CustomerMapper;
 import com.xuebei.crm.customer.CustomerService;
 import com.xuebei.crm.customer.Department;
+import com.xuebei.crm.journal.VisitRecord;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,5 +73,10 @@ public class OpportunityServiceImpl implements OpportunityService {
     @Override
     public List<OpportunityModify> queryModifyRecord(@Param("opportunityId") int opportunityId) {
         return opportunityMapper.queryModifyRecord(opportunityId);
+    }
+
+    @Override
+    public List<VisitRecord> queryVisitRecord(@Param("opportunityId") int opportunityId) {
+        return opportunityMapper.queryVisitRecord(opportunityId);
     }
 }

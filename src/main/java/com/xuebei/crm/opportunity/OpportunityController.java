@@ -4,6 +4,7 @@ import com.xuebei.crm.customer.Contacts;
 import com.xuebei.crm.customer.Customer;
 import com.xuebei.crm.customer.CustomerServiceImpl;
 import com.xuebei.crm.dto.GsonView;
+import com.xuebei.crm.journal.VisitRecord;
 import com.xuebei.crm.member.Member;
 import com.xuebei.crm.member.MemberServiceImpl;
 import com.xuebei.crm.user.User;
@@ -172,4 +173,17 @@ public class OpportunityController {
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }
+
+    @RequestMapping("opportunityVisitRecord")
+    public GsonView opportunityVisitRecord(@RequestParam("opportunityId")int opportunityId,
+                                       HttpServletRequest request) {
+        String userId = (String) request.getSession().getAttribute("userId");
+        List<VisitRecord> visitRecords = opportunityService.queryVisitRecord(opportunityId);
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("visitRecords",visitRecords);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
+
+
 }

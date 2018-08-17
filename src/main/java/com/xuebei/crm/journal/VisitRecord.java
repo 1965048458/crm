@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.xuebei.crm.customer.Contacts;
 import com.xuebei.crm.opportunity.Opportunity;
 
+import java.util.Date;
 import java.util.List;
 
 public class VisitRecord {
@@ -22,6 +23,11 @@ public class VisitRecord {
     private Integer opportunityId;
     @Expose
     private String opportunityName;
+
+    @Expose
+    private String realName;
+    @Expose
+    private Date updateTime;
 
     public String getVisitId() {
         return visitId;
@@ -79,4 +85,19 @@ public class VisitRecord {
         this.opportunityName = opportunityName;
     }
 
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 }

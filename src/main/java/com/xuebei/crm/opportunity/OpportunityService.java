@@ -1,6 +1,7 @@
 package com.xuebei.crm.opportunity;
 
 import com.xuebei.crm.customer.Customer;
+import com.xuebei.crm.journal.VisitRecord;
 import com.xuebei.crm.user.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,5 +26,7 @@ public interface OpportunityService
     void addModificationRecord(int opportunityId, String userId);
 
     List<OpportunityModify> queryModifyRecord(@Param("opportunityId")int opportunityId);
+
+    List<VisitRecord> queryVisitRecord(@Param("opportunityId")int opportunityId);
 
 }

@@ -18,6 +18,15 @@
         <result property="createTime" column="time_stamp"/>
     </resultMap>
 
+    <resultMap id="visitMap" type="com.xuebei.crm.journal.VisitRecord">
+        <id property="visitId" column="visit_log_id"/>
+        <result property="journalId" column="journal_id"/>
+        <result property="visitType" column="visit_type"/>
+        <result property="updateTime" column="update_ts"/>
+        <result property="realName" column="real_nm"/>
+        <result property="visitResult" column="visit_result"/>
+    </resultMap>
+
     <resultMap id="opportunityMap" type="com.xuebei.crm.opportunity.Opportunity">
         <id property="opportunityId" column="sales_opportunity_id"/>
         <result property="customerId" column="customer_id"/>
@@ -158,6 +167,15 @@
         inner join sales_opportunity so on so.sales_opportunity_id = om.sales_opportunity_id
         inner join crm_customer cc on cc.customer_id = so.customer_id
         where om.sales_opportunity_id = #{opportunityId}
+    </select>
+
+    <select id="queryVisitRecord" resultMap="visitMap">
+        select j.journal_id,vl.visit_log_id,j.user_id,cu.real_nm,j.update_ts,vl.visit_result,vl.visit_type
+        from journal j
+        left join visit_log  vl on j.journal_id = vl.journal_id
+        left join crm_user cu on cu.crm_user_id = (select c.crm_user_id from company_user c where c.user_id =j.user_id)
+        where j.has_submitted = 1
+        and vl.sales_opportunity_id = #{opportunityId}
     </select>
 
 </mapper>

@@ -246,6 +246,9 @@
 
 
                     <div id="relevantPage" v-show="showPage ==='relevantPage'">
+                        <div class="weui-footer" style="margin-top: 5px;margin-bottom: 5px">
+                            <p class="weui-footer__text">——————&nbsp; 项目支持 &nbsp;——————</p>
+                        </div>
                         <div class="weui-cells" style="font-size: small;">
                             <div class="weui-cell" style="font-weight: bold">撰写招标参数</div>
                             <div class="weui-media-box weui-media-box_text">
@@ -296,36 +299,30 @@
                         </div>
 
                         <div class="weui-cells" style="font-size: small">
-                            <div class="weui-cell" style="font-weight: bold">拜访记录</div>
-                            <div class="weui-media-box weui-media-box_text">
-                                <ul class="weui-media-box__info" style="margin-top: 0px">
-                                    <li class="weui-media-box__info__meta">何云龙</li>
-                                    <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
-                                        日常拜访
-                                    </li>
-                                    <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
-                                        今天18:25
-                                    </li>
-                                </ul>
-                                <p class="weui-media-box__desc" style="line-height: 25px">刘主任现在准备申报项目，同意我们处建设方案，已经将需求发给
-                                    ABC，并暂定下周搞定它</p>
+
+                            <div class="weui-cell" style="font-weight: bold;">拜访记录</div>
+
+                            <div v-for="record in visitRecords">
+                                <div></div>
+                                <div class="weui-media-box weui-media-box_text">
+                                    <ul class="weui-media-box__info" style="margin-top: 0px">
+                                        <li class="weui-media-box__info__meta">{{record.realName}}</li>
+                                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                                            {{visitType(record.visitType)}}
+                                        </li>
+                                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                                            {{record.updateTime}}
+                                        </li>
+                                    </ul>
+                                    <p class="weui-media-box__desc" style="line-height: 25px">{{record.visitResult}}</p>
+                                </div>
+
                             </div>
-                            <div class="weui-media-box weui-media-box_text">
-                                <ul class="weui-media-box__info" style="margin-top: 0px">
-                                    <li class="weui-media-box__info__meta">何云龙</li>
-                                    <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
-                                        电话拜访
-                                    </li>
-                                    <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
-                                        昨天15:25
-                                    </li>
-                                </ul>
-                                <p class="weui-media-box__desc" style="line-height: 25px">突然跑累了，不想干了，再见。</p>
-                            </div>
+
                             <div class="weui-panel__ft">
                                 <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
-                                    <div class="weui-cell__bd">查看全部拜访记录</div>
-                                    <span class="weui-cell__ft"></span>
+                                    <div class="weui-cell__bd">全部拜访记录</div>
+                                    <!--<span class="weui-cell__ft"></span>-->
                                 </a>
                             </div>
                         </div>
@@ -359,6 +356,16 @@
                                 <!--</div>-->
 
                             </div>
+                            <div class="weui-media-box weui-media-box_text">
+                                <ul class="weui-media-box__info" style="margin-top: 0px">
+                                    <li class="weui-media-box__info__meta">{{creatorName}}</li>
+                                    <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                                        {{opportunity.create_ts}}
+                                    </li>
+                                </ul>
+                                <p class="weui-media-box__desc" style="line-height: 25px">创建 商机 &nbsp;{{opportunity.opportunityName}}，客户&nbsp;{{opportunity.customerName}}</p>
+                            </div>
+
                             <div class="weui-panel__ft">
                                 <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
                                     <div class="weui-cell__bd">全部修改记录</div>

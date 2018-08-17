@@ -6,7 +6,11 @@ $(document).ready(function () {
         else
             return time;
     }
-
+    var TYPE_NAMES = {
+        'VISIT': '日常拜访',
+        'OFFLINE': '线下拜访',
+        'PHONE': '电话拜访'
+    };
 
     var opportunityDetailVue = new Vue({
         el: '#opportunityDetailVue',
@@ -30,6 +34,7 @@ $(document).ready(function () {
             creatorName:'',
 
             modifyRecord:'',
+            visitRecords:'',
         },
         methods: {
             'showResult': function () {
@@ -66,7 +71,24 @@ $(document).ready(function () {
                 $("#detail").css('color', 'black');
                 $("#modifBox").removeAttr("style");
                 $("#modif").css('color', 'black');
-                this.showPage = 'relevantPage';
+                var thisVue = this;
+                $.ajax({
+                    type: 'post',
+                    url: '/opportunity/opportunityVisitRecord',
+                    data: {
+                        opportunityId: thisVue.opportunity.opportunityId,
+                    },
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        thisVue.$set(thisVue, 'visitRecords', result.visitRecords);
+                        thisVue.showPage = 'relevantPage';
+                    }
+                })
+            },
+            'visitType': function (type){
+                return TYPE_NAMES[type];
             },
             'modification': function () {
                 $("#modifBox").css('border-bottom', 'solid 2px #38A4F2');
