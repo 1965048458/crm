@@ -4,13 +4,13 @@ $(document).ready(function () {
         data: {
             showPage: 'projectList',
             imgFilter: '/images/opportunity/filterUnchecked.svg',
-            projectList: []
+            projectList: [],
             searchBar: false,
             keyWord: '',
             stages: ['未开始', '未交付', '交付及回款', '已结束'],
             filterPage: false,
             filterCondition: '',
-            imgFilter: '/images/opportunity/筛选未选中.svg',
+            imgFilter: '/images/opportunity/filterUnchecked.svg',
             projectList: [],
             dateValueStart: '',
             newDate: 'all',
@@ -51,7 +51,7 @@ $(document).ready(function () {
                 window.location = '/project/new';
             },
             'search': function () {
-                this.imgFilter = '/images/opportunity/筛选未选中.svg';
+                this.imgFilter = '/images/opportunity/filterUnchecked.svg';
                 this.filterPage = false;
                 this.filterCondition = '';
                 this.searchBar = !this.searchBar;
@@ -76,32 +76,24 @@ $(document).ready(function () {
                 $('#searchInput').blur();
                 this.searchBar = false;
             },
-            'filter':function () {
-                this.imgFilter = "/images/opportunity/filterChecked.svg";
             'filter': function () {
                 this.searchBar = false;
-                this.imgFilter = "/images/opportunity/筛选已选中.svg";
+                this.imgFilter = "/images/opportunity/filterChecked.svg";
                 this.filterPage = true;
                 this.filterCondition = 'creator';
             },
-            'all':function () {
-                this.imgFilter = '/images/opportunity/filterUnchecked.svg';
             'all': function () {
-                this.imgFilter = '/images/opportunity/筛选未选中.svg';
+                this.imgFilter = '/images/opportunity/filterUnchecked.svg';
                 this.filterPage = false;
                 this.filterCondition = '';
             },
-            'before':function () {
-                this.imgFilter = '/images/opportunity/filterUnchecked.svg';
             'before': function () {
-                this.imgFilter = '/images/opportunity/筛选未选中.svg';
+                this.imgFilter = '/images/opportunity/filterUnchecked.svg';
                 this.filterPage = false;
                 this.filterCondition = '';
             },
-            'after':function () {
-                this.imgFilter = '/images/opportunity/filterUnchecked.svg';
             'after': function () {
-                this.imgFilter = '/images/opportunity/筛选未选中.svg';
+                this.imgFilter = '/images/opportunity/filterUnchecked.svg';
                 this.filterPage = false;
                 this.filterCondition = '';
             },
@@ -156,7 +148,7 @@ $(document).ready(function () {
             },
             'finish': function () {
                 this.filterPage = false;
-                this.imgFilter = '/images/opportunity/筛选未选中.svg';
+                this.imgFilter = '/images/opportunity/filterChecked.svg';
                 this.filterCondition = '';
                 var data = {
                     userId: this.creatorValue,

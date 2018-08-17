@@ -41,16 +41,24 @@
 
         .filterType {
             position: absolute;
-            top: 70px;
-            width: 100%;
+            top: 82px;
+            width: 25%;
+            height: 270px;
+            background: #F5F5F5;
             z-index: 99999;
+        }
+
+        .title{
+            background: #F5F5F5;
         }
 
         .filterDetail {
             position: absolute;
-            top: 70px;
+            top: 82px;
             left: 25%;
             width: 75%;
+            height: 270px;
+            background: #FFFFFF;
             z-index: 99999;
         }
 
@@ -144,47 +152,38 @@
         </div>
 
         <div id="filterPage" style="display: none;" v-show="filterPage">
-            <div class="weui-mask" @click="cancelMask" style="position: absolute;top: 30%;"></div>
+            <div class="weui-mask" @click="cancelMask" style="position: absolute;top: 200px;"></div>
             <div class="filterType">
                 <div class="weui-cells weui-cells_radio">
-                    <label id="creator" class="weui-cell weui-check-label" @click="selCreator">
+                    <label id="creator" class="weui-cell weui-check-label title" @click="selCreator">
                         <div class="weui-cell__bd">
                             <p style="color: #888888; font-size: 14px;">创建人</p>
                         </div>
-                        <div class="weui-cell__ft" style="display: none">
-                        </div>
                     </label>
-                    <label id="cusotmer" class="weui-cell weui-check__label" @click="selCustomer">
+                    <label id="cusotmer" class="weui-cell weui-check__label title" @click="selCustomer">
                         <div class="weui-cell__bd">
                             <p style="color: #888888; font-size: 14px;">客户名称</p>
                         </div>
-                        <div class="weui-cell__ft" style="display: none">
-                        </div>
                     </label>
-                    <label id="date" class="weui-cell weui-check__label" @click="selDate">
+                    <label id="date" class="weui-cell weui-check__label title" @click="selDate">
                         <div class="weui-cell__bd">
                             <p style="color: #888888; font-size: 14px;">创建时间</p>
                         </div>
-                        <div class="weui-cell__ft" style="display: none">
-                        </div>
                     </label>
-                    <label id="status" class="weui-cell weui-check__label" @click="selStatus">
+                    <label id="status" class="weui-cell weui-check__label title" @click="selStatus">
                         <div class="weui-cell__bd">
                             <p style="color: #888888; font-size: 14px;">项目状态</p>
                         </div>
-                        <div class="weui-cell__ft" style="display: none">
-                        </div>
                     </label>
 
-                    <div style="height: 120px;"></div>
-                    <div style="height: 0px;">
-                        <a style="float:right; margin-right: 15px" href="javascript:;" @click="finish"
-                           class="weui-btn weui-btn_mini weui-btn_primary">完成</a>
-                        <a style="float:right; position: relative;bottom: 15px;right: 15px"
-                           href="javascript:;"
-                           @click="reset"
-                           class="weui-btn weui-btn_mini weui-btn_default">重置</a>
-                    </div>
+                </div>
+            </div>
+            <div style="height: 44px; width: 100%; position: absolute; top: 352px; background: #F9F9F9; z-index: 99999;">
+                <div style="float:right;">
+                    <a style="position: relative;bottom: 8px;margin-right: 15px;"
+                       @click="reset" class="weui-btn weui-btn_mini weui-btn_default"><span style="color: rgba(61, 168, 244, 1);">重置</span></a>
+                    <a style=" right: 15px; bottom: 8px; background: #3DA8F4;" @click="finish"
+                       class="weui-btn weui-btn_mini weui-btn_default"><span style="color: #FFFFFF;">完成</span></a>
                 </div>
             </div>
         </div>
@@ -270,7 +269,6 @@
                         </div>
                         <div class="weui-cell__ft"></div>
                     </a>
-                    <div style="height: 90px"></div>
                 </div>
             </div>
         </div>
@@ -295,7 +293,6 @@
                                    style="font-size: 14px;color: #101010;" v-model="customerValueIn"/>
                         </div>
                     </div>
-                    <div style="height: 185px"></div>
                 </div>
             </div>
         </div>

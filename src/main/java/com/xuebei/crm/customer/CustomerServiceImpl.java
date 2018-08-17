@@ -111,7 +111,7 @@ public class CustomerServiceImpl implements CustomerService {
                 }
             }
             //合成联系人的部门院校名称
-            totalName = contacts.getCustomerName() + "-" + totalName + contacts.getTypeName() + "-" + contacts.getRealName()
+            totalName = contacts.getCustomerName() + "-" + totalName + (contacts.getTypeName() != null? contacts.getTypeName() : "无") + "-" + contacts.getRealName()
                     + ":" + contacts.getContactsId() + ":" + contacts.getCustomerId();
             contacts.setTotalName(totalName);
             department.addSubContact(contacts);
