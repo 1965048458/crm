@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface ProjectMapper {
 
-    void insertProject(Project project);
+    Integer insertProject(Project project);
 
     List<Project> queryProjectsByUserId(String userId);
 

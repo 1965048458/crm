@@ -6,8 +6,20 @@
 <mapper namespace="com.xuebei.crm.project.ProjectMapper">
     
     <resultMap id="projectMap" type="com.xuebei.crm.project.Project">
-        <id property="projectId" column="project_id"/>
-        <result property="projectNm" column="project_nm"/>
+        <id property="projectId" column="sales_opportunity_id"/>
+        <result property="projectName" column="opportunity_nm"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="status" column="sales_status"/>
+        <result property="amount" column="amount"/>
+        <result property="deadLine" column="clinch_date"/>
+        <result property="content" column="content"/>
+        <result property="leader" column="leader"/>
+        <result property="userId" column="user_id"/>
+        <result property="agent" column="agent"/>
+        <result property="leader" column="leader"/>
+        <result property="createTime" column="create_ts"/>
+        <result property="updaterId" column="updater_id"/>
+        <result property="updateTime" column="update_ts"/>
     </resultMap>
 
     <resultMap id="opportunityMap" type="com.xuebei.crm.opportunity.Opportunity">
@@ -15,14 +27,16 @@
         <result property="opportunityName" column="opportunity_nm"/>
     </resultMap>
 
-    <insert id="insertProject" parameterType="com.xuebei.crm.project.Project">
-        INSERT INTO  project
-        ( project_id, project_no, project_nm, background, project_content,
-        status_cd, deadline, priority, agent, sales_opportunity_id,  contract_id, user_id),
+    <insert id="insertProject" parameterType="com.xuebei.crm.project.Project"
+            useGeneratedKeys="true" keyColumn="sales_opportunity_id" keyProperty="projectId">
+        INSERT INTO  sales_opportunity
+        ( `customer_id`, `opportunity_nm`,
+          `sales_status`, `amount`, `clinch_date`, `agent`, `leader`,
+          `content`, `user_id`, `create_ts`, `updater_id`, `update_ts`)
         VALUES
-        ( #{projectId},#{projectNo},  #{projectNm}, #{backGround}, #{projectContent},
-        #{status}, #{deadLine},#{priority}, #{agent}, #{opportunityId},
-         #{contractId}, #{userId}
+        ( #{customerId},#{projectName},  #{status}, #{amount}, #{deadLine},
+        #{agent}, #{leader},#{content}, #{userId}, NOW(),
+         #{userId}, NOW()
         )
     </insert>
 

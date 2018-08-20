@@ -18,6 +18,7 @@ jQuery(document).ready(function () {
             person: '',
             selStage: '',
             status: '请选择',
+            lastStatus: '',
             deadLine: '请选择',
             background: '',
             temp: '',
@@ -44,18 +45,20 @@ jQuery(document).ready(function () {
                     return;
                 } else {
                     var thisVue = this;
+                    var postData = {
+                        projectName: thisVue.name,
+                        content: thisVue.content,
+                        agent: thisVue.agent,
+                        contactId: thisVue.contactId,
+                        deadLine: thisVue.deadLine,
+                        status: thisVue.lastStatus,
+                        amount: thisVue.amount,
+                        customerId: thisVue.customerId
+                    };
                     jQuery.ajax({
                         type: 'post',
                         url: '/project/add',
-                        data: {
-                            name: thisVue.name,
-                            content: thisVue.content,
-                            agent: thisVue.agent,
-                            contact: thisVue.contact,
-                            deadLine: thisVue.deadLine,
-                            status: thisVue.status,
-                            amount: thisVue.amount
-                        },
+                        data: JSON.stringify(postData),
                         dataType: 'json',
                         cache: false
                     }).done(function (result) {
@@ -95,7 +98,8 @@ jQuery(document).ready(function () {
                     alert("项目状态不能为空！");
                     return;
                 }
-                this.status = this.selStage;
+                this.status = this.stages[this.selStage];
+                this.lastStatus = this.selStage;
                 this.showPage = 'addProject';
             },
             'selContact': function () {

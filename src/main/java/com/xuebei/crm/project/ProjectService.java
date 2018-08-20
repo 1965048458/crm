@@ -7,7 +7,7 @@ import java.util.List;
  */
 public interface ProjectService {
 
-    void addProject(Project project);
+    Integer addProject(Project project);
 
     List<Project> searchProject(ProjectSearchParam param);
 }

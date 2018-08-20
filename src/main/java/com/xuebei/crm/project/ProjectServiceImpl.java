@@ -16,8 +16,8 @@ public class ProjectServiceImpl implements ProjectService{
     private ProjectMapper projectMapper;
 
     @Override
-    public void addProject(Project project) {
-        projectMapper.insertProject(project);
+    public Integer addProject(Project project) {
+        return projectMapper.insertProject(project);
     }
 
     @Override

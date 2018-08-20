@@ -1,5 +1,6 @@
 package com.xuebei.crm.project;
 
+import com.xuebei.crm.opportunity.OpportunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,9 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
+    @Autowired
+    private OpportunityService opportunityService;
+
     @RequestMapping("/projectDetail")
     public String detail(){
         return "projectDetail";
@@ -58,9 +62,9 @@ public class ProjectController {
         String userId = (String) session.getAttribute("userId");
         GsonView gsonView = new GsonView();
         project.setUserId(userId);
-        project.setProjectId(UUIDGenerator.genUUID());
-
         projectService.addProject(project);
+        opportunityService.addOpportunityContact(project.getProjectId(), project.getContactId());
+
         gsonView.addStaticAttribute(SUCCESS_FLG, true);
         return gsonView;
     }
