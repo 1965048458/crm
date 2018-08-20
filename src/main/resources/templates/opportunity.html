@@ -136,7 +136,7 @@
                                             {{opportunity.create_ts}}</label>
                                     </p>
                                     <p class="weui-media-box__desc" style="font-size: 12px;color: #A0B4BB;">
-                                        {{opportunity.salesStatus}}
+                                        {{opportunity.salesStatus}} &nbsp;阶段
                                         <label class="pull-right" style="font-size: 15px;color: #A0B4BB;">
                                             {{opportunity.amount}}元</label>
                                     </p>
@@ -391,7 +391,7 @@
                                     </div>
                                     <div class="weui-cell__ft">
                                         <input id="stage2" type="radio" class="weui-check" name="selectStage"
-                                               value="A阶段"
+                                               value="A"
                                                v-model="stageValue"/>
                                         <span class="weui-icon-checked"></span>
                                     </div>
@@ -402,7 +402,7 @@
                                     </div>
                                     <div class="weui-cell__ft">
                                         <input id="stage3" type="radio" class="weui-check" name="selectStage"
-                                               value="B阶段"
+                                               value="B"
                                                v-model="stageValue"/>
                                         <span class="weui-icon-checked"></span>
                                     </div>
@@ -413,7 +413,7 @@
                                     </div>
                                     <div class="weui-cell__ft">
                                         <input id="stage4" type="radio" class="weui-check" name="selectStage"
-                                               value="C阶段"
+                                               value="C"
                                                v-model="stageValue"/>
                                         <span class="weui-icon-checked"></span>
                                     </div>
@@ -424,7 +424,7 @@
                                     </div>
                                     <div class="weui-cell__ft">
                                         <input id="stage5" type="radio" class="weui-check" name="selectStage"
-                                               value="D阶段"
+                                               value="D"
                                                v-model="stageValue"/>
                                         <span class="weui-icon-checked"></span>
                                     </div>
@@ -434,7 +434,7 @@
                                         <p style="font-size: 14px;color: #101010;">输单</p>
                                     </div>
                                     <div class="weui-cell__ft">
-                                        <input id="stage6" type="radio" class="weui-check" name="selectStage" value="输单"
+                                        <input id="stage6" type="radio" class="weui-check" name="selectStage" value="F"
                                                v-model="stageValue"/>
                                         <span class="weui-icon-checked"></span>
                                     </div>
@@ -566,7 +566,7 @@
                                         <span style="font-weight: 100">{{opportunity.amount}}</span>
                                     </p>
                                     <p class="weui-media-box__desc" style="padding: 3px;font-weight: bold">状态&nbsp;
-                                        <span style="font-weight: 100">{{opportunity.salesStatus}}</span>
+                                        <span style="font-weight: 100">{{opportunity.salesStatus}} &nbsp;阶段</span>
                                     </p>
                                 </div>
                             </div>
@@ -659,7 +659,7 @@
                                             销售阶段</label>
                                     </div>
                                     <div class="weui-cell__bd">
-                                        <span>{{opportunity.salesStatus}}</span>
+                                        <span>{{opportunity.salesStatus}} &nbsp;阶段</span>
                                     </div>
                                 </div>
                                 <div class="weui-cell">
@@ -988,7 +988,7 @@
                     </div>
                     <div class="weui-cell__ft">
                         <input type="radio" class="weui-check"
-                               :value="ind[index] + '阶段'"
+                               :value="ind[index] "
                                v-model="selStage">
                         <span class="weui-icon-checked"></span>
                     </div>
@@ -1002,7 +1002,7 @@
                     </div>
                     <div class="weui-cell__ft">
                         <input type="radio" class="weui-check"
-                               value="输单"
+                               value="F"
                                v-model="selStage">
                         <span class="weui-icon-checked"></span>
                     </div>

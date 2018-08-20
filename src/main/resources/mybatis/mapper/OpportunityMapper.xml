@@ -82,14 +82,14 @@
         (select cu.company_id from company_user cu where cu.user_id =#{scene})
         ) and cu.user_id = s.user_id
         LEFT JOIN crm_customer c ON c.customer_id = s.customer_id
-        WHERE 1 =1
+        WHERE s.sales_status IN ('A','B','C','D','F')
         <if test="createStart != null">
             AND s.create_ts > #{createStart}
         </if>
         <if test="createEnd != null">
             AND s.create_ts &lt; #{createEnd}
         </if>
-        <if test="salesStatus != null and salesStatus != 'all'">
+        <if test="salesStatus != null and salesStatus != 'all' ">
             AND s.sales_status = #{salesStatus}
         </if>
         <if test="customerName != null and customerName != ''">
@@ -180,5 +180,12 @@
         where j.has_submitted = 1
         and vl.sales_opportunity_id = #{opportunityId}
     </select>
+
+    <!--<select id="queryApplySupport" resultMap="supportMap">-->
+        <!--select s.support_id,s.`type`,c.real_nm,s.`order`,s.expire_date,s.content from support s-->
+        <!--inner join crm_user c on c.crm_user_id =-->
+        <!--(select cu.crm_user_id from company_user cu where cu.user_id = s.creator_id)-->
+        <!--where s.sales_opportunity_id = #{opportunityId}-->
+    <!--</select>-->
 
 </mapper>

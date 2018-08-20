@@ -71,12 +71,17 @@ public class OpportunityServiceImpl implements OpportunityService {
     }
 
     @Override
-    public List<OpportunityModify> queryModifyRecord(@Param("opportunityId") int opportunityId) {
+    public List<OpportunityModify> queryModifyRecord(int opportunityId) {
         return opportunityMapper.queryModifyRecord(opportunityId);
     }
 
     @Override
-    public List<VisitRecord> queryVisitRecord(@Param("opportunityId") int opportunityId) {
+    public List<VisitRecord> queryVisitRecord(int opportunityId) {
         return opportunityMapper.queryVisitRecord(opportunityId);
     }
+
+//    @Override
+//    public List<ApplySupport> queryApplySupport(int opportunityId){
+//      return opportunityMapper.queryApplySupport(opportunityId);
+//    }
 }

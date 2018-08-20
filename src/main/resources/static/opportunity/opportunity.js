@@ -63,6 +63,7 @@ $(document).ready(function () {
             deliverDate: '请选择',
             saleStage: '请选择',
             selStage: '',
+            lastStage:'',
             content: '',
             opportunityName: '',
             amount: '',
@@ -73,6 +74,8 @@ $(document).ready(function () {
             visitRecords: '',
 
             opportunityId: '',
+
+            applySupports:'',
 
         },
         methods: {
@@ -99,15 +102,15 @@ $(document).ready(function () {
                 })
             },
             'imgSrc': function (data) {
-                if (data == 'A阶段') {
+                if (data == 'A') {
                     return '/images/opportunity/AStage.svg';
-                } else if (data == 'B阶段') {
+                } else if (data == 'B') {
                     return '/images/opportunity/BStage.svg';
-                } else if (data == 'C阶段') {
+                } else if (data == 'C') {
                     return '/images/opportunity/CStage.svg';
-                } else if (data == 'D阶段') {
+                } else if (data == 'D') {
                     return '/images/opportunity/DStage.svg';
-                } else if (data == '输单') {
+                } else if (data == 'F') {
                     return '/images/opportunity/loseOrder.svg';
                 }
             },
@@ -333,7 +336,7 @@ $(document).ready(function () {
                 var thisVue = this;
                 $.ajax({
                     type: 'post',
-                    url: '/opportunity/opportunityVisitRecord',
+                    url: '/opportunity/opportunityRecord',
                     data: {
                         opportunityId: thisVue.opportunity.opportunityId,
                     },
@@ -342,6 +345,7 @@ $(document).ready(function () {
                 }).done(function (result) {
                     if (result.successFlg) {
                         thisVue.$set(thisVue, 'visitRecords', result.visitRecords);
+                        // thisVue.$set(thisVue, 'applySupports', result.applySupports);
                         thisVue.showDetailPage = 'relevantPage';
                     }
                 })
@@ -374,6 +378,14 @@ $(document).ready(function () {
             },
             'back': function () {
                 this.showPage = 'opportunity';
+                this.showDetailPage ='detailPage';
+                $("#detailBox").css('border-bottom', 'solid 2px #38A4F2');
+                $("#detail").css('color', '#38A4F2');
+                $("#relevantBox").removeAttr("style");
+                $("#relevant").css('color', 'black');
+                $("#modifBox").removeAttr("style");
+                $("#modif").css('color', 'black');
+
             },
             'modif': function () {
                 this.show = 'modif';
@@ -392,7 +404,7 @@ $(document).ready(function () {
                 var postData = {
                     opportunityId: thisVue.opportunity.opportunityId,
                     opportunityName: this.opportunityName,
-                    salesStatus: this.saleStage,
+                    salesStatus: this.lastStage,
                     amount: this.amount,
                     checkDate: this.preDate,
                     clinchDate: this.deliverDate,
@@ -459,8 +471,12 @@ $(document).ready(function () {
                 if (this.selStage === "") {
                     alert("销售阶段不能为空！");
                     return;
+                }else if (this.selStage === 'F') {
+                    this.saleStage = '输单';
+                } else {
+                    this.saleStage = this.selStage + '阶段';
                 }
-                this.saleStage = this.selStage;
+                this.lastStage = this.selStage;
                 this.show = 'modif';
             },
 
