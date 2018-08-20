@@ -662,9 +662,11 @@
                                         <span>{{opportunity.salesStatus}}</span>
                                     </div>
                                 </div>
-                                <label style="margin-left: 15px;">输单原因</label>
                                 <div class="weui-cell">
-                                    <div class="weui-cell__bd">
+                                    <label style="margin-left: 0px;">输单原因</label>
+                                </div>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__bd" style="color: darkgray;;">
                                         <span>暂无</span>
                                     </div>
                                 </div>
@@ -717,50 +719,57 @@
                                 <p class="weui-footer__text">——————&nbsp; 项目支持 &nbsp;——————</p>
                             </div>
                             <div class="weui-cells" style="font-size: small;">
-                                <div class="weui-cell" style="font-weight: bold">撰写招标参数</div>
-                                <div class="weui-media-box weui-media-box_text">
-                                    <ul class="weui-media-box__info" style="margin-top: 0px">
-                                        <li class="weui-media-box__info__meta">负责人：冯婷婷</li>
-                                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
-                                            重要且紧急
-                                        </li>
-                                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
-                                            8月20日截止
-                                        </li>
-                                    </ul>
-                                    <p class="weui-media-box__desc" style="line-height: 25px">引擎节点，加工中心，奇迹人事假变成、
-                                        垃圾分类游戏软件（1节点），山东华宇工学院创业学院招标技术参数、评分标准</p>
-                                </div>
-                                <div class="weui-cell" style="font-weight: bold">方案支持</div>
-                                <div class="weui-media-box weui-media-box_text">
-                                    <ul class="weui-media-box__info" style="margin-top: 0px">
-                                        <li class="weui-media-box__info__meta">负责人：冯婷婷</li>
-                                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
-                                            重要不紧急
-                                        </li>
-                                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
-                                            8月10日截止
-                                        </li>
-                                    </ul>
-                                    <p class="weui-media-box__desc" style="line-height: 25px">方案支持说明</p>
-                                </div>
-                                <div class="weui-cell" style="font-weight: bold">项目评估</div>
-                                <div class="weui-media-box weui-media-box_text">
-                                    <ul class="weui-media-box__info" style="margin-top: 0px">
-                                        <li class="weui-media-box__info__meta">负责人：常兴</li>
-                                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
-                                            重要不紧急
-                                        </li>
-                                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
-                                            8月10日截止
-                                        </li>
-                                    </ul>
-                                    <p class="weui-media-box__desc" style="line-height: 25px">软件类项目评估说明</p>
-                                </div>
+
+                                <!--<div v-for="apply in applySupports">-->
+                                    <div></div>
+                                    <div class="weui-cell" style="font-weight: bold">撰写招标参数</div>
+                                    <div class="weui-media-box weui-media-box_text">
+                                        <ul class="weui-media-box__info" style="margin-top: 0px">
+                                            <li class="weui-media-box__info__meta">负责人：冯婷婷</li>
+                                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                                                重要且紧急
+                                            </li>
+                                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                                                8月20日截止
+                                            </li>
+                                        </ul>
+                                        <p class="weui-media-box__desc" style="line-height: 25px;display: inline-block">引擎节点，加工中心，奇迹人事假变成、
+                                            垃圾分类游戏软件（1节点），山东华宇工学院创业学院招标技术参数、评分标准真是刘啊，这么重把椅子都压坏了</p>
+                                    </div>
+                                <!--</div>-->
+
+
+                                <!--<div class="weui-cell" style="font-weight: bold">方案支持</div>-->
+                                <!--<div class="weui-media-box weui-media-box_text">-->
+                                <!--<ul class="weui-media-box__info" style="margin-top: 0px">-->
+                                <!--<li class="weui-media-box__info__meta">负责人：冯婷婷</li>-->
+                                <!--<li class="weui-media-box__info__meta weui-media-box__info__meta_extra">-->
+                                <!--重要不紧急-->
+                                <!--</li>-->
+                                <!--<li class="weui-media-box__info__meta weui-media-box__info__meta_extra">-->
+                                <!--8月10日截止-->
+                                <!--</li>-->
+                                <!--</ul>-->
+                                <!--<p class="weui-media-box__desc" style="line-height: 25px">方案支持说明</p>-->
+                                <!--</div>-->
+                                <!--<div class="weui-cell" style="font-weight: bold">项目评估</div>-->
+                                <!--<div class="weui-media-box weui-media-box_text">-->
+                                <!--<ul class="weui-media-box__info" style="margin-top: 0px">-->
+                                <!--<li class="weui-media-box__info__meta">负责人：常兴</li>-->
+                                <!--<li class="weui-media-box__info__meta weui-media-box__info__meta_extra">-->
+                                <!--重要不紧急-->
+                                <!--</li>-->
+                                <!--<li class="weui-media-box__info__meta weui-media-box__info__meta_extra">-->
+                                <!--8月10日截止-->
+                                <!--</li>-->
+                                <!--</ul>-->
+                                <!--<p class="weui-media-box__desc" style="line-height: 25px">软件类项目评估说明</p>-->
+                                <!--</div>-->
                                 <div class="weui-panel__ft">
                                     <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
-                                        <div class="weui-cell__bd">查看全部支持记录</div>
-                                        <span class="weui-cell__ft"></span>
+                                        <div class="weui-cell__bd">以上为全部支持记录</div>
+                                        <!--<div class="weui-cell__bd">查看全部支持记录</div>-->
+                                        <!--<span class="weui-cell__ft"></span>-->
                                     </a>
                                 </div>
                             </div>
@@ -781,7 +790,7 @@
                                                 {{record.updateTime}}
                                             </li>
                                         </ul>
-                                        <p class="weui-media-box__desc" style="line-height: 25px">
+                                        <p class="weui-media-box__desc" style="line-height: 25px;display: inline-block">
                                             {{record.visitResult}}</p>
                                     </div>
 
@@ -789,7 +798,7 @@
 
                                 <div class="weui-panel__ft">
                                     <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
-                                        <div class="weui-cell__bd">全部拜访记录</div>
+                                        <div class="weui-cell__bd">以上为全部拜访记录</div>
                                         <!--<span class="weui-cell__ft"></span>-->
                                     </a>
                                 </div>
@@ -803,6 +812,7 @@
                                 <div class="weui-cell" style="font-weight: bold">修改记录</div>
 
                                 <div v-for="record in modifyRecord">
+                                    <div></div>
                                     <div class="weui-media-box weui-media-box_text">
                                         <ul class="weui-media-box__info" style="margin-top: 0px">
                                             <li class="weui-media-box__info__meta">{{record.realName}}</li>
@@ -810,7 +820,8 @@
                                                 {{record.createTime}}
                                             </li>
                                         </ul>
-                                        <p class="weui-media-box__desc" style="line-height: 25px">编辑 商机 &nbsp;{{record.opportunityName}}，客户&nbsp;{{record.customerName}}</p>
+                                        <p class="weui-media-box__desc" style="line-height: 25px;display: inline-block">
+                                            编辑 商机 &nbsp;{{record.opportunityName}}，客户&nbsp;{{record.customerName}}</p>
                                     </div>
 
                                     <!--<div class="weui-media-box weui-media-box_text">-->
@@ -820,7 +831,9 @@
                                     <!--2018年6月28日 18:25-->
                                     <!--</li>-->
                                     <!--</ul>-->
-                                    <!--<p class="weui-media-box__desc" style="line-height: 25px">新建 商机 购买虚拟仿真产品，客户 浙江大学</p>-->
+                                    <!--<p class="weui-media-box__desc" style="line-height: 25px">新建 商机 购买虚拟仿真产品，客户 浙江大学为什么新-->
+                                    <!--什么新内容 时间飞逝利君股份解开龙凤关键是结束了空间是否结婚一口价-->
+                                    <!--内容 时间飞逝利君股份解开龙凤关键是结束了空间是否结婚一口价换个</p>-->
                                     <!--</div>-->
 
                                 </div>
@@ -836,7 +849,7 @@
 
                                 <div class="weui-panel__ft">
                                     <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
-                                        <div class="weui-cell__bd">全部修改记录</div>
+                                        <div class="weui-cell__bd">以上为全部修改记录</div>
                                         <!--<span class="weui-cell__ft"></span>-->
                                     </a>
                                 </div>
@@ -850,15 +863,15 @@
 
 
             <div class="weui-tabbar">
-                <a  class="weui-tabbar__item">
+                <a class="weui-tabbar__item">
                     <img src="/images/opportunity/applySupport.svg" class="weui-tabbar__icon">
                     <p class="weui-tabbar__label">申请支持</p>
                 </a>
-                <a  class="weui-tabbar__item weui-bar__item_on">
+                <a class="weui-tabbar__item weui-bar__item_on">
                     <img src="/images/opportunity/convertToProject.svg" class="weui-tabbar__icon">
                     <p class="weui-tabbar__label">转为项目</p>
                 </a>
-                <a  class="weui-tabbar__item">
+                <a class="weui-tabbar__item">
                     <img src="/images/opportunity/others.svg" class="weui-tabbar__icon">
                     <p class="weui-tabbar__label">其他</p>
                 </a>
