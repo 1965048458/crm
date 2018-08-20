@@ -10,13 +10,10 @@
 
     <script src="/lib/jquery-2.1.1.js"></script>
     <script src="/vue.v2.5.13.js"></script>
+    <script src="/weui.min.js"></script>
     <script src="/opportunity/opportunity.js"></script>
     <style>
-        .center-box {
-            text-align: center;
-        }
-
-        .top-bar, .journal-box, #journalDetail {
+        .top-bar {
             font-size: 18px;
             text-align: center;
             background: #ffffff;
@@ -37,32 +34,40 @@
 
         .sortSelect {
             position: absolute;
-            top: 70px;
+            top: 90px;
             width: 100%;
             z-index: 99999;
         }
 
         .filterSelect {
             position: absolute;
-            top: 70px;;
+            top: 90px;;
             width: 100%;
-            z-index: 99999;
-        }
-
-        .filterItem {
-            position: absolute;
-            top: 70px;
-            left: 124px;
-            width: 70%;
             z-index: 99999;
         }
 
         .filterDetail {
             position: absolute;
-            top: 70px;
+            top: 90px;
             left: 25%;
             width: 75%;
             z-index: 99999;
+        }
+
+        .weui-cells {
+            margin-top: 0;
+            padding: 0px;
+        }
+
+        .navi-bar {
+            height: 44px;
+            padding: 8px 15px;
+
+        }
+
+        .center-box {
+            font-size: large;
+            height: 40px;
         }
 
     </style>
@@ -107,14 +112,12 @@
 
 
                     <div id="opportuityNull" class="blank" style="margin:20% auto auto auto; text-align:center; "
-                         v-show="showNull ==='null'" >
+                         v-show="showNull ==='null'">
                         <p>
                             <img src="/images/opportunity/opportunityNull.svg"/>
                         </p>
                         <p style="color: #CCCCCC; font-size: small">还没有创建相关的商机</p>
                     </div>
-
-
 
                     <div v-for="opportunity in opportunityList">
                         <div class="weui-panel weui-panel_access" @click="detail(opportunity.opportunityId)">
@@ -498,7 +501,7 @@
     <div id="selectCreator" v-show="showPage === 'selectCreator'">
         <div class="weui-tab">
 
-            <div class="top-bar center-box" style="border: hidden; padding: 8px 8px;">
+            <div class="top-bar " style="border: hidden; padding: 8px 8px;text-align: center">
                         <span class="pull-left" @click="backToFilter"
                               style="color: rgb(61, 168, 244); font-size: 16px;">取消</span>
                 <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);">选择创建人</span>
@@ -523,6 +526,493 @@
 
         </div>
     </div>
+
+
+    <div id="toDetail" v-show="showPage === 'toDetail' ">
+
+        <div id="opportunityDetail" v-show="show ==='home'">
+            <div class="page tabbar js_show">
+                <div class="weui-tab">
+
+                    <div class="weui-tab__panel">
+
+                        <div class="weui-navbar" style="height: 50px;">
+                            <div id="titleBar1" class="weui-navbar__item top-bar" style=" padding: 10px 10px;">
+                            <span class="pull-left" style="margin-top: 7px" @click="back()">&nbsp;
+                                <img src="/images/back_icon.svg"/>
+                            </span>
+                                <span style="width: 76%;text-align: center;font-size: 20px;margin-top: 5px ">商机</span>
+                                <span style="float:right;margin-top: 7px" @click="modif">&nbsp;
+                                <img src="/images/opportunity/editOpportunity.svg"/>
+                            </span>
+                            </div>
+                        </div>
+
+                        <div style="height: 35px"></div>
+                        <div class="weui-panel weui-panel_access">
+                            <div class="weui-panel__bd">
+                                <div class="weui-media-box weui-media-box_text">
+                                    <h4 class="weui-media-box__title">{{opportunity.opportunityName}}</h4>
+                                    <p class="weui-media-box__desc" style="padding: 3px;font-weight: bold">客户名称&nbsp;
+                                        <span style="font-weight: 100">{{opportunity.customerName}}</span>
+                                    </p>
+                                    <p class="weui-media-box__desc" style="padding: 3px;font-weight: bold">二级学院&nbsp;
+                                        <span style="font-weight: 100">{{contact.departmentName}}</span>
+                                    </p>
+                                    <p class="weui-media-box__desc" style="padding: 3px;font-weight: bold">客户联系人&nbsp;
+                                        <span style="font-weight: 100">{{contact.typeName}}-{{contact.realName}}</span>
+                                    </p>
+                                    <p class="weui-media-box__desc" style="padding: 3px;font-weight: bold">金额（元）&nbsp;
+                                        <span style="font-weight: 100">{{opportunity.amount}}</span>
+                                    </p>
+                                    <p class="weui-media-box__desc" style="padding: 3px;font-weight: bold">状态&nbsp;
+                                        <span style="font-weight: 100">{{opportunity.salesStatus}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="weui-grids">
+                            <a id="detailBox" href="javascript:;" class="weui-grid navi-bar"
+                               style="border-bottom: solid 2px #38A4F2" @click="detailShow()">
+                                <p id="detail" class="weui-grid__label" style=" font-size: medium;color:#38A4F2">
+                                    详细信息</p>
+                            </a>
+                            <a id="relevantBox" href="javascript:;" class="weui-grid navi-bar" @click="relevant()">
+
+                                <p id="relevant" class="weui-grid__label" style=" font-size: medium;">相关</p>
+                            </a>
+                            <a id="modifBox" href="javascript:;" class="weui-grid navi-bar" @click="modification()">
+
+                                <p id="modif" class="weui-grid__label" style=" font-size: medium;">修改记录</p>
+                            </a>
+                        </div>
+
+                        <div id="detailPage" v-show="showDetailPage ==='detailPage'">
+                            <div class="weui-cells" style="font-size: small">
+                                <div class="weui-cell" style="font-weight: bold">基本信息</div>
+                                <label style="margin-left: 15px;color: grey">制作内容</label>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__bd">
+                                        <span>{{opportunity.content}}</span>
+                                    </div>
+                                </div>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__hd">
+                                        <label class="weui-label">
+                                            预估挂标日期</label>
+                                    </div>
+                                    <div class="weui-cell__bd">
+                                        <span>{{opportunity.checkDateString}}</span>
+                                    </div>
+                                </div>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__hd">
+                                        <label class="weui-label">
+                                            交付日期</label>
+                                    </div>
+                                    <div class="weui-cell__bd">
+                                        <span>{{opportunity.clinchDateString}}</span>
+                                    </div>
+                                </div>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__hd">
+                                        <label class="weui-label">
+                                            金额(元)</label>
+                                    </div>
+                                    <div class="weui-cell__bd">
+                                        <span>{{opportunity.amount}}</span>
+                                    </div>
+                                </div>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__hd">
+                                        <label class="weui-label">
+                                            客户名称</label>
+                                    </div>
+                                    <div class="weui-cell__bd">
+                                        <span>{{opportunity.customerName}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="weui-cell">
+                                    <div class="weui-cell__hd">
+                                        <label class="weui-label">
+                                            二级学院</label>
+                                    </div>
+                                    <div class="weui-cell__bd">
+                                        <span>{{contact.departmentName}}</span>
+                                    </div>
+                                </div>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__hd">
+                                        <label class="weui-label">
+                                            客户联系人</label>
+                                    </div>
+                                    <div class="weui-cell__bd">
+                                        <span>{{contact.typeName}}-{{contact.realName}}</span>
+                                    </div>
+                                </div>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__hd">
+                                        <label class="weui-label">
+                                            销售阶段</label>
+                                    </div>
+                                    <div class="weui-cell__bd">
+                                        <span>{{opportunity.salesStatus}}</span>
+                                    </div>
+                                </div>
+                                <div class="weui-cell">
+                                    <label style="margin-left: 0px;">输单原因</label>
+                                </div>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__bd" style="color: darkgray;;">
+                                        <span>暂无</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="weui-cells" style="font-size: small">
+                                <div class="weui-cell" style="font-weight:bold">系统信息</div>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__hd">
+                                        <label class="weui-label">
+                                            最后跟进时间</label>
+                                    </div>
+                                    <div class="weui-cell__bd">
+                                        <span>{{opportunity.update_ts}}</span>
+                                    </div>
+                                </div>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__hd">
+                                        <label class="weui-label">
+                                            状态</label>
+                                    </div>
+                                    <div class="weui-cell__bd">
+                                        <span>进行中</span>
+                                    </div>
+                                </div>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__hd">
+                                        <label class="weui-label">
+                                            创建人</label>
+                                    </div>
+                                    <div class="weui-cell__bd">
+                                        <span>{{creatorName}}</span>
+                                    </div>
+                                </div>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__hd">
+                                        <label class="weui-label">
+                                            创建时间</label>
+                                    </div>
+                                    <div class="weui-cell__bd">
+                                        <span>{{opportunity.create_ts}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="relevantPage" v-show="showDetailPage ==='relevantPage'">
+                            <div class="weui-footer" style="margin-top: 5px;margin-bottom: 5px">
+                                <p class="weui-footer__text">——————&nbsp; 项目支持 &nbsp;——————</p>
+                            </div>
+                            <div class="weui-cells" style="font-size: small;">
+
+                                <!--<div v-for="apply in applySupports">-->
+                                    <div></div>
+                                    <div class="weui-cell" style="font-weight: bold">撰写招标参数</div>
+                                    <div class="weui-media-box weui-media-box_text">
+                                        <ul class="weui-media-box__info" style="margin-top: 0px">
+                                            <li class="weui-media-box__info__meta">负责人：冯婷婷</li>
+                                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                                                重要且紧急
+                                            </li>
+                                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                                                8月20日截止
+                                            </li>
+                                        </ul>
+                                        <p class="weui-media-box__desc" style="line-height: 25px;display: inline-block">引擎节点，加工中心，奇迹人事假变成、
+                                            垃圾分类游戏软件（1节点），山东华宇工学院创业学院招标技术参数、评分标准真是刘啊，这么重把椅子都压坏了</p>
+                                    </div>
+                                <!--</div>-->
+
+
+                                <!--<div class="weui-cell" style="font-weight: bold">方案支持</div>-->
+                                <!--<div class="weui-media-box weui-media-box_text">-->
+                                <!--<ul class="weui-media-box__info" style="margin-top: 0px">-->
+                                <!--<li class="weui-media-box__info__meta">负责人：冯婷婷</li>-->
+                                <!--<li class="weui-media-box__info__meta weui-media-box__info__meta_extra">-->
+                                <!--重要不紧急-->
+                                <!--</li>-->
+                                <!--<li class="weui-media-box__info__meta weui-media-box__info__meta_extra">-->
+                                <!--8月10日截止-->
+                                <!--</li>-->
+                                <!--</ul>-->
+                                <!--<p class="weui-media-box__desc" style="line-height: 25px">方案支持说明</p>-->
+                                <!--</div>-->
+                                <!--<div class="weui-cell" style="font-weight: bold">项目评估</div>-->
+                                <!--<div class="weui-media-box weui-media-box_text">-->
+                                <!--<ul class="weui-media-box__info" style="margin-top: 0px">-->
+                                <!--<li class="weui-media-box__info__meta">负责人：常兴</li>-->
+                                <!--<li class="weui-media-box__info__meta weui-media-box__info__meta_extra">-->
+                                <!--重要不紧急-->
+                                <!--</li>-->
+                                <!--<li class="weui-media-box__info__meta weui-media-box__info__meta_extra">-->
+                                <!--8月10日截止-->
+                                <!--</li>-->
+                                <!--</ul>-->
+                                <!--<p class="weui-media-box__desc" style="line-height: 25px">软件类项目评估说明</p>-->
+                                <!--</div>-->
+                                <div class="weui-panel__ft">
+                                    <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
+                                        <div class="weui-cell__bd">以上为全部支持记录</div>
+                                        <!--<div class="weui-cell__bd">查看全部支持记录</div>-->
+                                        <!--<span class="weui-cell__ft"></span>-->
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="weui-cells" style="font-size: small">
+
+                                <div class="weui-cell" style="font-weight: bold;">拜访记录</div>
+
+                                <div v-for="record in visitRecords">
+                                    <div></div>
+                                    <div class="weui-media-box weui-media-box_text">
+                                        <ul class="weui-media-box__info" style="margin-top: 0px">
+                                            <li class="weui-media-box__info__meta">{{record.realName}}</li>
+                                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                                                {{visitType(record.visitType)}}
+                                            </li>
+                                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                                                {{record.updateTime}}
+                                            </li>
+                                        </ul>
+                                        <p class="weui-media-box__desc" style="line-height: 25px;display: inline-block">
+                                            {{record.visitResult}}</p>
+                                    </div>
+
+                                </div>
+
+                                <div class="weui-panel__ft">
+                                    <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
+                                        <div class="weui-cell__bd">以上为全部拜访记录</div>
+                                        <!--<span class="weui-cell__ft"></span>-->
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div id="modifPage" v-show="showDetailPage ==='modifPage'">
+                            <div class="weui-cells" style="font-size: small">
+                                <div class="weui-cell" style="font-weight: bold">修改记录</div>
+
+                                <div v-for="record in modifyRecord">
+                                    <div></div>
+                                    <div class="weui-media-box weui-media-box_text">
+                                        <ul class="weui-media-box__info" style="margin-top: 0px">
+                                            <li class="weui-media-box__info__meta">{{record.realName}}</li>
+                                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                                                {{record.createTime}}
+                                            </li>
+                                        </ul>
+                                        <p class="weui-media-box__desc" style="line-height: 25px;display: inline-block">
+                                            编辑 商机 &nbsp;{{record.opportunityName}}，客户&nbsp;{{record.customerName}}</p>
+                                    </div>
+
+                                    <!--<div class="weui-media-box weui-media-box_text">-->
+                                    <!--<ul class="weui-media-box__info" style="margin-top: 0px">-->
+                                    <!--<li class="weui-media-box__info__meta">何云龙</li>-->
+                                    <!--<li class="weui-media-box__info__meta weui-media-box__info__meta_extra">-->
+                                    <!--2018年6月28日 18:25-->
+                                    <!--</li>-->
+                                    <!--</ul>-->
+                                    <!--<p class="weui-media-box__desc" style="line-height: 25px">新建 商机 购买虚拟仿真产品，客户 浙江大学为什么新-->
+                                    <!--什么新内容 时间飞逝利君股份解开龙凤关键是结束了空间是否结婚一口价-->
+                                    <!--内容 时间飞逝利君股份解开龙凤关键是结束了空间是否结婚一口价换个</p>-->
+                                    <!--</div>-->
+
+                                </div>
+                                <div class="weui-media-box weui-media-box_text">
+                                    <ul class="weui-media-box__info" style="margin-top: 0px">
+                                        <li class="weui-media-box__info__meta">{{creatorName}}</li>
+                                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                                            {{opportunity.create_ts}}
+                                        </li>
+                                    </ul>
+                                    <p class="weui-media-box__desc" style="line-height: 25px">创建 商机 &nbsp;{{opportunity.opportunityName}}，客户&nbsp;{{opportunity.customerName}}</p>
+                                </div>
+
+                                <div class="weui-panel__ft">
+                                    <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
+                                        <div class="weui-cell__bd">以上为全部修改记录</div>
+                                        <!--<span class="weui-cell__ft"></span>-->
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="weui-tabbar">
+                <a class="weui-tabbar__item">
+                    <img src="/images/opportunity/applySupport.svg" class="weui-tabbar__icon">
+                    <p class="weui-tabbar__label">申请支持</p>
+                </a>
+                <a class="weui-tabbar__item weui-bar__item_on">
+                    <img src="/images/opportunity/convertToProject.svg" class="weui-tabbar__icon">
+                    <p class="weui-tabbar__label">转为项目</p>
+                </a>
+                <a class="weui-tabbar__item">
+                    <img src="/images/opportunity/others.svg" class="weui-tabbar__icon">
+                    <p class="weui-tabbar__label">其他</p>
+                </a>
+            </div>
+        </div>
+
+        <div id="modificationOppo" v-show="show ==='modif'">
+
+            <div class="center-box">
+
+                <div id="basicInfo">
+                    <div class="top-bar">
+            <span @click="modifBack" class="pull-left">
+                <img src="/images/back_icon.svg"
+                     style="margin-top:5px;"/></span>
+                        <span class="center" style="margin-top: 3px;">编辑商机</span>
+                        <span class="pull-right" style="margin-top: 0px; color: #28b3ff"
+                              @click="detailSubmit"> 完成 &nbsp; </span>
+                    </div>
+
+                    <div class="list">
+                        <div class="weui-cells">
+                            <div class="weui-cell">基本信息</div>
+                            <label style="margin-left: 15px"><span style="color: red">*</span>制作内容</label>
+                            <div class="weui-cell">
+                                <div class="weui-cell__bd">
+                                    <input class="weui-input" type="text" placeholder="请填写制作内容" v-model="content">
+                                </div>
+                            </div>
+                            <a class="weui-cell weui-cell_access" @click="showDatePicker">
+                                <div class="weui-cell__bd">
+                                    <p><span style="color: red">*</span>预估挂标日期</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <span v-text="preDate"></span>
+                                </div>
+                            </a>
+                            <a class="weui-cell weui-cell_access" @click="deliverDatePicker">
+                                <div class="weui-cell__bd">
+                                    <p><span style="color: red">*</span>交付日期</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <span v-text="deliverDate"></span>
+                                </div>
+                            </a>
+                            <a class="weui-cell weui-cell_access" @click="selSaleStage">
+                                <div class="weui-cell__bd">
+                                    <p><span style="color: red">*</span>销售阶段</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <span v-text="saleStage"></span>
+                                </div>
+                            </a>
+
+                            <div class="weui-cell">
+                                <div class="weui-cell__hd"><label class="weui-label"><span
+                                        style="color: red">*</span>金额(元)</label></div>
+                                <div class="weui-cell__bd">
+                                    <input class="weui-input" type="number" placeholder="请输入项目金额" v-model="amount">
+                                </div>
+                            </div>
+                            <a class="weui-cell weui-cell_access">
+                                <div class="weui-cell__bd">
+                                    <p><span style="color: red">*</span>客户及联系人</p>
+                                    <p style="color: grey"
+                                       v-text="contact.customerName+'-'+contact.departmentName+'-'+contact.typeName+'-'+contact.realName"></p>
+                                </div>
+
+                            </a>
+
+                            <label style="margin-left: 15px"><span style="color: red">*</span>商机名称</label>
+                            <div class="weui-cell">
+                                <div class="weui-cell__bd">
+                                    <input class="weui-input" type="text" v-model="opportunityName"
+                                           placeholder="请输入商机名称">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--BEGIN toast-->
+                    <div id="toast" style="display: none;">
+                        <div class="weui-mask_transparent"></div>
+                        <div class="weui-toast">
+                            <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                            <p class="weui-toast__content">修改成功</p>
+                        </div>
+                    </div>
+                    <!--end toast-->
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+        <div id="saleStage" v-show="show === 'saleStage'" style="display: none">
+            <div class="top-bar">
+            <span @click="chooseBack" class="pull-left">
+                <img src="/images/back_icon.svg"
+                     style="margin-top:5px;"/></span>
+                <span class="center" style="margin-top: 3px;">选择销售阶段</span>
+                <span class="pull-right" style="margin-top: 0px; color: #28b3ff"
+                      @click="done1"> 完成 &nbsp; </span>
+            </div>
+            <div class="weui-cells weui-cells_radio">
+                <label class="weui-cell weui-check__label" v-for="(stage, index) in stages">
+                    <div class="weui-cell__hd">
+                        <img :src="'/images/opportunity/'+ ind[index] +'Stage.svg' " style="margin-right: 10px"/>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p v-text="stage"></p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" class="weui-check"
+                               :value="ind[index] + '阶段'"
+                               v-model="selStage">
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+                <label class="weui-cell weui-check__label">
+                    <div class="weui-cell__hd">
+                        <img src="/images/opportunity/loseOrder.svg" style="margin-right: 10px"/>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <p>输单</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" class="weui-check"
+                               value="输单"
+                               v-model="selStage">
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+    </div>
+
+
 </div>
 
 </div>

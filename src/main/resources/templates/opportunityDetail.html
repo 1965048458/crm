@@ -44,21 +44,6 @@
             height: 40px;
         }
 
-        .customer-item {
-            background-color: #FFFFFF;
-            line-height: 1.47058824;
-            font-size: 17px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .usr-img {
-            position: relative;
-            margin-right: 10px;
-            padding-left: 30px;
-            width: 25px;
-            display: block;
-        }
     </style>
 </head>
 <body>
@@ -109,7 +94,7 @@
 
                     <div class="weui-grids">
                         <a id="detailBox" href="javascript:;" class="weui-grid navi-bar"
-                           style="border-bottom: solid 2px #38A4F2" @click="detail()">
+                           style="border-bottom: solid 2px #38A4F2" @click="detailShow()">
                             <p id="detail" class="weui-grid__label" style=" font-size: medium;color:#38A4F2">详细信息</p>
                         </a>
                         <a id="relevantBox" href="javascript:;" class="weui-grid navi-bar" @click="relevant()">
@@ -122,7 +107,7 @@
                         </a>
                     </div>
 
-                    <div id="detailPage" v-show="showPage ==='detailPage'">
+                    <div id="detailPage" v-show="showDetailPage ==='detailPage'">
                         <div class="weui-cells" style="font-size: small">
                             <div class="weui-cell" style="font-weight: bold">基本信息</div>
                             <label style="margin-left: 15px;color: grey">制作内容</label>
@@ -245,7 +230,7 @@
                     </div>
 
 
-                    <div id="relevantPage" v-show="showPage ==='relevantPage'">
+                    <div id="relevantPage" v-show="showDetailPage ==='relevantPage'">
                         <div class="weui-footer" style="margin-top: 5px;margin-bottom: 5px">
                             <p class="weui-footer__text">——————&nbsp; 项目支持 &nbsp;——————</p>
                         </div>
@@ -330,7 +315,7 @@
                     </div>
 
 
-                    <div id="modifPage" v-show="showPage ==='modifPage'">
+                    <div id="modifPage" v-show="showDetailPage ==='modifPage'">
                         <div class="weui-cells" style="font-size: small">
                             <div class="weui-cell" style="font-weight: bold">修改记录</div>
 
@@ -408,7 +393,7 @@
                      style="margin-top:5px;"/></span>
                     <span class="center" style="margin-top: 3px;">编辑商机</span>
                     <span class="pull-right" style="margin-top: 0px; color: #28b3ff"
-                          @click="submit"> 完成 &nbsp; </span>
+                          @click="detailSubmit"> 完成 &nbsp; </span>
                 </div>
 
                 <div class="list">
