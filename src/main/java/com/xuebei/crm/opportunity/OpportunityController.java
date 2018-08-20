@@ -176,13 +176,15 @@ public class OpportunityController {
         return gsonView;
     }
 
-    @RequestMapping("opportunityVisitRecord")
+    @RequestMapping("opportunityRecord")
     public GsonView opportunityVisitRecord(@RequestParam("opportunityId")int opportunityId,
                                        HttpServletRequest request) {
         String userId = (String) request.getSession().getAttribute("userId");
         List<VisitRecord> visitRecords = opportunityService.queryVisitRecord(opportunityId);
+//        List<applySupport> applySupports = opportunityService.queryApplySupport(opportunityId);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("visitRecords",visitRecords);
+//        gsonView.addStaticAttribute("applySupports",applySupports);
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }

@@ -25,8 +25,10 @@ public interface OpportunityService
 
     void addModificationRecord(int opportunityId, String userId);
 
-    List<OpportunityModify> queryModifyRecord(@Param("opportunityId")int opportunityId);
+    List<OpportunityModify> queryModifyRecord(int opportunityId);
 
-    List<VisitRecord> queryVisitRecord(@Param("opportunityId")int opportunityId);
+    List<VisitRecord> queryVisitRecord(int opportunityId);
+
+//    List<ApplySupport> queryApplySupport(int opportunityId);
 
 }
