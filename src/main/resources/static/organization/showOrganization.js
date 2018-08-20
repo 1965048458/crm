@@ -276,12 +276,17 @@ jQuery(document).ready(function () {
             },
             'addEnclosureBrackets':function (status) {
                 if(status == 'ENCLOSURE'){
-                    return "[ 已圈 ]"
+                    return "[ 别人正在申请 ]"
                 }
             },
             'addNormalBrackets':function (status) {
                 if(status == 'NORMAL'){
                     return "[ 未圈 ]"
+                }
+            },
+            'addApplyingBrackets':function (status) {
+                if(status == 'APPLYING'){
+                    return "[ 待审核 ]"
                 }
             },
             'addOpenSeaWarning':function (warning) {

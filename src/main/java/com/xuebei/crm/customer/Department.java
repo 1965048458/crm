@@ -35,13 +35,23 @@ public class Department {
     @Expose
     private EnclosureApply enclosureApply;
     @Expose
-    private String applyByOthers;
+    private Integer applyByOthers;
+    @Expose
+    private String statusCd;
 
-    public String getApplyByOthers() {
+    public String getStatusCd() {
+        return statusCd;
+    }
+
+    public void setStatusCd(String statusCd) {
+        this.statusCd = statusCd;
+    }
+
+    public Integer getApplyByOthers() {
         return applyByOthers;
     }
 
-    public void setApplyByOthers(String applyByOthers) {
+    public void setApplyByOthers(Integer applyByOthers) {
         this.applyByOthers = applyByOthers;
     }
 

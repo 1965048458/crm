@@ -72,7 +72,17 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Department> queryDepartment(String customerId, String userId) {
-        List<Department> departmentList = customerMapper.queryDepartment(customerId);
+        List<Department> departmentList = customerMapper.queryDepartment(customerId,userId);
+        for(Department department:departmentList){
+            if(department.getEnclosureApply().getStatusCd().equals("PERMITTED")){
+                List<Department> subDepartmentList = customerMapper.querySubDepartment(department.getDeptId());
+                List<Contacts> contactsList = customerMapper.queryContacts(department.getDeptId());
+                if(subDepartmentList !=null && !subDepartmentList.isEmpty()){
+
+                }
+            }
+
+        }
         List<Contacts> contactsList = customerMapper.queryContacts(customerId);
         for (Department department : departmentList) {
             setEnclosureStatus(userId, department);
