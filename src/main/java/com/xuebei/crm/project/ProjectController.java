@@ -2,6 +2,7 @@ package com.xuebei.crm.project;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.xuebei.crm.dto.GsonView;
@@ -11,8 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import static com.xuebei.crm.login.LoginController.SUCCESS_FLG;
 
@@ -23,8 +28,8 @@ import static com.xuebei.crm.login.LoginController.SUCCESS_FLG;
 @RequestMapping("/project")
 public class ProjectController {
 
-    //@Autowired
-    //private ProjectService projectService;
+    @Autowired
+    private ProjectService projectService;
 
     @RequestMapping("/projectDetail")
     public String detail(){
@@ -32,11 +37,7 @@ public class ProjectController {
     }
 
 
-
-    @Autowired
-    private ProjectMapper projectMapper;
-
-    @RequestMapping("new")
+    @RequestMapping("/new")
     public String newProject() {
         return "newProject";
     }
@@ -50,28 +51,16 @@ public class ProjectController {
      * @param background
      * @return
      */
-    @RequestMapping("add")
-    public GsonView addProject(@RequestParam("name") String name,
-                               @RequestParam("content") String content,
-                               @RequestParam("agent") String agent,
-                               @RequestParam("person") String person,
-                               @RequestParam("background") String background ) {
+    @RequestMapping("/add")
+    public GsonView addProject(@RequestBody Project project,
+                               HttpServletRequest request) {
+        HttpSession session =  request.getSession();
+        String userId = (String) session.getAttribute("userId");
         GsonView gsonView = new GsonView();
-        Project project = new Project();
+        project.setUserId(userId);
         project.setProjectId(UUIDGenerator.genUUID());
-        project.setProjectNo("123");
-        project.setProjectNm(name);
-        project.setBackGround(background);
-        project.setProjectContent(content);
-        project.setStatus("1");
-     //   SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        project.setDeadLine(new Date());
-        project.setPriority(1);
-        project.setAgent(agent);
-        project.setOpportunityId(123);
-        project.setContractId("123");
-        project.setUserId("001c52e79ee0484ca8158e926b5c05a3");
-        projectMapper.insertProject(project);
+
+        projectService.addProject(project);
         gsonView.addStaticAttribute(SUCCESS_FLG, true);
         return gsonView;
     }
@@ -84,6 +73,17 @@ public class ProjectController {
     @RequestMapping("/projectList")
     public String project(){
         return "projectList";
+    }
+
+    @RequestMapping("/searchProject")
+    public GsonView searchProject(@RequestBody ProjectSearchParam param,
+                                  HttpServletRequest request){
+        String userId = (String) request.getSession().getAttribute("userId");
+        List<Project> projectList = projectService.searchProject(param);
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("projectList", projectList);
+        return gsonView;
     }
 
 }

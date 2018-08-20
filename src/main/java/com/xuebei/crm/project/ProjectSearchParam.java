@@ -4,9 +4,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-/**
- * Created by Administrator on 2018/8/17.
- */
 public class ProjectSearchParam {
 
     private String creator;

@@ -18,4 +18,6 @@ public interface ProjectMapper {
     List<Opportunity> queryOpportunitiesByUserId(String userId);
 
     String queryOpportunityNameByOpportunityId(Integer opportunityId);
+
+    List<Project> searchProject(ProjectSearchParam param);
 }

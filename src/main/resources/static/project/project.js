@@ -10,8 +10,6 @@ $(document).ready(function () {
             stages: ['未开始', '未交付', '交付及回款', '已结束'],
             filterPage: false,
             filterCondition: '',
-            imgFilter: '/images/opportunity/filterUnchecked.svg',
-            projectList: [],
             dateValueStart: '',
             newDate: 'all',
             dateValueEnd: '',
@@ -19,11 +17,11 @@ $(document).ready(function () {
             tempSub: [],
             subUserId: [],
             subsName: [],
-            subUser: '',
+            // subUser: '',
             creatorValue: 'all',
-            customerValue: 'all',
-            customerValueIn: '',
-            creatorV: '',
+            customerValue: '',
+            // customerValueIn: '',
+            // creatorV: '',
             stageValue: 'all'
         },
         methods: {
@@ -31,16 +29,16 @@ $(document).ready(function () {
                 var thisVue = this;
                 $.ajax({
                     type: 'get',
-                    url: '/opportunity/queryOpportunity',
+                    url: '/project/searchProject',
                     data: data,
                     dataType: 'json',
                     cache: false
                 }).done(function (result) {
                     if (result.successFlg) {
-                        thisVue.$set(thisVue, 'opportunityList', result.opportunityList);
+                        thisVue.$set(thisVue, 'projectList', result.projectList);
                     } else {
                         thisVue.errMsg = result.errMsg;
-                        alert(thisVue.errMsg);
+                        thisVue.showErrMsg = true;
                     }
                 })
             },
@@ -53,10 +51,11 @@ $(document).ready(function () {
             'search': function () {
                 this.imgFilter = '/images/opportunity/filterUnchecked.svg';
                 this.filterPage = false;
+                $('#' + this.filterCondition).css('background-color', '#F5F5F5');
                 this.filterCondition = '';
                 this.searchBar = !this.searchBar;
             },
-            'filterProject':function (project) {
+            'filterProject': function (project) {
                 return project.projectName.indexOf(this.keyWord) != -1;
             },
             'text': function () {
@@ -79,51 +78,70 @@ $(document).ready(function () {
             'filter': function () {
                 this.searchBar = false;
                 this.imgFilter = "/images/opportunity/filterChecked.svg";
-                this.filterPage = true;
+                $('#' + this.filterCondition).css('background-color', '#F5F5F5');
                 this.filterCondition = 'creator';
+                $('#creator').css('background-color', '#FFFFFF');
+                this.filterPage = true;
             },
             'all': function () {
                 this.imgFilter = '/images/opportunity/filterUnchecked.svg';
                 this.filterPage = false;
+                $('#' + this.filterCondition).css('background-color', '#F5F5F5');
                 this.filterCondition = '';
             },
             'before': function () {
                 this.imgFilter = '/images/opportunity/filterUnchecked.svg';
                 this.filterPage = false;
+                $('#' + this.filterCondition).css('background-color', '#F5F5F5');
                 this.filterCondition = '';
             },
             'after': function () {
                 this.imgFilter = '/images/opportunity/filterUnchecked.svg';
                 this.filterPage = false;
+                $('#' + this.filterCondition).css('background-color', '#F5F5F5');
                 this.filterCondition = '';
             },
             'cancelMask': function () {
                 this.filterPage = false;
+                $('#' + this.filterCondition).css('background-color', '#F5F5F5');
                 this.filterCondition = '';
             },
             'selCreator': function () {
+                $('#' + this.filterCondition).css('background-color', '#F5F5F5');
+                $('#creator').css('background-color', '#FFFFFF');
                 this.filterCondition = 'creator';
             },
             'selDate': function () {
+                $('#' + this.filterCondition).css('background-color', '#F5F5F5');
+                $('#date').css('background-color', '#FFFFFF');
                 this.filterCondition = 'date';
             },
             'selCustomer': function () {
+                $('#' + this.filterCondition).css('background-color', '#F5F5F5');
+                $('#customer').css('background-color', '#FFFFFF');
                 this.filterCondition = 'customer';
             },
             'selStatus': function () {
+                $('#' + this.filterCondition).css('background-color', '#F5F5F5');
+                $('#status').css('background-color', '#FFFFFF');
                 this.filterCondition = 'status';
             },
             'dateChecked': function () {
                 this.dateValueStart = '';
                 this.dateValueEnd = '';
             },
+            'removeAll':function () {
+                this.newDate = '';
+            },
             'creatorChecked': function () {
-                this.creatorV = '';
-                this.subUser = '';
+                // this.creatorV = '';
+                // this.subUser = '';
+                this.subUserId = [];
+                this.subsName = [];
                 this.tempSub = [];
             },
             'customerChecked': function () {
-                this.customerValueIn = '';
+                this.customerValue = '';
             },
             'backToFilter': function () {
                 this.tempSub = [];
@@ -151,26 +169,28 @@ $(document).ready(function () {
                 this.imgFilter = '/images/opportunity/filterChecked.svg';
                 this.filterCondition = '';
                 var data = {
-                    userId: this.creatorValue,
-                    subUser: this.subUser,
-                    customerName: this.customerValueIn,
-                    createStart: this.dateValueStart,
-                    createEnd: this.dateValueEnd,
-                    salesStatus: this.stageValue,
+                    creator: this.creatorValue,
+                    subMember: this.subUserId,
+                    customerName: this.customerValue,
+                    startTime: this.dateValueStart,
+                    endTime: this.dateValueEnd,
+                    status: this.stageValue
                 };
                 console.log(data);
-                this.showResult(data);
+                // this.showResult(data);
             },
             'reset': function () {
                 this.creatorValue = 'all';
                 this.stageValue = 'all';
                 this.newDate = 'all';
-                this.customerValue = 'all';
+                this.customerValue = '';
                 this.dateValueStart = '';
                 this.dateValueEnd = '';
-                this.creatorV = '';
-                this.customerValueIn = '';
-                this.subUser = '';
+                // this.creatorV = '';
+                // this.customerValueIn = '';
+                // this.subUser = '';
+                this.subUserId = [];
+                this.subsName = [];
                 this.tempSub = [];
             },
             'submit': function () {
@@ -182,12 +202,12 @@ $(document).ready(function () {
                     this.subUserId[i] = str[0];
                     this.subsName[i] = str[1];
                 }
-                var tempId = '';
+                /*var tempId = '';
                 for (var i = 0; i < this.subUserId.length; i++) {
                     tempId += this.subUserId[i] + ',';
                 }
-                this.subUser = tempId;
-                this.creatorV = this.subsName;
+                this.subUser = tempId;*/
+                // this.creatorV = this.subsName;
                 this.showPage = 'projectList';
             }
         }
