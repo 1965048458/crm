@@ -14,13 +14,14 @@ $(document).ready(function () {
     var saleVue = new Vue({
         el: '#saleVue',
         data: {
-            ind: ['A', 'B', 'C', 'D'],
-            stages: ['拿到老师手机及微信号', '提交方案', '以我方提供参数挂标', '中标'],
+            ind: ['A', 'B', 'C', 'D', 'F'],
+            stages: ['拿到老师手机及微信号', '提交方案', '以我方提供参数挂标', '中标', '输单'],
             showPage: 'basicInfo',
             preDate: '请选择',
             deliverDate: '请选择',
             saleStage: '请选择',
             selStage: '',
+            lastStage: '',
             contact: '请选择',
             temp: '',
             contactId: '',
@@ -78,15 +79,19 @@ $(document).ready(function () {
                 this.showPage = 'saleStage';
             },
             'done1': function () {
-                if (this.selStage === ""){
+                if (this.selStage === "") {
                     alert("销售阶段不能为空！");
                     return;
+                } else if (this.selStage === 'F') {
+                    this.saleStage = '输单';
+                } else {
+                    this.saleStage = this.selStage + '阶段';
                 }
-                this.saleStage = this.selStage;
+                this.lastStage = this.selStage;
                 this.showPage = 'basicInfo';
             },
             'done2': function () {
-                if (this.temp === ""){
+                if (this.temp === "") {
                     alert("客户联系人不能为空！");
                     return;
                 }
@@ -101,30 +106,30 @@ $(document).ready(function () {
                 this.showPage = 'customerContact';
                 this.showMyCustomers();
             },
-            'checkNull':function () {
-                if( this.contactId === "" ||
-                this.saleStage === "" || this.opportunityName === "" ){
+            'checkNull': function () {
+                if (this.contactId === "" ||
+                    this.lastStage === "" || this.opportunityName === "") {
                     alert("以下带星号内容均为必填项！");
                     return false;
-                }else{
-                    if(this.preDate === "请选择"){
+                } else {
+                    if (this.preDate === "请选择") {
                         this.preDate = '';
                     }
-                    if (this.deliverDate === "请选择"){
+                    if (this.deliverDate === "请选择") {
                         this.deliverDate = '';
                     }
                     return true;
                 }
             },
             'add': function () {
-                if (!this.checkNull()){
+                if (!this.checkNull()) {
                     return;
                 }
                 var thisVue = this;
                 var postData = {
                     customerId: this.customerId,
                     opportunityName: this.opportunityName,
-                    salesStatus: this.saleStage,
+                    salesStatus: this.lastStage,
                     amount: this.amount,
                     checkDate: this.preDate,
                     clinchDate: this.deliverDate,
