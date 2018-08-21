@@ -63,7 +63,7 @@ $(document).ready(function () {
             deliverDate: '请选择',
             saleStage: '请选择',
             selStage: '',
-            lastStage:'',
+            lastStage: '',
             content: '',
             opportunityName: '',
             amount: '',
@@ -75,10 +75,10 @@ $(document).ready(function () {
 
             opportunityId: '',
 
-            applySupports:'',
+            applySupports: '',
 
-            searchBar:false,
-            keyWord:'',
+            searchBar: false,
+            keyWord: '',
 
         },
         methods: {
@@ -118,16 +118,16 @@ $(document).ready(function () {
                 }
             },
             'search': function () {
-                    this.searchBar = !this.searchBar;
-                    if(this.searchBar == false){
-                        this.keyWord = '';
-                    }else{
-                        this.imgFilter = '/images/opportunity/filterUnchecked.svg';
-                        this.imgSort = '/images/opportunity/sortUnchecked.svg';
-                        this.showFilterPage = false;
-                        this.showSortPage = false;
-                        this.filterCondition = '';
-                    }
+                this.searchBar = !this.searchBar;
+                if (this.searchBar == false) {
+                    this.keyWord = '';
+                } else {
+                    this.imgFilter = '/images/opportunity/filterUnchecked.svg';
+                    this.imgSort = '/images/opportunity/sortUnchecked.svg';
+                    this.showFilterPage = false;
+                    this.showSortPage = false;
+                    this.filterCondition = '';
+                }
 
             },
             'clear': function () {
@@ -139,7 +139,7 @@ $(document).ready(function () {
                 $('#searchInput').focus();
             },
             'cancel': function () {
-                this.keyWord='';
+                this.keyWord = '';
                 $('#searchInput').blur();
                 this.searchBar = false;
             },
@@ -182,7 +182,6 @@ $(document).ready(function () {
                     createEnd: this.dateValueEnd,
                     salesStatus: this.stageValue,
                 };
-                console.log(data);
                 this.showResult(data);
             },
             'filter': function () {
@@ -330,8 +329,8 @@ $(document).ready(function () {
                 $.ajax({
                     type: 'get',
                     url: '/opportunity/opportunityDetail',
-                    data:{
-                        opportunityId:thisVue.opportunityId,
+                    data: {
+                        opportunityId: thisVue.opportunityId,
                     },
                     dataType: 'json',
                     cache: false
@@ -343,7 +342,7 @@ $(document).ready(function () {
                         thisVue.$set(thisVue, 'lastStage', result.opportunity.salesStatus);
                         if (result.contact != null) {
                             thisVue.$set(thisVue, 'contact', result.contact);
-                        }else{
+                        } else {
                             thisVue.$set(thisVue, 'contact', '');
                         }
                     }
@@ -410,7 +409,7 @@ $(document).ready(function () {
             },
             'back': function () {
                 this.showPage = 'opportunity';
-                this.showDetailPage ='detailPage';
+                this.showDetailPage = 'detailPage';
                 $("#detailBox").css('border-bottom', 'solid 2px #38A4F2');
                 $("#detail").css('color', '#38A4F2');
                 $("#relevantBox").removeAttr("style");
@@ -423,12 +422,12 @@ $(document).ready(function () {
                 this.show = 'modif';
                 this.preDate = this.opportunity.checkDateString;
                 this.deliverDate = this.opportunity.clinchDateString;
-                if(this.opportunity.salesStatus =='F'){
+                if (this.opportunity.salesStatus == 'F') {
                     this.saleStage = '输单';
-                }else{
-                    this.saleStage = this.opportunity.salesStatus+'阶段';
+                } else {
+                    this.saleStage = this.opportunity.salesStatus + '阶段';
                 }
-                this.selStage =  this.opportunity.salesStatus;
+                this.selStage = this.opportunity.salesStatus;
                 this.content = this.opportunity.content;
                 this.opportunityName = this.opportunity.opportunityName;
                 this.amount = this.opportunity.amount;
@@ -467,7 +466,7 @@ $(document).ready(function () {
                             $("#modifBox").removeAttr("style");
                             $("#modif").css('color', 'black');
                             thisVue.show = 'home';
-                            thisVue.showDetailPage ='detailPage';
+                            thisVue.showDetailPage = 'detailPage';
 
                         }, 1000);
                     }
@@ -482,11 +481,10 @@ $(document).ready(function () {
                     end: 2030,
                     defaultValue: [nowDate.getFullYear(), nowDate.getMonth() + 1, nowDate.getDate()],
                     onChange: function (result) {
-                        console.log(result);
+
                     },
                     onConfirm: function (result) {
                         thisVue.preDate = result[0] + '-' + handleTime(result[1]) + '-' + handleTime(result[2]);
-                        console.log(result);
                     }
                 });
             },
@@ -498,11 +496,9 @@ $(document).ready(function () {
                     end: 2030,
                     defaultValue: [nowDate.getFullYear(), nowDate.getMonth() + 1, nowDate.getDate()],
                     onChange: function (result) {
-                        console.log(result);
                     },
                     onConfirm: function (result) {
                         thisVue.deliverDate = result[0] + '-' + handleTime(result[1]) + '-' + handleTime(result[2]);
-                        console.log(result);
                     }
                 });
             },
@@ -516,7 +512,7 @@ $(document).ready(function () {
                 if (this.selStage === "") {
                     alert("销售阶段不能为空！");
                     return;
-                }else if (this.selStage === 'F') {
+                } else if (this.selStage === 'F') {
                     this.saleStage = '输单';
                 } else {
                     this.saleStage = this.selStage + '阶段';
@@ -545,7 +541,7 @@ $(document).ready(function () {
                     this.creatorValue = '';
                 }
             },
-            'keyWord':function () {
+            'keyWord': function () {
                 var thisVue = this;
                 var data = {
                     sortMode: this.sortMode,
@@ -555,7 +551,7 @@ $(document).ready(function () {
                     createStart: this.dateValueStart,
                     createEnd: this.dateValueEnd,
                     salesStatus: this.stageValue,
-                    keyWord:this.keyWord,
+                    keyWord: this.keyWord,
                 };
                 this.showResult(data);
             }

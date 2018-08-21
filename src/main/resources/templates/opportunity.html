@@ -87,7 +87,7 @@
                                 <span class="pull-left" style="margin-top: 7px;display: none">&nbsp;
                                      <img src="/images/back_icon.svg"/>
                                 </span>
-                            <span style="text-align: center;font-size: 20px;margin-top: 5px ">商机</span>
+                            <span style="text-align: center;font-size: 20px;margin-top: 5px;margin-left: 15% ">商机</span>
 
                             <span style="float:right;margin-top: 7px" @click="add">&nbsp;
                                     <img src="/images/journal/添加日志.svg"/>
@@ -162,7 +162,12 @@
                                     <p class="weui-media-box__desc" style="font-size: 12px;color: #888888;">
                                         {{opportunity.customerName}}
                                         <label class="pull-right" style="font-size: 12px;color: #101010;">
-                                            <span v-text="opportunity.checkDate.substring(0,11)"></span></label>
+                                            <span v-if="opportunity.checkDate === undefined"></span>
+                                            <span v-else>
+                                                <span v-text="opportunity.checkDate.substring(0,11)"></span>
+                                            </span>
+
+                                        </label>
                                     </p>
                                     <p class="weui-media-box__desc" style="font-size: 12px;color: #A0B4BB;">
                                         <span v-if="opportunity.salesStatus !='F'">
