@@ -82,31 +82,60 @@
                 <div class="weui-tab__panel">
 
                     <div class="weui-navbar" style="height: 50px;">
-                        <div id="titleBar" class="weui-navbar__item top-bar" style=" padding: 10px 10px;">
-                    <span class="pull-left" style="margin-top: 7px">&nbsp;
-                      <img src="/images/back_icon.svg"/></span>
-                            <span style="width: 76%;text-align: center;font-size: 20px;margin-top: 5px ">商机</span>
+                        <div id="titleBar"
+                             style=" width: 100%;text-align: center;display: inline-block;padding: 10px 10px;">
+                                <span class="pull-left" style="margin-top: 7px;display: none">&nbsp;
+                                     <img src="/images/back_icon.svg"/>
+                                </span>
+                            <span style="text-align: center;font-size: 20px;margin-top: 5px ">商机</span>
 
                             <span style="float:right;margin-top: 7px" @click="add">&nbsp;
-                      <img src="/images/journal/添加日志.svg"/></span>
+                                    <img src="/images/journal/添加日志.svg"/>
+                                </span>
+                            <span style="float:right;margin-top: 7px;margin-right: 10px" @click="search">&nbsp;
+                                    <img src="/images/search.svg"/>
+                                </span>
                         </div>
                     </div>
 
 
                     <div style="height: 50px"></div>
-                    <div class="weui-flex">
-                        <div class="weui-flex__item" style="text-align: center;height: 35px;padding-top: 5px">
+
+                    <div v-if="searchBar">
+                        <div class="weui-search-bar" id="searchBar">
+                            <div class="weui-search-bar__form">
+                                <div class="weui-search-bar__box">
+                                    <i class="weui-icon-search"></i>
+                                    <input type="text" class="weui-search-bar__input" id="searchInput"
+                                           placeholder="搜索" v-model="keyWord">
+                                    <a href="javascript:" class="weui-icon-clear" id="searchClear"
+                                       @click="clear"></a>
+                                </div>
+                                <label class="weui-search-bar__label" id="searchText" @click="text"
+                                       style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                                    <i class="weui-icon-search"></i>
+                                    <span>搜索</span>
+                                </label>
+                            </div>
+                            <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel"
+                               @click="cancel">取消</a>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <div class="weui-flex">
+                            <div class="weui-flex__item" style="text-align: center;height: 35px;padding-top: 5px">
                         <span @click="sort">
                             <label>排序</label>
                             <img :src='imgSort'>
 
                         </span>
-                        </div>
-                        <div class="weui-flex__item" style="text-align: center;height: 35px;padding-top: 5px">
+                            </div>
+                            <div class="weui-flex__item" style="text-align: center;height: 35px;padding-top: 5px">
                         <span @click="filter">
                             <label>筛选</label>
                             <img :src='imgFilter'>
                         </span>
+                            </div>
                         </div>
                     </div>
 
@@ -116,7 +145,7 @@
                         <p>
                             <img src="/images/opportunity/opportunityNull.svg"/>
                         </p>
-                        <p style="color: #CCCCCC; font-size: small">还没有创建相关的商机</p>
+                        <p style="color: #CCCCCC; font-size: small">还没有创建相关的商机哦，快去创建吧</p>
                     </div>
 
                     <div v-for="opportunity in opportunityList">
