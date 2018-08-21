@@ -20,8 +20,19 @@ public class OpportunitySearchParam {
 
     private String sortMode;
 
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
+
+    private String keyWord;
+    @Expose
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createStart;
+    @Expose
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createEnd;
     @Expose
@@ -122,6 +133,7 @@ public class OpportunitySearchParam {
     public void setCreateEnd(Date createEnd) {
         this.createEnd = createEnd;
     }
+
 
 
 }

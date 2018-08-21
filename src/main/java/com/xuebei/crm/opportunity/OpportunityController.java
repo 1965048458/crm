@@ -145,8 +145,10 @@ public class OpportunityController {
 //        String opportunityId = (String) request.getSession().getAttribute("opportunityId");
         GsonView gsonView = new GsonView();
         Opportunity opportunity = opportunityService.opportunityDetail(opportunityId);
-        if(opportunity.getCheckDate() != null && opportunity.getClinchDate()!=null){
+        if(opportunity.getCheckDate() != null){
             opportunity.setCheckDateString(opportunity.getCheckDateString());
+        }
+        if(opportunity.getClinchDate()!=null){
             opportunity.setClinchDateString(opportunity.getClinchDateString());
         }
         Contacts contact =customerService.queryOpportunityDetail(opportunityId);
@@ -184,13 +186,15 @@ public class OpportunityController {
         return gsonView;
     }
 
-    @RequestMapping("opportunityVisitRecord")
+    @RequestMapping("opportunityRecord")
     public GsonView opportunityVisitRecord(@RequestParam("opportunityId")int opportunityId,
                                        HttpServletRequest request) {
         String userId = (String) request.getSession().getAttribute("userId");
         List<VisitRecord> visitRecords = opportunityService.queryVisitRecord(opportunityId);
+//        List<applySupport> applySupports = opportunityService.queryApplySupport(opportunityId);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("visitRecords",visitRecords);
+//        gsonView.addStaticAttribute("applySupports",applySupports);
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }
