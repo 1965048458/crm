@@ -52,18 +52,25 @@
         </div>
 
         <div class="weui-cells">
-            <a class="weui-cell weui-cell_access" href="javascript:;" @Click="selectSupportType">
+            <a class="weui-cell weui-cell_access" href="javascript:;">
                 <div class="weui-cell__bd">
                     <p>支持类型</p>
                 </div>
-                <div class="weui-cell__ft" v-text="supportTypeString">未选择</div>
+                <div class="weui-cell__ft">
+                    <select id="supportType" class="weui-select select-my">
+                        <option value="">未选择</option>
+                        <th:block th:each="enumItem: ${supportTypes}">
+                            <option th:text="${enumItem.getName()}" th:value="${enumItem.name()}"></option>
+                        </th:block>
+                    </select>
+                </div>
             </a>
             <div class="weui-cell">
                 <div class="weui-cell__hd">
                     <label class="weui-label">执行者</label>
                 </div>
-                <div class="weui-cell__bd">
-                    <input  class="weui-input" style="text-align: right;" placeholder="根据支持类型由管理员配置">
+                <div class="weui-cell__ft">
+                    <label  class="weui-input" style="text-align: right;">根据支持类型由管理员配置</label>
                 </div>
             </div>
             <a class="weui-cell weui-cell_access" href="javascript:;">
@@ -80,9 +87,9 @@
                 </div>
                 <div class="weui-cell__ft">
                     <select id="selectOrder" class="weui-select select-my">
-                        <option value="">&thinsp;未选择</option>
-                        <option value="NORMAL">&thinsp;&thinsp;普通</option>
-                        <option value="URGENT">&thinsp;紧急</option>
+                        <option value="">未选择</option>
+                        <option value="NORMAL">普通</option>
+                        <option value="URGENT">紧急</option>
                         <option value="GREATEURGENT">十分紧急</option>
                     </select>
                 </div>
@@ -105,36 +112,36 @@
 
         <br>
 
-        <div id="buttonDiv" style="padding:0px 15px;">
+        <div id="buttonDiv" style="padding:0px 15px;" @click="submitSupport">
             <a href="javascript:;" class="weui-btn weui-btn_primary">确定</a>
         </div>
     </div>
 
-    <div v-show="showPage=='supportTypePage'">
-        <div class="top-bar center-box" style="border: hidden">
-            <span class="center-ele" style="font-size: 18px; color: #101010;">选择支持类型</span>
-        </div>
-        <div class="weui-cells_radio" style="background:#ffffff;">
-            <div th:each="enumItem: ${supportTypes}">
-                <label class="weui-cell weui-check__label">
-                    <div class="weui-cell__bd">
-                        <p th:text="${enumItem.getName()}"></p>
-                    </div>
-                    <div class="weui-cell__ft">
-                        <input type="radio" class="weui-check" name="supportType" th:value="${enumItem.name()}" v-model="supportType">
-                        <i class="weui-icon-checked"></i>
-                    </div>
-                </label>
-            </div>
-        </div>
+    <!--<div v-show="showPage=='supportTypePage'">-->
+        <!--<div class="top-bar center-box" style="border: hidden">-->
+            <!--<span class="center-ele" style="font-size: 18px; color: #101010;">选择支持类型</span>-->
+        <!--</div>-->
+        <!--<div class="weui-cells_radio" style="background:#ffffff;">-->
+            <!--<div th:each="enumItem: ${supportTypes}">-->
+                <!--<label class="weui-cell weui-check__label">-->
+                    <!--<div class="weui-cell__bd">-->
+                        <!--<p th:text="${enumItem.getName()}"></p>-->
+                    <!--</div>-->
+                    <!--<div class="weui-cell__ft">-->
+                        <!--<input type="radio" class="weui-check" name="supportType" th:value="${enumItem.name()}" v-model="supportType">-->
+                        <!--<i class="weui-icon-checked"></i>-->
+                    <!--</div>-->
+                <!--</label>-->
+            <!--</div>-->
+        <!--</div>-->
 
-        <br>
+        <!--<br>-->
 
-        <div id="confirmSelectTypeButtonDiv" style="padding:0px 15px;">
-            <a href="javascript:;" class="weui-btn weui-btn_primary" @click="confirmSupportType">确定</a>
-        </div>
+        <!--<div id="confirmSelectTypeButtonDiv" style="padding:0px 15px;">-->
+            <!--<a href="javascript:;" class="weui-btn weui-btn_primary" @click="confirmSupportType">确定</a>-->
+        <!--</div>-->
 
-    </div>
+    <!--</div>-->
 
     <div class="js_dialog" id="iosDialog2" style="opacity: 1;" v-show="showErrMsg">
         <div class="weui-mask"></div>

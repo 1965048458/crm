@@ -22,24 +22,27 @@ $(document).ready(function () {
             'confirmSupportType': function () {
                 this.showPage = 'mainPage';
             },
-            'submit': function () {
+            'submitSupport': function () {
+                var thisVue = this;
+
                 jQuery.ajax({
                     type: 'post',
-                    url: '',
+                    url: '/opportunity/action/submitApplySupport',
                     data: {
+                        salesOpportunityId: 144,
                         supportType: this.supportType,
                         expireDate: jQuery('#date').val(),
-                        order: jQuery('#order').val(),
+                        order: jQuery('#selectOrder').val(),
                         content: jQuery('#content').val()
                     },
                     dataType: 'json',
                     cache: false,
                     success: function(result) {
                         if (result.successFlg) {
-
+                            alert("成功");
                         } else {
-                            this.errMsg = result.errMsg;
-                            this.showErrMsg = true;
+                            thisVue.errMsg = result.errMsg;
+                            thisVue.showErrMsg = true;
                         }
                     }
                 });
