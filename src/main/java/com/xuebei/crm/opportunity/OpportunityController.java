@@ -200,4 +200,14 @@ public class OpportunityController {
 
         return "applySupport";
     }
+
+    @RequestMapping("failReason")
+    public GsonView failReason(@RequestParam("opportunityId")int opportunityId,
+                               @RequestParam("failReason")String failReason,
+                               HttpServletRequest request) {
+        GsonView gsonView = new GsonView();
+        opportunityService.insertFailReason(opportunityId,failReason);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
 }

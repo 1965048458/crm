@@ -33,6 +33,7 @@
         <result property="customerName" column="customer_nm"/>
         <result property="opportunityName" column="opportunity_nm"/>
         <result property="salesStatus" column="sales_status"/>
+        <result property="failReason" column="fail_reason"/>
         <result property="amount" column="amount"/>
         <result property="userId" column="user_id"/>
         <result property="create_ts" column="create_ts"/>
@@ -194,5 +195,11 @@
         <!--where s.sales_opportunity_id = #{opportunityId}-->
         <!--ORDER  BY s.create_ts DESC-->
     <!--</select>-->
+    
+    <update id="insertFailReason">
+        update sales_opportunity
+        set fail_reason=#{failReason}
+        where sales_opportunity_id= #{opportunityId}
+    </update>
 
 </mapper>

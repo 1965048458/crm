@@ -80,6 +80,8 @@ $(document).ready(function () {
             searchBar: false,
             keyWord: '',
 
+            failReason:'',
+
         },
         methods: {
             'showResult': function (data) {
@@ -435,6 +437,12 @@ $(document).ready(function () {
             'modifBack': function () {
                 this.show = 'home';
             },
+            'failBack': function () {
+                this.show = 'home';
+            },
+            'fail': function () {
+                this.show = 'failReason';
+            },
             'detailSubmit': function () {
                 var thisVue = this;
                 var postData = {
@@ -519,6 +527,24 @@ $(document).ready(function () {
                 }
                 this.lastStage = this.selStage;
                 this.show = 'modif';
+            },
+            'failSubmit':function(data){
+                var thisVue = this;
+                $.ajax({
+                    type: 'post',
+                    url: '/opportunity/failReason',
+                    data: {
+                        opportunityId: data,
+                        failReason:thisVue.failReason,
+                    },
+                    dataType: 'json',
+                    cache: false,
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        thisVue.showDetailResult();
+                        thisVue.show = 'home';
+                    }
+                })
             },
 
 
