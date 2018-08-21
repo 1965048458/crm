@@ -28,6 +28,18 @@
         <result property="gender" column="gender"/>
         <result property="typeName" column="type_name"/>
     </resultMap>
+    
+    <resultMap id="enclosureApplyMap" type="com.xuebei.crm.customer.EnclosureApply">
+        <id property="enclosureApplyId" column="enclosure_apply_id"/>
+        <result property="deptId" column="customer_dept_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="reasons" column="apply_reason"/>
+        <result property="startTime" column="apply_start_ts"/>
+        <result property="endTime" column="apply_end_ts"/>
+        <result property="statusCd" column="status_cd"/>
+        <result property="updateTime" column="update_ts"/>
+        <result property="applyTime" column="apply_ts"/>
+    </resultMap>
 
     <select id="searchDepts" resultMap="deptMap">
         select r2.* from
@@ -119,6 +131,21 @@
             'APPLYING',
             #{userId},
             NOW()
+        )
+    </insert>
+    
+    <insert id="delayApplyDepartment" >
+        INSERT INTO enclosure_delay_apply(
+        apply_ts, enclosure_apply_id, plan_end_ts, apply_reason, status_cd
+        ) VALUES (
+            NOW(),
+            (SELECT a.enclosure_apply_id FROM enclosure_apply AS a
+            WHERE a.customer_dept_id=#{deptId}
+            ORDER BY a.update_ts DESC
+            LIMIT 1),
+            adddate(NOW(), INTERVAL 3 MONTH),
+            NULL,
+            'APPLYING'
         )
     </insert>
 

@@ -24,7 +24,7 @@ public class DeptServiceImpl implements DeptService {
         List<Department> departmentList = deptMapper.searchDepts(customerId, userId);
         //设置圈地状态
         setEnclosureStatus(departmentList);
-        //添加联系人
+        //添加联系人和三级机构
         setSubDeptAndContacts(departmentList);
         return departmentList;
     }
@@ -61,7 +61,6 @@ public class DeptServiceImpl implements DeptService {
             }
         }
     }
-
     private void checkOpenSeaWarning(Department department){
         EnclosureApply enclosureApply = department.getEnclosureApply();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -76,14 +75,24 @@ public class DeptServiceImpl implements DeptService {
             e.printStackTrace();
         }
         if(diffDays<7){
-            OpenSeaWarning openSeaWarning = new OpenSeaWarning();
-            openSeaWarning.setDeptId(department.getDeptId());
-            openSeaWarning.setCreatedTime(enclosureApply.getStartTime());
-            openSeaWarning.setLastTimeFollow(enclosureApply.getUpdateTime());
-            openSeaWarning.setDeptName(department.getDeptName());
-            openSeaWarning.setLeftDays(String.valueOf(diffDays));
-            openSeaWarning.setLeftHours(String.valueOf(diffHours));
-            department.setOpenSeaWarning(openSeaWarning);
+            String delayApplyStatus = deptMapper.delayApplyStatus(department.getDeptId());
+            switch (delayApplyStatus){
+                case "APPLYING":
+                case "REJECTED":
+                    OpenSeaWarning openSeaWarning = new OpenSeaWarning();
+                    openSeaWarning.setDeptId(department.getDeptId());
+                    openSeaWarning.setCreatedTime(enclosureApply.getStartTime());
+                    openSeaWarning.setLastTimeFollow(enclosureApply.getUpdateTime());
+                    openSeaWarning.setDeptName(department.getDeptName());
+                    openSeaWarning.setLeftDays(String.valueOf(diffDays));
+                    openSeaWarning.setLeftHours(String.valueOf(diffHours));
+                    openSeaWarning.setDelayApplied(true);
+                    department.setOpenSeaWarning(openSeaWarning);
+                    break;
+                case "PERMITTED":
+                default:
+                    break;
+            }
         }
     }
     private void setSubDeptAndContacts(List<Department> departmentList) {
@@ -95,7 +104,6 @@ public class DeptServiceImpl implements DeptService {
             //三级机构
             List<Department> subDeptList = deptMapper.searchSubDepts(deptId);
             if(subDeptList != null && !subDeptList.isEmpty()){
-                department.setDepartmentList(subDeptList);
                 for(Department subDepartment:subDeptList){
                     String subDeptId = subDepartment.getDeptId();
                     //三级机构联系人
@@ -107,6 +115,7 @@ public class DeptServiceImpl implements DeptService {
                         contactsNum+=subContactsList.size();
                     }
                 }
+                department.setDepartmentList(subDeptList);
             }
             //二级机构联系人
             List<Contacts> contactsList = deptMapper.searchContacts(deptId);

@@ -255,8 +255,14 @@
             </div>
         </div>
 
-        <a href="javascript:;" class="weui-btn weui-btn_primary" style="margin-top: 40px"
-           @click="enclosureDelayApply(warningDetails.deptId, warningDetails.warnedOrganization)">申请延期</a>
+        <div v-if="warningDetails.isApplied">
+            <a href="javascript:;" class="weui-btn weui-btn_primary" style="margin-top: 40px;opacity: 0.5">已经申请延期</a>
+        </div>
+        <div v-else>
+            <a href="javascript:;" class="weui-btn weui-btn_primary" style="margin-top: 40px"
+               @click="enclosureDelayApply(warningDetails.deptId, warningDetails.warnedOrganization)">申请延期</a>
+        </div>
+
 
         <div class="js_dialog" id="delayApplyDialog" style="opacity: 1;display: none" v-show="showDelayApplyDialog">
             <div class="weui-mask"></div>

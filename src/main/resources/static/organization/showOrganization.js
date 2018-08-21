@@ -25,11 +25,13 @@ jQuery(document).ready(function () {
             submitReasons:'',
             warningDetails:{
                 deptId:'',
-                leftTime:'',
+                leftDays:'',
+                leftHours:'',
                 warnedOrganization:'',
                 createdTime:'',
                 times:'',
-                lastTime:''
+                lastTime:'',
+                isApplied:false
             },
             deptList:'',
             errMsg:'',
@@ -131,11 +133,12 @@ jQuery(document).ready(function () {
             },
             'openSeaWarningDetail':function (warning) {
                 this.warningDetails.deptId = warning.deptId;
-                this.warningDetails.leftTime = warning.leftTime;
+                this.warningDetails.leftDays = warning.leftDays;
+                this.warningDetails.leftHours = warning.leftHours;
                 this.warningDetails.warnedOrganization = warning.deptName;
                 this.warningDetails.createdTime = warning.createdTime;
-                this.warningDetails.times = warning.followTimes;
                 this.warningDetails.lastTime = warning.lastTimeFollow;
+                this.warningDetails.isApplied = warning.isDelayApplied;
                 this.showPage = 'showOpenSeaWarning';
 
             },
@@ -239,11 +242,11 @@ jQuery(document).ready(function () {
         methods: {
 
             'changeSubFold' : function (status) {
-                if(status == 'ENCLOSURE'){
-                    this.showSub = false;
+                if(status == 'PERMITTED'){
+                    this.showSub = !this.showSub;
                     this.setImgPath();
                 }else {
-                    this.showSub = !this.showSub;
+                    this.showSub = false;
                     this.setImgPath();
                 }
 
@@ -291,7 +294,11 @@ jQuery(document).ready(function () {
             },
             'addOpenSeaWarning':function (warning) {
                 if(warning != null){
-                    return "!!即将进入公海";
+                    if(warning.isDelayApplied == true){
+                        return "!!已申请延期";
+                    }else {
+                        return "!!即将进入公海";
+                    }
                 }
                 else {
                     return '';
@@ -304,6 +311,7 @@ jQuery(document).ready(function () {
             'openSeaWarning':function (warning) {
                 console.log("component.warning")
                 organizationVue.openSeaWarningDetail(warning);
+                
             },
             'toContactDetail':function (contactsId) {
                 window.location = '/customer/contactsInfo?contactsId='+contactsId;

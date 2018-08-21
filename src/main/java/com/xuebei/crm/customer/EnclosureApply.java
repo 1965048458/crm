@@ -30,6 +30,16 @@ public class EnclosureApply {
     private String enclosureByOthers;
     @Expose
     private String applyByOthers;
+    @Expose
+    private String customerName;
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
     public String getEnclosureByOthers() {
         return enclosureByOthers;

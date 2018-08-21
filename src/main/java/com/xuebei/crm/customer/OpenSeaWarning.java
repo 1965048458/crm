@@ -44,6 +44,17 @@ public class OpenSeaWarning {
     @Expose
     private String leftHours;
 
+    public Boolean getDelayApplied() {
+        return isDelayApplied;
+    }
+
+    public void setDelayApplied(Boolean delayApplied) {
+        isDelayApplied = delayApplied;
+    }
+
+    @Expose
+    private Boolean isDelayApplied;
+
     public String getLeftDays() {
         return leftDays;
     }
