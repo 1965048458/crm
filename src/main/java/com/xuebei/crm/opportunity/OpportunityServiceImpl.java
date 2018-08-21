@@ -84,4 +84,10 @@ public class OpportunityServiceImpl implements OpportunityService {
 //    public List<ApplySupport> queryApplySupport(int opportunityId){
 //      return opportunityMapper.queryApplySupport(opportunityId);
 //    }
+
+
+    @Override
+    public void insertFailReason(int opportunityId, String failReason) {
+        opportunityMapper.insertFailReason(opportunityId,failReason);
+    }
 }

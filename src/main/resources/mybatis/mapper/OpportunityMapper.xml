@@ -33,6 +33,7 @@
         <result property="customerName" column="customer_nm"/>
         <result property="opportunityName" column="opportunity_nm"/>
         <result property="salesStatus" column="sales_status"/>
+        <result property="failReason" column="fail_reason"/>
         <result property="amount" column="amount"/>
         <result property="userId" column="user_id"/>
         <result property="create_ts" column="create_ts"/>
@@ -76,7 +77,7 @@
 
     <select id="queryOpportunity" resultMap="opportunityMap">
         SELECT
-        s.sales_opportunity_id,s.customer_id,c.customer_nm,s.opportunity_nm,s.sales_status,s.amount,s.user_id,s.create_ts
+        s.sales_opportunity_id,s.customer_id,c.customer_nm,s.opportunity_nm,s.sales_status,s.amount,s.user_id,s.create_ts,s.check_date
         FROM sales_opportunity s
         inner join company_user cu on cu.user_id in(select cu.user_id from company_user cu where cu.company_id =
         (select cu.company_id from company_user cu where cu.user_id =#{scene})
@@ -113,11 +114,15 @@
 
         </if>
 
+        <if test="keyWord != null and keyWord != ''">
+            AND s.opportunity_nm LIKE CONCAT('%', #{keyWord}, '%')
+        </if>
+
         <if test="sortMode == 'ASC'">
-            ORDER BY s.create_ts ASC
+            ORDER BY s.check_date ASC
         </if>
         <if test="sortMode == 'DESC'">
-            ORDER BY s.create_ts DESC
+            ORDER BY s.check_date DESC
         </if>
     </select>
 
@@ -170,6 +175,7 @@
         inner join sales_opportunity so on so.sales_opportunity_id = om.sales_opportunity_id
         inner join crm_customer cc on cc.customer_id = so.customer_id
         where om.sales_opportunity_id = #{opportunityId}
+        ORDER  BY om.time_stamp DESC
     </select>
 
     <select id="queryVisitRecord" resultMap="visitMap">
@@ -179,13 +185,21 @@
         left join crm_user cu on cu.crm_user_id = (select c.crm_user_id from company_user c where c.user_id =j.user_id)
         where j.has_submitted = 1
         and vl.sales_opportunity_id = #{opportunityId}
+        ORDER  BY j.update_ts DESC
     </select>
 
     <!--<select id="queryApplySupport" resultMap="supportMap">-->
-        <!--select s.support_id,s.`type`,c.real_nm,s.`order`,s.expire_date,s.content from support s-->
+        <!--select s.support_id,s.`type`,c.real_nm,s.`order`,s.expire_date,s.content,s.create_ts from support s-->
         <!--inner join crm_user c on c.crm_user_id =-->
         <!--(select cu.crm_user_id from company_user cu where cu.user_id = s.creator_id)-->
         <!--where s.sales_opportunity_id = #{opportunityId}-->
+        <!--ORDER  BY s.create_ts DESC-->
     <!--</select>-->
+    
+    <update id="insertFailReason">
+        update sales_opportunity
+        set fail_reason=#{failReason}
+        where sales_opportunity_id= #{opportunityId}
+    </update>
 
 </mapper>

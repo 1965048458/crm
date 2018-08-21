@@ -26,6 +26,8 @@ public class Opportunity {
     @Expose
     private double amount;
     @Expose
+    private String failReason;
+    @Expose
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date checkDate;
     @Expose
@@ -199,5 +201,13 @@ public class Opportunity {
 
     public void setClinchDateString(String clinchDateString) {
         this.clinchDateString = clinchDateString;
+    }
+
+    public String getFailReason() {
+        return failReason;
+    }
+
+    public void setFailReason(String failReason) {
+        this.failReason = failReason;
     }
 }
