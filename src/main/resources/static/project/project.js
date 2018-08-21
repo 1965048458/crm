@@ -61,7 +61,7 @@ $(document).ready(function () {
             },
             'text': function () {
                 $('#searchBar').addClass('weui-search-bar_focusing');
-                //$('#searchText').focus();
+                $('#searchInput').focus();
             },
             'cancelSearch': function () {
                 this.keyWord = "";

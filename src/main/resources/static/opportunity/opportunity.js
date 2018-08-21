@@ -77,6 +77,9 @@ $(document).ready(function () {
 
             applySupports:'',
 
+            searchBar:false,
+            keyWord:'',
+
         },
         methods: {
             'showResult': function (data) {
@@ -113,6 +116,32 @@ $(document).ready(function () {
                 } else if (data == 'F') {
                     return '/images/opportunity/loseOrder.svg';
                 }
+            },
+            'search': function () {
+                    this.searchBar = !this.searchBar;
+                    if(this.searchBar == false){
+                        this.keyWord = '';
+                    }else{
+                        this.imgFilter = '/images/opportunity/filterUnchecked.svg';
+                        this.imgSort = '/images/opportunity/sortUnchecked.svg';
+                        this.showFilterPage = false;
+                        this.showSortPage = false;
+                        this.filterCondition = '';
+                    }
+
+            },
+            'clear': function () {
+                this.keyWord = '';
+                $('#searchInput').focus();
+            },
+            'text': function () {
+                $('#searchBar').addClass('weui-search-bar_focusing');
+                $('#searchInput').focus();
+            },
+            'cancel': function () {
+                this.keyWord='';
+                $('#searchInput').blur();
+                this.searchBar = false;
             },
             'add': function () {
                 window.location = "/opportunity/newSale";
@@ -251,7 +280,6 @@ $(document).ready(function () {
                     createEnd: this.dateValueEnd,
                     salesStatus: this.stageValue,
                 };
-                console.log(data);
                 this.showResult(data);
             },
             'reset': function () {
@@ -293,6 +321,7 @@ $(document).ready(function () {
                 thisVue.opportunityId = data;
                 thisVue.showDetailResult();
                 thisVue.showPage = 'toDetail';
+
             },
 
 
@@ -311,8 +340,11 @@ $(document).ready(function () {
                         thisVue.$set(thisVue, 'opportunity', result.opportunity);
                         thisVue.$set(thisVue, 'currentOppoId', result.opportunityId);
                         thisVue.$set(thisVue, 'creatorName', result.creatorName);
+                        thisVue.$set(thisVue, 'lastStage', result.opportunity.salesStatus);
                         if (result.contact != null) {
                             thisVue.$set(thisVue, 'contact', result.contact);
+                        }else{
+                            thisVue.$set(thisVue, 'contact', '');
                         }
                     }
                 })
@@ -391,7 +423,12 @@ $(document).ready(function () {
                 this.show = 'modif';
                 this.preDate = this.opportunity.checkDateString;
                 this.deliverDate = this.opportunity.clinchDateString;
-                this.saleStage = this.opportunity.salesStatus;
+                if(this.opportunity.salesStatus =='F'){
+                    this.saleStage = '输单';
+                }else{
+                    this.saleStage = this.opportunity.salesStatus+'阶段';
+                }
+                this.selStage =  this.opportunity.salesStatus;
                 this.content = this.opportunity.content;
                 this.opportunityName = this.opportunity.opportunityName;
                 this.amount = this.opportunity.amount;
@@ -423,7 +460,15 @@ $(document).ready(function () {
                         setTimeout(function () {
                             $('#toast').fadeOut(100);
                             thisVue.showDetailResult();
+                            $("#detailBox").css('border-bottom', 'solid 2px #38A4F2');
+                            $("#detail").css('color', '#38A4F2');
+                            $("#relevantBox").removeAttr("style");
+                            $("#relevant").css('color', 'black');
+                            $("#modifBox").removeAttr("style");
+                            $("#modif").css('color', 'black');
                             thisVue.show = 'home';
+                            thisVue.showDetailPage ='detailPage';
+
                         }, 1000);
                     }
                 });
@@ -500,6 +545,20 @@ $(document).ready(function () {
                     this.creatorValue = '';
                 }
             },
+            'keyWord':function () {
+                var thisVue = this;
+                var data = {
+                    sortMode: this.sortMode,
+                    userId: this.creatorValue,
+                    subUser: this.subUser,
+                    customerName: this.customerValueIn,
+                    createStart: this.dateValueStart,
+                    createEnd: this.dateValueEnd,
+                    salesStatus: this.stageValue,
+                    keyWord:this.keyWord,
+                };
+                this.showResult(data);
+            }
 
 
         }
