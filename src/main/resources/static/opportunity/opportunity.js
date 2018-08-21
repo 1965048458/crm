@@ -182,7 +182,6 @@ $(document).ready(function () {
                     createEnd: this.dateValueEnd,
                     salesStatus: this.stageValue,
                 };
-                console.log(data);
                 this.showResult(data);
             },
             'filter': function () {
@@ -482,11 +481,10 @@ $(document).ready(function () {
                     end: 2030,
                     defaultValue: [nowDate.getFullYear(), nowDate.getMonth() + 1, nowDate.getDate()],
                     onChange: function (result) {
-                        console.log(result);
+
                     },
                     onConfirm: function (result) {
                         thisVue.preDate = result[0] + '-' + handleTime(result[1]) + '-' + handleTime(result[2]);
-                        console.log(result);
                     }
                 });
             },
@@ -498,11 +496,9 @@ $(document).ready(function () {
                     end: 2030,
                     defaultValue: [nowDate.getFullYear(), nowDate.getMonth() + 1, nowDate.getDate()],
                     onChange: function (result) {
-                        console.log(result);
                     },
                     onConfirm: function (result) {
                         thisVue.deliverDate = result[0] + '-' + handleTime(result[1]) + '-' + handleTime(result[2]);
-                        console.log(result);
                     }
                 });
             },
