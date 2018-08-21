@@ -17,8 +17,8 @@ jQuery(document).ready(function () {
             agent: '',
             person: '',
             selStage: '',
-            status: '请选择',
-            lastStatus: '',
+            status: '未启动(创建后提交启动申请)',
+            lastStatus: 0,
             deadLine: '请选择',
             background: '',
             temp: '',
@@ -39,12 +39,15 @@ jQuery(document).ready(function () {
                 this.showPage = 'addProject';
             },
             'submit': function () {
-                if (this.name == '' || this.deadLine == '请选择' || this.contact == '请选择'
-                    || this.content === '' || this.amount === '') {
+                if (this.name === '' || this.contact === '请选择' ) {
                     alert("带星号内容必须填写！");
                     return;
                 } else {
                     var thisVue = this;
+                    if(thisVue.deadLine === '请选择' ){
+                        thisVue.deadLine = '';
+                    }
+
                     var postData = {
                         projectName: thisVue.name,
                         content: thisVue.content,
@@ -60,6 +63,7 @@ jQuery(document).ready(function () {
                         url: '/project/add',
                         data: JSON.stringify(postData),
                         dataType: 'json',
+                        contentType: 'application/json',
                         cache: false
                     }).done(function (result) {
                         if (result.successFlg) {

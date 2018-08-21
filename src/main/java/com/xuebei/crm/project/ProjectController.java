@@ -1,5 +1,8 @@
 package com.xuebei.crm.project;
 
+import com.xuebei.crm.customer.Contacts;
+import com.xuebei.crm.customer.CustomerService;
+import com.xuebei.crm.journal.JournalService;
 import com.xuebei.crm.opportunity.OpportunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +21,9 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import static com.xuebei.crm.login.LoginController.SUCCESS_FLG;
 
@@ -34,6 +39,12 @@ public class ProjectController {
 
     @Autowired
     private OpportunityService opportunityService;
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private JournalService journalService;
 
     @RequestMapping("/projectDetail")
     public String detail(){
@@ -80,10 +91,41 @@ public class ProjectController {
     }
 
     @RequestMapping("/searchProject")
-    public GsonView searchProject(@RequestBody ProjectSearchParam param,
+    public GsonView searchProject(ProjectSearchParam param,
                                   HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
+        param.setUserId(userId);
+
+        if (param.getSubUsers() != null && !param.getSubUsers().equals("") ){
+            String[] subUser = param.getSubUsers().split(",");
+            param.setSubMember(subUser);
+        }
+
+        if (param.getCreator() != null && !param.getCreator().equals("")){
+            if (param.getCreator().equals("sub")){
+                Set<String> childs = journalService.getAllSubordinatesUserId(param.getUserId());
+                String[] childsArray = new String[childs.size()];
+                childs.toArray(childsArray);
+                param.setSubMember(childsArray);
+            }
+        }
+
         List<Project> projectList = projectService.searchProject(param);
+        Iterator<Project> it = projectList.iterator();
+        while (it.hasNext()){
+            Project project = it.next();
+            if (project.getLeader() == null){
+                project.setLeader("无");
+            }
+            if (project.getDeadLine() != null){
+                project.setStrDeadLine(project.getDeadLine());
+            }
+            Contacts contact = customerService.queryOpportunityDetail(project.getProjectId().toString());
+            if (contact == null){
+                continue;
+            }
+            project.setCustomerName(contact.getCustomerName() +"-"+ contact.getDepartmentName());
+        }
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg", true);
         gsonView.addStaticAttribute("projectList", projectList);

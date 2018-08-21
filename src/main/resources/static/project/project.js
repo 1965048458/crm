@@ -17,7 +17,7 @@ $(document).ready(function () {
             tempSub: [],
             subUserId: [],
             subsName: [],
-            // subUser: '',
+            subUser: '',
             creatorValue: 'all',
             customerValue: '',
             // customerValueIn: '',
@@ -30,11 +30,13 @@ $(document).ready(function () {
                 $.ajax({
                     type: 'get',
                     url: '/project/searchProject',
-                    data: data,
+                    data: data,//JSON.stringify(data),
                     dataType: 'json',
+                    //contentType: 'application/json',
                     cache: false
                 }).done(function (result) {
                     if (result.successFlg) {
+                        console.log(result.projectList);
                         thisVue.$set(thisVue, 'projectList', result.projectList);
                     } else {
                         thisVue.errMsg = result.errMsg;
@@ -60,7 +62,7 @@ $(document).ready(function () {
             },
             'text': function () {
                 $('#searchBar').addClass('weui-search-bar_focusing');
-                //$('#searchText').focus();
+                $('#searchInput').focus();
             },
             'cancelSearch': function () {
                 this.keyWord = "";
@@ -88,18 +90,27 @@ $(document).ready(function () {
                 this.filterPage = false;
                 $('#' + this.filterCondition).css('background-color', '#F5F5F5');
                 this.filterCondition = '';
+                this.showResult();
             },
             'before': function () {
                 this.imgFilter = '/images/opportunity/filterUnchecked.svg';
                 this.filterPage = false;
                 $('#' + this.filterCondition).css('background-color', '#F5F5F5');
                 this.filterCondition = '';
+                var data = {
+                    before: 1
+                };
+                this.showResult(data);
             },
             'after': function () {
                 this.imgFilter = '/images/opportunity/filterUnchecked.svg';
                 this.filterPage = false;
                 $('#' + this.filterCondition).css('background-color', '#F5F5F5');
                 this.filterCondition = '';
+                var data = {
+                    after: 2
+                };
+                this.showResult(data);
             },
             'cancelMask': function () {
                 this.filterPage = false;
@@ -126,6 +137,25 @@ $(document).ready(function () {
                 $('#status').css('background-color', '#FFFFFF');
                 this.filterCondition = 'status';
             },
+            'showStatus':function (statusId) {
+                return this.stages[statusId];
+            },
+            'getStyle': function (statusId) {
+                var style;
+                if (statusId === '0'){
+                    style = {
+                        'font-size': '12px',
+                        'color': '#00A4FF'
+                    };
+                }else{
+                    style = {
+                        'font-size': '12px',
+                        'color': '#A0B4BB'
+                    };
+                }
+                return style;
+            }
+            ,
             'dateChecked': function () {
                 this.dateValueStart = '';
                 this.dateValueEnd = '';
@@ -135,7 +165,7 @@ $(document).ready(function () {
             },
             'creatorChecked': function () {
                 // this.creatorV = '';
-                // this.subUser = '';
+                this.subUser = '';
                 this.subUserId = [];
                 this.subsName = [];
                 this.tempSub = [];
@@ -167,17 +197,20 @@ $(document).ready(function () {
             'finish': function () {
                 this.filterPage = false;
                 this.imgFilter = '/images/opportunity/filterChecked.svg';
+                $('#' + this.filterCondition).css('background-color', '#F5F5F5');
+                this.filterCondition = 'creator';
+                $('#creator').css('background-color', '#FFFFFF');
                 this.filterCondition = '';
                 var data = {
                     creator: this.creatorValue,
-                    subMember: this.subUserId,
+                    subUsers: this.subUser,
                     customerName: this.customerValue,
                     startTime: this.dateValueStart,
                     endTime: this.dateValueEnd,
                     status: this.stageValue
                 };
                 console.log(data);
-                // this.showResult(data);
+                this.showResult(data);
             },
             'reset': function () {
                 this.creatorValue = 'all';
@@ -188,7 +221,7 @@ $(document).ready(function () {
                 this.dateValueEnd = '';
                 // this.creatorV = '';
                 // this.customerValueIn = '';
-                // this.subUser = '';
+                this.subUser = '';
                 this.subUserId = [];
                 this.subsName = [];
                 this.tempSub = [];
@@ -202,14 +235,16 @@ $(document).ready(function () {
                     this.subUserId[i] = str[0];
                     this.subsName[i] = str[1];
                 }
-                /*var tempId = '';
+                var tempId = '';
                 for (var i = 0; i < this.subUserId.length; i++) {
                     tempId += this.subUserId[i] + ',';
                 }
-                this.subUser = tempId;*/
+                this.subUser = tempId;
                 // this.creatorV = this.subsName;
                 this.showPage = 'projectList';
             }
         }
     });
+
+    projectVue.showResult();
 });

@@ -16,7 +16,6 @@
         <result property="leader" column="leader"/>
         <result property="userId" column="user_id"/>
         <result property="agent" column="agent"/>
-        <result property="leader" column="leader"/>
         <result property="createTime" column="create_ts"/>
         <result property="updaterId" column="updater_id"/>
         <result property="updateTime" column="update_ts"/>
@@ -39,6 +38,43 @@
          #{userId}, NOW()
         )
     </insert>
+
+    <select id="searchProject" resultMap="projectMap">
+        SELECT s.sales_opportunity_id, s.opportunity_nm, s.customer_id, s.sales_status, s.amount, s.clinch_date,
+            s.agent, s.leader, s.content, s.user_id, s.create_ts, s.updater_id, s.update_ts FROM sales_opportunity s
+        INNER JOIN crm_customer v ON s.customer_id = v.customer_id
+        LEFT JOIN company_customer c ON c.customer_id = s.customer_id
+        LEFT JOIN company_user u ON u.company_id = c.company_id
+        WHERE u.user_id = #{userId}
+        AND s.sales_status in ( '0' , '1', '2', '3')
+        <if test="startTime != null">
+            AND s.create_ts &gt; #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND s.create_ts  &lt;#{endTime}
+        </if>
+        <if test="status != null and status != 'all'">
+            AND s.sales_status = #{status}
+        </if>
+        <if test="creator == 'mine'">
+            AND s.user_id = #{userId}
+        </if>
+        <if test="subMember != null">
+            AND s.user_id IN
+            <foreach item="subId" collection="subMember" open="(" separator="," close=")">
+                #{subId}
+            </foreach>
+        </if>
+        <if test="customerName != null and customerName != ''">
+            AND v.customer_nm LIKE CONCAT('%', #{customerName}, '%')
+        </if>
+        <if test="before != null and before != ''">
+            AND s.sales_status in ('0', '1')
+        </if>
+        <if test="after != null and after != ''">
+            AND s.sales_status in ('2', '3')
+        </if>
+    </select>
 
     <select id="queryProjectsByUserId" resultMap="projectMap">
         SELECT project_id, project_nm

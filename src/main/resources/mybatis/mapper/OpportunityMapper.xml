@@ -84,7 +84,7 @@
         LEFT JOIN crm_customer c ON c.customer_id = s.customer_id
         WHERE s.sales_status IN ('A','B','C','D','F')
         <if test="createStart != null">
-            AND s.create_ts > #{createStart}
+            AND s.create_ts &gt; #{createStart}
         </if>
         <if test="createEnd != null">
             AND s.create_ts &lt; #{createEnd}

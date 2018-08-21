@@ -1,7 +1,9 @@
 package com.xuebei.crm.project;
 
 import com.google.gson.annotations.Expose;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -15,17 +17,25 @@ public class Project {
     @Expose
     private String projectName;
     @Expose
+    private String customerName;
+    @Expose
+    private Date deadLine;
+    @Expose
+    private String strDeadLine;
+    @Expose
     private String leader;
     @Expose
     private String status;
     @Expose
     private String content;
     @Expose
-    private Date deadLine;
-    @Expose
     private String agent;
     @Expose
+    private Double amount;
+    @Expose
     private String contactId;
+    @Expose
+    private String contactName;
     @Expose
     private String userId;
     @Expose
@@ -34,6 +44,30 @@ public class Project {
     private String updaterId;
     @Expose
     private String updateTime;
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
 
     public String getUpdaterId() {
         return updaterId;
@@ -107,10 +141,18 @@ public class Project {
         this.content = content;
     }
 
+    public void setStrDeadLine(Date deadLine) {
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+        this.strDeadLine = ft.format(deadLine);
+    }
+
+    public String getStrDeadLine() {
+        return strDeadLine;
+    }
+
     public Date getDeadLine() {
         return deadLine;
     }
-
     public void setDeadLine(Date deadLine) {
         this.deadLine = deadLine;
     }
