@@ -59,11 +59,7 @@ public class ProjectController {
 
     /**
      * 新建项目
-     * @param name
-     * @param content
-     * @param agent
-     * @param person
-     * @param background
+     * @param project
      * @return
      */
     @RequestMapping("/add")
@@ -104,6 +100,8 @@ public class ProjectController {
         if (param.getCreator() != null && !param.getCreator().equals("")){
             if (param.getCreator().equals("sub")){
                 Set<String> childs = journalService.getAllSubordinatesUserId(param.getUserId());
+                //删除自己的ID
+                childs.remove(userId);
                 String[] childsArray = new String[childs.size()];
                 childs.toArray(childsArray);
                 param.setSubMember(childsArray);
