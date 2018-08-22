@@ -977,7 +977,7 @@
 
 
                 <span v-if="opportunity.salesStatus !='F'" style="width:33% ">
-                    <a class="weui-tabbar__item">
+                    <a class="weui-tabbar__item" @click="clickApplySupport">
                         <img src="/images/opportunity/applySupport.svg" class="weui-tabbar__icon">
                         <p class="weui-tabbar__label">申请支持</p>
                     </a>

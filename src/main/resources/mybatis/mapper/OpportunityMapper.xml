@@ -41,9 +41,16 @@
         <result property="clinchDate" column="clinch_date"/>
         <result property="updater_id" column="updater_id"/>
         <result property="update_ts" column="update_ts"/>
-
     </resultMap>
 
+    <resultMap id="supportMap" type="com.xuebei.crm.opportunity.Support">
+        <id property="supportId" column="support_id"/>
+        <result property="salesOpportunityId" column="sales_opportunity_id"/>
+        <result property="supportType" column="support_type"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="order" column="support_order"/>
+        <result property="content" column="content"/>
+    </resultMap>
 
     <insert id="addSale" parameterType="com.xuebei.crm.opportunity.Opportunity"
             useGeneratedKeys="true" keyColumn="sales_opportunity_id" keyProperty="opportunityId">
@@ -188,19 +195,37 @@
         ORDER  BY j.update_ts DESC
     </select>
 
-    <!--<select id="queryApplySupport" resultMap="supportMap">-->
-        <!--select s.support_id,s.`type`,c.real_nm,s.`order`,s.expire_date,s.content,s.create_ts from support s-->
-        <!--inner join crm_user c on c.crm_user_id =-->
-        <!--(select cu.crm_user_id from company_user cu where cu.user_id = s.creator_id)-->
-        <!--where s.sales_opportunity_id = #{opportunityId}-->
-        <!--ORDER  BY s.create_ts DESC-->
-    <!--</select>-->
-    
+
     <update id="insertFailReason">
         update sales_opportunity
         set fail_reason=#{failReason}
         where sales_opportunity_id= #{opportunityId}
     </update>
+    <insert id="insertSupport">
+		INSERT INTO support (
+			sales_opportunity_id,
+			support_type,
+			expire_date,
+			support_order,
+			content,
+			create_ts,
+			creator_id,
+			updater_id,
+			update_ts
+		)
+		VALUES
+			(
+				#{salesOpportunityId},
+				#{supportType},
+				#{expireDate},
+				#{order},
+				#{content},
+				NOW(),
+				#{creatorId},
+				#{creatorId},
+				NOW()
+			);
+    </insert>
 
     <update id="deleteOpportunity">
         update sales_opportunity

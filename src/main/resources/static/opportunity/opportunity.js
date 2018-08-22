@@ -604,6 +604,10 @@ $(document).ready(function () {
                 })
             },
 
+            clickApplySupport: function () {
+                window.location = "/opportunity/applySupport?salesOpportunityId=" + this.opportunityId;
+            }
+
 
         },
         watch: {

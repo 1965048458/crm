@@ -15,6 +15,7 @@ $(document).ready(function () {
         methods: {
             'backPage': function () {
                 //do nothing
+                window.location = "/opportunity";
             },
             'selectSupportType': function () {
                 this.showPage = 'supportTypePage';
@@ -22,24 +23,27 @@ $(document).ready(function () {
             'confirmSupportType': function () {
                 this.showPage = 'mainPage';
             },
-            'submit': function () {
+            'submitSupport': function () {
+                var thisVue = this;
+
                 jQuery.ajax({
                     type: 'post',
-                    url: '',
+                    url: '/opportunity/action/submitApplySupport',
                     data: {
-                        supportType: this.supportType,
+                        salesOpportunityId: jQuery('#salesOpportunityId').val(),
+                        supportType: jQuery('#supportType').val(),
                         expireDate: jQuery('#date').val(),
-                        order: jQuery('#order').val(),
+                        order: jQuery('#selectOrder').val(),
                         content: jQuery('#content').val()
                     },
                     dataType: 'json',
                     cache: false,
                     success: function(result) {
                         if (result.successFlg) {
-
+                            window.location = "/opportunity";
                         } else {
-                            this.errMsg = result.errMsg;
-                            this.showErrMsg = true;
+                            thisVue.errMsg = result.errMsg;
+                            thisVue.showErrMsg = true;
                         }
                     }
                 });

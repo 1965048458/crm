@@ -32,6 +32,8 @@ public interface OpportunityMapper {
 
     List<VisitRecord> queryVisitRecord(@Param("opportunityId")int opportunityId);
 
+    Integer insertSupport(Support support);
+
 //    List<ApplySupport> queryApplySupport(@Param("opportunityId")int opportunityId);
 
     void insertFailReason(@Param("opportunityId")int opportunityId, @Param("failReason")String failReason);
