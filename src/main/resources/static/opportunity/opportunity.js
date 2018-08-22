@@ -596,15 +596,14 @@ $(document).ready(function () {
                         thisVue.showResult();
                         $('#toast1').fadeIn(100);
                         setTimeout(function () {
-                            $('#toast').fadeOut(100);
+                            $('#toast1').fadeOut(100);
                             thisVue.showPage = 'opportunity';
                             thisVue.showDetailPage = 'detailPage';
                         }, 500);
                     }
                 })
             },
-
-            clickApplySupport: function () {
+            'clickApplySupport': function () {
                 window.location = "/opportunity/applySupport?salesOpportunityId=" + this.opportunityId;
             }
 
@@ -629,7 +628,6 @@ $(document).ready(function () {
                 }
             },
             'keyWord': function () {
-                var thisVue = this;
                 var data = {
                     sortMode: this.sortMode,
                     userId: this.creatorValue,
