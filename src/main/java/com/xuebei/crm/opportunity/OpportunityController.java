@@ -202,8 +202,10 @@ public class OpportunityController {
 
 
     @RequestMapping("applySupport")
-    public String applySupport(ModelMap modelMap) {
+    public String applySupport(@RequestParam("salesOpportunityId") Integer salesOpportunityId,
+                                ModelMap modelMap) {
         SupportTypeEnum[] supportTypes = SupportTypeEnum.values();
+        modelMap.addAttribute("salesOpportunityId", salesOpportunityId);
         modelMap.addAttribute("supportTypes", supportTypes);
 
         return "applySupport";

@@ -45,6 +45,8 @@
 
 <div id="applySupportVue">
 
+    <input type="hidden" id="salesOpportunityId" th:value="${salesOpportunityId}"/>
+
     <div v-show="showPage == 'mainPage'">
         <div class="top-bar center-box" style="border: hidden">
             <span @click="backPage" class="pull-left"><img src="/images/back_icon.svg" style="margin-top:3px"/></span>

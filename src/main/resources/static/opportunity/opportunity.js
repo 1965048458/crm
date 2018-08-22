@@ -521,6 +521,10 @@ $(document).ready(function () {
                 this.show = 'modif';
             },
 
+            clickApplySupport: function () {
+                window.location = "/opportunity/applySupport?salesOpportunityId=" + this.opportunityId;
+            }
+
 
         },
         watch: {

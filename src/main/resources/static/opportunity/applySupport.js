@@ -15,6 +15,7 @@ $(document).ready(function () {
         methods: {
             'backPage': function () {
                 //do nothing
+                window.location = "/opportunity";
             },
             'selectSupportType': function () {
                 this.showPage = 'supportTypePage';
@@ -29,8 +30,8 @@ $(document).ready(function () {
                     type: 'post',
                     url: '/opportunity/action/submitApplySupport',
                     data: {
-                        salesOpportunityId: 144,
-                        supportType: this.supportType,
+                        salesOpportunityId: jQuery('#salesOpportunityId').val(),
+                        supportType: jQuery('#supportType').val(),
                         expireDate: jQuery('#date').val(),
                         order: jQuery('#selectOrder').val(),
                         content: jQuery('#content').val()
@@ -39,7 +40,7 @@ $(document).ready(function () {
                     cache: false,
                     success: function(result) {
                         if (result.successFlg) {
-                            alert("成功");
+                            window.location = "/opportunity";
                         } else {
                             thisVue.errMsg = result.errMsg;
                             thisVue.showErrMsg = true;
