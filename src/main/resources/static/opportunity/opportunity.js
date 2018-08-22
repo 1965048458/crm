@@ -82,6 +82,9 @@ $(document).ready(function () {
 
             failReason:'',
 
+            showOption: false,
+            showDialog:false,
+
         },
         methods: {
             'showResult': function (data) {
@@ -543,6 +546,60 @@ $(document).ready(function () {
                     if (result.successFlg) {
                         thisVue.showDetailResult();
                         thisVue.show = 'home';
+                    }
+                })
+            },
+            'cancelOtherEvent': function () {
+               this.showOption = false;
+            },
+            'other':function () {
+                this.showOption = !this.showOption;
+            },
+            'deleteOppo': function () {
+                this.showOption = false;
+                this.showDialog = true;
+            },
+            'cancelDialog': function () {
+                this.showDialog = false;
+            },
+            'deleteConfirm': function () {
+                var thisVue = this;
+                $.ajax({
+                    type: 'get',
+                    url: '/opportunity/deleteOpportunity',
+                    data: {
+                        opportunityId: thisVue.opportunityId,
+                    },
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        thisVue.showDialog = false;
+                        thisVue.showResult();
+                        thisVue.showPage = 'opportunity';
+                        thisVue.showDetailPage = 'detailPage';
+                    }
+                })
+            },
+            'convert': function () {
+                var thisVue = this;
+                $.ajax({
+                    type: 'get',
+                    url: '/opportunity/convertOpportunity',
+                    data: {
+                        opportunityId: thisVue.opportunityId,
+                    },
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        thisVue.showResult();
+                        $('#toast1').fadeIn(100);
+                        setTimeout(function () {
+                            $('#toast').fadeOut(100);
+                            thisVue.showPage = 'opportunity';
+                            thisVue.showDetailPage = 'detailPage';
+                        }, 500);
                     }
                 })
             },

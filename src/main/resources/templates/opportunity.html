@@ -70,6 +70,13 @@
             height: 40px;
         }
 
+        .other-option {
+            position: absolute;
+            bottom: 50px;
+            right: 60px;
+            z-index: 99999;
+        }
+
     </style>
 </head>
 <body>
@@ -724,7 +731,7 @@
                                 <div v-if="opportunity.salesStatus !='F'">
                                     <div class="weui-cells" style="font-size: small">
                                         <div class="weui-cell">
-                                            <label style="margin-left: 0px;">输单原因:</label>
+                                            <label style="margin-left: 0px;">输单原因</label>
                                         </div>
                                         <div class="weui-cell">
                                             <div class="weui-cell__bd" style="color: darkgray;">
@@ -740,7 +747,7 @@
                                             <a class="weui-cell weui-cell_access"
                                                @click="fail()">
                                                 <div class="weui-cell__bd">
-                                                    <p>输单原因:</p>
+                                                    <p>输单原因</p>
                                                 </div>
                                                 <div class="weui-cell__ft">请输入输单原因</div>
                                             </a>
@@ -957,20 +964,78 @@
             </div>
 
 
-            <div class="weui-tabbar">
-                <a class="weui-tabbar__item">
-                    <img src="/images/opportunity/applySupport.svg" class="weui-tabbar__icon">
-                    <p class="weui-tabbar__label">申请支持</p>
-                </a>
-                <a class="weui-tabbar__item "> <!--weui-bar__item_on-->
-                    <img src="/images/opportunity/convertToProject.svg" class="weui-tabbar__icon">
-                    <p class="weui-tabbar__label">转为项目</p>
-                </a>
-                <a class="weui-tabbar__item">
-                    <img src="/images/opportunity/others.svg" class="weui-tabbar__icon">
-                    <p class="weui-tabbar__label">其他</p>
-                </a>
+            <div id="toast1" style="display: none;">
+                <div class="weui-mask_transparent"></div>
+                <div class="weui-toast">
+                    <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                    <p class="weui-toast__content">成功转为项目</p>
+                </div>
             </div>
+
+
+            <div class="weui-tabbar">
+
+
+                <span v-if="opportunity.salesStatus !='F'" style="width:33% ">
+                    <a class="weui-tabbar__item">
+                        <img src="/images/opportunity/applySupport.svg" class="weui-tabbar__icon">
+                        <p class="weui-tabbar__label">申请支持</p>
+                    </a>
+                </span>
+                <span v-else style="width:33% ">
+                    <a class="weui-tabbar__item" style="opacity: 0.5">
+                        <img src="/images/opportunity/applySupport.svg" class="weui-tabbar__icon">
+                        <p class="weui-tabbar__label">申请支持</p>
+                    </a>
+                </span>
+
+                <span v-if="opportunity.salesStatus ==='D' " style="width:33% ">
+                    <a class="weui-tabbar__item " @click="convert">
+                        <img src="/images/opportunity/convertToProject.svg" class="weui-tabbar__icon">
+                        <p class="weui-tabbar__label">转为项目</p>
+                    </a>
+                </span>
+                <span v-else style="width:33% ">
+                    <a class="weui-tabbar__item " style="opacity: 0.5">
+                        <img src="/images/opportunity/convertToProject.svg" class="weui-tabbar__icon">
+                        <p class="weui-tabbar__label">转为项目</p>
+                    </a>
+                </span>
+                <span style="width:33% ">
+                    <a class="weui-tabbar__item" @click="other">
+                        <img src="/images/opportunity/others.svg" class="weui-tabbar__icon">
+                        <p class="weui-tabbar__label">其他</p>
+                    </a>
+                </span>
+            </div>
+
+            <div id="othersOption" v-show="showOption === true">
+                <div class="weui-mask" @click="cancelOtherEvent"></div>
+                <div class="other-option">
+                    <div class="weui-actionsheet__menu" style="border-radius: 0.33em">
+                        <a @click="deleteOppo">
+                            <div class="weui-actionsheet__cell "
+                                 style="font-size: medium;color: #0D0D0D;padding: 10px 15px">删除商机
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!--BEGIN dialog1-->
+            <div class="js_dialog" id="iosDialog1" style="display: none;" v-show="showDialog">
+                <div class="weui-mask"></div>
+                <div class="weui-dialog">
+                    <div class="weui-dialog__hd"><strong class="weui-dialog__title">商机</strong></div>
+                    <div class="weui-dialog__bd">删除该条商机</div>
+                    <div class="weui-dialog__ft">
+                        <a @click="deleteConfirm" class="weui-dialog__btn weui-dialog__btn_default">确认</a>
+                        <a @click="cancelDialog" class="weui-dialog__btn weui-dialog__btn_primary">取消</a>
+                    </div>
+                </div>
+            </div>
+            <!--END dialog1-->
+
         </div>
 
         <div id="fail" v-show="show ==='failReason'">
@@ -1006,15 +1071,9 @@
                         </div>
                     </div>
 
-                    <!--BEGIN toast-->
-                    <!--<div id="toast" style="display: none;">-->
-                    <!--<div class="weui-mask_transparent"></div>-->
-                    <!--<div class="weui-toast">-->
-                    <!--<i class="weui-icon-success-no-circle weui-icon_toast"></i>-->
-                    <!--<p class="weui-toast__content">修改成功</p>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--end toast-->
+
+
+
                 </div>
 
 

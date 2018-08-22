@@ -210,4 +210,22 @@ public class OpportunityController {
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }
+
+    @RequestMapping("deleteOpportunity")
+    public GsonView deleteOpportunity(@RequestParam("opportunityId")int opportunityId,
+                               HttpServletRequest request) {
+        GsonView gsonView = new GsonView();
+        opportunityService.deleteOpportunity(opportunityId);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
+
+    @RequestMapping("convertOpportunity")
+    public GsonView convertOpportunity(@RequestParam("opportunityId")int opportunityId,
+                                      HttpServletRequest request) {
+        GsonView gsonView = new GsonView();
+        opportunityService.convertOpportunity(opportunityId);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
 }
