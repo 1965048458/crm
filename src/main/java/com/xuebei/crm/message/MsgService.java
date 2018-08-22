@@ -7,5 +7,8 @@ import java.util.List;
  */
 public interface MsgService {
 
-    List<Query> searchQueryList(String userId);
+    List<Apply> applyList(String userId);
+
+    void applyCheck(ApplyTypeEnum applyType,String applyId,Boolean isApprove,String userId);
+
 }

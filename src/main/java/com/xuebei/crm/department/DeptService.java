@@ -15,4 +15,6 @@ public interface DeptService {
 
     String warningBeforeCreate(String deptName,String customerId, String userId);
 
+    void enclosureApply(String deptId,String userId);
+
 }

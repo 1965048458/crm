@@ -148,4 +148,9 @@ public class DeptServiceImpl implements DeptService {
         return editPermitted;
     }
 
+    @Override
+    public void enclosureApply(String deptId, String userId) {
+
+    }
+
 }

@@ -23,13 +23,26 @@ public class MsgController {
     @Autowired
     private MsgMapper msgMapper;
 
-    @RequestMapping("/exam")
-    GsonView queryList(HttpServletRequest request){
-        String userId = (String)request.getSession().getAttribute("userId");
-        List<Query> queryList = msgService.searchQueryList(userId);
+    @RequestMapping("applyList")
+    GsonView applyList(HttpServletRequest request){
+        String userId = (String) request.getSession().getAttribute("userId");
+        List<Apply> applyList = msgService.applyList(userId);
         GsonView gsonView = new GsonView();
-        gsonView.addStaticAttribute("successFlg",true);
-        gsonView.addStaticAttribute("queryList",queryList);
+        gsonView.addStaticAttribute("successFlag",true);
+        gsonView.addStaticAttribute("applyList",applyList);
         return gsonView;
     }
+
+    @RequestMapping("applyCheck")
+    GsonView applyCheck(@RequestParam("applyType") ApplyTypeEnum applyType,
+                        @RequestParam("applyId") String applyId,
+                        @RequestParam("isApprove") Boolean isApprove,
+                        HttpServletRequest request){
+        GsonView gsonView = new GsonView();
+        String userId = (String) request.getSession().getAttribute("userId");
+        msgService.applyCheck(applyType,applyId,isApprove,userId);
+        gsonView.addStaticAttribute("successFlag",true);
+        return gsonView;
+    }
+
 }

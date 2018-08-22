@@ -24,10 +24,8 @@ public class Journal {
     private Date modifyTs;
     @Expose
     private Boolean hasSubmitted;
-
     @Expose
     private List<VisitRecord> visitRecords;
-
     @Expose
     private User user;
 
