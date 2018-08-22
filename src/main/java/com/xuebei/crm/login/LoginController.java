@@ -205,7 +205,6 @@ public class LoginController {
 
         String realName = loginRegisterMapper.queryRealName(crmUserId);
         String tel = loginRegisterMapper.queryTel(crmUserId);
-//        String  tel ="13777875102";
         String companyName = companyMapper.queryCompanyName(userId);
         String result = companyMapper.queryStatus(userId);
 

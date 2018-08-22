@@ -1,7 +1,9 @@
 package com.xuebei.crm.project;
 
 import com.google.gson.annotations.Expose;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -9,76 +11,118 @@ import java.util.Date;
  */
 public class Project {
     @Expose
-    private String projectId;
+    private Integer projectId;
     @Expose
-    private String projectNo;
+    private String customerId;
     @Expose
-    private String projectNm;
+    private String projectName;
     @Expose
-    private String backGround;
-    @Expose
-    private String status;
-    @Expose
-    private String projectContent;
+    private String customerName;
     @Expose
     private Date deadLine;
     @Expose
-    private Integer priority;
+    private String strDeadLine;
+    @Expose
+    private String leader;
+    @Expose
+    private String status;
+    @Expose
+    private String content;
     @Expose
     private String agent;
     @Expose
-    private Integer opportunityId;
+    private Double amount;
     @Expose
-    private String contractId;
+    private String contactId;
+    @Expose
+    private String contactName;
     @Expose
     private String userId;
+    @Expose
+    private String createTime;
+    @Expose
+    private String updaterId;
+    @Expose
+    private String updateTime;
 
-    public String getProjectId() {
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getUpdaterId() {
+        return updaterId;
+    }
+
+    public void setUpdaterId(String updaterId) {
+        this.updaterId = updaterId;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public Integer getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(String projectId) {
+    public void setProjectId(Integer projectId) {
         this.projectId = projectId;
     }
 
-    public String getContractId() {
-        return contractId;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setContractId(String contractId) {
-        this.contractId = contractId;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
-    public String getProjectNo() {
-        return projectNo;
+    public String getLeader() {
+        return leader;
     }
 
-    public void setProjectNo(String projectNo) {
-        this.projectNo = projectNo;
-    }
-
-    public String getProjectNm() {
-        return projectNm;
-    }
-
-    public void setProjectNm(String projectNm) {
-        this.projectNm = projectNm;
-    }
-
-    public String getBackGround() {
-        return backGround;
-    }
-
-    public void setBackGround(String backGround) {
-        this.backGround = backGround;
+    public void setLeader(String leader) {
+        this.leader = leader;
     }
 
     public String getStatus() {
@@ -89,28 +133,28 @@ public class Project {
         this.status = status;
     }
 
-    public String getProjectContent() {
-        return projectContent;
+    public String getContent() {
+        return content;
     }
 
-    public void setProjectContent(String projectContent) {
-        this.projectContent = projectContent;
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setStrDeadLine(Date deadLine) {
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+        this.strDeadLine = ft.format(deadLine);
+    }
+
+    public String getStrDeadLine() {
+        return strDeadLine;
     }
 
     public Date getDeadLine() {
         return deadLine;
     }
-
     public void setDeadLine(Date deadLine) {
         this.deadLine = deadLine;
-    }
-
-    public Integer getPriority() {
-        return priority;
-    }
-
-    public void setPriority(Integer priority) {
-        this.priority = priority;
     }
 
     public String getAgent() {
@@ -121,12 +165,20 @@ public class Project {
         this.agent = agent;
     }
 
-    public Integer getOpportunityId() {
-        return opportunityId;
+    public String getContactId() {
+        return contactId;
     }
 
-    public void setOpportunityId(Integer opportunityId) {
-        this.opportunityId = opportunityId;
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public int hashCode() {

@@ -719,14 +719,51 @@
 
                                     </div>
                                 </div>
-                                <div class="weui-cell">
-                                    <label style="margin-left: 0px;">输单原因</label>
-                                </div>
-                                <div class="weui-cell">
-                                    <div class="weui-cell__bd" style="color: darkgray;;">
-                                        <span>暂无</span>
+
+
+                                <div v-if="opportunity.salesStatus !='F'">
+                                    <div class="weui-cells" style="font-size: small">
+                                        <div class="weui-cell">
+                                            <label style="margin-left: 0px;">输单原因:</label>
+                                        </div>
+                                        <div class="weui-cell">
+                                            <div class="weui-cell__bd" style="color: darkgray;">
+                                                <span>暂无</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <div v-else>
+                                    <div v-if="opportunity.failReason ===undefined ">
+                                        <div class="weui-cells" style="font-size: small">
+                                            <a class="weui-cell weui-cell_access"
+                                               @click="fail()">
+                                                <div class="weui-cell__bd">
+                                                    <p>输单原因:</p>
+                                                </div>
+                                                <div class="weui-cell__ft">请输入输单原因</div>
+                                            </a>
+
+                                        </div>
+                                    </div>
+
+                                    <div v-else>
+                                        <div class="weui-cells" style="font-size: small">
+                                            <div class="weui-cell">
+                                                <label style="margin-left: 0px;">输单原因:</label>
+                                            </div>
+                                            <div class="weui-cell">
+                                                <div class="weui-cell__bd" style="color: darkgray;">
+                                                    <span>{{opportunity.failReason}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
                             </div>
 
                             <div class="weui-cells" style="font-size: small">
@@ -925,7 +962,7 @@
                     <img src="/images/opportunity/applySupport.svg" class="weui-tabbar__icon">
                     <p class="weui-tabbar__label">申请支持</p>
                 </a>
-                <a class="weui-tabbar__item weui-bar__item_on" href="/">
+                <a class="weui-tabbar__item "> <!--weui-bar__item_on-->
                     <img src="/images/opportunity/convertToProject.svg" class="weui-tabbar__icon">
                     <p class="weui-tabbar__label">转为项目</p>
                 </a>
@@ -935,6 +972,57 @@
                 </a>
             </div>
         </div>
+
+        <div id="fail" v-show="show ==='failReason'">
+
+            <div class="center-box">
+
+                <div id="inputInfo">
+                    <div class="top-bar" style="height: 40px">
+                        <span @click="failBack" class="pull-left">
+                                <img src="/images/back_icon.svg"
+                                     style="margin-top:10px;margin-left: 10px"/>
+                        </span>
+
+                        <span style="height: 40px;display: inline-block ;padding-top: 5px;">输单原因</span>
+
+                        <span class="pull-right" style="margin-top: 7px; color: #28b3ff"
+                              @click="failSubmit(opportunity.opportunityId)"> 完成 &nbsp; </span>
+                    </div>
+
+                    <div class="list">
+                        <div class="page__bd">
+
+
+                            <div class="weui-cells weui-cells_form">
+                                <div class="weui-cell">
+                                    <div class="weui-cell__bd">
+                                        <textarea class="weui-textarea" placeholder="请输入输单原因" rows="24"
+                                                  v-model="failReason"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!--BEGIN toast-->
+                    <!--<div id="toast" style="display: none;">-->
+                    <!--<div class="weui-mask_transparent"></div>-->
+                    <!--<div class="weui-toast">-->
+                    <!--<i class="weui-icon-success-no-circle weui-icon_toast"></i>-->
+                    <!--<p class="weui-toast__content">修改成功</p>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--end toast-->
+                </div>
+
+
+            </div>
+
+
+        </div>
+
 
         <div id="modificationOppo" v-show="show ==='modif'">
 

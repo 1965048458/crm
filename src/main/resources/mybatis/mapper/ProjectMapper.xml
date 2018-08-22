@@ -6,8 +6,19 @@
 <mapper namespace="com.xuebei.crm.project.ProjectMapper">
     
     <resultMap id="projectMap" type="com.xuebei.crm.project.Project">
-        <id property="projectId" column="project_id"/>
-        <result property="projectNm" column="project_nm"/>
+        <id property="projectId" column="sales_opportunity_id"/>
+        <result property="projectName" column="opportunity_nm"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="status" column="sales_status"/>
+        <result property="amount" column="amount"/>
+        <result property="deadLine" column="clinch_date"/>
+        <result property="content" column="content"/>
+        <result property="leader" column="leader"/>
+        <result property="userId" column="user_id"/>
+        <result property="agent" column="agent"/>
+        <result property="createTime" column="create_ts"/>
+        <result property="updaterId" column="updater_id"/>
+        <result property="updateTime" column="update_ts"/>
     </resultMap>
 
     <resultMap id="opportunityMap" type="com.xuebei.crm.opportunity.Opportunity">
@@ -15,16 +26,55 @@
         <result property="opportunityName" column="opportunity_nm"/>
     </resultMap>
 
-    <insert id="insertProject" parameterType="com.xuebei.crm.project.Project">
-        INSERT INTO  project
-        ( project_id, project_no, project_nm, background, project_content,
-        status_cd, deadline, priority, agent, sales_opportunity_id,  contract_id, user_id),
+    <insert id="insertProject" parameterType="com.xuebei.crm.project.Project"
+            useGeneratedKeys="true" keyColumn="sales_opportunity_id" keyProperty="projectId">
+        INSERT INTO  sales_opportunity
+        ( `customer_id`, `opportunity_nm`,
+          `sales_status`, `amount`, `clinch_date`, `agent`, `leader`,
+          `content`, `user_id`, `create_ts`, `updater_id`, `update_ts`)
         VALUES
-        ( #{projectId},#{projectNo},  #{projectNm}, #{backGround}, #{projectContent},
-        #{status}, #{deadLine},#{priority}, #{agent}, #{opportunityId},
-         #{contractId}, #{userId}
+        ( #{customerId},#{projectName},  #{status}, #{amount}, #{deadLine},
+        #{agent}, #{leader},#{content}, #{userId}, NOW(),
+         #{userId}, NOW()
         )
     </insert>
+
+    <select id="searchProject" resultMap="projectMap">
+        SELECT s.sales_opportunity_id, s.opportunity_nm, s.customer_id, s.sales_status, s.amount, s.clinch_date,
+            s.agent, s.leader, s.content, s.user_id, s.create_ts, s.updater_id, s.update_ts FROM sales_opportunity s
+        INNER JOIN crm_customer v ON s.customer_id = v.customer_id
+        LEFT JOIN company_customer c ON c.customer_id = s.customer_id
+        LEFT JOIN company_user u ON u.company_id = c.company_id
+        WHERE u.user_id = #{userId}
+        AND s.sales_status in ( '0' , '1', '2', '3')
+        <if test="startTime != null">
+            AND s.create_ts &gt; #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND s.create_ts  &lt;#{endTime}
+        </if>
+        <if test="status != null and status != 'all'">
+            AND s.sales_status = #{status}
+        </if>
+        <if test="creator == 'mine'">
+            AND s.user_id = #{userId}
+        </if>
+        <if test="subMember != null">
+            AND s.user_id IN
+            <foreach item="subId" collection="subMember" open="(" separator="," close=")">
+                #{subId}
+            </foreach>
+        </if>
+        <if test="customerName != null and customerName != ''">
+            AND v.customer_nm LIKE CONCAT('%', #{customerName}, '%')
+        </if>
+        <if test="before != null and before != ''">
+            AND s.sales_status in ('0', '1')
+        </if>
+        <if test="after != null and after != ''">
+            AND s.sales_status in ('2', '3')
+        </if>
+    </select>
 
     <select id="queryProjectsByUserId" resultMap="projectMap">
         SELECT project_id, project_nm

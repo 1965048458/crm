@@ -43,7 +43,7 @@ $(document).ready(function () {
             },
             'text': function () {
                 $('#searchBar').addClass('weui-search-bar_focusing');
-                $('#searchText').focus();
+                $('#searchInput').focus();
                 $('#searchResult').show();
                 this.customers = false;
                 this.titleBar = false;

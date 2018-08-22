@@ -33,6 +33,7 @@
         <result property="customerName" column="customer_nm"/>
         <result property="opportunityName" column="opportunity_nm"/>
         <result property="salesStatus" column="sales_status"/>
+        <result property="failReason" column="fail_reason"/>
         <result property="amount" column="amount"/>
         <result property="userId" column="user_id"/>
         <result property="create_ts" column="create_ts"/>
@@ -91,7 +92,7 @@
         LEFT JOIN crm_customer c ON c.customer_id = s.customer_id
         WHERE s.sales_status IN ('A','B','C','D','F')
         <if test="createStart != null">
-            AND s.create_ts > #{createStart}
+            AND s.create_ts &gt; #{createStart}
         </if>
         <if test="createEnd != null">
             AND s.create_ts &lt; #{createEnd}
@@ -181,6 +182,7 @@
         inner join sales_opportunity so on so.sales_opportunity_id = om.sales_opportunity_id
         inner join crm_customer cc on cc.customer_id = so.customer_id
         where om.sales_opportunity_id = #{opportunityId}
+        ORDER  BY om.time_stamp DESC
     </select>
 
     <select id="queryVisitRecord" resultMap="visitMap">
@@ -190,8 +192,15 @@
         left join crm_user cu on cu.crm_user_id = (select c.crm_user_id from company_user c where c.user_id =j.user_id)
         where j.has_submitted = 1
         and vl.sales_opportunity_id = #{opportunityId}
+        ORDER  BY j.update_ts DESC
     </select>
 
+
+    <update id="insertFailReason">
+        update sales_opportunity
+        set fail_reason=#{failReason}
+        where sales_opportunity_id= #{opportunityId}
+    </update>
     <insert id="insertSupport">
 		INSERT INTO support (
 			sales_opportunity_id,

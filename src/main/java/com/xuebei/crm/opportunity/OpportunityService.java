@@ -31,4 +31,7 @@ public interface OpportunityService
 
 //    List<ApplySupport> queryApplySupport(int opportunityId);
 
+    void insertFailReason(int opportunityId, String failReason);
+
+
 }
