@@ -7,23 +7,21 @@ import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.journal.VisitRecord;
 import com.xuebei.crm.member.Member;
 import com.xuebei.crm.member.MemberServiceImpl;
-import com.xuebei.crm.user.User;
-import com.xuebei.crm.utils.UUIDGenerator;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
-import static com.xuebei.crm.login.LoginController.SUCCESS_FLG;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by Rong Weicheng on 2018/7/9.
@@ -38,6 +36,16 @@ public class OpportunityController {
     private MemberServiceImpl memberService;
     @Autowired
     private CustomerServiceImpl customerService;
+    @Autowired
+    private OpportunityMapper opportunityMapper;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder, WebRequest request) {
+        // 转换日期格式
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
 
     @RequestMapping("")
     public String opportunity() {
@@ -194,11 +202,39 @@ public class OpportunityController {
 
 
     @RequestMapping("applySupport")
-    public String applySupport(ModelMap modelMap) {
+    public String applySupport(@RequestParam("salesOpportunityId") Integer salesOpportunityId,
+                                ModelMap modelMap) {
         SupportTypeEnum[] supportTypes = SupportTypeEnum.values();
+        modelMap.addAttribute("salesOpportunityId", salesOpportunityId);
         modelMap.addAttribute("supportTypes", supportTypes);
 
         return "applySupport";
+    }
+
+    @RequestMapping("/action/submitApplySupport")
+    public GsonView submitApplySupport(@RequestParam("salesOpportunityId") Integer salesOpportunityId,
+                                       @RequestParam(value = "supportType", required = false) SupportTypeEnum supportType,
+                                       @RequestParam(value = "expireDate", required = false) Date expireDate,
+                                       @RequestParam(value = "order", required = false) SupportOrderEnum order,
+                                       @RequestParam("content") String content,
+                                       HttpServletRequest request) {
+        if (supportType == null) {
+            return GsonView.createErrorView("未填写支持类型");
+        }
+
+        if (expireDate == null) {
+            return GsonView.createErrorView("未填写截止日期");
+        }
+
+        if (order == null) {
+            return GsonView.createErrorView("未填写优先级");
+        }
+
+        String userId = (String)request.getSession().getAttribute("userId");
+        Support support = new Support(salesOpportunityId, supportType, expireDate, order, content, userId);
+
+        opportunityMapper.insertSupport(support);
+        return GsonView.createSuccessView();
     }
 
     @RequestMapping("failReason")
@@ -207,6 +243,24 @@ public class OpportunityController {
                                HttpServletRequest request) {
         GsonView gsonView = new GsonView();
         opportunityService.insertFailReason(opportunityId,failReason);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
+
+    @RequestMapping("deleteOpportunity")
+    public GsonView deleteOpportunity(@RequestParam("opportunityId")int opportunityId,
+                               HttpServletRequest request) {
+        GsonView gsonView = new GsonView();
+        opportunityService.deleteOpportunity(opportunityId);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
+
+    @RequestMapping("convertOpportunity")
+    public GsonView convertOpportunity(@RequestParam("opportunityId")int opportunityId,
+                                      HttpServletRequest request) {
+        GsonView gsonView = new GsonView();
+        opportunityService.convertOpportunity(opportunityId);
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }

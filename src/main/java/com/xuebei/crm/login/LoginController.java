@@ -293,6 +293,7 @@ public class LoginController {
                 gsonView.addStaticAttribute(SUCCESS_FLG, true);
             } else {
                 gsonView.addStaticAttribute(SUCCESS_FLG, false);
+                gsonView.addStaticAttribute("loginError", true);
             }
         }
         return gsonView;

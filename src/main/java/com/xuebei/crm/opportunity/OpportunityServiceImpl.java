@@ -45,18 +45,18 @@ public class OpportunityServiceImpl implements OpportunityService {
     }
 
     @Override
-    public List<Opportunity> queryOpportunity(OpportunitySearchParam opportunitySearchParam){
-        List<Opportunity> opportunities = opportunityMapper.queryOpportunity(opportunitySearchParam) ;
+    public List<Opportunity> queryOpportunity(OpportunitySearchParam opportunitySearchParam) {
+        List<Opportunity> opportunities = opportunityMapper.queryOpportunity(opportunitySearchParam);
         return opportunities;
     }
 
     @Override
-    public Opportunity opportunityDetail(String opportunityId){
+    public Opportunity opportunityDetail(String opportunityId) {
         return opportunityMapper.opportunityDetail(opportunityId);
     }
 
     @Override
-    public String queryOpportunityCreator(String opportunityId){
+    public String queryOpportunityCreator(String opportunityId) {
         return opportunityMapper.queryOpportunityCreator(opportunityId);
     }
 
@@ -66,8 +66,8 @@ public class OpportunityServiceImpl implements OpportunityService {
     }
 
     @Override
-    public void addModificationRecord(int opportunityId, String userId){
-        opportunityMapper.addModificationRecord(opportunityId,userId);
+    public void addModificationRecord(int opportunityId, String userId) {
+        opportunityMapper.addModificationRecord(opportunityId, userId);
     }
 
     @Override
@@ -88,6 +88,16 @@ public class OpportunityServiceImpl implements OpportunityService {
 
     @Override
     public void insertFailReason(int opportunityId, String failReason) {
-        opportunityMapper.insertFailReason(opportunityId,failReason);
+        opportunityMapper.insertFailReason(opportunityId, failReason);
+    }
+
+    @Override
+    public void deleteOpportunity(int opportunityId) {
+        opportunityMapper.deleteOpportunity(opportunityId);
+    }
+
+    @Override
+    public void convertOpportunity(int opportunityId) {
+        opportunityMapper.convertOpportunity(opportunityId);
     }
 }
