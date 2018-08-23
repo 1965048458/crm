@@ -135,4 +135,9 @@ public class ProjectController {
         return gsonView;
     }
 
+    @RequestMapping("/applyStart")
+    public String startProject(){
+        return "applyStartProject";
+    }
+
 }
