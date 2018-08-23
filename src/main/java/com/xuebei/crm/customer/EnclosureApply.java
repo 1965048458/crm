@@ -26,6 +26,36 @@ public class EnclosureApply {
     private String updaterId;
     @Expose
     private String updateTime;
+    @Expose
+    private String enclosureByOthers;
+    @Expose
+    private String applyByOthers;
+    @Expose
+    private String customerName;
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getEnclosureByOthers() {
+        return enclosureByOthers;
+    }
+
+    public void setEnclosureByOthers(String enclosureByOthers) {
+        this.enclosureByOthers = enclosureByOthers;
+    }
+
+    public String getApplyByOthers() {
+        return applyByOthers;
+    }
+
+    public void setApplyByOthers(String applyByOthers) {
+        this.applyByOthers = applyByOthers;
+    }
 
     public Integer getEnclosureApplyId() {
         return enclosureApplyId;

@@ -39,6 +39,38 @@ public class OpenSeaWarning {
     @Expose
     private String[] warnedReasons;
 
+    @Expose
+    private String leftDays;
+    @Expose
+    private String leftHours;
+
+    public Boolean getDelayApplied() {
+        return isDelayApplied;
+    }
+
+    public void setDelayApplied(Boolean delayApplied) {
+        isDelayApplied = delayApplied;
+    }
+
+    @Expose
+    private Boolean isDelayApplied;
+
+    public String getLeftDays() {
+        return leftDays;
+    }
+
+    public void setLeftDays(String leftDays) {
+        this.leftDays = leftDays;
+    }
+
+    public String getLeftHours() {
+        return leftHours;
+    }
+
+    public void setLeftHours(String leftHours) {
+        this.leftHours = leftHours;
+    }
+
     public String getLastTimeFollow() {
         return lastTimeFollow;
     }

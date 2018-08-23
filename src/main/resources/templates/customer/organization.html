@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Organization</title>
@@ -168,7 +168,7 @@
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                 <textarea class="weui-textarea" style="font-size:16px "
-                          placeholder="请输入申请理由" rows="5" v-model="submitReasons"></textarea>
+                          placeholder="请输入申请理由" rows="5" v-model="applyReasons"></textarea>
                 </div>
             </div>
         </div>
@@ -207,7 +207,7 @@
         <div class="weui-cells" style="height: 60px;">
             <div class="weui-cell" style="background-color: #FF9800;">
                 <img src="/images/customer/timer.png" style="width: 40px;height: 40px;padding-left: 30px">
-                <span style="color: #FFFFFF">{{warningDetails.leftTime}}小时后，{{warningDetails.warnedOrganization}}将自动进入公海</span>
+                <span style="color: #FFFFFF">{{warningDetails.leftDays}}天{{warningDetails.leftHours}}小时后，{{warningDetails.warnedOrganization}}将自动进入公海</span>
             </div>
         </div>
 
@@ -225,15 +225,15 @@
                     <span>{{warningDetails.createdTime}}</span>
                 </div>
             </div>
-            <div class="weui-cell">
-                <div class="weui-cell__hd" style="color: #101010;font-size: 16px;">
-                    <span>跟进次数 : </span>
-                </div>
-                <div class="weui-cell__bd">
-                    <span style="color: #3DA8F4;font-size: 16px;">{{warningDetails.times}}</span>
-                    <span style="color: #101010;font-size: 16px;">次</span>
-                </div>
-            </div>
+            <!--<div class="weui-cell">-->
+                <!--<div class="weui-cell__hd" style="color: #101010;font-size: 16px;">-->
+                    <!--<span>跟进次数 : </span>-->
+                <!--</div>-->
+                <!--<div class="weui-cell__bd">-->
+                    <!--<span style="color: #3DA8F4;font-size: 16px;">{{warningDetails.times}}</span>-->
+                    <!--<span style="color: #101010;font-size: 16px;">次</span>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="weui-cell">
                 <div class="weui-cell__hd" style="color: #101010;font-size: 16px;">
                     <span>最后跟进 : </span>
@@ -257,8 +257,21 @@
             </div>
         </div>
 
-        <a href="javascript:;" class="weui-btn weui-btn_primary" style="margin-top: 40px"
-           @click="enclosureDelayApply(warningDetails.deptId, warningDetails.warnedOrganization)">申请延期</a>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <textarea class="weui-textarea" style="font-size:16px "
+                          placeholder="请输入延期理由" rows="5" v-model="delayApplyReasons"></textarea>
+            </div>
+        </div>
+
+        <div v-if="warningDetails.isApplied">
+            <a href="javascript:;" class="weui-btn weui-btn_primary" style="margin-top: 40px;opacity: 0.5">已经申请延期</a>
+        </div>
+        <div v-else>
+            <a href="javascript:;" class="weui-btn weui-btn_primary" style="margin-top: 40px"
+               @click="enclosureDelayApply(warningDetails.deptId, warningDetails.warnedOrganization)">申请延期</a>
+        </div>
+
 
         <div class="js_dialog" id="delayApplyDialog" style="opacity: 1;display: none" v-show="showDelayApplyDialog">
             <div class="weui-mask"></div>
@@ -304,6 +317,8 @@
                 <span class="pull-left" v-text="addNumBrackets(customer.contactNumber,customer.enclosureStatus)"
                       style="color: #333333;font-size: 16px" ></span>
                 <span class="pull-left" v-text="addMineBrackets(customer.enclosureStatus)"
+                      style="padding-left:5px;color:#38A4F2;font-size:14px;"></span>
+                <span class="pull-left" v-text="addApplyingBrackets(customer.enclosureStatus)"
                       style="padding-left:5px;color:#38A4F2;font-size:14px;"></span>
                 <span class="pull-left" v-text="addEnclosureBrackets(customer.enclosureStatus)"
                       style="padding-left:5px;color:#999999;font-size:14px;"></span>

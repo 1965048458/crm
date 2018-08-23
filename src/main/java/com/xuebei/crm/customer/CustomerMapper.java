@@ -40,9 +40,13 @@ public interface CustomerMapper {
 
     Customer queryCustomer(@Param("customerId") String customerId);
 
-    List<Department> queryDepartment(@Param("customerId") String customerId);
+    List<Department> queryDepartment(@Param("customerId") String customerId,
+                                     @Param("userId") String userId);
 
-    List<Contacts> queryContacts(@Param("customerId") String customerId);
+    List<Department> querySubDepartment(@Param("deptId") String deptId);
+
+
+    List<Contacts> queryContacts(@Param("deptId") String deptId);
 
     void insertEnclosureApply(EnclosureApply enclosureApply);
 
