@@ -17,6 +17,7 @@ jQuery(document).ready(function () {
             applyDeptName:'',
             applyDeptId:'',
             applyReasons:'',
+            delayApplyReasons:'gggg',
             showSubmitDialog:false,
             showSubmitErrDialog:false,
             showSearchResult:false,
@@ -148,7 +149,8 @@ jQuery(document).ready(function () {
                     type:'post',
                     url:'/customer/organization/delayApply',
                     data:{
-                        deptId:deptId
+                        deptId:deptId,
+                        delayApplyReasons:thisVue.delayApplyReasons
                     },
                     dataType:'json',
                     cache:false

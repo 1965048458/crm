@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Organization</title>
@@ -166,7 +166,7 @@
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                 <textarea class="weui-textarea" style="font-size:16px "
-                          placeholder="请输入申请理由" rows="5" v-model="submitReasons"></textarea>
+                          placeholder="请输入申请理由" rows="5" v-model="applyReasons"></textarea>
                 </div>
             </div>
         </div>
@@ -205,7 +205,7 @@
         <div class="weui-cells" style="height: 60px;">
             <div class="weui-cell" style="background-color: #FF9800;">
                 <img src="/images/customer/timer.png" style="width: 40px;height: 40px;padding-left: 30px">
-                <span style="color: #FFFFFF">{{warningDetails.leftTime}}小时后，{{warningDetails.warnedOrganization}}将自动进入公海</span>
+                <span style="color: #FFFFFF">{{warningDetails.leftDays}}天{{warningDetails.leftHours}}小时后，{{warningDetails.warnedOrganization}}将自动进入公海</span>
             </div>
         </div>
 
@@ -223,15 +223,15 @@
                     <span>{{warningDetails.createdTime}}</span>
                 </div>
             </div>
-            <div class="weui-cell">
-                <div class="weui-cell__hd" style="color: #101010;font-size: 16px;">
-                    <span>跟进次数 : </span>
-                </div>
-                <div class="weui-cell__bd">
-                    <span style="color: #3DA8F4;font-size: 16px;">{{warningDetails.times}}</span>
-                    <span style="color: #101010;font-size: 16px;">次</span>
-                </div>
-            </div>
+            <!--<div class="weui-cell">-->
+                <!--<div class="weui-cell__hd" style="color: #101010;font-size: 16px;">-->
+                    <!--<span>跟进次数 : </span>-->
+                <!--</div>-->
+                <!--<div class="weui-cell__bd">-->
+                    <!--<span style="color: #3DA8F4;font-size: 16px;">{{warningDetails.times}}</span>-->
+                    <!--<span style="color: #101010;font-size: 16px;">次</span>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="weui-cell">
                 <div class="weui-cell__hd" style="color: #101010;font-size: 16px;">
                     <span>最后跟进 : </span>
@@ -252,6 +252,13 @@
                 <hr style="color: #FFFFFF;height: 3px;border: hidden"/>
                 <p>2.该客户在n个月没有任何交易</p>
                 <hr style="color: #FFFFFF;height: 40px;border: hidden"/>
+            </div>
+        </div>
+
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <textarea class="weui-textarea" style="font-size:16px "
+                          placeholder="请输入延期理由" rows="5" v-model="delayApplyReasons"></textarea>
             </div>
         </div>
 

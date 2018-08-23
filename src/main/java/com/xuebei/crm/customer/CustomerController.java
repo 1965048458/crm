@@ -355,41 +355,32 @@ public class CustomerController {
         return gsonView;
     }
 
-
-
     @RequestMapping("/organization/apply")
-    public GsonView applyDepartment(@RequestParam("submitReasons") String submitReasons,
+    public GsonView applyDepartment(@RequestParam("applyReasons") String reasons,
                                     @RequestParam("applyDeptId") String applyDeptId,
-                                    EnclosureApply enclosureApply,
                                     HttpServletRequest request) {
         GsonView gsonView = new GsonView();
         final String EMPTY_REASONS_ERROR = "申请理由不能为空";
-        if(submitReasons == null || submitReasons.equals("")) {
+        if(reasons == null || reasons.equals("")) {
             gsonView.addStaticAttribute("successFlg", false);
             gsonView.addStaticAttribute("errMsg",EMPTY_REASONS_ERROR);
         }
         else{
             String userId = (String) request.getSession().getAttribute("userId");
-//            enclosureApply.setReasons(submitReasons);
-//            enclosureApply.setDeptId(applyDeptId);
-//            enclosureApply.setUserId(userId);
-            deptMapper.deleteApplyDepartment(applyDeptId,userId);
-            deptMapper.applyDepartment(applyDeptId,userId, submitReasons);
-//            customerMapper.insertEnclosureApply(enclosureApply);
+            deptService.enclosureApply(applyDeptId,userId, reasons);
             gsonView.addStaticAttribute("successFlg", true);
         }
         return gsonView;
     }
 
     @RequestMapping("/organization/delayApply")
-    public GsonView delayApply(@RequestParam("deptId") String deptId){
+    public GsonView delayApply(@RequestParam("deptId") String deptId,
+                               @RequestParam("delayApplyReasons") String reasons,
+                               HttpServletRequest request){
         GsonView gsonView = new GsonView();
-        customerService.enclosureDelayApply(deptId);
-//        EnclosureApply enclosureApply = new EnclosureApply();
-//        enclosureApply.setEnclosureApplyId(11);
-//        customerMapper.insertEnclosureDelayApply(enclosureApply);
+        String userId = (String) request.getSession().getAttribute("userId");
+        deptService.enclosureDelayApply(deptId,userId,reasons);
         gsonView.addStaticAttribute("successFlg",true);
-        //gsonView.addStaticAttribute("errMsg","申请延期失败");
         return gsonView;
     }
 
