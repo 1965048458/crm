@@ -13,8 +13,10 @@ public interface DeptService {
 
     List<Department> myDepartmentList(String customerId, String userId);
 
-    String warningBeforeCreate(String deptName,String customerId, String userId);
+    WarningBeforeCreateEnum warningBeforeCreate(String deptName,String customerId, String userId);
 
-    void enclosureApply(String deptId,String userId);
+    void enclosureApply(String deptId,String userId,String reasons);
+
+    void enclosureDelayApply(String deptId, String userId,String reasons);
 
 }

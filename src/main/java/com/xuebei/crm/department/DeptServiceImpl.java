@@ -19,6 +19,12 @@ public class DeptServiceImpl implements DeptService {
     @Autowired
     private DeptMapper deptMapper;
 
+    /**
+     * 组织机构列表中显示我申请过的机构
+     * @param customerId
+     * @param userId
+     * @return
+     */
     @Override
     public List<Department> departmentList(String customerId, String userId) {
         List<Department> departmentList = deptMapper.searchDepts(customerId, userId);
@@ -29,6 +35,12 @@ public class DeptServiceImpl implements DeptService {
         return departmentList;
     }
 
+    /**
+     * 添加二级机构页面中显示我的二级机构
+     * @param customerId
+     * @param userId
+     * @return
+     */
     @Override
     public List<Department> myDepartmentList(String customerId, String userId) {
         List<Department> myDepartmentList = deptMapper.searchMyDepts(customerId,userId);
@@ -76,81 +88,108 @@ public class DeptServiceImpl implements DeptService {
         }
         if(diffDays<7){
             String delayApplyStatus = deptMapper.delayApplyStatus(department.getDeptId());
-            switch (delayApplyStatus){
-                case "APPLYING":
-                case "REJECTED":
-                    OpenSeaWarning openSeaWarning = new OpenSeaWarning();
-                    openSeaWarning.setDeptId(department.getDeptId());
-                    openSeaWarning.setCreatedTime(enclosureApply.getStartTime());
-                    openSeaWarning.setLastTimeFollow(enclosureApply.getUpdateTime());
-                    openSeaWarning.setDeptName(department.getDeptName());
-                    openSeaWarning.setLeftDays(String.valueOf(diffDays));
-                    openSeaWarning.setLeftHours(String.valueOf(diffHours));
-                    openSeaWarning.setDelayApplied(true);
-                    department.setOpenSeaWarning(openSeaWarning);
-                    break;
-                case "PERMITTED":
-                default:
-                    break;
-            }
-        }
-    }
-    private void setSubDeptAndContacts(List<Department> departmentList) {
-        //二级机构
-        for(Department department:departmentList){
-            //二级机构联系人总人数
-            Integer contactsNum = 0;
-            String deptId = department.getDeptId();
-            //三级机构
-            List<Department> subDeptList = deptMapper.searchSubDepts(deptId);
-            if(subDeptList != null && !subDeptList.isEmpty()){
-                for(Department subDepartment:subDeptList){
-                    String subDeptId = subDepartment.getDeptId();
-                    //三级机构联系人
-                    List<Contacts> subContactsList = deptMapper.searchContacts(subDeptId);
-                    if(subContactsList != null && !subContactsList.isEmpty()){
-                        subDepartment.setContactsList(subContactsList);
-                        //三级机构添加联系人总人数
-                        subDepartment.setContactNumber(subContactsList.size());
-                        contactsNum+=subContactsList.size();
-                    }
+            if (delayApplyStatus.equals("")){
+                OpenSeaWarning openSeaWarning = new OpenSeaWarning();
+                openSeaWarning.setDeptId(department.getDeptId());
+                openSeaWarning.setCreatedTime(enclosureApply.getStartTime());
+                openSeaWarning.setLastTimeFollow(enclosureApply.getUpdateTime());
+                openSeaWarning.setDeptName(department.getDeptName());
+                openSeaWarning.setLeftDays(String.valueOf(diffDays));
+                openSeaWarning.setLeftHours(String.valueOf(diffHours));
+                openSeaWarning.setDelayApplied(false);
+                department.setOpenSeaWarning(openSeaWarning);
+            }else{
+                switch (delayApplyStatus){
+                    case "APPLYING":
+                    case "REJECTED":
+                        OpenSeaWarning openSeaWarning = new OpenSeaWarning();
+                        openSeaWarning.setDeptId(department.getDeptId());
+                        openSeaWarning.setCreatedTime(enclosureApply.getStartTime());
+                        openSeaWarning.setLastTimeFollow(enclosureApply.getUpdateTime());
+                        openSeaWarning.setDeptName(department.getDeptName());
+                        openSeaWarning.setLeftDays(String.valueOf(diffDays));
+                        openSeaWarning.setLeftHours(String.valueOf(diffHours));
+                        openSeaWarning.setDelayApplied(true);
+                        department.setOpenSeaWarning(openSeaWarning);
+                        break;
+                    case "PERMITTED":
+                    default:
+                        break;
                 }
-                department.setDepartmentList(subDeptList);
             }
-            //二级机构联系人
-            List<Contacts> contactsList = deptMapper.searchContacts(deptId);
-            if(contactsList !=null && !contactsList.isEmpty()){
-                department.setContactsList(contactsList);
-                contactsNum+=contactsList.size();
-            }
-            //二级机构添加联系人总人数
-            department.setContactNumber(contactsNum);
         }
     }
 
+    private void setSubDeptAndContacts(List<Department> departmentList) {
+        //二级机构
+        for(Department department:departmentList){
+            if (department.getEnclosureStatus() == EnclosureStatusEnum.MINE){
+                addSubDeptAndContacts(department);
+            }
+        }
+    }
+    private void addSubDeptAndContacts(Department department) {
+        //二级机构联系人总人数
+        Integer contactsNum = 0;
+        String deptId = department.getDeptId();
+        //三级机构
+        List<Department> subDeptList = deptMapper.searchSubDepts(deptId);
+        if(subDeptList != null && !subDeptList.isEmpty()){
+            for(Department subDepartment:subDeptList){
+                String subDeptId = subDepartment.getDeptId();
+                //三级机构联系人
+                List<Contacts> subContactsList = deptMapper.searchContacts(subDeptId);
+                if(subContactsList != null && !subContactsList.isEmpty()){
+                    subDepartment.setContactsList(subContactsList);
+                    //三级机构添加联系人总人数
+                    subDepartment.setContactNumber(subContactsList.size());
+                    contactsNum+=subContactsList.size();
+                }
+            }
+            department.setDepartmentList(subDeptList);
+        }
+        //二级机构联系人
+        List<Contacts> contactsList = deptMapper.searchContacts(deptId);
+        if(contactsList !=null && !contactsList.isEmpty()){
+            department.setContactsList(contactsList);
+            contactsNum+=contactsList.size();
+        }
+        //二级机构添加联系人总人数
+        department.setContactNumber(contactsNum);
+    }
+
+    /**
+     * 添加二级机构前的检查
+     * @param deptName 编辑的二级机构
+     * @param customerId
+     * @param userId
+     * @return 被我申请过，被别人申请过，没人申请过
+     */
     @Override
-    public String warningBeforeCreate(String deptName,String customerId,String userId) {
-        String appliedByMeWarning = "您已经申请过或已经被您圈走了";
-        String appliedByOthersWarning = "该部门已经被其他人圈走或申请";
-        String editPermitted = "该部门还未被申请过，可以申请";
+    public WarningBeforeCreateEnum warningBeforeCreate(String deptName,String customerId,String userId) {
         List<Department> myDepts = deptMapper.searchMyAppliedDepts(customerId, userId);
         List<Department> othersDepts = deptMapper.searchOthersAppliedDepts(customerId, userId);
         for(Department department:myDepts){
             if(department.getDeptName().equals(deptName)){
-                return appliedByMeWarning;
+                return WarningBeforeCreateEnum.APPLY_BY_ME;
             }
         }
         for(Department department:othersDepts){
             if(department.getDeptName().equals(deptName)){
-                return appliedByOthersWarning;
+                return WarningBeforeCreateEnum.APPLY_BY_OTHERS;
             }
         }
-        return editPermitted;
+        return WarningBeforeCreateEnum.NO_ONE_APPLY;
     }
 
     @Override
-    public void enclosureApply(String deptId, String userId) {
+    public void enclosureApply(String deptId, String userId,String reasons) {
+        deptMapper.applyDepartment(deptId,userId,reasons);
+    }
 
+    @Override
+    public void enclosureDelayApply(String deptId, String userId, String reasons) {
+        deptMapper.delayApplyDepartment(deptId,userId,reasons);
     }
 
 }

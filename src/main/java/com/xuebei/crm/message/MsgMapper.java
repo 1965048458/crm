@@ -16,6 +16,7 @@ public interface MsgMapper {
     List<Apply> searchEnclosureDelayApply(@Param("userId") String userId);
     //项目启动申请
     List<Apply> searchProjectApply(@Param("userId") String userId);
+
     //同意圈地申请
     void enclosureApplyAgree(@Param("enclosureApplyId") String enclosureApplyId,
                              @Param("userId")String userId);

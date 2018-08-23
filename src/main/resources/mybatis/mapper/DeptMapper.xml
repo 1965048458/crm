@@ -48,11 +48,13 @@
                      (select count(*) from enclosure_apply b
                      where b.customer_dept_id = d.customer_dept_id
                            and b.user_id  <![CDATA[ <> ]]> #{userId}
-                           and status_cd = "PERMITTED") as en_by_others,
+                           and status_cd = "PERMITTED"
+                           and b.apply_end_ts &gt; NOW() ) as en_by_others,
                      (select count(*) from enclosure_apply b
                      where b.customer_dept_id = d.customer_dept_id
                            and b.user_id  <![CDATA[ <> ]]> #{userId}
-                           and status_cd = "APPLYING") as ap_by_others
+                           and status_cd = "APPLYING"
+                           and b.apply_end_ts &gt; NOW()) as ap_by_others
                  from customer_dept d
                      inner join enclosure_apply a on d.customer_dept_id = a.customer_dept_id
                  where d.customer_id= #{customerId}
@@ -70,6 +72,7 @@
         where (b.status_cd = 'PERMITTED')
         and a.customer_id = #{customerId}
         and b.user_id = #{userId}
+        and b.apply_end_ts &gt; NOW()
         order by b.update_ts desc) as r1
         group by r1.customer_dept_id,r1.user_id
     </select>
@@ -91,10 +94,12 @@
         select r1.* from
             (select a.department_nm,a.customer_id,b.*
              from customer_dept as a
-                 inner join enclosure_apply as b on a.customer_dept_id = b.customer_dept_id
+                 inner join enclosure_apply as b
+                 on a.customer_dept_id = b.customer_dept_id
              where (b.status_cd = 'PERMITTED' or b.status_cd = 'APPLYING')
                    and a.customer_id = #{customerId}
                    and b.user_id != #{userId}
+                   and b.apply_end_ts &gt; NOW()
              order by b.update_ts desc) as r1
         group by r1.customer_dept_id,r1.user_id
     </select>
@@ -107,6 +112,7 @@
              where (b.status_cd = 'PERMITTED' or b.status_cd = 'APPLYING' or b.status_cd='REJECTED')
                    and a.customer_id = #{customerId}
                    and b.user_id = #{userId}
+                   and b.apply_end_ts &gt; NOW()
              order by b.update_ts desc) as r1
         group by r1.customer_dept_id,r1.user_id
     </select>
@@ -144,9 +150,19 @@
             ORDER BY a.update_ts DESC
             LIMIT 1),
             adddate(NOW(), INTERVAL 3 MONTH),
-            NULL,
+            #{applyReasons},
             'APPLYING'
         )
     </insert>
+
+    <select id="delayApplyStatus" resultType="java.lang.String">
+        SELECT status_cd FROM enclosure_delay_apply
+        WHERE enclosure_apply_id =
+              (SELECT a.enclosure_apply_id FROM enclosure_apply AS a
+              WHERE a.customer_dept_id = #{deptId}
+              AND a.status_cd = 'PERMITTED'
+              AND a.apply_end_ts &gt; NOW()
+              ORDER BY a.update_ts)
+    </select>
 
 </mapper>

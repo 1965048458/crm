@@ -34,16 +34,16 @@ public interface DeptMapper {
     List<Department> searchMyAppliedDepts(@Param("customerId") String customerId,
                                        @Param("userId") String userId);
     //申请圈地
-    //先删掉被拒绝或过期的申请，再插入新的applying
-    void deleteApplyDepartment(@Param("deptId") String deptId,
-                               @Param("userId") String userId);
+//    void deleteApplyDepartment(@Param("deptId") String deptId,
+//                               @Param("userId") String userId);
     void applyDepartment(@Param("deptId") String deptId,
                          @Param("userId") String userId,
                          @Param("applyReasons") String reasons);
 
     //公海警告延期申请
     void delayApplyDepartment(@Param("deptId") String deptId,
-                              @Param("userId") String userId);
+                              @Param("userId") String userId,
+                              @Param("applyReasons") String reasons);
 
     //对公海警告提出申请后的状态
     String delayApplyStatus(@Param("deptId") String deptId);
