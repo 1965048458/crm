@@ -10,6 +10,10 @@ import java.util.Date;
  */
 public class Apply {
     @Expose
+    private String deptName;
+    @Expose
+    private String deptId;
+    @Expose
     private String customerName;
     @Expose
     private String customerId;
@@ -25,6 +29,22 @@ public class Apply {
     private String applyId;
     @Expose
     private ApplyTypeEnum applyType;
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
+    }
 
     public Date getApplyTime() {
         return applyTime;

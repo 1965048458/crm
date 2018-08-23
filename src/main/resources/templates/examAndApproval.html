@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/example.css"/>
     <script src="/lib/jquery-2.1.1.js"></script>
     <script src="/vue.v2.5.13.js"></script>
+    <script src="/organization/examAndApproval.js"></script>
     <style>
         .pull-left{
             float: left!important;
@@ -74,8 +75,19 @@
                     <span class="center-ele">审批</span>
                 </div>
             </div>
-            <div class="weui-tab__panel">
-                <query-check v-for="apply in enclosureApplyList" :apply="apply"></query-check>
+
+            <div class="weui-tab__panel" style="padding-top: 44px">
+                <div v-for="apply in applyList" :apply="apply">
+                    <div v-if="apply.applyType == 'ENCLOSURE_APPLY'">
+                        <enclosure-apply-component :apply="apply"></enclosure-apply-component>
+                    </div>
+                    <div v-else-if="apply.applyType == ENCLOSURE_DELAY_APPLY">
+                        <enclosure-delay-apply-component :apply="apply"></enclosure-delay-apply-component>
+                    </div>
+                    <div v-else>
+
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -83,19 +95,70 @@
 </div>
 
 </body>
-<script type="text/x-template" id="query-check">
-    <div class="weui-cells">
-        <div class="weui-cell">
+<script type="text/x-template" id="enclosureApplyComponent">
+    <div class="weui-cells" style="padding-top: 10px">
+        <div class="weui-cell" style="text-align: center">
             <span v-text="apply.applyTime"></span>
         </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd">
-                延期申请:
-            </div>
-            <div class="weui-cell__bd" v-text="apply.customerName"></div>
-
+        <div style="padding-left: 15px">
+            <p>
+                <span>圈地申请：</span>
+                <span v-text="apply.customerName"></span>
+                <span>-</span>
+                <span v-text="apply.deptName"></span>
+            </p>
+            <p>
+                <span>申请人：</span>
+                <span v-text="apply.applyUserName"></span>
+            </p>
+            <p>申请内容：</p>
+            <p v-text="apply.applyDetails"></p>
         </div>
-
+        <div class="weui-cell" style="padding: 8px 20px;">
+            <div class="weui-flex__item" style="text-align: center;">
+                <div class="placeholder" style="text-align: center;">
+                    <a href="javascript:;" class="weui-btn weui-btn_plain-default" style="margin-right: 10px;">不通过</a>
+                </div>
+            </div>
+            <div class="weui-flex__item" style="text-align: center;">
+                <div class="placeholder">
+                    <a href="javascript:;" class="weui-btn weui-btn_plain-primary" style="margin-left: 10px;">通过</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/x-template" id="enclosureDelayApplyComponent">
+    <div class="weui-cells" style="padding-top: 10px">
+        <div class="weui-cell" style="text-align: center">
+            <span v-text="apply.applyTime"></span>
+        </div>
+        <div style="padding-left: 15px">
+            <p>
+                <span>延期申请：</span>
+                <span v-text="apply.customerName"></span>
+                <span>-</span>
+                <span v-text="apply.deptName"></span>
+            </p>
+            <p>
+                <span>申请人：</span>
+                <span v-text="apply.applyUserName"></span>
+            </p>
+            <p>申请内容：</p>
+            <p v-text="apply.applyDetails"></p>
+        </div>
+        <div class="weui-cell" style="padding: 8px 20px;">
+            <div class="weui-flex__item" style="text-align: center;">
+                <div class="placeholder" style="text-align: center;">
+                    <a href="javascript:;" class="weui-btn weui-btn_plain-default" style="margin-right: 10px;">不通过</a>
+                </div>
+            </div>
+            <div class="weui-flex__item" style="text-align: center;">
+                <div class="placeholder">
+                    <a href="javascript:;" class="weui-btn weui-btn_plain-primary" style="margin-left: 10px;">通过</a>
+                </div>
+            </div>
+        </div>
     </div>
 </script>
 </html>
