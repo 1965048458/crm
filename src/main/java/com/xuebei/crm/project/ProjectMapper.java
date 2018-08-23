@@ -11,11 +11,13 @@ import java.util.List;
 @Mapper
 public interface ProjectMapper {
 
-    void insertProject(Project project);
+    Integer insertProject(Project project);
 
     List<Project> queryProjectsByUserId(String userId);
 
     List<Opportunity> queryOpportunitiesByUserId(String userId);
 
     String queryOpportunityNameByOpportunityId(Integer opportunityId);
+
+    List<Project> searchProject(ProjectSearchParam param);
 }

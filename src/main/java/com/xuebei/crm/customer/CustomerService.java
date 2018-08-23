@@ -35,4 +35,6 @@ public interface CustomerService {
     Boolean isSubDepartmentNameDuplicated(String parentDeptId, String deptName);
 
     String lastFollowTs(String customerId) throws ParseException;
+
+    Contacts queryOpportunityDetail(String opportunityId);
 }

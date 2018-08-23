@@ -205,7 +205,6 @@ public class LoginController {
 
         String realName = loginRegisterMapper.queryRealName(crmUserId);
         String tel = loginRegisterMapper.queryTel(crmUserId);
-//        String  tel ="13777875102";
         String companyName = companyMapper.queryCompanyName(userId);
         String result = companyMapper.queryStatus(userId);
 
@@ -294,6 +293,7 @@ public class LoginController {
                 gsonView.addStaticAttribute(SUCCESS_FLG, true);
             } else {
                 gsonView.addStaticAttribute(SUCCESS_FLG, false);
+                gsonView.addStaticAttribute("loginError", true);
             }
         }
         return gsonView;

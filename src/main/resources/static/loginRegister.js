@@ -36,8 +36,12 @@ jQuery(document).ready(function () {
                 }).done(function (result) {
                     if (result.successFlg) {
                         window.location.href = "/myAccount";
-                    } else {
-                        alert("用户名或密码不正确");
+                    } else{
+                        if(result.loginError) {
+                            alert("用户名或密码不正确");
+                        }else{
+                            alert("系统错误！");
+                        }
                     }
                 });
             },

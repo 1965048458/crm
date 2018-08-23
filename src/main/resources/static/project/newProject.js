@@ -17,7 +17,8 @@ jQuery(document).ready(function () {
             agent: '',
             person: '',
             selStage: '',
-            status: '请选择',
+            status: '未启动(创建后提交启动申请)',
+            lastStatus: 0,
             deadLine: '请选择',
             background: '',
             temp: '',
@@ -38,25 +39,31 @@ jQuery(document).ready(function () {
                 this.showPage = 'addProject';
             },
             'submit': function () {
-                if (this.name == '' || this.deadLine == '请选择' || this.contact == '请选择'
-                    || this.content === '' || this.amount === '') {
+                if (this.name === '' || this.contact === '请选择' ) {
                     alert("带星号内容必须填写！");
                     return;
                 } else {
                     var thisVue = this;
+                    if(thisVue.deadLine === '请选择' ){
+                        thisVue.deadLine = '';
+                    }
+
+                    var postData = {
+                        projectName: thisVue.name,
+                        content: thisVue.content,
+                        agent: thisVue.agent,
+                        contactId: thisVue.contactId,
+                        deadLine: thisVue.deadLine,
+                        status: thisVue.lastStatus,
+                        amount: thisVue.amount,
+                        customerId: thisVue.customerId
+                    };
                     jQuery.ajax({
                         type: 'post',
                         url: '/project/add',
-                        data: {
-                            name: thisVue.name,
-                            content: thisVue.content,
-                            agent: thisVue.agent,
-                            contact: thisVue.contact,
-                            deadLine: thisVue.deadLine,
-                            status: thisVue.status,
-                            amount: thisVue.amount
-                        },
+                        data: JSON.stringify(postData),
                         dataType: 'json',
+                        contentType: 'application/json',
                         cache: false
                     }).done(function (result) {
                         if (result.successFlg) {
@@ -95,7 +102,8 @@ jQuery(document).ready(function () {
                     alert("项目状态不能为空！");
                     return;
                 }
-                this.status = this.selStage;
+                this.status = this.stages[this.selStage];
+                this.lastStatus = this.selStage;
                 this.showPage = 'addProject';
             },
             'selContact': function () {

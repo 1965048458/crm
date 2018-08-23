@@ -4,6 +4,8 @@ import com.xuebei.crm.customer.Customer;
 import com.xuebei.crm.customer.CustomerMapper;
 import com.xuebei.crm.customer.CustomerService;
 import com.xuebei.crm.customer.Department;
+import com.xuebei.crm.journal.VisitRecord;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,9 +45,59 @@ public class OpportunityServiceImpl implements OpportunityService {
     }
 
     @Override
-    public List<Opportunity> queryOpportunity(OpportunitySearchParam opportunitySearchParam){
-        List<Opportunity> opportunities = opportunityMapper.queryOpportunity(opportunitySearchParam) ;
+    public List<Opportunity> queryOpportunity(OpportunitySearchParam opportunitySearchParam) {
+        List<Opportunity> opportunities = opportunityMapper.queryOpportunity(opportunitySearchParam);
         return opportunities;
     }
 
+    @Override
+    public Opportunity opportunityDetail(String opportunityId) {
+        return opportunityMapper.opportunityDetail(opportunityId);
+    }
+
+    @Override
+    public String queryOpportunityCreator(String opportunityId) {
+        return opportunityMapper.queryOpportunityCreator(opportunityId);
+    }
+
+    @Override
+    public void modifyOpportunity(Opportunity opportunity) {
+        opportunityMapper.modifyOpportunity(opportunity);
+    }
+
+    @Override
+    public void addModificationRecord(int opportunityId, String userId) {
+        opportunityMapper.addModificationRecord(opportunityId, userId);
+    }
+
+    @Override
+    public List<OpportunityModify> queryModifyRecord(int opportunityId) {
+        return opportunityMapper.queryModifyRecord(opportunityId);
+    }
+
+    @Override
+    public List<VisitRecord> queryVisitRecord(int opportunityId) {
+        return opportunityMapper.queryVisitRecord(opportunityId);
+    }
+
+//    @Override
+//    public List<ApplySupport> queryApplySupport(int opportunityId){
+//      return opportunityMapper.queryApplySupport(opportunityId);
+//    }
+
+
+    @Override
+    public void insertFailReason(int opportunityId, String failReason) {
+        opportunityMapper.insertFailReason(opportunityId, failReason);
+    }
+
+    @Override
+    public void deleteOpportunity(int opportunityId) {
+        opportunityMapper.deleteOpportunity(opportunityId);
+    }
+
+    @Override
+    public void convertOpportunity(int opportunityId) {
+        opportunityMapper.convertOpportunity(opportunityId);
+    }
 }

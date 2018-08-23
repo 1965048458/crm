@@ -90,4 +90,6 @@ public interface CustomerMapper {
     Boolean isContactsTypeExist(@Param("customerId") String customerId,
                                 @Param("contactsTypeName") String contactsTypeNa);
 
+    Contacts queryOpportunityDetail(String opportunityId);
+
 }

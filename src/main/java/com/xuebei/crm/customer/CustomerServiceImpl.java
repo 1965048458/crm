@@ -20,6 +20,18 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     /**
+     * 商机详情页查询二级学院和客户联系人信息
+     * @param opportunityId
+     * @return
+     */
+    public Contacts queryOpportunityDetail(String opportunityId){
+        return customerMapper.queryOpportunityDetail(opportunityId);
+    }
+
+
+
+
+    /**
      * 增加二级学院
      *
      * @param department
@@ -109,7 +121,7 @@ public class CustomerServiceImpl implements CustomerService {
                 }
             }
             //合成联系人的部门院校名称
-            totalName = contacts.getCustomerName() + "-" + totalName + contacts.getTypeName() + "-" + contacts.getRealName()
+            totalName = contacts.getCustomerName() + "-" + totalName + (contacts.getTypeName() != null? contacts.getTypeName() : "无") + "-" + contacts.getRealName()
                     + ":" + contacts.getContactsId() + ":" + contacts.getCustomerId();
             contacts.setTotalName(totalName);
             department.addSubContact(contacts);

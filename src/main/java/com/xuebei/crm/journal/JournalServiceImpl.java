@@ -38,9 +38,10 @@ public class JournalServiceImpl implements JournalService {
         checkBasicInfo(journal);
         checkVisitRecords(journal.getVisitRecords());
 
-        Journal draft = journalMapper.findJournalDraft(journal.getUserId());
-        if (draft != null) {
-            journalMapper.deleteJournal(journal.getUserId(), journal.getJournalId());
+        List<Journal> drafts = journalMapper.findJournalDraft(journal.getUserId());
+        if (drafts != null) {
+            for (Journal draft: drafts)
+                journalMapper.deleteJournal(draft.getUserId(), draft.getJournalId());
         }
 
         journalMapper.createJournal(journal);
