@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
@@ -251,7 +251,7 @@
                 </div>
 
 
-                <div class="weui-tab__panel" style="padding-top: 25px; background: #FFFFFF;" >
+                <div class="weui-tab__panel" style="padding-top: 25px; background: #FFFFFF;">
                     <div class="weui-cells" style="font-size: medium">
                         <div class="weui-cell">
                             <div class="weui-cell__hd">
@@ -342,19 +342,23 @@
                                 <p></p>
                             </div>
                             <div class="weui-cell__ft">
-                                <div class="weui-cell__ft" style="float: right">10%</div>
+                                <div id="wan" class="weui-cell__ft" style="float: right">0</div>
                             </div>
                         </div>
                     </div>
-                    <div class="weui-slider-box slider js_show" >
-                        <div class="weui-slider">
-                            <div id="sliderInner" class="weui-slider__inner">
-                                <div id="sliderTrack" style="width: 80%;" class="weui-slider__track"></div>
-                                <div id="sliderHandler" style="left: 80%;" class="weui-slider__handler"></div>
+
+
+                            <div class="weui-slider-box slider js_show">
+                                <div class="weui-slider">
+                                    <div id="sliderInner" class="weui-slider__inner">
+                                        <div id="sliderTrack" style="width: 80%;" class="weui-slider__track"></div>
+                                        <div id="sliderHandler" style="left: 80%;" class="weui-slider__handler"></div>
+                                    </div>
+                                </div>
+                                <div id="sliderValue" class="weui-slider-box__value" style="display: none">80</div>
                             </div>
-                        </div>
-                        <div id="sliderValue" class="weui-slider-box__value">50</div>
-                    </div>
+
+
 
                     <div class="weui-cells" style="font-size: medium">
                         <div class="weui-cell">
@@ -391,18 +395,18 @@
                             </div>
                         </div>
 
-                        <div class="weui-cell">
+                        <div class="weui-cell" style="padding: 5px 8px">
                             <div class="weui-cell__bd" style="color: darkgray;">
                                 <span @click="" class="pull-left">
-                            <img src="/images/back_icon.svg"/></span>
-                                <div>添加新的信息</div>
+                            <img src="/images/project/add.svg"/></span>
+                                <div>添加新的进度信息</div>
                             </div>
                         </div>
                         <div class="weui-cell">
                             <div class="weui-cell__bd" style="color: darkgray;">
 
                                 <div>5分钟前</div>
-                                    <span>飞机上的浪费哈绥芬河哈哈司法局
+                                <span>飞机上的浪费哈绥芬河哈哈司法局
                                         傻家伙发来贺电 号号快乐就好好师傅发生大富翁</span>
                             </div>
                         </div>
@@ -440,12 +444,12 @@
     });
 </script>
 <script type="text/javascript" class="slider js_show">
-    $(function(){
+    $(function () {
         var $sliderTrack = $('#sliderTrack'),
             $sliderHandler = $('#sliderHandler'),
             $sliderValue = $('#sliderValue');
 
-        var totalLen ,
+        var totalLen,
             startLeft = 0,
             startX = 0;
 
@@ -460,13 +464,13 @@
                 startLeft = parseInt($sliderHandler.css('left'));
                 startX = e.originalEvent.pageX;
 
-                $sliderHandler.unbind('mousemove').on('mousemove', function(e){
+                $sliderHandler.unbind('mousemove').on('mousemove', function (e) {
                     totalLen = $('#sliderInner').width();
                     var moveX = e.originalEvent.pageX;
                     var dist = startLeft + moveX - startX,
                         percent;
                     dist = dist < 0 ? 0 : dist > totalLen ? totalLen : dist;
-                    percent =  parseInt(dist / totalLen * 100);
+                    percent = parseInt(dist / totalLen * 100);
                     $sliderTrack.css('width', percent + '%');
                     $sliderHandler.css('left', percent + '%');
                     $sliderValue.text(percent);
@@ -474,16 +478,16 @@
                     e.preventDefault();
                 })
             })
-            .on('touchmove', function(e){
+            .on('touchmove', function (e) {
                 var moveX = e.originalEvent.changedTouches[0].clientX;
                 var dist = startLeft + moveX - startX,
                     percent;
                 dist = dist < 0 ? 0 : dist > totalLen ? totalLen : dist;
-                percent =  parseInt(dist / totalLen * 100);
+                percent = parseInt(dist / totalLen * 100);
                 $sliderTrack.css('width', percent + '%');
                 $sliderHandler.css('left', percent + '%');
                 $sliderValue.text(percent);
-
+                $('#wan').text(percent+'%');
                 e.preventDefault();
             })
         ;
@@ -491,5 +495,5 @@
             $sliderHandler.unbind('mousemove');
         })
     });
-    </script>
+</script>
 </html>

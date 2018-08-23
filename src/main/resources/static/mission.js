@@ -9,6 +9,7 @@ $(document).ready(function () {
         data: {
             showPage:'unfinish',
             show:'home',
+            sliderValue:''
         },
         methods: {
             'unfinish':function () {
@@ -20,6 +21,7 @@ $(document).ready(function () {
             },
             'toDetail': function () {
                 this.show = 'detail';
+                this.sliderValue = $("#sliderValue").text();
             },
             'back': function () {
                this.show = 'home';
@@ -43,6 +45,9 @@ $(document).ready(function () {
                     }
                 });
             },
+        },
+        watch: {
+
         }
     });
 });
