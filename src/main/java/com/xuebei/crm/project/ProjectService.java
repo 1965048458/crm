@@ -1,7 +1,5 @@
 package com.xuebei.crm.project;
 
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 
 public interface ProjectService {
