@@ -57,6 +57,11 @@ public class ProjectController {
         return "newProject";
     }
 
+    @RequestMapping("/mission")
+    public String mission(){
+        return "mission";
+    }
+
     /**
      * 新建项目
      * @param project
