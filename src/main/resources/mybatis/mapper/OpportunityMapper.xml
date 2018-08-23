@@ -148,7 +148,7 @@
         ))
     </select>
 
-    <insert id="modifyOpportunity" parameterType="com.xuebei.crm.opportunity.Opportunity">
+    <update id="modifyOpportunity" parameterType="com.xuebei.crm.opportunity.Opportunity">
         UPDATE sales_opportunity SET
          opportunity_nm =#{opportunityName},
          sales_status=#{salesStatus},
@@ -159,7 +159,7 @@
          updater_id= #{userId} ,
          update_ts= NOW()
         WHERE sales_opportunity_id =#{opportunityId}
-    </insert>
+    </update>
 
     <insert id="addModificationRecord">
         INSERT INTO opportunity_modification_record (

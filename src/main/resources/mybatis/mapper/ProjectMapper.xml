@@ -25,6 +25,22 @@
         <id property="opportunityId" column="sales_opportunity_id"/>
         <result property="opportunityName" column="opportunity_nm"/>
     </resultMap>
+    
+    <resultMap id="contractMap" type="com.xuebei.crm.project.Contract">
+        <id column="contract_id" property="contractId"/>
+        <result column="contract_no" property="contractNo"/>
+        <result column="project_id" property="projectId"/>
+        <result column="amount" property="amount"/>
+        <result column="advance_pay" property="advancePay"/>
+        <result column="advance_time" property="advanceTime"/>
+    </resultMap>
+
+    <resultMap id="refundLogMap" type="com.xuebei.crm.project.Refund">
+        <id column="refund_id" property="refundId"/>
+        <result column="project_id" property="projectId"/>
+        <result column="refund_amount" property="refundNum"/>
+        <result column="refund_condition" property="condition"/>
+    </resultMap>
 
     <insert id="insertProject" parameterType="com.xuebei.crm.project.Project"
             useGeneratedKeys="true" keyColumn="sales_opportunity_id" keyProperty="projectId">
@@ -38,6 +54,37 @@
          #{userId}, NOW()
         )
     </insert>
+
+    <insert id="insertContract" parameterType="com.xuebei.crm.project.Contract">
+        INSERT INTO contract(
+          `contract_id`, `contract_no`, `project_id`,
+          `amount`, `advance_pay`, `advance_time`
+        ) VALUES (
+          #{contractId}, #{contractNo}, #{projectId},
+          #{amount}, #{advancePay}, #{advanceTime}
+        )
+    </insert>
+    
+    <insert id="insertRefund" parameterType="com.xuebei.crm.project.Refund"
+            useGeneratedKeys="true" keyColumn="refund_id" keyProperty="refundId">
+        INSERT INTO refund_log (
+            `project_id`, `refund_amount`, `refund_condition`
+        ) VALUES (
+            #{projectId}, #{refundNum}, #{condition}
+        )
+    </insert>
+
+    <update id="updateContract" parameterType="com.xuebei.crm.project.Contract">
+        UPDATE contract SET
+            amount = #{amount}, advance_pay = #{advancePay}, advance_time = #{advanceTime}
+        WHERE contract_id = #{contractId}
+    </update>
+    
+    <update id="updateRefund" parameterType="com.xuebei.crm.project.Refund">
+        UPDATE refund_log SET
+            refund_amount = #{refundNum}, refund_condition = #{condition}
+        WHERE refund_id = #{refundId}
+    </update>
 
     <select id="searchProject" resultMap="projectMap">
         SELECT s.sales_opportunity_id, s.opportunity_nm, s.customer_id, s.sales_status, s.amount, s.clinch_date,

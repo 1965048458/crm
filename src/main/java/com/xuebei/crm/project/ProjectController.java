@@ -6,6 +6,7 @@ import com.xuebei.crm.journal.JournalService;
 import com.xuebei.crm.opportunity.OpportunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -27,9 +28,6 @@ import java.util.Set;
 
 import static com.xuebei.crm.login.LoginController.SUCCESS_FLG;
 
-/**
- * Created by Administrator on 2018/7/24.
- */
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
@@ -131,8 +129,23 @@ public class ProjectController {
     }
 
     @RequestMapping("/applyStart")
-    public String startProject(){
+    public String startProject(@RequestParam(value = "projectId", required = false) Integer projectId){
+        ModelMap modelMap = new ModelMap();
+        String projectName = projectService.queryOpportunityNameByOpportunityId(projectId);
+        modelMap.addAttribute("projectId", projectId);
+        modelMap.addAttribute("projectName", projectName);
         return "applyStartProject";
+    }
+
+    @RequestMapping("/submitProject")
+    public GsonView submitProject(@RequestBody ProjectStart projectStart,
+                                  HttpServletRequest request){
+        String userId = (String) request.getSession().getAttribute("userId");
+        projectStart.setUserId(userId);
+        GsonView gsonView = new GsonView();
+        projectService.startProject(projectStart);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
     }
 
 }

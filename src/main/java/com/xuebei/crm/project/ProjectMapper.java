@@ -5,13 +5,18 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-/**
- * Created by Administrator on 2018/7/24.
- */
 @Mapper
 public interface ProjectMapper {
 
     Integer insertProject(Project project);
+
+    void insertContract(Contract contract);
+
+    Integer insertRefund(Refund refund);
+
+    void updateContract(Contract contract);
+
+    void updateRefund(Refund refund);
 
     List<Project> queryProjectsByUserId(String userId);
 
