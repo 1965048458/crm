@@ -98,8 +98,13 @@ jQuery(document).ready(function () {
                     if (result.successFlg) {
                         thisVue.myCompany1();
 
-                    } else {
+                    } else if(result.again){
                         alert(result.errMsg);
+                        thisVue.myCompany1();
+
+                    }else{
+                        alert(result.errMsg);
+
                     }
 
                 });
