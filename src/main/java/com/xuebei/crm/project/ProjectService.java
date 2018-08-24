@@ -28,5 +28,5 @@ public interface ProjectService {
 
     List<Project> searchProject(ProjectSearchParam param);
 
-    String queryOpportunityNameByOpportunityId(Integer projectId);
+    ProjectDetail getProjectDetail(String projectId);
 }

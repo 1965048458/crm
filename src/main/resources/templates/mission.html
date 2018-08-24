@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>任务</title>
+
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css">
+
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/weui.min.js"></script>
+    <script src="/mission.js"></script>
+
+    <style>
+        .pull-left {
+            float: left !important;
+        }
+
+        .pull-right {
+            float: right !important;
+        }
+
+        .top-bar {
+            background: #FFFFFF;
+            text-align: center;
+            padding: 7px 10px;
+            font-size: 18px;
+        }
+
+        .center-box {
+            text-align: center;
+        }
+
+        .navi-bar {
+            z-index: 9999;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        .weui-media-box__title {
+            padding: 4px 5px;
+        }
+
+    </style>
+</head>
+<body ontouchstart>
+
+<div id="mission">
+    <div id="missionList" v-show="show==='home'">
+        <div class="page tabbar js_show" style="height: 100%">
+            <div class="weui-tab">
+                <div class="navi-bar">
+                    <div class="top-bar center-box">
+                        任务</span>
+                    </div>
+
+                    <div class="weui-navbar" style="position: relative;height: 40px;background-color: #F9F9F9;
+                            font-size: 15px; color: #999999;">
+                        <div class="weui-navbar__item weui-bar__item_on"
+                             style="border-bottom: inset rgba(56, 164, 242, 1); color: rgba(56, 164, 242, 1)"
+                             @click="unfinish">
+                            未完成
+                        </div>
+                        <div class="weui-navbar__item" @click="finish">
+                            已完成
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="weui-tab__panel" style="padding-top: 82px; background: #FFFFFF;">
+                    <!--<div v-for=""> </div>-->
+
+                    <div id="notFinish" v-show="showPage ==='unfinish'" style="display: none">
+
+                        <div class="weui-panel weui-panel_access" style="border-top: solid 1px #B2B2B2;">
+                            <div class="weui-form-preview">
+                                <div class="weui-form-preview__item" style="font-size: small;padding: 3px 0px;">
+                                    <label class="weui-form-preview__label" style="padding-left: 15px;color: #0D0D0D">截止日期：2018-08-02</label>
+                                    <label class="weui-form-preview__label" style="float: right;color: #0D0D0D">发起日期：2018-02-15</label>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
+                               style="padding: 8px 10px ;">
+                                <div class="weui-media-box__bd">
+                                    <p class="weui-media-box__title" style="font-size: 13px;">
+                                        任务名称: 方案撰写
+                                        <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
+                                            紧急</label>
+                                    </p>
+                                    <p class="weui-media-box__title" style="font-size: 13px;">
+                                        相关项目：浙江大学-机械学院 仿真实验项目&nbsp;
+
+                                    </p>
+                                    <p class="weui-media-box__title" style="font-size: 13px;">
+                                        执行者: 封口费
+                                        <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
+                                            0%</label>
+                                    </p>
+                                    <p class="weui-media-box__title" style="font-size: 13px;">
+                                        发起人: 我刘二妈
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+
+
+                        <div class="weui-panel weui-panel_access" style="border-top: solid 1px #B2B2B2;">
+                            <div class="weui-form-preview">
+                                <div class="weui-form-preview__item" style="font-size: small;padding: 3px 0px;">
+                                    <label class="weui-form-preview__label" style="padding-left: 15px;color: #0D0D0D">截止日期：2018-08-02</label>
+                                    <label class="weui-form-preview__label" style="float: right;color: #0D0D0D">发起日期：2018-02-15</label>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
+                               style="padding: 8px 10px ;" @click="toDetail">
+                                <div class="weui-media-box__bd">
+                                    <p class="weui-media-box__title" style="font-size: 13px;">
+                                        任务名称: 方案撰写
+                                        <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
+                                            紧急</label>
+                                    </p>
+                                    <p class="weui-media-box__title" style="font-size: 13px;">
+                                        相关项目：浙江大学-机械学院 仿真实验项目&nbsp;
+
+                                    </p>
+                                    <p class="weui-media-box__title" style="font-size: 13px;">
+                                        执行者: 封口费
+                                        <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
+                                            0%</label>
+                                    </p>
+                                    <p class="weui-media-box__title" style="font-size: 13px;">
+                                        发起人: 我
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="hasFinish" v-show="showPage ==='finish'" style="display: none">
+
+                        <div class="weui-panel weui-panel_access" style="border-top: solid 1px #B2B2B2;">
+                            <div class="weui-form-preview">
+                                <div class="weui-form-preview__item" style="font-size: small;padding: 3px 0px;">
+                                    <label class="weui-form-preview__label" style="padding-left: 15px;color: #0D0D0D">截止日期：2018-08-02</label>
+                                    <label class="weui-form-preview__label" style="float: right;color: #0D0D0D">发起日期：2018-02-15</label>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
+                               style="padding: 8px 10px ;">
+                                <div class="weui-media-box__bd">
+                                    <p class="weui-media-box__title" style="font-size: 13px;">
+                                        任务名称: 方案撰写
+                                        <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
+                                            紧急</label>
+                                    </p>
+                                    <p class="weui-media-box__title" style="font-size: 13px;">
+                                        相关项目：浙江大学-机械学院 仿真实验项目&nbsp;
+
+                                    </p>
+                                    <p class="weui-media-box__title" style="font-size: 13px;">
+                                        执行者: 封口费
+                                        <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
+                                            0%</label>
+                                    </p>
+                                    <p class="weui-media-box__title" style="font-size: 13px;">
+                                        发起人: 我刘二妈
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+
+
+                        <div class="weui-panel weui-panel_access" style="border-top: solid 1px #B2B2B2;">
+                            <div class="weui-form-preview">
+                                <div class="weui-form-preview__item" style="font-size: small;padding: 3px 0px;">
+                                    <label class="weui-form-preview__label" style="padding-left: 15px;color: #0D0D0D">截止日期：2018-08-02</label>
+                                    <label class="weui-form-preview__label" style="float: right;color: #0D0D0D">发起日期：2018-02-15</label>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
+                               style="padding: 8px 10px ;">
+                                <div class="weui-media-box__bd">
+                                    <p class="weui-media-box__title" style="font-size: 13px;">
+                                        任务名称: 方案撰写
+                                        <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
+                                            紧急</label>
+                                    </p>
+                                    <p class="weui-media-box__title" style="font-size: 13px;">
+                                        相关项目：浙江大学-机械学院 仿真实验项目&nbsp;
+
+                                    </p>
+                                    <p class="weui-media-box__title" style="font-size: 13px;">
+                                        执行者: 封口费
+                                        <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
+                                            0%</label>
+                                    </p>
+                                    <p class="weui-media-box__title" style="font-size: 13px;">
+                                        发起人: 我刘二妈
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="weui-tabbar">
+            <a href="/customer/customerList" class="weui-tabbar__item">
+                <img src="/images/bottom/customer_1.svg" class="weui-tabbar__icon">
+                <p class="weui-tabbar__label">客户</p>
+            </a>
+            <a href="/opportunity" class="weui-tabbar__item">
+                <img src="/images/bottom/opportunity_1.svg" class="weui-tabbar__icon">
+                <p class="weui-tabbar__label">商机</p>
+            </a>
+            <a href="/journal/toList" class="weui-tabbar__item">
+                <img src="/images/bottom/journal_1.svg" class="weui-tabbar__icon">
+                <p class="weui-tabbar__label">日志</p>
+            </a>
+            <a href="/project/projectList" class="weui-tabbar__item weui-bar__item_on">
+                <img src="/images/bottom/project_2.svg" class="weui-tabbar__icon">
+                <p class="weui-tabbar__label">项目</p>
+            </a>
+            <a href="/myAccount" class="weui-tabbar__item" id="tabbarMine">
+                <img src="/images/bottom/mine_1.svg" class="weui-tabbar__icon">
+                <p class="weui-tabbar__label">我的</p>
+            </a>
+        </div>
+    </div>
+
+    <div id="missionDetail" v-show="show==='detail'">
+        <div class="page tabbar js_show" style="height: 100%">
+            <div class="weui-tab">
+                <div class="navi-bar">
+                    <div class="top-bar center-box">
+                        <span @click="back" class="pull-left">
+                            <img src="/images/back_icon.svg"
+                                 style="margin-top:7px;"/></span>
+                        <span class="center" style="margin-top: 3px;">任务详情</span>
+                    </div>
+
+                </div>
+
+
+                <div class="weui-tab__panel" style="padding-top: 25px; background: #FFFFFF;">
+                    <div class="weui-cells" style="font-size: medium">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">任务名称：</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <label class="weui-input">家里蹲大学晒太阳</label>
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">项目名称：</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <label class="weui-input">都太阳湾项目</label>
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">发起日期：</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <label class="weui-input">2018-02-03</label>
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">截止日期：</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <label class="weui-input">2018-09-31</label>
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">发起人：</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <label class="weui-input">六儿妈</label>
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">执行人：</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <label class="weui-input">未指定</label>
+                            </div>
+                        </div>
+
+                        <a class="weui-cell weui-cell_access" href="javascript:;">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">执行人：</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <label class="weui-input">未指定</label>
+                            </div>
+                            <div class="weui-cell__ft">
+                                指定执行者
+                            </div>
+                        </a>
+
+
+                    </div>
+
+                    <div class="weui-cells weui-cells_form" style="font-size: medium">
+                        <div class="weui-cell" style="padding-bottom: 0">
+                            <div class="plan-title"><p>支持描述</p></div>
+                        </div>
+                        <div class="weui-cells weui-cells_form" style="margin-top: 0;">
+                            <div class="weui-cell">
+                                <div class="weui-cell__bd" style="color: darkgray;">
+
+                                    <span>飞机上的浪费哈绥芬河哈哈司法局
+                                        傻家伙发来贺电 号号快乐就好好师傅发生大富翁</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="weui-cells" style="font-size: medium">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">任务完成度</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <p></p>
+                            </div>
+                            <div class="weui-cell__ft">
+                                <div id="wan" class="weui-cell__ft" style="float: right">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                            <div class="weui-slider-box slider js_show">
+                                <div class="weui-slider">
+                                    <div id="sliderInner" class="weui-slider__inner">
+                                        <div id="sliderTrack" style="width: 80%;" class="weui-slider__track"></div>
+                                        <div id="sliderHandler" style="left: 80%;" class="weui-slider__handler"></div>
+                                    </div>
+                                </div>
+                                <div id="sliderValue" class="weui-slider-box__value" style="display: none">80</div>
+                            </div>
+
+
+
+                    <div class="weui-cells" style="font-size: medium">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">任务完成度</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <p></p>
+                            </div>
+                            <div class="weui-cell__ft">
+                                <div class="weui-cell__ft" style="float: right">10%</div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="weui-cells" style="font-size: medium">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">任务信息</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <label class="weui-input">暂无</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="weui-cells" style="font-size: medium">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">任务信息</label>
+                            </div>
+                        </div>
+
+                        <div class="weui-cell" style="padding: 5px 8px">
+                            <div class="weui-cell__bd" style="color: darkgray;">
+                                <span @click="" class="pull-left">
+                            <img src="/images/project/add.svg"/></span>
+                                <div>添加新的进度信息</div>
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd" style="color: darkgray;">
+
+                                <div>5分钟前</div>
+                                <span>飞机上的浪费哈绥芬河哈哈司法局
+                                        傻家伙发来贺电 号号快乐就好好师傅发生大富翁</span>
+                            </div>
+                        </div>
+
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd" style="color: darkgray;">
+                                <div>6分钟前</div>
+                                <span>飞机上的浪费哈绥芬河哈哈司法局
+                                        傻家伙发来贺电 号号快乐就好好师傅发生大富翁</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+
+<script type="text/javascript">
+    $(function () {
+        $('.weui-navbar__item').on('click', function () {
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').css("border-bottom", "none").css("color", "#999999");
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+            $('div.weui-bar__item_on').css("border-bottom", "inset rgba(56, 164, 242, 1)").css("color", "rgba(56, 164, 242, 1)");
+        });
+    });
+</script>
+<script type="text/javascript" class="slider js_show">
+    $(function () {
+        var $sliderTrack = $('#sliderTrack'),
+            $sliderHandler = $('#sliderHandler'),
+            $sliderValue = $('#sliderValue');
+
+        var totalLen,
+            startLeft = 0,
+            startX = 0;
+
+        $sliderHandler
+            .on('touchstart', function (e) {
+                totalLen = $('#sliderInner').width();
+                startLeft = parseInt($sliderHandler.css('left'));
+                startX = e.originalEvent.changedTouches[0].clientX;
+            })
+            .on('mousedown', function (e) {
+                totalLen = $('#sliderInner').width();
+                startLeft = parseInt($sliderHandler.css('left'));
+                startX = e.originalEvent.pageX;
+
+                $sliderHandler.unbind('mousemove').on('mousemove', function (e) {
+                    totalLen = $('#sliderInner').width();
+                    var moveX = e.originalEvent.pageX;
+                    var dist = startLeft + moveX - startX,
+                        percent;
+                    dist = dist < 0 ? 0 : dist > totalLen ? totalLen : dist;
+                    percent = parseInt(dist / totalLen * 100);
+                    $sliderTrack.css('width', percent + '%');
+                    $sliderHandler.css('left', percent + '%');
+                    $sliderValue.text(percent);
+
+                    e.preventDefault();
+                })
+            })
+            .on('touchmove', function (e) {
+                var moveX = e.originalEvent.changedTouches[0].clientX;
+                var dist = startLeft + moveX - startX,
+                    percent;
+                dist = dist < 0 ? 0 : dist > totalLen ? totalLen : dist;
+                percent = parseInt(dist / totalLen * 100);
+                $sliderTrack.css('width', percent + '%');
+                $sliderHandler.css('left', percent + '%');
+                $sliderValue.text(percent);
+                $('#wan').text(percent+'%');
+                e.preventDefault();
+            })
+        ;
+        $('body').on('mouseup', function (e) {
+            $sliderHandler.unbind('mousemove');
+        })
+    });
+</script>
+</html>

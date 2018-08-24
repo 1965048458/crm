@@ -45,7 +45,15 @@ public class ProjectController {
     private JournalService journalService;
 
     @RequestMapping("/projectDetail")
-    public String detail(){
+    public String projectDetail(@RequestParam("projectId") String projectId,
+                                ModelMap modelMap) {
+        ProjectDetail projectDetail = projectService.getProjectDetail(projectId);
+        modelMap.addAttribute("projectDetail", projectDetail);
+
+        if (projectDetail == null) {
+            return "error/404";
+        }
+
         return "projectDetail";
     }
 
@@ -53,6 +61,11 @@ public class ProjectController {
     @RequestMapping("/new")
     public String newProject() {
         return "newProject";
+    }
+
+    @RequestMapping("/mission")
+    public String mission(){
+        return "mission";
     }
 
     /**

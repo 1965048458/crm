@@ -171,5 +171,11 @@
         select crm_user_id from company_user where user_id = #{userId};
     </select>
 
+    <update id="applyAgain">
+        update company_user
+        SET  status ='PENDING', updater_id = #{crmUserId}, update_ts= NOW()
+        where crm_user_id = #{crmUserId} and company_id = #{companyId}
+    </update>
+
 
 </mapper>

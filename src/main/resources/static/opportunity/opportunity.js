@@ -13,6 +13,20 @@ var TYPE_NAMES = {
     'PHONE': '电话拜访'
 };
 
+var TYPE_OEDER = {
+    'NORMAL':'普通',
+    'URGENT':'紧急',
+    'GREATEURGENT':'十分紧急'
+};
+
+var TYPE_TYPE = {
+    'A':'方案', 'B':'资源示例', 'C':'试用',
+    'D':'人员外出支持',
+    'E':'项目评估', 'F':'为代理商陪标', 'G':'代理商授权',
+    'H':'撰写招标参数', 'I':'其他'
+};
+
+
 $(document).ready(function () {
 
     var opportunityVue = new Vue({
