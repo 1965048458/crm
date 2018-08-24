@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Administrator on 2018/7/24.
+ */
 @Service
 public class ProjectServiceImpl implements ProjectService{
 
@@ -107,6 +110,17 @@ public class ProjectServiceImpl implements ProjectService{
         projectDetail.setProjectSupports(supports);
         return projectDetail;
     }
+
+
+    @Override
+    public List<Support> queryMission(String userId){
+        List<Support> projectDetail = projectMapper.queryMission(userId);
+        if (projectDetail == null) {
+            return null;
+        }
+        return projectDetail;
+    }
+
 
     @Override
     public ProjectStart getProjectStart(Integer projectId, String userId) {

@@ -26,6 +26,7 @@
         .top-div {
             height: 52px;
         }
+
         .pull-left {
             float: left !important;
         }
@@ -39,6 +40,7 @@
             font-size: large;
             height: 40px;
         }
+
         .pro-title {
             font-size: 16px;
             line-height: 23px;
@@ -47,10 +49,12 @@
             padding-bottom: 5px;
             padding-left: 15px;
         }
+
         .pro {
             background-color: #FFFFFF;
             border-top: solid 1px #EAE4E4;
         }
+
         .pro-detail-div {
             padding-top: 5px;
             padding-bottom: 0px;
@@ -59,35 +63,44 @@
             line-height: 19px;
             color: #999999;
         }
+
         .pro-detail-title {
             padding-right: 7px;
             font-weight: bold;
         }
+
         .pro-status-title {
             font-size: 14px;
             line-height: 20px;
             font-weight: bold;
             padding-right: 17px;
         }
+
         .pro-status-content {
             font-size: 13px;
             line-height: 19px;
         }
+
         .my-weui-grid {
-            font-size: 15px; line-height: 22px;
+            font-size: 15px;
+            line-height: 22px;
             padding-top: 11px;
             padding-bottom: 10px;
         }
+
         .weui-grid-select {
             border-bottom: solid 2px #38A6F7;
         }
+
         .weui-grid-select-content {
-            color:#38A6F7;
+            color: #38A6F7;
         }
+
         .my-weui-tabbar {
             position: fixed;
             background-color: #FFFFFF;
         }
+
         .h-bottom {
             height: 55px;
         }
@@ -133,7 +146,7 @@
 
     <div style="height: 8px;"></div>
 
-    <div class="weui-grids" >
+    <div class="weui-grids">
         <a id="detailBox" class="weui-grid navi-bar my-weui-grid weui-grid-select" @click="toDetailPage">
             <p id="detail" class="weui-grid__label weui-grid-select-content" style=" font-size: medium;">详细信息</p>
         </a>
@@ -199,7 +212,7 @@
             </div>
         </div>
 
-        <div class="weui-cells" style="font-size: small;" >
+        <div class="weui-cells" style="font-size: small;">
             <div class="weui-cell" style="font-weight: bold">系统信息</div>
             <div class="weui-cell">
                 <div class="weui-cell__hd">
@@ -268,25 +281,39 @@
             <p class="weui-footer__text">——————&nbsp; 项目支持 &nbsp;——————</p>
         </div>
         <div class="weui-cells" style="font-size: small;">
-            <th:block th:if="${projectDetail.getProjectSupports() != null && projectDetail.getProjectSupports().size() > 0}">
+            <th:block
+                    th:if="${projectDetail.getProjectSupports() != null && projectDetail.getProjectSupports().size() > 0}">
                 <th:block th:each="support: ${projectDetail.getProjectSupports()}">
-                    <div class="weui-cell" style="font-weight: bold" th:text="${support.getSupportType().getName()}">撰写招标参数</div>
+                    <div class="weui-cell" style="font-weight: bold" th:text="${support.getSupportType().getName()}">
+                        撰写招标参数
+                    </div>
                     <div class="weui-media-box weui-media-box_text">
                         <ul class="weui-media-box__info" style="margin-top: 0px">
-                            <li class="weui-media-box__info__meta" th:text="'负责人：需管理员指定'">负责人：冯婷婷</li>
-                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra" th:text="${support.getOrder().getName()}">
+                            <th:block th:if="${projectDetail.getLeaderName() == null}">
+                                <li class="weui-media-box__info__meta" th:text="'负责人：需管理员指定'">负责人：冯婷婷</li>
+                            </th:block>
+                            <th:block th:if="${projectDetail.getLeaderName() != null}">
+                                <li class="weui-media-box__info__meta" th:text="${projectDetail.getLeaderName()}">
+                                    负责人：冯婷婷
+                                </li>
+                            </th:block>
+                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra"
+                                th:text="${support.getOrder().getName()}">
                                 重要且紧急
                             </li>
-                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra" th:text="${support.showExpire()}+'截止'">
+                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra"
+                                th:text="${support.showExpire()}+'截止'">
                                 8月20日截止
                             </li>
                         </ul>
-                        <p class="weui-media-box__desc" style="line-height: 25px" th:text="${support.getContent()}">引擎节点，加工中心，奇迹人事假变成、
+                        <p class="weui-media-box__desc" style="line-height: 25px" th:text="${support.getContent()}">
+                            引擎节点，加工中心，奇迹人事假变成、
                             垃圾分类游戏软件（1节点），山东华宇工学院创业学院招标技术参数、评分标准</p>
                     </div>
                 </th:block>
             </th:block>
-            <th:block th:if="${projectDetail.getProjectSupports() == null || projectDetail.getProjectSupports().size() == 0}">
+            <th:block
+                    th:if="${projectDetail.getProjectSupports() == null || projectDetail.getProjectSupports().size() == 0}">
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
                         <label class="weui-label">项目支持暂无</label>
@@ -299,21 +326,29 @@
 
             <div class="weui-cell" style="font-weight: bold;">拜访记录</div>
 
-            <th:block th:if="${projectDetail.getFollowUpRecords() != null && projectDetail.getFollowUpRecords().size() > 0}">
-                <div class="weui-media-box weui-media-box_text" th:each="followUpRecord: ${projectDetail.getFollowUpRecords()}">
+            <th:block
+                    th:if="${projectDetail.getFollowUpRecords() != null && projectDetail.getFollowUpRecords().size() > 0}">
+                <div class="weui-media-box weui-media-box_text"
+                     th:each="followUpRecord: ${projectDetail.getFollowUpRecords()}">
                     <ul class="weui-media-box__info" style="margin-top: 0px">
-                        <li class="weui-media-box__info__meta" th:text="${followUpRecord.getFollowUpPersonRealName()}">realName</li>
-                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra" th:text="${followUpRecord.getFollowUpType().getName()}">
+                        <li class="weui-media-box__info__meta" th:text="${followUpRecord.getFollowUpPersonRealName()}">
+                            realName
+                        </li>
+                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra"
+                            th:text="${followUpRecord.getFollowUpType().getName()}">
                             visitType
                         </li>
-                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra" th:text="${followUpRecord.getFollowUpTimeStr()}">
+                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra"
+                            th:text="${followUpRecord.getFollowUpTimeStr()}">
                             updateTime
                         </li>
                     </ul>
-                    <p class="weui-media-box__desc" style="line-height: 25px" th:text="${followUpRecord.getFollowUpResult()}">visitResult</p>
+                    <p class="weui-media-box__desc" style="line-height: 25px"
+                       th:text="${followUpRecord.getFollowUpResult()}">visitResult</p>
                 </div>
             </th:block>
-            <th:block th:if="${projectDetail.getFollowUpRecords() == null || projectDetail.getFollowUpRecords().size() == 0}">
+            <th:block
+                    th:if="${projectDetail.getFollowUpRecords() == null || projectDetail.getFollowUpRecords().size() == 0}">
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
                         <label class="weui-label">跟进记录暂无</label>
@@ -343,11 +378,11 @@
     <div class="h-bottom"></div>
 
     <div class="weui-tabbar my-weui-tabbar">
-        <a href="" class="weui-tabbar__item">
+        <a class="weui-tabbar__item" @click="clickApplySupport">
             <img src="/images/opportunity/applySupport.svg" class="weui-tabbar__icon">
             <p class="weui-tabbar__label">申请支持</p>
         </a>
-        <a href="" class="weui-tabbar__item">
+        <a class="weui-tabbar__item">
             <img src="/images/opportunity/uploadFile.svg" class="weui-tabbar__icon">
             <p class="weui-tabbar__label">上传附件</p>
         </a>

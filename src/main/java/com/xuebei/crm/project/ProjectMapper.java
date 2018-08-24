@@ -41,4 +41,6 @@ public interface ProjectMapper {
     ProjectDetail queryProjectDetailById(String projectId);
 
     List<Support> querySupportsByProjectId(String projectId);
+
+    List<Support> queryMission(@Param("userId") String userId);
 }

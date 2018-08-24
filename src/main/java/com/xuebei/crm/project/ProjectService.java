@@ -1,5 +1,7 @@
 package com.xuebei.crm.project;
 
+import com.xuebei.crm.opportunity.Support;
+
 import java.util.List;
 
 public interface ProjectService {
@@ -31,4 +33,6 @@ public interface ProjectService {
     ProjectDetail getProjectDetail(String projectId);
 
     String queryOpportunityNameByOpportunityId(Integer projectId);
+
+    List<Support> queryMission(String userId);
 }

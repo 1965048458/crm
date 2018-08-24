@@ -40,6 +40,10 @@
         </association>
     </resultMap>
 
+
+
+
+
     <resultMap id="supportMap" type="com.xuebei.crm.opportunity.Support">
         <id property="supportId" column="support_id"/>
         <result property="salesOpportunityId" column="sales_opportunity_id"/>
@@ -220,6 +224,14 @@
 		LEFT JOIN user_view U2 ON A.leader = U2.user_id
 		WHERE A.has_delete = 0 AND A.sales_opportunity_id = #{projectId};
     </select>
+
+
+
+
+
+
+
+
 
     <select id="querySupportsByProjectId" resultMap="supportMap">
         SELECT *
