@@ -17,6 +17,7 @@ jQuery(document).ready(function () {
             applyDeptName:'',
             applyDeptId:'',
             applyReasons:'',
+            delayApplyReasons:'gggg',
             showSubmitDialog:false,
             showSubmitErrDialog:false,
             showSearchResult:false,
@@ -25,11 +26,13 @@ jQuery(document).ready(function () {
             submitReasons:'',
             warningDetails:{
                 deptId:'',
-                leftTime:'',
+                leftDays:'',
+                leftHours:'',
                 warnedOrganization:'',
                 createdTime:'',
                 times:'',
-                lastTime:''
+                lastTime:'',
+                isApplied:false
             },
             deptList:'',
             errMsg:'',
@@ -131,11 +134,12 @@ jQuery(document).ready(function () {
             },
             'openSeaWarningDetail':function (warning) {
                 this.warningDetails.deptId = warning.deptId;
-                this.warningDetails.leftTime = warning.leftTime;
+                this.warningDetails.leftDays = warning.leftDays;
+                this.warningDetails.leftHours = warning.leftHours;
                 this.warningDetails.warnedOrganization = warning.deptName;
                 this.warningDetails.createdTime = warning.createdTime;
-                this.warningDetails.times = warning.followTimes;
                 this.warningDetails.lastTime = warning.lastTimeFollow;
+                this.warningDetails.isApplied = warning.isDelayApplied;
                 this.showPage = 'showOpenSeaWarning';
 
             },
@@ -145,7 +149,8 @@ jQuery(document).ready(function () {
                     type:'post',
                     url:'/customer/organization/delayApply',
                     data:{
-                        deptId:deptId
+                        deptId:deptId,
+                        delayApplyReasons:thisVue.delayApplyReasons
                     },
                     dataType:'json',
                     cache:false
@@ -239,11 +244,11 @@ jQuery(document).ready(function () {
         methods: {
 
             'changeSubFold' : function (status) {
-                if(status == 'ENCLOSURE'){
-                    this.showSub = false;
+                if(status == 'PERMITTED'){
+                    this.showSub = !this.showSub;
                     this.setImgPath();
                 }else {
-                    this.showSub = !this.showSub;
+                    this.showSub = false;
                     this.setImgPath();
                 }
 
@@ -276,7 +281,7 @@ jQuery(document).ready(function () {
             },
             'addEnclosureBrackets':function (status) {
                 if(status == 'ENCLOSURE'){
-                    return "[ 已圈 ]"
+                    return "[ 别人正在申请 ]"
                 }
             },
             'addNormalBrackets':function (status) {
@@ -284,9 +289,18 @@ jQuery(document).ready(function () {
                     return "[ 未圈 ]"
                 }
             },
+            'addApplyingBrackets':function (status) {
+                if(status == 'APPLYING'){
+                    return "[ 待审核 ]"
+                }
+            },
             'addOpenSeaWarning':function (warning) {
                 if(warning != null){
-                    return "!!即将进入公海";
+                    if(warning.isDelayApplied == true){
+                        return "!!已申请延期";
+                    }else {
+                        return "!!即将进入公海";
+                    }
                 }
                 else {
                     return '';
@@ -299,6 +313,7 @@ jQuery(document).ready(function () {
             'openSeaWarning':function (warning) {
                 console.log("component.warning")
                 organizationVue.openSeaWarningDetail(warning);
+                
             },
             'toContactDetail':function (contactsId) {
                 window.location = '/customer/contactsInfo?contactsId='+contactsId;

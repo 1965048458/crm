@@ -1,7 +1,11 @@
 package com.xuebei.crm.customer;
 
 import com.xuebei.crm.company.CompanyMapper;
+import com.xuebei.crm.department.DeptMapper;
+import com.xuebei.crm.department.DeptService;
 import com.xuebei.crm.dto.GsonView;
+import com.xuebei.crm.member.Member;
+import com.xuebei.crm.member.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.xuebei.crm.utils.UUIDGenerator;
 import com.xuebei.crm.exception.DepartmentNameDuplicatedException;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -23,6 +28,15 @@ public class CustomerController {
 
     @Autowired
     private CompanyMapper companyMapper;
+
+    @Autowired
+    private MemberService memberService;
+
+    @Autowired
+    private DeptService deptService;
+
+    @Autowired
+    private DeptMapper deptMapper;
 
     @RequestMapping("searchCustInfo")
     public String searchInfo(){
@@ -137,7 +151,8 @@ public class CustomerController {
                                       @RequestParam("deptName") String deptName,
                                       @RequestParam(value = "website", required = false) String website,
                                       @RequestParam(value = "profile", required = false) String profile,
-                                      HttpServletRequest request) {
+                                      HttpServletRequest request,
+                                     EnclosureApply enclosureApply) {
         if (!customerService.isUserHasCustomer(acquireUserId(request), customerId)) {
             return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
         }
@@ -164,6 +179,11 @@ public class CustomerController {
             return GsonView.createErrorView(e.getMessage());
         }
 
+        String userId = (String) request.getSession().getAttribute("userId");
+        enclosureApply.setDeptId(dept.getDeptId());
+        enclosureApply.setUserId(userId);
+        customerMapper.insertEnclosureApply(enclosureApply);
+
         return GsonView.createSuccessView();
     }
 
@@ -189,6 +209,8 @@ public class CustomerController {
         }
 
         customerService.addSubDepartment(parentDeptId, deptName);
+
+
 
         return GsonView.createSuccessView();
     }
@@ -313,12 +335,7 @@ public class CustomerController {
 
     @RequestMapping("/organization")
     public String organization(@RequestParam("customerId") String customerId,
-                               HttpServletRequest request,
                                ModelMap modelMap){
-        String userId = (String)request.getSession().getAttribute("userId");
-        if (userId == null) {
-            return "error/404";
-        }
         Customer customer = customerMapper.queryCustomer(customerId);
         modelMap.addAttribute("customerId", customer.getCustomerId());
         modelMap.addAttribute("customerName", customer.getCustomerName());
@@ -329,59 +346,41 @@ public class CustomerController {
     public GsonView queryDepartment(@RequestParam("customerId") String customerId,
                                     HttpServletRequest request) {
         String userId = (String) request.getSession().getAttribute("userId");
-        List<Department> deptList = customerService.queryDepartment(customerId, userId);
-//        deptList.get(0).setEnclosureStatus(EnclosureStatusEnum.ENCLOSURE);
-//        deptList.get(5).setEnclosureStatus(EnclosureStatusEnum.ENCLOSURE);
-//        deptList.get(4).setEnclosureStatus(EnclosureStatusEnum.MINE);
-//        OpenSeaWarning openSeaWarning = new OpenSeaWarning();
-//        openSeaWarning.setDeptName(deptList.get(4).getDeptName());
-//        openSeaWarning.setFollowTimes(2);
-//        openSeaWarning.setLeftTime("3");
-//        openSeaWarning.setDeptId("dept1");
-//        openSeaWarning.setCreatedTime("2018-08-08 12:23:33");
-//        openSeaWarning.setLastTimeFollow("2018-09-08 12:23:33");
-//        deptList.get(4).setOpenSeaWarning(openSeaWarning);
-        //TODO
-        List searchList = customerService.querySearchList(deptList);
+        List<Department> departmentList = deptService.departmentList(customerId,userId);
+        List searchList = new ArrayList();
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg",true);
-        gsonView.addStaticAttribute("customerList", deptList);
-        //TODO
+        gsonView.addStaticAttribute("customerList", departmentList);
         gsonView.addStaticAttribute("searchList",searchList);
         return gsonView;
     }
 
     @RequestMapping("/organization/apply")
-    public GsonView applyDepartment(@RequestParam("submitReasons") String submitReasons,
+    public GsonView applyDepartment(@RequestParam("applyReasons") String reasons,
                                     @RequestParam("applyDeptId") String applyDeptId,
-                                    EnclosureApply enclosureApply,
                                     HttpServletRequest request) {
         GsonView gsonView = new GsonView();
         final String EMPTY_REASONS_ERROR = "申请理由不能为空";
-        if(submitReasons == null || submitReasons.equals("")) {
+        if(reasons == null || reasons.equals("")) {
             gsonView.addStaticAttribute("successFlg", false);
             gsonView.addStaticAttribute("errMsg",EMPTY_REASONS_ERROR);
         }
         else{
             String userId = (String) request.getSession().getAttribute("userId");
-            enclosureApply.setReasons(submitReasons);
-            enclosureApply.setDeptId(applyDeptId);
-            enclosureApply.setUserId(userId);
-            customerMapper.insertEnclosureApply(enclosureApply);
+            deptService.enclosureApply(applyDeptId,userId, reasons);
             gsonView.addStaticAttribute("successFlg", true);
         }
         return gsonView;
     }
 
     @RequestMapping("/organization/delayApply")
-    public GsonView delayApply(@RequestParam("deptId") String deptId){
+    public GsonView delayApply(@RequestParam("deptId") String deptId,
+                               @RequestParam("delayApplyReasons") String reasons,
+                               HttpServletRequest request){
         GsonView gsonView = new GsonView();
-        customerService.enclosureDelayApply(deptId);
-//        EnclosureApply enclosureApply = new EnclosureApply();
-//        enclosureApply.setEnclosureApplyId(11);
-//        customerMapper.insertEnclosureDelayApply(enclosureApply);
+        String userId = (String) request.getSession().getAttribute("userId");
+        deptService.enclosureDelayApply(deptId,userId,reasons);
         gsonView.addStaticAttribute("successFlg",true);
-        //gsonView.addStaticAttribute("errMsg","申请延期失败");
         return gsonView;
     }
 
@@ -447,7 +446,7 @@ public class CustomerController {
                                    ModelMap modelMap) {
         String userId = (String)request.getSession().getAttribute("userId");
 
-        List<Department> deptList = customerService.queryDepartment(customerId, userId);
+        List<Department> deptList = deptService.myDepartmentList(customerId, userId);
 
         modelMap.addAttribute("customerId", customerId);
         modelMap.addAttribute("departments", deptList);

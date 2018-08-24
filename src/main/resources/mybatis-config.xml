@@ -24,5 +24,7 @@
         <mapper resource="mybatis/mapper/OpportunityMapper.xml"/>
         <mapper resource="mybatis/mapper/ProjectMapper.xml"/>
         <mapper resource="mybatis/mapper/MemberMapper.xml"/>
+        <mapper resource="mybatis/mapper/DeptMapper.xml"/>
+        <mapper resource="mybatis/mapper/MsgMapper.xml"/>
     </mappers>
 </configuration>
