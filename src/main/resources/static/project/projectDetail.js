@@ -4,7 +4,7 @@ jQuery(document).ready(function () {
    var projDetailVue = new Vue({
        el: '#projDetailVue',
        data: {
-            showPage: 'detailPage',
+            showPage: 'detailPage'
        },
        methods: {
            'back':function () {
