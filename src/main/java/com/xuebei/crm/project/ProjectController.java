@@ -43,7 +43,7 @@ public class ProjectController {
 
     @Autowired
     private JournalService journalService;
-
+//    http://localhost:8080/project/projectDetail?projectId=140
     @RequestMapping("/projectDetail")
     public String projectDetail(@RequestParam("projectId") String projectId,
                                 ModelMap modelMap) {
