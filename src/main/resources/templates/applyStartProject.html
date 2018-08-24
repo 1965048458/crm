@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
@@ -69,6 +69,7 @@
 
     <div class="weui-tab">
 
+        <input type="hidden" id="projectId" th:value="${projectId}">
         <div class="navi-bar">
             <div class="top-bar center-box">
                 <span @click="backToDetail" class="pull-left">
@@ -83,7 +84,7 @@
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">项目名称 :</label></div>
                 <div class="weui-cell__bd">
-                    <p v-text=""></p>
+                    <span th:text="${projectName}"></span>
                 </div>
             </div>
             <div class="weui-cell">
@@ -120,7 +121,7 @@
                             <img style="width: 20px; height: 15px;" src="/images/project/payBack.png"/> &nbsp; 回款金额(元)</label></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input" type="number" pattern="[0-9]*" placeholder="     输入回款金额"
-                                  :id="'refund' +index" v-model="pay.refund">
+                                  :id="'refund' +index" v-model="pay.refundNum">
                         </div>
                     </div>
                     <div class="weui-cell">
@@ -159,6 +160,16 @@
                     <div class="weui-cell__bd" style="color: #CCCCCC; font-size: 16px;">还没有上传附件</div>
                 </div>
             </div>
+
+            <!--BEGIN toast-->
+            <div id="toast" style="display: none;">
+                <div class="weui-mask_transparent"></div>
+                <div class="weui-toast">
+                    <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                    <p class="weui-toast__content">提交成功</p>
+                </div>
+            </div>
+            <!--end toast-->
 
             <a href="javascript:;" class="weui-btn weui-btn_plain-default" style="background-color: #38A4F2; color:#FFFFFF; font-size: 18px; margin-top: 20px;">上传附件</a>
         </div>

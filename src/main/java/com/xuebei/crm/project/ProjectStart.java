@@ -7,6 +7,8 @@ import java.util.List;
 
 public class ProjectStart {
     @Expose
+    private Integer id;
+    @Expose
     private Integer projectId;
     @Expose
     private String projectName;
@@ -18,6 +20,24 @@ public class ProjectStart {
     private List<Refund> refunds;
     @Expose
     private String userId;
+    @Expose
+    private String status;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getUserId() {
         return userId;

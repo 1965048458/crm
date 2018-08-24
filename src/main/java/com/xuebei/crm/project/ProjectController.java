@@ -129,12 +129,29 @@ public class ProjectController {
     }
 
     @RequestMapping("/applyStart")
-    public String startProject(@RequestParam(value = "projectId", required = false) Integer projectId){
-        ModelMap modelMap = new ModelMap();
+    public String startProject(@RequestParam(value = "projectId") Integer projectId,
+                               ModelMap modelMap){
         String projectName = projectService.queryOpportunityNameByOpportunityId(projectId);
         modelMap.addAttribute("projectId", projectId);
         modelMap.addAttribute("projectName", projectName);
         return "applyStartProject";
+    }
+
+    @RequestMapping("/getContractInfo")
+    public GsonView getContractInfo(@RequestParam("projectId") Integer projectId,
+                                    HttpServletRequest request){
+        String userId = (String) request.getSession().getAttribute("userId");
+        GsonView gsonView = new GsonView();
+        ProjectStart projectStart = projectService.getProjectStart(projectId, userId);
+        Contract contract = projectService.getContract(projectId);
+        List<Refund> refunds = projectService.getRefunds(projectId);
+        if (projectStart != null){
+            projectStart.setContract(contract);
+            projectStart.setRefunds(refunds);
+        }
+        gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("projectStart", projectStart);
+        return gsonView;
     }
 
     @RequestMapping("/submitProject")

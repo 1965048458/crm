@@ -26,6 +26,18 @@
         <result property="opportunityName" column="opportunity_nm"/>
     </resultMap>
     
+    <resultMap id="projectStartMap" type="com.xuebei.crm.project.ProjectStart">
+        <id property="id" column="start_project_id"/>
+        <result column="sales_opportunity_id" property="projectId"/>
+        <result column="status" property="status"/>
+        <result column="apply_content" property="applyContent"/>
+        <result column="user_id" property="userId"/>
+        <association property="projectName" javaType="java.lang.String">
+            <id property="projectId" column="sales_opportunity_id"/>
+            <result column="opportunity_nm" property="projectName"/>
+        </association>
+    </resultMap>
+    
     <resultMap id="contractMap" type="com.xuebei.crm.project.Contract">
         <id column="contract_id" property="contractId"/>
         <result column="contract_no" property="contractNo"/>
@@ -55,6 +67,15 @@
         )
     </insert>
 
+    <insert id="insertProjectStart" parameterType="com.xuebei.crm.project.ProjectStart"
+            useGeneratedKeys="true" keyColumn="start_project_id" keyProperty="id">
+        INSERT INTO project_start(
+          `status`, `apply_content`, `sales_opportunity_id`, `user_id`
+        ) VALUES (
+                'applying', #{applyContent}, #{projectId}, #{userId}
+        )
+    </insert>
+
     <insert id="insertContract" parameterType="com.xuebei.crm.project.Contract">
         INSERT INTO contract(
           `contract_id`, `contract_no`, `project_id`,
@@ -73,6 +94,12 @@
             #{projectId}, #{refundNum}, #{condition}
         )
     </insert>
+
+    <update id="updateProjectStart" parameterType="com.xuebei.crm.project.ProjectStart">
+        UPDATE project_start SET
+            status = 'applying', apply_content = #{applyContent}
+        WHERE start_project_id = #{id}
+    </update>
 
     <update id="updateContract" parameterType="com.xuebei.crm.project.Contract">
         UPDATE contract SET
@@ -123,12 +150,22 @@
         </if>
     </select>
 
-    <select id="queryProjectsByUserId" resultMap="projectMap">
-        SELECT project_id, project_nm
-        FROM project
-        WHERE user_id = #{userId};
+    <select id="getProjectStart" resultMap="projectStartMap">
+        SELECT * FROM project_start ps
+        WHERE ps.sales_opportunity_id = #{projectId} AND ps.user_id = #{userId}
+              AND ps.status = 'applying'
     </select>
 
+    <select id="getRefunds" resultMap="refundLogMap">
+        SELECT * from refund_log
+        WHERE project_id = #{projectId}
+    </select>
+
+    <select id="getContract" resultMap="contractMap">
+        SELECT * FROM contract
+        WHERE project_id = #{projectId}
+    </select>
+    
     <select id="queryOpportunitiesByUserId" resultMap="opportunityMap">
         SELECT sales_opportunity_id, opportunity_nm
         FROM sales_opportunity

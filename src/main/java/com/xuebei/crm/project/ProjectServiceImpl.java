@@ -29,6 +29,16 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
+    public Integer addProjectStart(ProjectStart projectStart) {
+        return projectMapper.insertProjectStart(projectStart);
+    }
+
+    @Override
+    public void updateProjectStart(ProjectStart projectStart) {
+        projectMapper.updateProjectStart(projectStart);
+    }
+
+    @Override
     public void updateContract(Contract contract) {
         projectMapper.updateContract(contract);
     }
@@ -40,13 +50,17 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public void startProject(ProjectStart projectStart) {
+
+        if (projectStart == null)
+            return;
+
         Contract contract = projectStart.getContract();
         if (contract != null){
-            contract.setProjectId(projectStart.getProjectId());
-            if (contract.getContractId() != null){
+            if (contract.getContractId() != null && !contract.getContractId().equals("") ){
                 updateContract(contract);
             }else{
                 String contractId = UUIDGenerator.genUUID();
+                contract.setProjectId(projectStart.getProjectId());
                 contract.setContractId(contractId);
                 addContract(contract);
             }
@@ -54,15 +68,20 @@ public class ProjectServiceImpl implements ProjectService{
         List<Refund> refunds = projectStart.getRefunds();
         if (refunds != null){
             for (Refund refund : refunds){
-                refund.setProjectId(projectStart.getProjectId());
-                if(refund.getRefundId() != null){
+                if(refund.getRefundId() != null && refund.getRefundId() != 0 ){
                     updateRefund(refund);
                 }else{
+                    refund.setProjectId(projectStart.getProjectId());
                     addRefund(refund);
                 }
             }
         }
-        //todo insert apply table
+
+        if (projectStart.getId() != null && projectStart.getId() != 0){
+            updateProjectStart(projectStart);
+        }else {
+            addProjectStart(projectStart);
+        }
     }
 
     @Override
@@ -70,6 +89,21 @@ public class ProjectServiceImpl implements ProjectService{
 
         List<Project> projectList = projectMapper.searchProject(param);
         return projectList;
+    }
+
+    @Override
+    public ProjectStart getProjectStart(Integer projectId, String userId) {
+        return projectMapper.getProjectStart(projectId, userId);
+    }
+
+    @Override
+    public Contract getContract(Integer projectId) {
+        return projectMapper.getContract(projectId);
+    }
+
+    @Override
+    public List<Refund> getRefunds(Integer projectId) {
+        return projectMapper.getRefunds(projectId);
     }
 
     @Override
