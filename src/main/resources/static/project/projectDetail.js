@@ -4,7 +4,8 @@ jQuery(document).ready(function () {
    var projDetailVue = new Vue({
        el: '#projDetailVue',
        data: {
-            showPage: 'detailPage'
+            showPage: 'detailPage',
+            projectId: ''
        },
        methods: {
            'back':function () {
@@ -37,10 +38,9 @@ jQuery(document).ready(function () {
                $('#modif').attr("class", "weui-grid__label weui-grid-select-content");
            },
            'clickApplySupport': function () {
-               window.location = "/opportunity/applySupport?salesOpportunityId=" + $("#salesOpportunityId").val();
+               window.location = "/opportunity/applySupport?salesOpportunityId=" + $('#salesOpportunityId').val();
            }
 
        }
    });
-
 });
