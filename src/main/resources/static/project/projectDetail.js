@@ -7,6 +7,9 @@ jQuery(document).ready(function () {
             showPage: 'detailPage',
        },
        methods: {
+           'back':function () {
+               window.location.href = '/project/projectList';
+           },
            'clearStyle': function () {
                $('#detailBox').attr("class", "weui-grid navi-bar my-weui-grid");
                $('#detail').attr("class", "weui-grid__label");

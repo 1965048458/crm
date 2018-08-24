@@ -29,4 +29,6 @@ public interface ProjectService {
     List<Project> searchProject(ProjectSearchParam param);
 
     ProjectDetail getProjectDetail(String projectId);
+
+    String queryOpportunityNameByOpportunityId(Integer projectId);
 }
