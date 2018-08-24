@@ -3,6 +3,7 @@ package com.xuebei.crm.project;
 import com.xuebei.crm.opportunity.Opportunity;
 import com.xuebei.crm.opportunity.Support;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface ProjectMapper {
     ProjectDetail queryProjectDetailById(String projectId);
 
     List<Support> querySupportsByProjectId(String projectId);
+
+    List<Support> queryMission(@Param("userId") String userId);
 }

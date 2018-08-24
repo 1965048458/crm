@@ -15,7 +15,7 @@ $(document).ready(function () {
         methods: {
             'backPage': function () {
                 //do nothing
-                window.location = "/opportunity";
+                history.back();
             },
             'selectSupportType': function () {
                 this.showPage = 'supportTypePage';

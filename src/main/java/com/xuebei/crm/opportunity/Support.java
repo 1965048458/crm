@@ -23,6 +23,8 @@ public class Support {
     private String creatorId;
 
 
+
+
     public Support() {}
     public Support(Integer salesOpportunityId, SupportTypeEnum supportType, Date expireDate, SupportOrderEnum order,
                    String content, String creatorId) {

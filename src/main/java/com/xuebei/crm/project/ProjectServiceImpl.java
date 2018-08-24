@@ -43,4 +43,15 @@ public class ProjectServiceImpl implements ProjectService{
         projectDetail.setProjectSupports(supports);
         return projectDetail;
     }
+
+
+    @Override
+    public List<Support> queryMission(String userId){
+        List<Support> projectDetail = projectMapper.queryMission(userId);
+        if (projectDetail == null) {
+            return null;
+        }
+        return projectDetail;
+    }
+
 }

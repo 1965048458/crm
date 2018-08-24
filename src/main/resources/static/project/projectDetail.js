@@ -32,7 +32,11 @@ jQuery(document).ready(function () {
                this.clearStyle();
                $('#modifBox').attr("class", "weui-grid navi-bar my-weui-grid weui-grid-select");
                $('#modif').attr("class", "weui-grid__label weui-grid-select-content");
+           },
+           'clickApplySupport': function () {
+               window.location = "/opportunity/applySupport?salesOpportunityId=" + $("#salesOpportunityId").val();
            }
+
        }
    });
 

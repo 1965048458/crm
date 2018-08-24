@@ -68,6 +68,7 @@ public class ProjectController {
 
     @RequestMapping("/mission")
     public String mission(){
+
         return "mission";
     }
 
@@ -148,5 +149,7 @@ public class ProjectController {
     public String startProject(){
         return "applyStartProject";
     }
+
+
 
 }
