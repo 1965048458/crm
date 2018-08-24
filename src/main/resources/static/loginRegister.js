@@ -4,7 +4,21 @@
 /**
  * Created by Administrator on 2018/7/12.
  */
+
 jQuery(document).ready(function () {
+    document.onkeydown = function () {
+        var key = window.event.keyCode;
+        var title = $('title').context.title;
+        if(key == 13){
+            if(title =='注册登录'){
+               insertVue.login();
+            }else if(title =='找回密码'){
+                insertVue.findPwd();
+            }else if(title =='手机号注册'){
+                insertVue.register();
+            }
+        }
+    }
     var insertVue = new Vue({
         el: '#insertVue',
         data: {
@@ -36,8 +50,12 @@ jQuery(document).ready(function () {
                 }).done(function (result) {
                     if (result.successFlg) {
                         window.location.href = "/myAccount";
-                    } else {
-                        alert("用户名或密码不正确");
+                    } else{
+                        if(result.loginError) {
+                            alert("用户名或密码不正确");
+                        }else{
+                            alert("系统错误！");
+                        }
                     }
                 });
             },

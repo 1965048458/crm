@@ -266,7 +266,9 @@ public class LoginController {
                 gsonView.addStaticAttribute(ERRMSG, "已加入公司，请勿重复加入！");
             } else if (status.equals("REFUSE")) {
                 gsonView.addStaticAttribute(SUCCESS_FLG, false);
-                gsonView.addStaticAttribute(ERRMSG, "申请被拒绝！");
+                companyMapper.applyAgain(crmUserId,company.getCompanyId());
+                gsonView.addStaticAttribute("again", true);
+                gsonView.addStaticAttribute(ERRMSG, "已再次发送申请，请等待审核。");
             }
         } else {
             gsonView.addStaticAttribute(SUCCESS_FLG, false);
@@ -293,6 +295,7 @@ public class LoginController {
                 gsonView.addStaticAttribute(SUCCESS_FLG, true);
             } else {
                 gsonView.addStaticAttribute(SUCCESS_FLG, false);
+                gsonView.addStaticAttribute("loginError", true);
             }
         }
         return gsonView;

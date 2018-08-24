@@ -251,10 +251,24 @@
     </select>
 
     <select id="queryDepartment" resultMap="deptMap">
-        SELECT cd.*
-        FROM customer_dept cd
-            LEFT JOIN contacts c ON c.customer_dept_id = cd.customer_dept_id
-        WHERE cd.customer_id = #{customerId}
+        select r2.* from
+            (select r.* from
+                (select d.*, a.update_ts,a.status_cd,a.user_id,a.apply_start_ts, a.apply_end_ts,
+                     (select count(*) from enclosure_apply b
+                     where b.customer_dept_id = d.customer_dept_id
+                           and b.user_id != #{userId}
+                           and status_cd = "permitted") as en_by_others,
+                     (select count(*) from enclosure_apply b
+                     where b.customer_dept_id = d.customer_dept_id
+                            and b.user_id != #{userId}
+                            and status_cd = "applying") as ap_by_others
+                 from customer_dept d
+                     inner join enclosure_apply a on d.customer_dept_id = a.customer_dept_id
+                 where d.customer_id= #{customerId}
+                       and a.user_id = #{userId}
+                 order by a.update_ts desc) as r
+        group by r.customer_dept_id) as r2
+        where r2.en_by_others=0;
     </select>
 
     <select id="queryContacts" resultMap="contactsMap">

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuebei.crm.department.DeptMapper">
+    
+    <resultMap id="deptMap" type="com.xuebei.crm.customer.Department">
+        <id property="deptId" column="customer_dept_id"/>
+        <result property="deptName" column="department_nm"/>
+        <result property="statusCd" column="status_cd"/>
+        <result property="applyByOthers" column="ap_by_others"/>
+        <association property="enclosureApply" javaType="com.xuebei.crm.customer.EnclosureApply">
+            <id property="enclosureApplyId" column="enclosure_apply_id"/>
+            <result property="userId" column="user_id"/>
+            <result property="startTime" column="apply_start_ts"/>
+            <result property="endTime" column="apply_end_ts"/>
+            <result property="statusCd" column="status_cd"/>
+            <result property="updateTime" column="update_ts"/>
+            <result property="enclosureByOthers" column="en_by_others"/>
+            <result property="applyByOthers" column="ap_by_others"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="contactsMap" type="com.xuebei.crm.customer.Contacts">
+        <id property="contactsId" column="contacts_id"/>
+        <result property="departmentId" column="customer_dept_id"/>
+        <result property="realName" column="real_nm"/>
+        <result property="gender" column="gender"/>
+        <result property="typeName" column="type_name"/>
+    </resultMap>
+    
+    <resultMap id="enclosureApplyMap" type="com.xuebei.crm.customer.EnclosureApply">
+        <id property="enclosureApplyId" column="enclosure_apply_id"/>
+        <result property="deptId" column="customer_dept_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="reasons" column="apply_reason"/>
+        <result property="startTime" column="apply_start_ts"/>
+        <result property="endTime" column="apply_end_ts"/>
+        <result property="statusCd" column="status_cd"/>
+        <result property="updateTime" column="update_ts"/>
+        <result property="applyTime" column="apply_ts"/>
+    </resultMap>
+
+    <select id="searchDepts" resultMap="deptMap">
+        select r2.* from
+            (select r.* from
+                (select d.prt_id,d.department_nm,d.customer_id,a.*,
+                     (select count(*) from enclosure_apply b
+                     where b.customer_dept_id = d.customer_dept_id
+                           and b.user_id  <![CDATA[ <> ]]> #{userId}
+                           and status_cd = "PERMITTED"
+                           and b.apply_end_ts &gt; NOW() ) as en_by_others,
+                     (select count(*) from enclosure_apply b
+                     where b.customer_dept_id = d.customer_dept_id
+                           and b.user_id  <![CDATA[ <> ]]> #{userId}
+                           and status_cd = "APPLYING"
+                           and b.apply_end_ts &gt; NOW()) as ap_by_others
+                 from customer_dept d
+                     inner join enclosure_apply a on d.customer_dept_id = a.customer_dept_id
+                 where d.customer_id= #{customerId}
+                       and a.user_id = #{userId}
+                 order by a.update_ts desc) as r
+            group by r.customer_dept_id) as r2
+         where r2.en_by_others=0;
+    </select>
+
+    <select id="searchMyDepts" resultMap="deptMap">
+        select r1.* from
+        (select a.department_nm,a.customer_id,b.*
+        from customer_dept as a
+        inner join enclosure_apply as b on a.customer_dept_id = b.customer_dept_id
+        where (b.status_cd = 'PERMITTED')
+        and a.customer_id = #{customerId}
+        and b.user_id = #{userId}
+        and b.apply_end_ts &gt; NOW()
+        order by b.update_ts desc) as r1
+        group by r1.customer_dept_id,r1.user_id
+    </select>
+
+    <select id="searchSubDepts" resultMap="deptMap">
+        SELECT * FROM customer_dept
+        WHERE prt_id = #{deptId};
+    </select>
+    
+    <select id="searchContacts" resultMap="contactsMap">
+        SELECT a.contacts_id,a.customer_dept_id,a.real_nm,a.gender,b.type_name
+        FROM contacts AS a
+        LEFT JOIN contacts_type AS b
+            ON a.contacts_type_id = b.contacts_type_id
+        WHERE a.customer_dept_id=#{deptId};
+    </select>
+
+    <select id="searchOthersAppliedDepts" resultMap="deptMap">
+        select r1.* from
+            (select a.department_nm,a.customer_id,b.*
+             from customer_dept as a
+                 inner join enclosure_apply as b
+                 on a.customer_dept_id = b.customer_dept_id
+             where (b.status_cd = 'PERMITTED' or b.status_cd = 'APPLYING')
+                   and a.customer_id = #{customerId}
+                   and b.user_id != #{userId}
+                   and b.apply_end_ts &gt; NOW()
+             order by b.update_ts desc) as r1
+        group by r1.customer_dept_id,r1.user_id
+    </select>
+    
+    <select id="searchMyAppliedDepts" resultMap="deptMap">
+        select r1.* from
+            (select a.department_nm,a.customer_id,b.*
+             from customer_dept as a
+                 inner join enclosure_apply as b on a.customer_dept_id = b.customer_dept_id
+             where (b.status_cd = 'PERMITTED' or b.status_cd = 'APPLYING' or b.status_cd='REJECTED')
+                   and a.customer_id = #{customerId}
+                   and b.user_id = #{userId}
+                   and b.apply_end_ts &gt; NOW()
+             order by b.update_ts desc) as r1
+        group by r1.customer_dept_id,r1.user_id
+    </select>
+
+    <delete id="deleteApplyDepartment" >
+        DELETE FROM enclosure_apply
+        WHERE user_id=#{userId}
+        AND customer_dept_id=#{deptId};
+    </delete>
+    
+    <insert id="applyDepartment" >
+        INSERT INTO enclosure_apply(
+            apply_ts, customer_dept_id, user_id, apply_reason, apply_start_ts, apply_end_ts, status_cd, updater_id, update_ts
+        )
+        VALUES (
+            NOW(),
+            #{deptId},
+            #{userId},
+            #{applyReasons},
+            NOW(),
+            adddate(NOW(),INTERVAL 3 MONTH),
+            'APPLYING',
+            #{userId},
+            NOW()
+        )
+    </insert>
+    
+    <insert id="delayApplyDepartment" >
+        INSERT INTO enclosure_delay_apply(
+        apply_ts, enclosure_apply_id, plan_end_ts, apply_reason, status_cd
+        ) VALUES (
+            NOW(),
+            (SELECT a.enclosure_apply_id FROM enclosure_apply AS a
+            WHERE a.customer_dept_id=#{deptId}
+            ORDER BY a.update_ts DESC
+            LIMIT 1),
+            adddate(NOW(), INTERVAL 3 MONTH),
+            #{applyReasons},
+            'APPLYING'
+        )
+    </insert>
+
+    <select id="delayApplyStatus" resultType="java.lang.String">
+        SELECT status_cd FROM enclosure_delay_apply
+        WHERE enclosure_apply_id =
+              (SELECT a.enclosure_apply_id FROM enclosure_apply AS a
+              WHERE a.customer_dept_id = #{deptId}
+              AND a.status_cd = 'PERMITTED'
+              AND a.apply_end_ts &gt; NOW()
+              ORDER BY a.update_ts)
+    </select>
+
+</mapper>

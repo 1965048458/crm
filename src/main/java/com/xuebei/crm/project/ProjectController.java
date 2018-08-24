@@ -66,6 +66,11 @@ public class ProjectController {
         return "newProject";
     }
 
+    @RequestMapping("/mission")
+    public String mission(){
+        return "mission";
+    }
+
     /**
      * 新建项目
      * @param project
@@ -137,6 +142,11 @@ public class ProjectController {
         gsonView.addStaticAttribute("successFlg", true);
         gsonView.addStaticAttribute("projectList", projectList);
         return gsonView;
+    }
+
+    @RequestMapping("/applyStart")
+    public String startProject(){
+        return "applyStartProject";
     }
 
 }

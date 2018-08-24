@@ -51,6 +51,8 @@ public interface CompanyMapper {
 
     String queryCrmUserId(@Param("userId") String userId);
 
+    void applyAgain(@Param("crmUserId")String crmUserId,@Param("companyId")String companyId);
+
 
 
 

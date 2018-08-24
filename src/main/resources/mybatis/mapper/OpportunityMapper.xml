@@ -90,7 +90,7 @@
         (select cu.company_id from company_user cu where cu.user_id =#{scene})
         ) and cu.user_id = s.user_id
         LEFT JOIN crm_customer c ON c.customer_id = s.customer_id
-        WHERE s.sales_status IN ('A','B','C','D','F')
+        WHERE s.sales_status IN ('A','B','C','D','F') AND  s.has_delete = 0
         <if test="createStart != null">
             AND s.create_ts &gt; #{createStart}
         </if>
@@ -226,5 +226,17 @@
 				NOW()
 			);
     </insert>
+
+    <update id="deleteOpportunity">
+        update sales_opportunity
+        set has_delete = 1
+        where sales_opportunity_id= #{opportunityId}
+    </update>
+
+    <update id="convertOpportunity">
+        update sales_opportunity
+        set sales_status = 0
+        where sales_opportunity_id= #{opportunityId}
+    </update>
 
 </mapper>

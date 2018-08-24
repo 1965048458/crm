@@ -191,6 +191,7 @@ jQuery(document).ready(function () {
                 for(var i=0;i<this.deleteMember.length;i++){
                     ids+=this.deleteMember+',';
                 }
+                console.log(ids);
                 var thisVue = this;
                 $.ajax({
                     type:'get',

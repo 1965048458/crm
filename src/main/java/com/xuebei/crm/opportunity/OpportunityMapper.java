@@ -38,5 +38,7 @@ public interface OpportunityMapper {
 
     void insertFailReason(@Param("opportunityId")int opportunityId, @Param("failReason")String failReason);
 
+    void deleteOpportunity(@Param("opportunityId")int opportunityId);
 
+    void convertOpportunity(@Param("opportunityId")int opportunityId);
 }

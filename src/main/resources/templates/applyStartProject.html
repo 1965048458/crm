@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>启动项目</title>
+
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css">
+
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/project/applyStartProject.js"></script>
+
+    <style>
+
+        .pull-left{
+            float: left !important;
+        }
+
+        .pull-right{
+            float: right !important;
+        }
+
+        .top-bar{
+            background: #FFFFFF;
+            text-align: center;
+            padding: 7px 10px;
+            font-size: 18px;
+        }
+
+        .center-box{
+            text-align: center;
+        }
+
+        .navi-bar{
+            z-index: 9999;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        .weui-cells{
+            padding: 0;
+            margin-top: 0;
+        }
+
+        .weui-cell, .weui-cells__title{
+            background: #FFFFFF;
+        }
+
+        .label{
+            font-size: 16px;
+            color: #030303;
+        }
+
+        .label_2{
+            color :#101010;
+            font-size: 14px;
+            width: 130px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div id="startProjectVue" style="height: 100%;">
+
+    <div class="weui-tab">
+
+        <div class="navi-bar">
+            <div class="top-bar center-box">
+                <span @click="backToDetail" class="pull-left">
+                    <img src="/images/back_icon.svg" style="margin-top: 7px;"/>
+                </span>
+                <span class="center" style="margin-top: 3px;">启动项目</span>
+                <span class="pull-right" style="margin-top: 0; font-size: 16px; color: #38A4F2;" @click="submit">提交</span>
+            </div>
+        </div>
+
+        <div class="weui-tab__panel" style="padding-top: 50px;">
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">项目名称 :</label></div>
+                <div class="weui-cell__bd">
+                    <p></p>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd" style="color: #19191A; font-size: 16px">合同信息</div>
+                <div class="weui-cell__ft" @click="changeFold"><img class="pull-right" :src="imgPath"/> </div>
+            </div>
+            <div class="weui-cells weui-cells_form" v-show="showContract">
+                <div class="weui-cell" style="border-top: thin solid #666666;">
+                    <div class="weui-cell__hd"><label class="weui-label label">合同金额(元)</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="number" pattern="[0-9]*" placeholder="    输入总金额">
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label label"></label>预付款(元)</div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="number" pattern="[0-9]*" placeholder="    输入预付款金额">
+                    </div>
+                </div>
+                <div class="weui-cell" style="border-bottom: thin solid #666666; ">
+                    <div class="weui-cell__hd"><label for="" class="weui-label label">预计交付时间</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="date" value="" placeholder="    输入预期时间">
+                    </div>
+                </div>
+
+                <div class="weui-cells" v-for="(pay, index) in pays">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd label">回款<span :style="getStyle(index)" v-text="numToCha(index)"></span></div>
+                        <div class="weui-cell__ft" @click="remove"><img src="/images/project/delete.svg"/> </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label label_2">
+                            <img style="width: 20px; height: 15px;" src="/images/project/payBack.png"/> &nbsp; 回款金额(元)</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="number" pattern="[0-9]*" placeholder="     输入回款金额">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd label_2"><img style="width: 20px; height: 15px;"
+                                src="/images/project/payCondition.png"/> &nbsp; 回款条件:</div>
+                        <div class="weui-cell__ft"></div>
+                    </div>
+                    <div class="weui-cell" style="border-bottom: thin solid #666666; ">
+                        <div class="weui-cell__bd label">
+                            <input class="weui-input" type="text" placeholder="      输入回款条件">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd" @click="addPay"><img src="/images/project/add.svg"/> </div>
+                    <div class="weui-cell__bd" style="color: #666666; font-size: 14px;">&nbsp; &nbsp;&nbsp;添加回款期数</div>
+                </div>
+            </div>
+
+            <div class="content" style="background: #FFFFFF;">
+                <div class="weui-cells__title"><label style="color: #19191A; font-size: 16px" class="weui-label">申请内容:</label></div>
+                <div class="weui-cells weui-cells_form" style="margin-top: 0; padding: 0;">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <textarea class="weui-textarea" placeholder="填写申请内容" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="attachment" style="background: #FFFFFF;">
+                <div class="weui-cells__title"><label style="color: #19191A; font-size: 16px" class="weui-label">附件:</label></div>
+                <div class="weui-cell" style="margin-top: 0;">
+                    <div class="weui-cell__bd" style="color: #CCCCCC; font-size: 16px;">还没有上传附件</div>
+                </div>
+            </div>
+
+            <a href="javascript:;" class="weui-btn weui-btn_plain-default" style="background-color: #38A4F2; color:#FFFFFF; font-size: 18px; margin-top: 10px;">上传附件</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

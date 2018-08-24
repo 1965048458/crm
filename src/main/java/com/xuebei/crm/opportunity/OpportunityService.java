@@ -33,5 +33,10 @@ public interface OpportunityService
 
     void insertFailReason(int opportunityId, String failReason);
 
+    void deleteOpportunity(int opportunityId);
+
+    void convertOpportunity(int opportunityId);
+
+
 
 }

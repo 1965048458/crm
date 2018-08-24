@@ -13,6 +13,20 @@ var TYPE_NAMES = {
     'PHONE': '电话拜访'
 };
 
+var TYPE_OEDER = {
+    'NORMAL':'普通',
+    'URGENT':'紧急',
+    'GREATEURGENT':'十分紧急'
+};
+
+var TYPE_TYPE = {
+    'A':'方案', 'B':'资源示例', 'C':'试用',
+    'D':'人员外出支持',
+    'E':'项目评估', 'F':'为代理商陪标', 'G':'代理商授权',
+    'H':'撰写招标参数', 'I':'其他'
+};
+
+
 $(document).ready(function () {
 
     var opportunityVue = new Vue({
@@ -81,6 +95,9 @@ $(document).ready(function () {
             keyWord: '',
 
             failReason:'',
+
+            showOption: false,
+            showDialog:false,
 
         },
         methods: {
@@ -546,8 +563,61 @@ $(document).ready(function () {
                     }
                 })
             },
-
-            clickApplySupport: function () {
+            'cancelOtherEvent': function () {
+               this.showOption = false;
+            },
+            'other':function () {
+                this.showOption = !this.showOption;
+            },
+            'deleteOppo': function () {
+                this.showOption = false;
+                this.showDialog = true;
+            },
+            'cancelDialog': function () {
+                this.showDialog = false;
+            },
+            'deleteConfirm': function () {
+                var thisVue = this;
+                $.ajax({
+                    type: 'get',
+                    url: '/opportunity/deleteOpportunity',
+                    data: {
+                        opportunityId: thisVue.opportunityId,
+                    },
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        thisVue.showDialog = false;
+                        thisVue.showResult();
+                        thisVue.showPage = 'opportunity';
+                        thisVue.showDetailPage = 'detailPage';
+                    }
+                })
+            },
+            'convert': function () {
+                var thisVue = this;
+                $.ajax({
+                    type: 'get',
+                    url: '/opportunity/convertOpportunity',
+                    data: {
+                        opportunityId: thisVue.opportunityId,
+                    },
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        thisVue.showResult();
+                        $('#toast1').fadeIn(100);
+                        setTimeout(function () {
+                            $('#toast1').fadeOut(100);
+                            thisVue.showPage = 'opportunity';
+                            thisVue.showDetailPage = 'detailPage';
+                        }, 500);
+                    }
+                })
+            },
+            'clickApplySupport': function () {
                 window.location = "/opportunity/applySupport?salesOpportunityId=" + this.opportunityId;
             }
 
@@ -572,7 +642,6 @@ $(document).ready(function () {
                 }
             },
             'keyWord': function () {
-                var thisVue = this;
                 var data = {
                     sortMode: this.sortMode,
                     userId: this.creatorValue,

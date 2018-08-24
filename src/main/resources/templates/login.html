@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="/weui.css"/>
     <link rel="stylesheet" href="/example.css">
 </head>
-<body ontouchstart>
+<body ontouchstart >
 
-<div id = "insertVue">
+<div id = "insertVue" >
     <div id="login" >
         <div class="weui-flex" style=" visibility: hidden">
             <div class="weui-flex__item">
@@ -39,7 +39,7 @@
             </div>
             <div class="weui-flex__item">
                 <div class="placeholder" style="text-align: center;">
-                    <image src="/logo.jpg"></image>
+                    <image src="/images/crm.svg"></image>
                 </div>
             </div>
             <div class="weui-flex__item">
@@ -87,7 +87,7 @@
             </div>
 
             <div class="hb_mar_top_40">
-                <button class="weui-btn weui-btn_primary" id=submit_btn @click="login">登录</button>
+                <button class="weui-btn weui-btn_primary" id=submit_btn @click="login"  >登录</button>
             </div>
         </div>
 
@@ -118,8 +118,8 @@
 <script>
     function findPwd(){
         location.href='/forgetPwd';
-    }
-</script>
+    };
+  </script>
 <script>
     function telRegister(){
         location.href='/register';
