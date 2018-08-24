@@ -21,6 +21,34 @@
         <result property="updateTime" column="update_ts"/>
     </resultMap>
 
+    <resultMap id="projectDetailMap" type="com.xuebei.crm.project.ProjectDetail">
+        <id property="projectId" column="project_id"/>
+        <result property="projectName" column="project_nm"/>
+        <result property="amount" column="amount"/>
+        <result property="content" column="content"/>
+        <result property="clinchDate" column="clinch_date"/>
+        <result property="creatorName" column="creator"/>
+        <result property="createTs" column="create_ts"/>
+        <result property="leaderName" column="leader_nm"/>
+        <result property="leaderPhone" column="leader_t"/>
+        <association property="projectContacts" javaType="com.xuebei.crm.project.ProjectContacts">
+            <id property="contactsName" column="contacts_nm"/>
+            <result property="customerName" column="customer_nm"/>
+            <result property="topDeptName" column="prt_dept_nm"/>
+            <result property="subDeptName" column="dept_nm"/>
+            <result property="type" column="contacts_type"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="supportMap" type="com.xuebei.crm.opportunity.Support">
+        <id property="supportId" column="support_id"/>
+        <result property="salesOpportunityId" column="sales_opportunity_id"/>
+        <result property="supportType" column="support_type"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="order" column="support_order"/>
+        <result property="content" column="content"/>
+    </resultMap>
+
     <resultMap id="opportunityMap" type="com.xuebei.crm.opportunity.Opportunity">
         <id property="opportunityId" column="sales_opportunity_id"/>
         <result property="opportunityName" column="opportunity_nm"/>
@@ -92,6 +120,27 @@
         SELECT opportunity_nm
         FROM sales_opportunity
         WHERE sales_opportunity_id = #{opportunityId};
+    </select>
+
+    <select id="queryProjectDetailById" resultMap="projectDetailMap">
+        SELECT A.sales_opportunity_id AS project_id, A.opportunity_nm AS project_nm, A.amount, A.content, A.clinch_date,
+						U.real_nm AS creator, A.create_ts,
+						C.real_nm AS contacts_nm, C.department_nm AS dept_nm, D.customer_nm, F.department_nm AS prt_dept_nm, H.type_name AS contacts_type, U2.real_nm AS leader_nm, U2.TEL AS leader_t
+		FROM sales_opportunity A LEFT JOIN opportunity_contacts B ON a.sales_opportunity_id = B.sales_opportunity_id
+		LEFT JOIN contacts_view C ON B.contacts_id = C.contacts_id
+		LEFT JOIN crm_customer D ON C.customer_id = D.customer_id
+		LEFT JOIN customer_dept F ON c.prt_id = F.customer_dept_id
+		LEFT JOIN contacts G ON B.contacts_id = G.contacts_id
+		LEFT JOIN contacts_type H ON G.contacts_type_id = H.contacts_type_id
+		LEFT JOIN user_view U ON A.user_id = U.user_id
+		LEFT JOIN user_view U2 ON A.leader = U2.user_id
+		WHERE A.has_delete = 0 AND A.sales_opportunity_id = #{projectId};
+    </select>
+
+    <select id="querySupportsByProjectId" resultMap="supportMap">
+        SELECT *
+        FROM support
+        WHERE sales_opportunity_id = #{projectId};
     </select>
 
 </mapper>
