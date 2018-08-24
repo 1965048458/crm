@@ -54,7 +54,7 @@ $(document).ready(function () {
                 });
             },
             'backToDetail': function () {
-                window.location.href = '/project/projectDetail';
+                window.location = '/project/projectDetail?projectId=' + this.projectId;;
             },
             'addPay': function () {
                 this.pays.push({
