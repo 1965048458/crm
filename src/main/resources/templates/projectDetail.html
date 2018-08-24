@@ -109,6 +109,8 @@
 <body>
 <div id="projDetailVue">
 
+    <input type="hidden"  th:value="${projectDetail.getProjectId()}" id="salesOpportunityId">
+
     <div class="top-bar" style="border-bottom: 1px solid #EAE4E4">
         <span class="pull-left" style="margin-top: 7px" @click="back">&nbsp;
             <img src="/images/back_icon.svg"/>
@@ -119,7 +121,6 @@
     <div class="top-div"></div>
 
     <div class="pro">
-        <input type="hidden" id="salesOpportunityId" th:value="${projectDetail.getProjectId()}">
         <p class="pro-title" th:text="${projectDetail.getProjectName()}">广东机电职业技术学院vr工程中心项目</p>
         <p class="pro-detail-div">
             <span class="pro-detail-title">客户名称</span>

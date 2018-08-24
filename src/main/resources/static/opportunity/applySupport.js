@@ -40,7 +40,7 @@ $(document).ready(function () {
                     cache: false,
                     success: function(result) {
                         if (result.successFlg) {
-                            window.location = "/opportunity";
+                            history.back();
                         } else {
                             thisVue.errMsg = result.errMsg;
                             thisVue.showErrMsg = true;
