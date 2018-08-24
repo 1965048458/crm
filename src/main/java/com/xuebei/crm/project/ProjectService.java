@@ -10,4 +10,6 @@ public interface ProjectService {
     Integer addProject(Project project);
 
     List<Project> searchProject(ProjectSearchParam param);
+
+    ProjectDetail getProjectDetail(String projectId);
 }

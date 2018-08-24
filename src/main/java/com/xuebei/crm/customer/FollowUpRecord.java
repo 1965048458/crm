@@ -27,9 +27,7 @@ public class FollowUpRecord {
     @Expose
     private String visitLogId;
 
-    public FollowUpRecord() {
-        projectName = "虚拟仿真的建设";
-    }
+    public FollowUpRecord() { }
 
 
     public VisitTypeEnum getFollowUpType() {

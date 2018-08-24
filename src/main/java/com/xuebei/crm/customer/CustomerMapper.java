@@ -88,4 +88,6 @@ public interface CustomerMapper {
 
     Contacts queryOpportunityDetail(String opportunityId);
 
+    List<FollowUpRecord> queryFollowUpRecordsByProjectId(@Param("projectId") String projectId);
+
 }

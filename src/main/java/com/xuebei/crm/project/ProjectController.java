@@ -6,6 +6,7 @@ import com.xuebei.crm.journal.JournalService;
 import com.xuebei.crm.opportunity.OpportunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -47,7 +48,15 @@ public class ProjectController {
     private JournalService journalService;
 
     @RequestMapping("/projectDetail")
-    public String detail(){
+    public String projectDetail(@RequestParam("projectId") String projectId,
+                                ModelMap modelMap) {
+        ProjectDetail projectDetail = projectService.getProjectDetail(projectId);
+        modelMap.addAttribute("projectDetail", projectDetail);
+
+        if (projectDetail == null) {
+            return "error/404";
+        }
+
         return "projectDetail";
     }
 

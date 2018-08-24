@@ -525,6 +525,11 @@
          and c.contacts_id = (select oc.contacts_id from opportunity_contacts oc where oc.sales_opportunity_id = #{opportunityId} )
     </select>
 
-
+    <select id="queryFollowUpRecordsByProjectId" resultMap="followUpRecordMap">
+        SELECT C.visit_log_id, C.visit_type, C.visit_result, D.create_ts, E.sales_opportunity_id AS project, U.real_nm
+        FROM visit_log C LEFT JOIN journal D ON C.journal_id = D.journal_id
+            LEFT JOIN sales_opportunity E ON C.sales_opportunity_id = E.sales_opportunity_id LEFT JOIN user_view U ON D.user_id = U.user_id
+        WHERE C.sales_opportunity_id = #{projectId};
+    </select>
 
 </mapper>

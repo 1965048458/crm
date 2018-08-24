@@ -2,6 +2,7 @@ package com.xuebei.crm.opportunity;
 
 import com.google.gson.annotations.Expose;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Support {
@@ -18,8 +19,11 @@ public class Support {
     private SupportOrderEnum order;
     @Expose
     private String content;
+    @Expose
     private String creatorId;
 
+
+    public Support() {}
     public Support(Integer salesOpportunityId, SupportTypeEnum supportType, Date expireDate, SupportOrderEnum order,
                    String content, String creatorId) {
         this.salesOpportunityId = salesOpportunityId;
@@ -86,4 +90,8 @@ public class Support {
         this.creatorId = creatorId;
     }
 
+    public String showExpire() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+        return format.format(expireDate);
+    }
 }
