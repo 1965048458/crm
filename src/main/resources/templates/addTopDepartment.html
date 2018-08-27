@@ -25,6 +25,9 @@
         .pull-right {
             float: right!important;
         }
+        .center-box{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -33,20 +36,25 @@
 
     <input id="customerId" type="hidden" th:value="${customerId}">
 
-    <div class="top-bar">
-        <span class="pull-left" @Click="cancelAddTopDepartment">取消</span>
-        <span>添加二级学院</span>
-        <span class="pull-right" @Click="confirmAddTopDepartment">完成</span>
+    <div class="top-bar" style="border: hidden">
+        <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;"
+              @Click="cancelAddTopDepartment">取消</span>
+        <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);">添加二级学院</span>
+        <span class="pull-right" style="color: gray; font-size: 16px;"
+              @Click="confirmAddTopDepartment" id="submitBtn">完成</span>
     </div>
 
     <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
             <div class="weui-cell__hd">
-                学院/部门名称
+                <label class="weui-label" style="width: 130px;">学院/部门名称</label>
             </div>
-            <div class="weui-cell__bd">
+            <div class="weui-cell__bd" >
                 <input  class="weui-input" placeholder="请输入学院或部门全称" v-model="deptName">
             </div>
+        </div>
+        <div style="padding: 0px 15px;line-height: 1;" v-show="showPromptMessage">
+            <span style="padding-left: 122px;color: red;font-size: 7px;" v-text="promptMessage"></span>
         </div>
     </div>
 

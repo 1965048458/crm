@@ -48,14 +48,13 @@
                 </label>
             </div>
             <div class="weui-cell__bd">
-                <input  class="weui-input" placeholder="请输入专业或部门全称" v-model="deptName" v-on:input="deptNameInputChanged()">
+                <input  class="weui-input" placeholder="请输入专业或部门全称" v-model="deptName" @input="deptNameInputChanged()">
             </div>
         </div>
     </div>
 
     <div style="padding: 0px 15px;line-height: 1;" v-show="showPromptMessage">
         <span style="padding-left: 122px;color: red;font-size: 7px;" v-text="promptMessage">
-            错了
         </span>
     </div>
 

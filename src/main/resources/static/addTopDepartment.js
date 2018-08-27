@@ -9,13 +9,19 @@ jQuery(document).ready(function () {
             errMsg: '',
             deptName: '',
             profile: '',
-            website: ''
+            website: '',
+            canSubmit:false,
+            showPromptMessage:false,
+            promptMessage:''
         },
         methods: {
             'cancelAddTopDepartment': function() {
                 window.location = '/customer/editCustomer?customerId=' + jQuery('#customerId').val();
             },
             'confirmAddTopDepartment': function() {
+                if(!this.canSubmit){
+                    return;
+                }
                 var vue = this;
                 jQuery.ajax({
                     type: 'get',
@@ -40,6 +46,30 @@ jQuery(document).ready(function () {
                         vue.$set(vue, 'showErrMsg', true);
                     }
                 });
+            },
+            'deptNameInputChanged':function () {
+                var thisVue = this;
+                $.ajax({
+                    type:'get',
+                    url:'/customer/action/departmentCheck',
+                    data:{deptName:this.deptName,
+                            customerId:$('#cusomerId').val()},
+                    dataType:'json',
+                    cache:false,
+                    success:function (result) {
+                        if(result.successFlg){
+                            thisVue.canSubmit=true;
+                            thisVue.showPromptMessage=false;
+                            $('#submitBtn').css("color",'rgb(61, 168, 244)');
+                        }else {
+                            thisVue.canSubmit=false;
+                            thisVue.showPromptMessage=true;
+                            thisVue.promptMessage=result.errMsg;
+                            $('#submitBtn').css("color",'gray');
+                        }
+                    }
+
+                })
             }
         }
     });

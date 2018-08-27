@@ -1,5 +1,6 @@
 package com.xuebei.crm.customer;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
 import com.xuebei.crm.company.CompanyMapper;
 import com.xuebei.crm.department.DeptMapper;
 import com.xuebei.crm.department.DeptService;
@@ -167,32 +168,31 @@ public class CustomerController {
             default:
                 break;
         }
+        if(customerMapper.isDepartNameExist(customerId,deptName)){
+            Department expiredDept = customerMapper.searchDeptByName(customerId,deptName);
+            customerMapper.updateDept(website,profile,expiredDept.getDeptId());
+            customerMapper.updateEnclosureApply(expiredDept.getDeptId(),userId);
+        }else{
+            Customer customer = new Customer();
+            customer.setCustomerId(customerId);
 
-        Customer customer = new Customer();
-        customer.setCustomerId(customerId);
+            Department dept = new Department();
+            dept.setDeptId(UUIDGenerator.genUUID());
+            dept.setDeptName(deptName);
+            dept.setWebsite(website);
+            dept.setProfile(profile);
+            dept.setEnclosureStatus(EnclosureStatusEnum.APPLYING);
+            dept.setCustomer(customer);
+            dept.setParent(new Department());
 
-        Department dept = new Department();
-        dept.setDeptId(UUIDGenerator.genUUID());
-        dept.setDeptName(deptName);
-        dept.setWebsite(website);
-        dept.setProfile(profile);
-        dept.setEnclosureStatus(EnclosureStatusEnum.NORMAL);
-        dept.setCustomer(customer);
-        dept.setParent(new Department());
-
-        try {
-            customerService.addTopDepartment(dept);
-        } catch (DepartmentNameDuplicatedException e) {
-            return GsonView.createErrorView(e.getMessage());
+            EnclosureApply enclosureApply = new EnclosureApply();
+            String reasons = "机构编辑申请";
+            enclosureApply.setDeptId(dept.getDeptId());
+            enclosureApply.setUserId(userId);
+            enclosureApply.setReasons(reasons);
+            customerMapper.insertDepartment(dept);
+            customerMapper.insertEnclosureApply(enclosureApply);
         }
-        EnclosureApply enclosureApply = new EnclosureApply();
-
-        String reasons = "机构编辑申请";
-        enclosureApply.setDeptId(dept.getDeptId());
-        enclosureApply.setUserId(userId);
-        enclosureApply.setReasons(reasons);
-        customerMapper.insertEnclosureApply(enclosureApply);
-
         return GsonView.createSuccessView();
     }
 
@@ -235,11 +235,32 @@ public class CustomerController {
             return GsonView.createErrorView(DEPT_NAME_BLANK_ERROR_MSG);
         }
         if (customerService.isSubDepartmentNameDuplicated(parentDeptId, deptName)) {
-            return GsonView.createErrorView("此专业已存在或已被圈，无法添加");
+            return GsonView.createErrorView("此专业已存在，无法添加");
         }
         return GsonView.createSuccessView();
     }
 
+
+    @RequestMapping("/action/departmentCheck")
+    public GsonView departmentCheck(@RequestParam("deptName")String deptName,
+                                    @RequestParam("customerId") String customerId,
+                                    HttpServletRequest request){
+        deptName = deptName.trim();
+        if(StringUtils.isEmptyOrWhitespace(deptName)){
+            return GsonView.createErrorView(DEPT_NAME_BLANK_ERROR_MSG);
+        }
+        String userId = (String) request.getSession().getAttribute("userId");
+        WarningBeforeCreateEnum warning = deptService.warningBeforeCreate(deptName,customerId,userId);
+        switch (warning){
+            case APPLY_BY_ME:
+                return GsonView.createErrorView(WarningBeforeCreateEnum.APPLY_BY_ME.getName());
+            case APPLY_BY_OTHERS:
+                return GsonView.createErrorView(WarningBeforeCreateEnum.APPLY_BY_OTHERS.getName());
+            default:
+                break;
+        }
+        return GsonView.createSuccessView();
+    }
 
     @RequestMapping("addContactsPage")
     public String addContactsPage(@RequestParam("deptId") String deptId,

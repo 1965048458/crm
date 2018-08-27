@@ -50,14 +50,14 @@
         .add-dept-image {
             height: 24px;
             width: 24px;
-            padding-top: 15px;
-            padding-bottom: 11px;
+            /*padding-top: 15px;*/
+            /*padding-bottom: 11px;*/
         }
         .add-dept-font {
             font-size: 14px;
             color: #666666;
-            padding-top: 16px;
-            padding-bottom: 11px;
+            /*padding-top: 16px;*/
+            /*padding-bottom: 11px;*/
         }
         .dept-cell {
             padding: 0px 15px;
@@ -96,14 +96,21 @@
         <!--<span class="pull-right" style="color: rgb(61, 168, 244); font-size: 16px;" @click="confirm()">完成</span>-->
     </div>
 
-    <div class="add-dept">
-        <a th:href="'/customer/addTopDepartment?customerId='+${customerId}">
-        <span style="padding-right:13px;">
-            <img src="/images/customer/addTopDeptBtn.svg" class="add-dept-image"/>
-        </span>
-        <span class="add-dept-font">添加二级学院</span>
-        </a>
+    <div style="padding: 10px 0px">
+        <a th:href="'/customer/addTopDepartment?customerId='+${customerId}"
+           class="weui-btn weui-btn_plain-default" style="width: 80%;">添加二级学院</a>
     </div>
+
+    <!--<a href="'/customer/addTopDepartment?customerId='+${customerId}">-->
+        <!--<div class="weui-cell">-->
+            <!--<div class="weui-cell__hd">-->
+                <!--<img src="/images/customer/addTopDeptBtn.svg" class="add-dept-image"/>-->
+            <!--</div>-->
+            <!--<div class="weui-cell__bd">-->
+                <!--<span class="add-dept-font">添加二级学院</span>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</a>-->
 
     <div class="weui-cells" th:each="department: ${departments}">
         <div class="weui-cell dept-cell">
