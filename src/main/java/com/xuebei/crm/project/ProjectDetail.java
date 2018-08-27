@@ -7,7 +7,9 @@ import com.xuebei.crm.opportunity.Support;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProjectDetail {
 
@@ -22,19 +24,51 @@ public class ProjectDetail {
     @Expose
     private String content;
     @Expose
+    private String status;
+    @Expose
     private Date clinchDate;
+    @Expose
+    private String userId;
     @Expose
     private String creatorName;
     @Expose
     private Date createTs;
     @Expose
+    private String leaderId;
+    @Expose
     private String leaderName;
     @Expose
     private String leaderPhone;
     @Expose
+    private String isAdmin;
+    @Expose
     private List<FollowUpRecord> followUpRecords;
     @Expose
     private List<Support> projectSupports;
+
+    public String getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(String isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public String getLeaderId() {
+        return leaderId;
+    }
+
+    public void setLeaderId(String leaderId) {
+        this.leaderId = leaderId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getProjectId() {
         return projectId;
@@ -132,6 +166,14 @@ public class ProjectDetail {
         this.projectSupports = projectSupports;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String showClinch() {
         if (clinchDate != null) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -205,5 +247,17 @@ public class ProjectDetail {
         } else {
             return "-";
         }
+    }
+
+    public String showStatus(){
+        Map<String, String> map = new HashMap<>();
+        map.put("0", "未开始");
+        map.put("1", "进行中");
+        map.put("2", "交付及回款");
+        map.put("3", "已结束");
+        if(getStatus().equals("1")){
+            //
+        }
+        return map.get(getStatus());
     }
 }

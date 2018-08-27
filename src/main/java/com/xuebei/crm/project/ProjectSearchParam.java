@@ -18,6 +18,7 @@ public class ProjectSearchParam {
     private String userId;
     private Integer before;
     private Integer after;
+    private String isAdmin;
 
     public String getUserId() {
         return userId;
@@ -25,6 +26,14 @@ public class ProjectSearchParam {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(String isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     public String getSubUsers() {

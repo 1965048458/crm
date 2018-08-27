@@ -1,5 +1,6 @@
 package com.xuebei.crm.project;
 
+import com.xuebei.crm.company.CompanyMapper;
 import com.xuebei.crm.customer.Contacts;
 import com.xuebei.crm.customer.CustomerService;
 import com.xuebei.crm.journal.JournalService;
@@ -42,12 +43,18 @@ public class ProjectController {
     private CustomerService customerService;
 
     @Autowired
+    private CompanyMapper companyMapper;
+
+    @Autowired
     private JournalService journalService;
 //    http://localhost:8080/project/projectDetail?projectId=140
     @RequestMapping("/projectDetail")
-    public String projectDetail(@RequestParam("projectId") String projectId,
+    public String projectDetail(@RequestParam("projectId") String projectId,HttpServletRequest request,
                                 ModelMap modelMap) {
+        String userId = (String) request.getSession().getAttribute("userId");
         ProjectDetail projectDetail = projectService.getProjectDetail(projectId);
+        String userType = companyMapper.queryUserType(userId);
+        projectDetail.setIsAdmin(userType);
         modelMap.addAttribute("projectDetail", projectDetail);
 
         if (projectDetail == null) {
@@ -103,20 +110,28 @@ public class ProjectController {
         String userId = (String) request.getSession().getAttribute("userId");
         param.setUserId(userId);
 
+        GsonView gsonView = new GsonView();
+        String userType = companyMapper.queryUserType(userId);
+        param.setIsAdmin(userType);
+
+        Set<String> childs = journalService.getAllSubordinatesUserId(param.getUserId());
+
         if (param.getSubUsers() != null && !param.getSubUsers().equals("") ){
             String[] subUser = param.getSubUsers().split(",");
             param.setSubMember(subUser);
+        }else{
+            //我及下属
+            String[] childsArray = new String[childs.size()];
+            childs.toArray(childsArray);
+            param.setSubMember(childsArray);
         }
 
-        if (param.getCreator() != null && !param.getCreator().equals("")){
-            if (param.getCreator().equals("sub")){
-                Set<String> childs = journalService.getAllSubordinatesUserId(param.getUserId());
-                //删除自己的ID
-                childs.remove(userId);
-                String[] childsArray = new String[childs.size()];
-                childs.toArray(childsArray);
-                param.setSubMember(childsArray);
-            }
+        if (param.getCreator() != null && param.getCreator().equals("sub")){
+            //删除自己的ID
+            childs.remove(userId);
+            String[] childsArray = new String[childs.size()];
+            childs.toArray(childsArray);
+            param.setSubMember(childsArray);
         }
 
         List<Project> projectList = projectService.searchProject(param);
@@ -135,7 +150,11 @@ public class ProjectController {
             }
             project.setCustomerName(contact.getCustomerName() +"-"+ contact.getDepartmentName());
         }
-        GsonView gsonView = new GsonView();
+        if (userType.equals("ADMIN")){
+            gsonView.addStaticAttribute("ADMIN", true);
+        }else{
+            gsonView.addStaticAttribute("ADMIN", false);
+        }
         gsonView.addStaticAttribute("successFlg", true);
         gsonView.addStaticAttribute("projectList", projectList);
         return gsonView;

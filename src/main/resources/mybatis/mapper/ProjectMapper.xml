@@ -26,9 +26,11 @@
         <result property="projectName" column="project_nm"/>
         <result property="amount" column="amount"/>
         <result property="content" column="content"/>
+        <result property="status" column="sales_status"/>
         <result property="clinchDate" column="clinch_date"/>
         <result property="creatorName" column="creator"/>
         <result property="createTs" column="create_ts"/>
+        <result property="leaderId" column="leader"/>
         <result property="leaderName" column="leader_nm"/>
         <result property="leaderPhone" column="leader_t"/>
         <association property="projectContacts" javaType="com.xuebei.crm.project.ProjectContacts">
@@ -149,10 +151,21 @@
         SELECT s.sales_opportunity_id, s.opportunity_nm, s.customer_id, s.sales_status, s.amount, s.clinch_date,
             s.agent, s.leader, s.content, s.user_id, s.create_ts, s.updater_id, s.update_ts FROM sales_opportunity s
         INNER JOIN crm_customer v ON s.customer_id = v.customer_id
+        LEFT JOIN project_start ps ON ps.sales_opportunity_id = s.sales_opportunity_id
         LEFT JOIN company_customer c ON c.customer_id = s.customer_id
         LEFT JOIN company_user u ON u.company_id = c.company_id
         WHERE u.user_id = #{userId}
         AND s.sales_status in ( '0' , '1', '2', '3')
+       <if test="isAdmin != 'ADMIN'">
+            AND ((s.user_id IN
+            <foreach item="subId" collection="subMember" open="(" separator="," close=")">
+                #{subId}
+            </foreach>)
+            OR (s.leader = #{userId} AND ps.status = 'permitted'))
+        </if>
+        <!--<if test="isAdmin == 'ADMIN'">-->
+            <!--OR ps.status = 'permitted'-->
+        <!--</if>-->
         <if test="startTime != null">
             AND s.create_ts &gt; #{startTime}
         </if>
@@ -165,7 +178,7 @@
         <if test="creator == 'mine'">
             AND s.user_id = #{userId}
         </if>
-        <if test="subMember != null">
+        <if test="creator == 'sub' or subUsers != null">
             AND s.user_id IN
             <foreach item="subId" collection="subMember" open="(" separator="," close=")">
                 #{subId}
@@ -211,8 +224,8 @@
     </select>
 
     <select id="queryProjectDetailById" resultMap="projectDetailMap">
-        SELECT A.sales_opportunity_id AS project_id, A.opportunity_nm AS project_nm, A.amount, A.content, A.clinch_date,
-						U.real_nm AS creator, A.create_ts,
+        SELECT A.sales_opportunity_id AS project_id, A.opportunity_nm AS project_nm, A.amount, A.content, A.clinch_date, A.sales_status,
+						U.real_nm AS creator, A.create_ts, A.leader,
 						C.real_nm AS contacts_nm, C.department_nm AS dept_nm, D.customer_nm, F.department_nm AS prt_dept_nm, H.type_name AS contacts_type, U2.real_nm AS leader_nm, U2.TEL AS leader_t
 		FROM sales_opportunity A LEFT JOIN opportunity_contacts B ON a.sales_opportunity_id = B.sales_opportunity_id
 		LEFT JOIN contacts_view C ON B.contacts_id = C.contacts_id

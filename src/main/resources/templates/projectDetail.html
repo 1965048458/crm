@@ -140,7 +140,11 @@
         </p>
         <div style="padding-top: 6px;padding-left: 15px;">
             <span class="pro-status-title">状态</span>
-            <span class="pro-status-content">进行中</span>
+            <span class="pro-status-content" th:text="${projectDetail.showStatus()}"></span>
+            <th:block th:if="${projectDetail.getLeaderName() == null && projectDetail.showStatus() == '进行中'}">
+                <span class="pro-status-content" style="color: #00A4FF;">(无负责人)</span>
+                <span class="pull-right" style="color: #00A4FF;"><img src=""/> 指派负责人&nbsp;&nbsp;</span>
+            </th:block>
         </div>
     </div>
 
@@ -160,7 +164,10 @@
 
     <div id="detailPage" v-show="showPage == 'detailPage'">
         <div class="weui-cells" style="font-size: small; margin-top: 0px;">
-            <div class="weui-cell" style="font-weight: bold">基本信息</div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd" style="font-weight: bold">基本信息</div>
+                <div class="weui-cell__ft"><img src="/images/opportunity/editOpportunity.svg"/></div>
+            </div>
             <label style="margin-left: 15px;color: grey">项目内容</label>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
@@ -228,7 +235,7 @@
                     <label class="weui-label">状态</label>
                 </div>
                 <div class="weui-cell__bd">
-                    <span>进行中</span>
+                    <span th:text="${projectDetail.showStatus()}">进行中</span>
                 </div>
             </div>
             <div class="weui-cell">
