@@ -21,6 +21,40 @@ $(document).ready(function () {
                     console.log(result);
                     thisVue.applyList=result.applyList;
                 })
+            },
+            'applyAgree':function (applyType,applyId) {
+                var thisVue = this;
+                $.ajax({
+                    type:'get',
+                    url:'/message/applyCheck',
+                    data:{
+                        applyType:applyType,
+                        applyId:applyId,
+                        isApprove:true
+                    },
+                    dataType:'json',
+                    cache:false
+                }).done(function (result) {
+                    console.log(result);
+                    thisVue.init()
+                })
+            },
+            'applyDecline':function (applyType,applyId) {
+                var thisVue = this;
+                $.ajax({
+                    type:'get',
+                    data:{
+                        applyType:applyType,
+                        applyId:applyId,
+                        isApprove:false
+                    },
+                    url:'/message/applyCheck',
+                    cache:false,
+                    dataType:'json'
+                }).done(function (result) {
+                    console.log(result);
+                    thisVue.init()
+                })
             }
         }
     });
@@ -34,7 +68,12 @@ $(document).ready(function () {
             }
         },
         methods:{
-
+            'applyAgree':function (applyType,applyId) {
+                examAndApprovalVue.applyAgree(applyType,applyId);
+            },
+            'applyDecline':function (applyType,applyId) {
+                examAndApprovalVue.applyDecline(applyType,applyId);
+            }
         }
     });
 
@@ -47,7 +86,12 @@ $(document).ready(function () {
             }
         },
         methods:{
-
+            'applyAgree':function (applyType,applyId) {
+                examAndApprovalVue.applyAgree(applyType,applyId);
+            },
+            'applyDecline':function (applyType,applyId) {
+                examAndApprovalVue.applyDecline(applyType,applyId);
+            }
         }
     });
 

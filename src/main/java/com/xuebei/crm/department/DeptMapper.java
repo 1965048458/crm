@@ -20,6 +20,12 @@ public interface DeptMapper {
     // 我的 二级机构 permitted
     List<Department> searchMyDepts(@Param("customerId") String customerId,
                                           @Param("userId") String userId);
+    //待审核 二级机构 applying
+    List<Department> searchApplyingDepts(@Param("customerId") String customerId,
+                                   @Param("userId") String userId);
+
+    //我的二级机构过期
+    void setMyDeptExpired(@Param("deptId") String deptId);
     //二级机构下的三级机构
     List<Department> searchSubDepts(@Param("deptId") String deptId);
 

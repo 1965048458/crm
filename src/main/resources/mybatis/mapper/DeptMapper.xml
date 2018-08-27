@@ -77,6 +77,26 @@
         group by r1.customer_dept_id,r1.user_id
     </select>
 
+    <select id="searchApplyingDepts" resultMap="deptMap">
+        select r1.* from
+        (select a.department_nm,a.customer_id,b.*
+        from customer_dept as a
+        inner join enclosure_apply as b on a.customer_dept_id = b.customer_dept_id
+        where (b.status_cd = 'APPLYING')
+        and a.customer_id = #{customerId}
+        and b.user_id = #{userId}
+        and b.apply_end_ts &gt; NOW()
+        order by b.update_ts desc) as r1
+        group by r1.customer_dept_id,r1.user_id
+    </select>
+    
+    <update id="setMyDeptExpired">
+        UPDATE enclosure_apply AS a
+        SET status_cd='EXPIRED'
+        WHERE a.customer_dept_id=#{deptId}
+        AND a.status_cd='PERMITTED';
+    </update>
+
     <select id="searchSubDepts" resultMap="deptMap">
         SELECT * FROM customer_dept
         WHERE prt_id = #{deptId};

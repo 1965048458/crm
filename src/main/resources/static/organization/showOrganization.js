@@ -244,10 +244,10 @@ jQuery(document).ready(function () {
         methods: {
 
             'changeSubFold' : function (status) {
-                if(status == 'PERMITTED'){
+                if(status == 'MINE'|| (status == '' || status == undefined)){
                     this.showSub = !this.showSub;
                     this.setImgPath();
-                }else {
+                } else {
                     this.showSub = false;
                     this.setImgPath();
                 }
@@ -274,9 +274,14 @@ jQuery(document).ready(function () {
                     return "( "+number+" )";
                 }
             },
-            'addMineBrackets':function (status) {
-                if (status == 'MINE'){
-                    return "[ 我的 ]"
+            'addMineBrackets':function (status,applyName) {
+                if (status == 'MINE' ){
+                    if(applyName == '' || applyName == undefined){
+                        return "[ 我的 ]"
+                    }else {
+                        return "[ "+ applyName + "]"
+                    }
+
                 }
             },
             'addEnclosureBrackets':function (status) {
@@ -289,9 +294,14 @@ jQuery(document).ready(function () {
                     return "[ 未圈 ]"
                 }
             },
-            'addApplyingBrackets':function (status) {
+            'addApplyingBrackets':function (status,applyName) {
                 if(status == 'APPLYING'){
-                    return "[ 待审核 ]"
+                    if(applyName == '' || applyName == undefined){
+                        return "[ 待审核 ]";
+                    }else {
+                        return "["+applyName+"] [ 待审核 ]";
+                    }
+
                 }
             },
             'addOpenSeaWarning':function (warning) {
