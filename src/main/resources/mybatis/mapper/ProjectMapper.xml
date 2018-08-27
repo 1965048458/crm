@@ -21,9 +21,69 @@
         <result property="updateTime" column="update_ts"/>
     </resultMap>
 
+    <resultMap id="projectDetailMap" type="com.xuebei.crm.project.ProjectDetail">
+        <id property="projectId" column="project_id"/>
+        <result property="projectName" column="project_nm"/>
+        <result property="amount" column="amount"/>
+        <result property="content" column="content"/>
+        <result property="clinchDate" column="clinch_date"/>
+        <result property="creatorName" column="creator"/>
+        <result property="createTs" column="create_ts"/>
+        <result property="leaderName" column="leader_nm"/>
+        <result property="leaderPhone" column="leader_t"/>
+        <association property="projectContacts" javaType="com.xuebei.crm.project.ProjectContacts">
+            <id property="contactsName" column="contacts_nm"/>
+            <result property="customerName" column="customer_nm"/>
+            <result property="topDeptName" column="prt_dept_nm"/>
+            <result property="subDeptName" column="dept_nm"/>
+            <result property="type" column="contacts_type"/>
+        </association>
+    </resultMap>
+
+
+
+
+
+    <resultMap id="supportMap" type="com.xuebei.crm.opportunity.Support">
+        <id property="supportId" column="support_id"/>
+        <result property="salesOpportunityId" column="sales_opportunity_id"/>
+        <result property="supportType" column="support_type"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="order" column="support_order"/>
+        <result property="content" column="content"/>
+    </resultMap>
+
     <resultMap id="opportunityMap" type="com.xuebei.crm.opportunity.Opportunity">
         <id property="opportunityId" column="sales_opportunity_id"/>
         <result property="opportunityName" column="opportunity_nm"/>
+    </resultMap>
+    
+    <resultMap id="projectStartMap" type="com.xuebei.crm.project.ProjectStart">
+        <id property="id" column="start_project_id"/>
+        <result column="sales_opportunity_id" property="projectId"/>
+        <result column="status" property="status"/>
+        <result column="apply_content" property="applyContent"/>
+        <result column="user_id" property="userId"/>
+        <association property="projectName" javaType="java.lang.String">
+            <id property="projectId" column="sales_opportunity_id"/>
+            <result column="opportunity_nm" property="projectName"/>
+        </association>
+    </resultMap>
+    
+    <resultMap id="contractMap" type="com.xuebei.crm.project.Contract">
+        <id column="contract_id" property="contractId"/>
+        <result column="contract_no" property="contractNo"/>
+        <result column="project_id" property="projectId"/>
+        <result column="amount" property="amount"/>
+        <result column="advance_pay" property="advancePay"/>
+        <result column="advance_time" property="advanceTime"/>
+    </resultMap>
+
+    <resultMap id="refundLogMap" type="com.xuebei.crm.project.Refund">
+        <id column="refund_id" property="refundId"/>
+        <result column="project_id" property="projectId"/>
+        <result column="refund_amount" property="refundNum"/>
+        <result column="refund_condition" property="condition"/>
     </resultMap>
 
     <insert id="insertProject" parameterType="com.xuebei.crm.project.Project"
@@ -38,6 +98,52 @@
          #{userId}, NOW()
         )
     </insert>
+
+    <insert id="insertProjectStart" parameterType="com.xuebei.crm.project.ProjectStart"
+            useGeneratedKeys="true" keyColumn="start_project_id" keyProperty="id">
+        INSERT INTO project_start(
+          `status`, `apply_content`, `sales_opportunity_id`, `user_id`
+        ) VALUES (
+                'applying', #{applyContent}, #{projectId}, #{userId}
+        )
+    </insert>
+
+    <insert id="insertContract" parameterType="com.xuebei.crm.project.Contract">
+        INSERT INTO contract(
+          `contract_id`, `contract_no`, `project_id`,
+          `amount`, `advance_pay`, `advance_time`
+        ) VALUES (
+          #{contractId}, #{contractNo}, #{projectId},
+          #{amount}, #{advancePay}, #{advanceTime}
+        )
+    </insert>
+    
+    <insert id="insertRefund" parameterType="com.xuebei.crm.project.Refund"
+            useGeneratedKeys="true" keyColumn="refund_id" keyProperty="refundId">
+        INSERT INTO refund_log (
+            `project_id`, `refund_amount`, `refund_condition`
+        ) VALUES (
+            #{projectId}, #{refundNum}, #{condition}
+        )
+    </insert>
+
+    <update id="updateProjectStart" parameterType="com.xuebei.crm.project.ProjectStart">
+        UPDATE project_start SET
+            status = 'applying', apply_content = #{applyContent}
+        WHERE start_project_id = #{id}
+    </update>
+
+    <update id="updateContract" parameterType="com.xuebei.crm.project.Contract">
+        UPDATE contract SET
+            amount = #{amount}, advance_pay = #{advancePay}, advance_time = #{advanceTime}
+        WHERE contract_id = #{contractId}
+    </update>
+    
+    <update id="updateRefund" parameterType="com.xuebei.crm.project.Refund">
+        UPDATE refund_log SET
+            refund_amount = #{refundNum}, refund_condition = #{condition}
+        WHERE refund_id = #{refundId}
+    </update>
 
     <select id="searchProject" resultMap="projectMap">
         SELECT s.sales_opportunity_id, s.opportunity_nm, s.customer_id, s.sales_status, s.amount, s.clinch_date,
@@ -76,12 +182,22 @@
         </if>
     </select>
 
-    <select id="queryProjectsByUserId" resultMap="projectMap">
-        SELECT project_id, project_nm
-        FROM project
-        WHERE user_id = #{userId};
+    <select id="getProjectStart" resultMap="projectStartMap">
+        SELECT * FROM project_start ps
+        WHERE ps.sales_opportunity_id = #{projectId} AND ps.user_id = #{userId}
+              AND ps.status = 'applying'
     </select>
 
+    <select id="getRefunds" resultMap="refundLogMap">
+        SELECT * from refund_log
+        WHERE project_id = #{projectId}
+    </select>
+
+    <select id="getContract" resultMap="contractMap">
+        SELECT * FROM contract
+        WHERE project_id = #{projectId}
+    </select>
+    
     <select id="queryOpportunitiesByUserId" resultMap="opportunityMap">
         SELECT sales_opportunity_id, opportunity_nm
         FROM sales_opportunity
@@ -92,6 +208,35 @@
         SELECT opportunity_nm
         FROM sales_opportunity
         WHERE sales_opportunity_id = #{opportunityId};
+    </select>
+
+    <select id="queryProjectDetailById" resultMap="projectDetailMap">
+        SELECT A.sales_opportunity_id AS project_id, A.opportunity_nm AS project_nm, A.amount, A.content, A.clinch_date,
+						U.real_nm AS creator, A.create_ts,
+						C.real_nm AS contacts_nm, C.department_nm AS dept_nm, D.customer_nm, F.department_nm AS prt_dept_nm, H.type_name AS contacts_type, U2.real_nm AS leader_nm, U2.TEL AS leader_t
+		FROM sales_opportunity A LEFT JOIN opportunity_contacts B ON a.sales_opportunity_id = B.sales_opportunity_id
+		LEFT JOIN contacts_view C ON B.contacts_id = C.contacts_id
+		LEFT JOIN crm_customer D ON C.customer_id = D.customer_id
+		LEFT JOIN customer_dept F ON c.prt_id = F.customer_dept_id
+		LEFT JOIN contacts G ON B.contacts_id = G.contacts_id
+		LEFT JOIN contacts_type H ON G.contacts_type_id = H.contacts_type_id
+		LEFT JOIN user_view U ON A.user_id = U.user_id
+		LEFT JOIN user_view U2 ON A.leader = U2.user_id
+		WHERE A.has_delete = 0 AND A.sales_opportunity_id = #{projectId};
+    </select>
+
+
+
+
+
+
+
+
+
+    <select id="querySupportsByProjectId" resultMap="supportMap">
+        SELECT *
+        FROM support
+        WHERE sales_opportunity_id = #{projectId};
     </select>
 
 </mapper>

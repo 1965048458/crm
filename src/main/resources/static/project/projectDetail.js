@@ -1,30 +1,46 @@
 
-$(document).ready(function(){
+jQuery(document).ready(function () {
 
-    var projectVue = new Vue({
-        el:'#projectVue',
-        data:{
-            records:[]
-        },
-        methods:{
-            'back':function () {
+   var projDetailVue = new Vue({
+       el: '#projDetailVue',
+       data: {
+            showPage: 'detailPage'
+       },
+       methods: {
+           'back':function () {
+               window.location.href = '/project/projectList';
+           },
+           'clearStyle': function () {
+               $('#detailBox').attr("class", "weui-grid navi-bar my-weui-grid");
+               $('#detail').attr("class", "weui-grid__label");
+               $('#relevantBox').attr("class", "weui-grid navi-bar my-weui-grid");
+               $('#relevant').attr("class", "weui-grid__label");
+               $('#modifBox').attr("class", "weui-grid navi-bar my-weui-grid");
+               $('#modif').attr("class", "weui-grid__label");
+           },
+           'toDetailPage': function () {
+               this.showPage = 'detailPage';
+               this.clearStyle();
+               $('#detailBox').attr("class", "weui-grid navi-bar my-weui-grid weui-grid-select");
+               $('#detail').attr("class", "weui-grid__label weui-grid-select-content");
+           },
+           'toRelevantPage': function () {
+               this.showPage = 'relevantPage';
+               this.clearStyle();
+               $('#relevantBox').attr("class", "weui-grid navi-bar my-weui-grid weui-grid-select");
+               $('#relevant').attr("class", "weui-grid__label weui-grid-select-content");
+           },
+           toModifyPage: function () {
+               this.showPage = 'modifyPage';
+               this.clearStyle();
+               $('#modifBox').attr("class", "weui-grid navi-bar my-weui-grid weui-grid-select");
+               $('#modif').attr("class", "weui-grid__label weui-grid-select-content");
+           },
+           'clickApplySupport': function () {
+               window.location = "/opportunity/applySupport?salesOpportunityId=" + $("#salesOpportunityId").val();
+           }
 
-            },
-            'apply':function () {
-                $('#applyDiv').show();
-            },
-            'cancel':function () {
-                $('#applyDiv').hide();
-            }
-        }
-    });
-
-    $().timelinr({
-        orientation: 'vertical', //垂直滚动
-        issuesSpeed: 300, // 对应内容区的滚动速度，可为100～1000之间的数字，或者设置为'slow', 'normal' or 'fast'
-        datesSpeed: 100, //主轴滚动速度，可为100～1000之间的数字，或者设置为'slow', 'normal' or 'fast'
-        arrowKeys: 'true', //支持方向键
-        startAt: 1 //初始化起点，即初始化轴点位置，数字
-    });
+       }
+   });
 
 });

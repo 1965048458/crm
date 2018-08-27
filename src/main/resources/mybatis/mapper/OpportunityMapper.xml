@@ -148,7 +148,7 @@
         ))
     </select>
 
-    <insert id="modifyOpportunity" parameterType="com.xuebei.crm.opportunity.Opportunity">
+    <update id="modifyOpportunity" parameterType="com.xuebei.crm.opportunity.Opportunity">
         UPDATE sales_opportunity SET
          opportunity_nm =#{opportunityName},
          sales_status=#{salesStatus},
@@ -159,28 +159,26 @@
          updater_id= #{userId} ,
          update_ts= NOW()
         WHERE sales_opportunity_id =#{opportunityId}
-    </insert>
+    </update>
 
     <insert id="addModificationRecord">
         INSERT INTO opportunity_modification_record (
-            sales_opportunity_id, user_id, real_nm, time_stamp, comment
+            sales_opportunity_id, user_id, time_stamp, comment
         ) VALUES (
             #{opportunityId},
             #{userId},
-            (select cu.real_nm from crm_user cu where cu.crm_user_id =(
-             select cp.crm_user_id from company_user cp where
-             cp.user_id = #{userId}
-              )),
             NOW(),
             NULL
         )
     </insert>
 
     <select id="queryModifyRecord" resultMap="modifyRecord">
-        select om.sales_opportunity_id,so.opportunity_nm,om.real_nm,cc.customer_nm,om.time_stamp
+        select om.sales_opportunity_id,so.opportunity_nm,cu.real_nm,cc.customer_nm,om.time_stamp
         from opportunity_modification_record om
         inner join sales_opportunity so on so.sales_opportunity_id = om.sales_opportunity_id
         inner join crm_customer cc on cc.customer_id = so.customer_id
+        inner join crm_user cu on cu.crm_user_id =
+		  (select c.crm_user_id from company_user c where c.user_id = om.user_id)
         where om.sales_opportunity_id = #{opportunityId}
         ORDER  BY om.time_stamp DESC
     </select>
