@@ -85,16 +85,16 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Department> queryDepartment(String customerId, String userId) {
         List<Department> departmentList = customerMapper.queryDepartment(customerId,userId);
-        for(Department department:departmentList){
-            if(department.getEnclosureApply().getStatusCd().equals("PERMITTED")){
-                List<Department> subDepartmentList = customerMapper.querySubDepartment(department.getDeptId());
-                List<Contacts> contactsList = customerMapper.queryContacts(department.getDeptId());
-                if(subDepartmentList !=null && !subDepartmentList.isEmpty()){
-
-                }
-            }
-
-        }
+//        for(Department department:departmentList){
+//            if(department.getEnclosureApply().getStatusCd().equals("PERMITTED")){
+//                List<Department> subDepartmentList = customerMapper.querySubDepartment(department.getDeptId());
+//                List<Contacts> contactsList = customerMapper.queryContacts(department.getDeptId());
+//                if(subDepartmentList !=null && !subDepartmentList.isEmpty()){
+//
+//                }
+//            }
+//
+//        }
         List<Contacts> contactsList = customerMapper.queryContacts(customerId);
         for (Department department : departmentList) {
             setEnclosureStatus(userId, department);
@@ -139,12 +139,12 @@ public class CustomerServiceImpl implements CustomerService {
             }
         }
         //TODO 判断哪些部门可以显示，哪些部门或联系人可以搜索
-        for (Department department : rltList) {
+        /*for (Department department : rltList) {
             if (department.getEnclosureStatus().equals(EnclosureStatusEnum.MINE) ||
                     department.getEnclosureStatus().equals(EnclosureStatusEnum.NORMAL)) {
                 department.setCanUnFold(true);
             }
-        }
+        }*/
         return rltList;
     }
 

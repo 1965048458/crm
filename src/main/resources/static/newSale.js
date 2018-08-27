@@ -190,7 +190,7 @@ $(document).ready(function () {
                 }).done(function (result) {
                     if (result.successFlg) {
                         thisVue.$set(thisVue, 'myCustomers', result.customerList);
-                        for (var index = 0; index < thisVue.myCustomers.length; index++) {
+                        for (var index in thisVue.myCustomers ) {// 0; index < thisVue.myCustomers.length; index++
                             thisVue.$set(thisVue.myCustomers[index], 'showSub', false);
                             thisVue.$set(thisVue.myCustomers[index], 'imgPath', "/images/customer/fold.svg");
                         }
