@@ -49,6 +49,7 @@
         WHERE user_view.crm_user_id = #{crmUserId};
     </select>
 
+
     <select id="queryUserId" resultType="java.lang.String">
         SELECT user_id
         FROM user_view

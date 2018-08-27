@@ -34,12 +34,13 @@ public class DeptServiceImpl implements DeptService {
         setEnclosureStatus(departmentList);
         //添加联系人和三级机构
         setSubDeptAndContacts(departmentList);
-//        departmentList.sort(new Comparator<Department>() {
-//            @Override
-//            public int compare(Department dept1, Department dept2) {
-//                return dept1.getEnclosureStatus().getOrderValue() - dept2.getEnclosureStatus().getOrderValue();
-//            }
-//        });
+        departmentList.sort(new Comparator<Department>() {
+            @Override
+            public int compare(Department dept1, Department dept2) {
+                return dept1.getEnclosureStatus().getOrderValue() - dept2.getEnclosureStatus().getOrderValue();
+            }
+        });
+
         return departmentList;
     }
 
