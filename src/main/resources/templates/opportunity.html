@@ -825,24 +825,28 @@
                             </div>
                             <div class="weui-cells" style="font-size: small;">
 
-                                <!--<div v-for="support in applySupports">-->
-                                <div></div>
-                                <div class="weui-cell" style="font-weight: bold">撰写招标参数</div>
-                                <div class="weui-media-box weui-media-box_text">
-                                    <ul class="weui-media-box__info" style="margin-top: 0px">
-                                        <li class="weui-media-box__info__meta">负责人：冯婷婷</li>
-                                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
-                                            重要且紧急
-                                        </li>
-                                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
-                                            8月20日截止
-                                        </li>
-                                    </ul>
-                                    <p class="weui-media-box__desc" style="line-height: 25px;display: inline-block">
-                                        引擎节点，加工中心，奇迹人事假变成、
-                                        垃圾分类游戏软件（1节点），山东华宇工学院创业学院招标技术参数、评分标准真是6啊，这么重把椅子都压坏了</p>
+                                <div v-for="support in applySupports">
+                                    <div></div>
+                                    <div class="weui-cell" style="font-weight: bold">{{supportType(support.supportType)}}</div>
+                                    <div class="weui-media-box weui-media-box_text">
+                                        <ul class="weui-media-box__info" style="margin-top: 0px">
+                                            <span v-if="support.leader === undefined">
+                                            <li class="weui-media-box__info__meta">负责人：管理员未指配</li>
+                                            </span>
+                                            <span v-else>
+                                                <li class="weui-media-box__info__meta">负责人：{{support.leaderName}}</li>
+                                            </span>
+                                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                                                {{supportOrder(support.order)}}
+                                            </li>
+                                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                                                {{support.expireDate.substring(0,11)}}
+                                            </li>
+                                        </ul>
+                                        <p class="weui-media-box__desc" style="line-height: 25px;display: inline-block">
+                                            {{support.content}}</p>
+                                    </div>
                                 </div>
-                                <!--</div>-->
 
 
                                 <!--<div class="weui-cell" style="font-weight: bold">方案支持</div>-->
@@ -1074,8 +1078,6 @@
 
                         </div>
                     </div>
-
-
 
 
                 </div>

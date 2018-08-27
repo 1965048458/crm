@@ -14,16 +14,16 @@ var TYPE_NAMES = {
 };
 
 var TYPE_OEDER = {
-    'NORMAL':'普通',
-    'URGENT':'紧急',
-    'GREATEURGENT':'十分紧急'
+    'NORMAL': '普通',
+    'URGENT': '紧急',
+    'GREATEURGENT': '十分紧急'
 };
 
 var TYPE_TYPE = {
-    'A':'方案', 'B':'资源示例', 'C':'试用',
-    'D':'人员外出支持',
-    'E':'项目评估', 'F':'为代理商陪标', 'G':'代理商授权',
-    'H':'撰写招标参数', 'I':'其他'
+    'A': '方案', 'B': '资源示例', 'C': '试用',
+    'D': '人员外出支持',
+    'E': '项目评估', 'F': '为代理商陪标', 'G': '代理商授权',
+    'H': '撰写招标参数', 'I': '其他'
 };
 
 
@@ -94,10 +94,10 @@ $(document).ready(function () {
             searchBar: false,
             keyWord: '',
 
-            failReason:'',
+            failReason: '',
 
             showOption: false,
-            showDialog:false,
+            showDialog: false,
 
         },
         methods: {
@@ -395,10 +395,16 @@ $(document).ready(function () {
                 }).done(function (result) {
                     if (result.successFlg) {
                         thisVue.$set(thisVue, 'visitRecords', result.visitRecords);
-                        // thisVue.$set(thisVue, 'applySupports', result.applySupports);
+                        thisVue.$set(thisVue, 'applySupports', result.applySupports);
                         thisVue.showDetailPage = 'relevantPage';
                     }
                 })
+            },
+            'supportType': function (type) {
+                return TYPE_TYPE[type];
+            },
+            'supportOrder': function (type) {
+                return TYPE_OEDER[type];
             },
             'visitType': function (type) {
                 return TYPE_NAMES[type];
@@ -545,14 +551,14 @@ $(document).ready(function () {
                 this.lastStage = this.selStage;
                 this.show = 'modif';
             },
-            'failSubmit':function(data){
+            'failSubmit': function (data) {
                 var thisVue = this;
                 $.ajax({
                     type: 'post',
                     url: '/opportunity/failReason',
                     data: {
                         opportunityId: data,
-                        failReason:thisVue.failReason,
+                        failReason: thisVue.failReason,
                     },
                     dataType: 'json',
                     cache: false,
@@ -564,9 +570,9 @@ $(document).ready(function () {
                 })
             },
             'cancelOtherEvent': function () {
-               this.showOption = false;
+                this.showOption = false;
             },
-            'other':function () {
+            'other': function () {
                 this.showOption = !this.showOption;
             },
             'deleteOppo': function () {

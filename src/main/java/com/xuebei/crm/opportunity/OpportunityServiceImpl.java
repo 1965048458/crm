@@ -80,10 +80,10 @@ public class OpportunityServiceImpl implements OpportunityService {
         return opportunityMapper.queryVisitRecord(opportunityId);
     }
 
-//    @Override
-//    public List<ApplySupport> queryApplySupport(int opportunityId){
-//      return opportunityMapper.queryApplySupport(opportunityId);
-//    }
+    @Override
+    public List<Support> queryApplySupport(int opportunityId){
+      return opportunityMapper.queryApplySupport(opportunityId);
+    }
 
 
     @Override

@@ -1,5 +1,6 @@
 package com.xuebei.crm.project;
 
+import com.xuebei.crm.company.CompanyUser;
 import com.xuebei.crm.opportunity.Support;
 
 import java.util.List;
@@ -34,5 +35,21 @@ public interface ProjectService {
 
     String queryOpportunityNameByOpportunityId(Integer projectId);
 
-    List<Support> queryMission(String userId);
+    List<ProjectDetail> queryMissionUn(String userId);
+
+    List<ProjectDetail> queryMission(String userId);
+
+    ProjectDetail queryMissionDetail(Integer supportId);
+
+    List<Support> querySupportInformation(Integer supportId);
+
+    void insertProgressInform(Integer supportId,String userId, String progress);
+
+    void updateSupportProgress(Integer supportId, Integer progress);
+
+    List<CompanyUser> queryCompanyUser(String userId);
+
+    void setSupportLeader(Integer supportId,String leaderId);
+
+
 }

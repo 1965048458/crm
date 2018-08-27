@@ -21,9 +21,46 @@ public class Support {
     private String content;
     @Expose
     private String creatorId;
+    @Expose
+    private String leader;
+    @Expose
+    private String leaderName;
+    @Expose
+    private Integer percent;
+    @Expose
+    private Date createTs;
 
+    public Date getCreateTs() {
+        return createTs;
+    }
 
+    public void setCreateTs(Date createTs) {
+        this.createTs = createTs;
+    }
 
+    public Integer getPercent() {
+        return percent;
+    }
+
+    public void setPercent(Integer percent) {
+        this.percent = percent;
+    }
+
+    public String getLeaderName() {
+        return leaderName;
+    }
+
+    public void setLeaderName(String leaderName) {
+        this.leaderName = leaderName;
+    }
+
+    public String getLeader() {
+        return leader;
+    }
+
+    public void setLeader(String leader) {
+        this.leader = leader;
+    }
 
     public Support() {}
     public Support(Integer salesOpportunityId, SupportTypeEnum supportType, Date expireDate, SupportOrderEnum order,

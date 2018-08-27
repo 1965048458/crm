@@ -191,10 +191,10 @@ public class OpportunityController {
                                        HttpServletRequest request) {
         String userId = (String) request.getSession().getAttribute("userId");
         List<VisitRecord> visitRecords = opportunityService.queryVisitRecord(opportunityId);
-//        List<applySupport> applySupports = opportunityService.queryApplySupport(opportunityId);
+        List<Support> applySupports = opportunityService.queryApplySupport(opportunityId);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("visitRecords",visitRecords);
-//        gsonView.addStaticAttribute("applySupports",applySupports);
+        gsonView.addStaticAttribute("applySupports",applySupports);
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }

@@ -29,7 +29,7 @@ public interface OpportunityService
 
     List<VisitRecord> queryVisitRecord(int opportunityId);
 
-//    List<ApplySupport> queryApplySupport(int opportunityId);
+   List<Support> queryApplySupport(int opportunityId);
 
     void insertFailReason(int opportunityId, String failReason);
 
