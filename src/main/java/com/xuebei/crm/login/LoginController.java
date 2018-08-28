@@ -76,6 +76,7 @@ public class LoginController {
     public GsonView accountSecurityDropOut(HttpServletRequest request) {
         GsonView gsonView = new GsonView();
         request.getSession().removeAttribute("crmUserId");
+        request.getSession().removeAttribute("userId");
         gsonView.addStaticAttribute(SUCCESS_FLG, true);
         return gsonView;
     }

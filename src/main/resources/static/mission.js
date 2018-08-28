@@ -135,6 +135,7 @@ $(document).ready(function () {
                         if (result.successFlg) {
                             thisVue.button = '修改';
                             thisVue.showSlider = false;
+                            thisVue.init();
                         }else{
                             thisVue.button = '修改';
                             thisVue.showSlider = false;
@@ -185,6 +186,7 @@ $(document).ready(function () {
                         if (result.successFlg) {
                             thisVue.toDetail(thisVue.curSupport.support.supportId);
                             thisVue.chosenExe ='';
+                            thisVue.init();
                             thisVue.show = 'detail';
                         } else {
                             alert("系统出错");
