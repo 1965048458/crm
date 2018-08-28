@@ -114,7 +114,7 @@
     <select id="isSubDepartNameExist" resultType="java.lang.Boolean">
         SELECT COUNT(customer_dept_id)
         FROM customer_dept
-        WHERE prt_id = #{deptId}
+        WHERE prt_id = #{prtId}
         AND department_nm = #{departmentName};
     </select>
 
