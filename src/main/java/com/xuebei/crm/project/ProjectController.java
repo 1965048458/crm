@@ -138,8 +138,10 @@ public class ProjectController {
         Iterator<Project> it = projectList.iterator();
         while (it.hasNext()){
             Project project = it.next();
-            if (project.getLeader() == null){
-                project.setLeader("无");
+            if (project.getLeaderId() == null){
+                project.setLeaderName("无");
+            }else if (project.getLeaderId().equals(userId)){
+                project.setLeaderName("我");
             }
             if (project.getDeadLine() != null){
                 project.setStrDeadLine(project.getDeadLine());
@@ -167,6 +169,17 @@ public class ProjectController {
         modelMap.addAttribute("projectId", projectId);
         modelMap.addAttribute("projectName", projectName);
         return "applyStartProject";
+    }
+
+    @RequestMapping("/projectCheck")
+    public String checkProject(@RequestParam(value = "projectId") Integer projectId,
+                               ModelMap modelMap){
+        String projectName = projectService.queryOpportunityNameByOpportunityId(projectId);
+        ProjectDetail projectDetail = projectService.getProjectDetail(projectId.toString());
+        modelMap.addAttribute("projectDetail", projectDetail);
+        modelMap.addAttribute("projectId", projectId);
+        modelMap.addAttribute("projectName", projectName);
+        return "checkProject";
     }
 
     @RequestMapping("/getContractInfo")

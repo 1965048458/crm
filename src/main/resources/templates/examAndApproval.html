@@ -42,6 +42,11 @@
             margin-top: 0;
             padding: 0px;
         }
+
+        .projectApply{
+            margin-top: 0;
+            padding: 0 0 0 15px;
+        }
         .usr-img{
             position: relative;
             margin-right: 10px;
@@ -89,6 +94,30 @@
                     </div>
                 </div>
 
+                <div v-for="projectApply in projectApplyList">
+                    <div class="weui-cells" style="padding-top: 10px">
+                        <div class="weui-cell" style="font-size: 14px; background: #FFF5F5F5;">
+                            <div class="weui-cell__bd center-box" v-text="projectApply.applyTime"></div>
+                        </div>
+                        <div class="weui-cell" style="font-size: 16px;">
+                            <div class="weui-cell__hd">启动申请 : </div>
+                            <div class="weui-cell__bd">{{projectApply.customerName}}-{{projectApply.deptName}}-{{projectApply.projectName}}</div>
+                        </div>
+                        <div class="weui-cell projectApply" style="color: #888888; font-size: 14px;">
+                            <div class="weui-cell__hd">申请人 : &nbsp;</div>
+                            <div class="weui-cell__bd" v-text="projectApply.applyerName"></div>
+                        </div>
+                        <div class="weui-cell projectApply" style="color: #888888; font-size: 14px;">申请内容 :</div>
+                        <div class="weui-cell" style="color: #888888; font-size: 14px; border-bottom: solid #F5F5F5;">
+                            <p style="width: auto;" v-text="projectApply.content"></p>
+                        </div>
+                        <div class="weui-cell">
+                            <a :href="'/project/projectCheck?projectId='+ projectApply.projectId" class="weui-btn weui-btn_mini weui-btn-default" style="margin-right: 10px; background: #38A4F2; height: 33px; padding-bottom: 8px;">
+                                <span style="color: #FFFFFF; font-size: 14px;"> 查看项目详情</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

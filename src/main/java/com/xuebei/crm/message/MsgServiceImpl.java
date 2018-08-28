@@ -40,10 +40,6 @@ public class MsgServiceImpl implements MsgService {
         return enclosureDelayApplyList;
     }
 
-    private List<Apply> projectApplyList(String userId){
-        return null;
-    }
-
     @Override
     public void applyCheck(ApplyTypeEnum applyType, String applyId, Boolean isApprove,String userId) {
         switch (applyType){
@@ -67,5 +63,9 @@ public class MsgServiceImpl implements MsgService {
         }
     }
 
-
+    @Override
+    public List<ProjectApply> getProjectApply(String userId) {
+        List<ProjectApply> projectApplyList = msgMapper.getProjectApply(userId);
+        return projectApplyList;
+    }
 }

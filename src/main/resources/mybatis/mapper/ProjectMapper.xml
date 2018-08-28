@@ -13,7 +13,8 @@
         <result property="amount" column="amount"/>
         <result property="deadLine" column="clinch_date"/>
         <result property="content" column="content"/>
-        <result property="leader" column="leader"/>
+        <result property="leaderId" column="leader"/>
+        <result property="leaderName" column="leader_nm"/>
         <result property="userId" column="user_id"/>
         <result property="agent" column="agent"/>
         <result property="createTime" column="create_ts"/>
@@ -148,12 +149,13 @@
     </update>
 
     <select id="searchProject" resultMap="projectMap">
-        SELECT s.sales_opportunity_id, s.opportunity_nm, s.customer_id, s.sales_status, s.amount, s.clinch_date,
+        SELECT s.sales_opportunity_id, s.opportunity_nm, s.customer_id, s.sales_status, s.amount, s.clinch_date, uv.real_nm AS leader_nm,
             s.agent, s.leader, s.content, s.user_id, s.create_ts, s.updater_id, s.update_ts FROM sales_opportunity s
         INNER JOIN crm_customer v ON s.customer_id = v.customer_id
         LEFT JOIN project_start ps ON ps.sales_opportunity_id = s.sales_opportunity_id
         LEFT JOIN company_customer c ON c.customer_id = s.customer_id
         LEFT JOIN company_user u ON u.company_id = c.company_id
+        LEFT JOIN user_view uv ON s.leader = uv.user_id
         WHERE u.user_id = #{userId}
         AND s.sales_status in ( '0' , '1', '2', '3')
        <if test="isAdmin != 'ADMIN'">
@@ -164,7 +166,7 @@
             OR (s.leader = #{userId} AND ps.status = 'permitted'))
         </if>
         <!--<if test="isAdmin == 'ADMIN'">-->
-            <!--OR ps.status = 'permitted'-->
+            <!--AND ps.status != 'refused'-->
         <!--</if>-->
         <if test="startTime != null">
             AND s.create_ts &gt; #{startTime}

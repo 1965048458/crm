@@ -141,7 +141,7 @@
         <div style="padding-top: 6px;padding-left: 15px;">
             <span class="pro-status-title">状态</span>
             <span class="pro-status-content" th:text="${projectDetail.showStatus()}"></span>
-            <th:block th:if="${projectDetail.getLeaderName() == null && projectDetail.showStatus() == '进行中'}">
+            <th:block th:if="${projectDetail.getLeaderName() == null && projectDetail.showStatus() == '进行中' && projectDetail.getIsAdmin() == 'ADMIN'}">
                 <span class="pro-status-content" style="color: #00A4FF;">(无负责人)</span>
                 <span class="pull-right" style="color: #00A4FF;"><img src=""/> 指派负责人&nbsp;&nbsp;</span>
             </th:block>

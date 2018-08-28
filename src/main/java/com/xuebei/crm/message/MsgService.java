@@ -11,4 +11,6 @@ public interface MsgService {
 
     void applyCheck(ApplyTypeEnum applyType,String applyId,Boolean isApprove,String userId);
 
+    List<ProjectApply> getProjectApply(String userId);
+
 }
