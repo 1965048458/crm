@@ -3,6 +3,7 @@ package com.xuebei.crm.customer;
 import com.xuebei.crm.company.CompanyMapper;
 import com.xuebei.crm.department.DeptMapper;
 import com.xuebei.crm.department.DeptService;
+import com.xuebei.crm.department.WarningBeforeCreateEnum;
 import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.member.Member;
 import com.xuebei.crm.member.MemberService;
@@ -129,10 +130,6 @@ public class CustomerController {
         return "addSubDepartment";
     }
 
-//    @RequestMapping("/addOrganizationPage")
-//    public String addOrganizationPage() {
-//        return "addTopOrg";
-//    }
 
     /**
      * 添加 客户-顶级机构(二级学院) 信息
@@ -151,14 +148,24 @@ public class CustomerController {
                                       @RequestParam("deptName") String deptName,
                                       @RequestParam(value = "website", required = false) String website,
                                       @RequestParam(value = "profile", required = false) String profile,
-                                      HttpServletRequest request,
-                                     EnclosureApply enclosureApply) {
+                                      HttpServletRequest request) {
         if (!customerService.isUserHasCustomer(acquireUserId(request), customerId)) {
             return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
         }
 
         if (StringUtils.isEmptyOrWhitespace(deptName)) {
             return GsonView.createErrorView(DEPT_NAME_BLANK_ERROR_MSG);
+        }
+        String userId = (String) request.getSession().getAttribute("userId");
+        WarningBeforeCreateEnum warning = deptService.warningBeforeCreate(deptName,customerId,userId);
+        switch (warning){
+            case APPLY_BY_ME:
+                return GsonView.createErrorView(WarningBeforeCreateEnum.APPLY_BY_ME.getName());
+            case APPLY_BY_OTHERS:
+                return GsonView.createErrorView(WarningBeforeCreateEnum.APPLY_BY_OTHERS.getName());
+            case NO_ONE_APPLY:
+            default:
+                break;
         }
 
         Customer customer = new Customer();
@@ -178,10 +185,12 @@ public class CustomerController {
         } catch (DepartmentNameDuplicatedException e) {
             return GsonView.createErrorView(e.getMessage());
         }
+        EnclosureApply enclosureApply = new EnclosureApply();
 
-        String userId = (String) request.getSession().getAttribute("userId");
+        String reasons = "机构编辑申请";
         enclosureApply.setDeptId(dept.getDeptId());
         enclosureApply.setUserId(userId);
+        enclosureApply.setReasons(reasons);
         customerMapper.insertEnclosureApply(enclosureApply);
 
         return GsonView.createSuccessView();

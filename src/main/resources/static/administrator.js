@@ -42,6 +42,9 @@ jQuery(document).ready(function () {
                 });
 
             },
+            'toMessage':function () {
+                window.location="message/showApplyList";
+            }
         },
     });
     administrator.init();

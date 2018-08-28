@@ -2,14 +2,14 @@ package com.xuebei.crm.department;
 
 import com.google.gson.annotations.Expose;
 import com.xuebei.crm.customer.*;
+import com.xuebei.crm.member.Member;
+import com.xuebei.crm.member.MemberService;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -19,6 +19,8 @@ import java.util.logging.Logger;
 public class DeptServiceImpl implements DeptService {
     @Autowired
     private DeptMapper deptMapper;
+    @Autowired
+    private MemberService memberService;
 
     /**
      * 组织机构列表中显示我申请过的机构
@@ -28,19 +30,47 @@ public class DeptServiceImpl implements DeptService {
      * @return
      */
     @Override
+    @SuppressWarnings("unchecked")
     public List<Department> departmentList(String customerId, String userId) {
+
         List<Department> departmentList = deptMapper.searchDepts(customerId, userId);
         //设置圈地状态
         setEnclosureStatus(departmentList);
         //添加联系人和三级机构
         setSubDeptAndContacts(departmentList);
-//        departmentList.sort(new Comparator<Department>() {
-//            @Override
-//            public int compare(Department dept1, Department dept2) {
-//                return dept1.getEnclosureStatus().getOrderValue() - dept2.getEnclosureStatus().getOrderValue();
-//            }
-//        });
-        return departmentList;
+        //按圈地状态分类dept
+        EnumMap<EnclosureStatusEnum,List> deptMap = getDeptMap(departmentList);
+
+        //下属人员
+        List<Member> subMemberList = memberService.searchSubMemberList(userId);
+        for(Member member:subMemberList){
+            //下属圈地
+            List<Department> subMyDepts = deptMapper.searchMyDepts(customerId,member.getMemberId());
+            setEnclosureStatus(subMyDepts);
+            setSubDeptAndContacts(subMyDepts);
+            for(Department department:subMyDepts){
+                department.setApplyName(member.getMemberName());
+            }
+
+            //下属申请
+            List<Department> subApplyingDepts = deptMapper.searchApplyingDepts(customerId,member.getMemberId());
+            setEnclosureStatus(subApplyingDepts);
+            setSubDeptAndContacts(subApplyingDepts);
+            for (Department department:subApplyingDepts){
+                department.setApplyName(member.getMemberName());
+            }
+
+            deptMap.get(EnclosureStatusEnum.MINE).addAll(subMyDepts);
+            deptMap.get(EnclosureStatusEnum.APPLYING).addAll(subApplyingDepts);
+        }
+
+        List<Department> rltList = new ArrayList<>();
+        rltList.addAll(deptMap.get(EnclosureStatusEnum.MINE));
+        rltList.addAll(deptMap.get(EnclosureStatusEnum.APPLYING));
+        rltList.addAll(deptMap.get(EnclosureStatusEnum.ENCLOSURE));
+        rltList.addAll(deptMap.get(EnclosureStatusEnum.NORMAL));
+        return rltList;
+
     }
 
     /**
@@ -55,7 +85,46 @@ public class DeptServiceImpl implements DeptService {
         List<Department> myDepartmentList = deptMapper.searchMyDepts(customerId, userId);
         setEnclosureStatus(myDepartmentList);
         setSubDeptAndContacts(myDepartmentList);
+        List<Member> subMemberList = memberService.searchSubMemberList(userId);
+        for(Member member:subMemberList){
+            List<Department> subMyDepts = deptMapper.searchMyDepts(customerId,member.getMemberId());
+            setEnclosureStatus(subMyDepts);
+            setSubDeptAndContacts(subMyDepts);
+            myDepartmentList.addAll(subMyDepts);
+        }
         return myDepartmentList;
+    }
+
+    private EnumMap<EnclosureStatusEnum, List> getDeptMap(List<Department> departmentList) {
+        List<Department> mineDept = new ArrayList<>();
+        List<Department> applyingDept = new ArrayList<>();
+        List<Department> enclosureDept = new ArrayList<>();
+        List<Department> normalDept = new ArrayList<>();
+        for(Department department:departmentList){
+            switch (department.getEnclosureStatus()){
+                case MINE:
+                    mineDept.add(department);
+                    break;
+                case APPLYING:
+                    applyingDept.add(department);
+                    break;
+                case ENCLOSURE:
+                    enclosureDept.add(department);
+                    break;
+                case NORMAL:
+                    normalDept.add(department);
+                    break;
+                default:
+                    break;
+            }
+        }
+        EnumMap<EnclosureStatusEnum,List> deptMap = new EnumMap<>(EnclosureStatusEnum.class);
+        deptMap.put(EnclosureStatusEnum.MINE,mineDept);
+        deptMap.put(EnclosureStatusEnum.APPLYING,applyingDept);
+        deptMap.put(EnclosureStatusEnum.ENCLOSURE,enclosureDept);
+        deptMap.put(EnclosureStatusEnum.NORMAL,normalDept);
+
+        return deptMap;
     }
 
     private void setEnclosureStatus(List<Department> deptList) {
@@ -86,19 +155,20 @@ public class DeptServiceImpl implements DeptService {
     private void checkOpenSeaWarning(Department department) {
         EnclosureApply enclosureApply = department.getEnclosureApply();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        long diffMillis = 0;
         int diffDays = 0;
         int diffHours = 0;
         try {
             Date endTime = dateFormat.parse(enclosureApply.getEndTime());
-            long diffMillis = (endTime.getTime() - System.currentTimeMillis());
-            diffDays = (int) diffMillis / (1000 * 3600 * 24);
-            diffHours = (int) diffMillis / (1000 * 3600) - diffDays * 24;
+            diffMillis = (endTime.getTime() - System.currentTimeMillis());
+            diffDays = (int) (diffMillis / (1000 * 3600 * 24));
+            diffHours = (int) (diffMillis / (1000 * 3600) - diffDays * 24);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (diffDays < 7) {
+        if (diffMillis <= 1000*3600*24*7 && diffMillis>=0) {
             String delayApplyStatus = deptMapper.delayApplyStatus(department.getDeptId());
-            if (delayApplyStatus.equals("")) {
+            if (delayApplyStatus.equals("") || delayApplyStatus==null) {
                 OpenSeaWarning openSeaWarning = new OpenSeaWarning();
                 openSeaWarning.setDeptId(department.getDeptId());
                 openSeaWarning.setCreatedTime(enclosureApply.getStartTime());
@@ -127,6 +197,10 @@ public class DeptServiceImpl implements DeptService {
                         break;
                 }
             }
+        }
+        if(diffMillis<0){
+            department.setEnclosureStatus(EnclosureStatusEnum.NORMAL);
+            deptMapper.setMyDeptExpired(department.getDeptId());
         }
     }
 

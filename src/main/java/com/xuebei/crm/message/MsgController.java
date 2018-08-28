@@ -24,7 +24,7 @@ public class MsgController {
     private MsgMapper msgMapper;
 
     @RequestMapping("applyList")
-    GsonView applyList(HttpServletRequest request){
+   public GsonView applyList(HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
         List<Apply> applyList = msgService.applyList(userId);
         GsonView gsonView = new GsonView();
@@ -34,7 +34,7 @@ public class MsgController {
     }
 
     @RequestMapping("applyCheck")
-    GsonView applyCheck(@RequestParam("applyType") ApplyTypeEnum applyType,
+    public GsonView applyCheck(@RequestParam("applyType") ApplyTypeEnum applyType,
                         @RequestParam("applyId") String applyId,
                         @RequestParam("isApprove") Boolean isApprove,
                         HttpServletRequest request){
@@ -43,6 +43,11 @@ public class MsgController {
         msgService.applyCheck(applyType,applyId,isApprove,userId);
         gsonView.addStaticAttribute("successFlag",true);
         return gsonView;
+    }
+
+    @RequestMapping("showApplyList")
+    public String showApplyList(){
+        return "examAndApproval";
     }
 
 }

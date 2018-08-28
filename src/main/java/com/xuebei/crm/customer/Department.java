@@ -38,6 +38,16 @@ public class Department {
     private Integer applyByOthers;
     @Expose
     private String statusCd;
+    @Expose
+    private String applyName;
+
+    public String getApplyName() {
+        return applyName;
+    }
+
+    public void setApplyName(String applyName) {
+        this.applyName = applyName;
+    }
 
     public String getStatusCd() {
         return statusCd;

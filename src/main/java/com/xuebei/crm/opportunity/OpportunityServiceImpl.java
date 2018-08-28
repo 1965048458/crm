@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("opportunityService")
@@ -21,15 +22,16 @@ public class OpportunityServiceImpl implements OpportunityService {
 
     @Override
     public List<Customer> getMyCustomers(String userId) {
+        List<Customer> customerList = new ArrayList<>();
         try {
-            List<Customer> customerList = customerService.getMyCustomers(userId);
+            customerList = customerService.getMyCustomers(userId);
             for (Customer customer : customerList) {
                 List<Department> departmentList = customerService.queryDepartment(customer.getCustomerId(), userId);
                 customer.setContacts(departmentList);
             }
             return customerList;
         } catch (Exception e) {
-            return null;
+            return customerList;
         }
     }
 

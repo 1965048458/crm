@@ -8,8 +8,10 @@
         <result property="applyTime" column="apply_ts"/>
         <result property="applyUserId" column="user_id"/>
         <result property="applyUserName" column="real_nm"/>
-        <result property="customerName" column="department_nm"/>
-        <result property="customerId" column="customer_dept_id"/>
+        <result property="deptName" column="department_nm"/>
+        <result property="deptId" column="customer_dept_id"/>
+        <result property="customerName" column="customer_nm"/>
+        <result property="customerId" column="customer_id"/>
         <result property="applyDetails" column="apply_reason"/>
     </resultMap>
 
@@ -24,7 +26,8 @@
     </resultMap>
 
     <select id="searchEnclosureApply" resultMap="enclosureApplyMap">
-        select t1.*,t2.department_nm from
+        select h1.*,h2.customer_nm from
+            (select t1.*,t2.department_nm,t2.customer_id from
             (select t.* from
                 (select r1.enclosure_apply_id,r1.customer_dept_id,r1.apply_ts,r1.apply_reason,r2.*
                  from enclosure_apply as r1
@@ -37,7 +40,6 @@
                             (select company_id from company_user
                             where company_user.user_id = #{userId}
                                   and company_user.is_delete = 0)
-                            and a.user_id != #{userId}
                             and a.is_delete = 0
                             and a.`status` = 'PERMITTED') as r2
                          on r1.user_id = r2.user_id
@@ -45,11 +47,14 @@
                  order by r1.update_ts desc) as t
             group by t.customer_dept_id) as t1
             left join customer_dept as t2
-                on t1.customer_dept_id = t2.customer_dept_id
+                on t1.customer_dept_id = t2.customer_dept_id) as h1
+        left join crm_customer as h2
+            on h1.customer_id = h2.customer_id;
     </select>
     
     <select id="searchEnclosureDelayApply" resultMap="enclosureDelayApplyMap">
-        select p1.*,p2.department_nm from
+        select h1.*,h2.customer_nm from
+        (select p1.*,p2.department_nm,p2.customer_id from
             (select p.* from
                 (select t1.enclosure_delay_apply_id,t1.apply_ts,t1.apply_reason,
                      t2.*
@@ -66,16 +71,18 @@
                                  (select company_id from company_user
                                  where user_id = #{userId})
                                  and a.is_delete = 0
-                                 and a.`status` = 'PERMITTED'
-                                 and a.user_id != #{userId}) as r2
+                                 and a.`status` = 'PERMITTED') as r2
                               on r1.user_id = r2.user_id) as t2
                          on t1.enclosure_apply_id = t2.enclosure_apply_id
                  where t1.status_cd = 'APPLYING'
                  order by t1.apply_ts) as p
             group by p.customer_dept_id) as p1
             left join customer_dept as p2
-                on p1.customer_dept_id = p2.customer_dept_id
+                on p1.customer_dept_id = p2.customer_dept_id) as h1
+        left join crm_customer as h2
+            on h1.customer_id = h2.customer_id;
     </select>
+
 
     <update id="enclosureApplyAgree" parameterType="java.lang.String">
         UPDATE enclosure_apply
