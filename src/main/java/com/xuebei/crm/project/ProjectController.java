@@ -1,9 +1,16 @@
 package com.xuebei.crm.project;
 
+import com.google.gson.Gson;
+import com.xuebei.crm.company.CompanyMapper;
+import com.xuebei.crm.company.CompanyUser;
 import com.xuebei.crm.customer.Contacts;
 import com.xuebei.crm.customer.CustomerService;
 import com.xuebei.crm.journal.JournalService;
+import com.xuebei.crm.member.Member;
+import com.xuebei.crm.member.MemberService;
 import com.xuebei.crm.opportunity.OpportunityService;
+import com.xuebei.crm.opportunity.Support;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,10 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static com.xuebei.crm.login.LoginController.SUCCESS_FLG;
 
@@ -43,7 +47,13 @@ public class ProjectController {
 
     @Autowired
     private JournalService journalService;
-//    http://localhost:8080/project/projectDetail?projectId=140
+
+    @Autowired
+    private CompanyMapper companyMapper;
+
+    @Autowired
+    private MemberService memberService;
+
     @RequestMapping("/projectDetail")
     public String projectDetail(@RequestParam("projectId") String projectId,
                                 ModelMap modelMap) {
@@ -64,19 +74,20 @@ public class ProjectController {
     }
 
     @RequestMapping("/mission")
-    public String mission(){
+    public String mission() {
         return "mission";
     }
 
     /**
      * 新建项目
+     *
      * @param project
      * @return
      */
     @RequestMapping("/add")
     public GsonView addProject(@RequestBody Project project,
                                HttpServletRequest request) {
-        HttpSession session =  request.getSession();
+        HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("userId");
         GsonView gsonView = new GsonView();
         project.setUserId(userId);
@@ -93,23 +104,23 @@ public class ProjectController {
     }
 
     @RequestMapping("/projectList")
-    public String project(){
+    public String project() {
         return "projectList";
     }
 
     @RequestMapping("/searchProject")
     public GsonView searchProject(ProjectSearchParam param,
-                                  HttpServletRequest request){
+                                  HttpServletRequest request) {
         String userId = (String) request.getSession().getAttribute("userId");
         param.setUserId(userId);
 
-        if (param.getSubUsers() != null && !param.getSubUsers().equals("") ){
+        if (param.getSubUsers() != null && !param.getSubUsers().equals("")) {
             String[] subUser = param.getSubUsers().split(",");
             param.setSubMember(subUser);
         }
 
-        if (param.getCreator() != null && !param.getCreator().equals("")){
-            if (param.getCreator().equals("sub")){
+        if (param.getCreator() != null && !param.getCreator().equals("")) {
+            if (param.getCreator().equals("sub")) {
                 Set<String> childs = journalService.getAllSubordinatesUserId(param.getUserId());
                 //删除自己的ID
                 childs.remove(userId);
@@ -121,19 +132,19 @@ public class ProjectController {
 
         List<Project> projectList = projectService.searchProject(param);
         Iterator<Project> it = projectList.iterator();
-        while (it.hasNext()){
+        while (it.hasNext()) {
             Project project = it.next();
-            if (project.getLeader() == null){
+            if (project.getLeader() == null) {
                 project.setLeader("无");
             }
-            if (project.getDeadLine() != null){
+            if (project.getDeadLine() != null) {
                 project.setStrDeadLine(project.getDeadLine());
             }
             Contacts contact = customerService.queryOpportunityDetail(project.getProjectId().toString());
-            if (contact == null){
+            if (contact == null) {
                 continue;
             }
-            project.setCustomerName(contact.getCustomerName() +"-"+ contact.getDepartmentName());
+            project.setCustomerName(contact.getCustomerName() + "-" + contact.getDepartmentName());
         }
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg", true);
@@ -143,7 +154,7 @@ public class ProjectController {
 
     @RequestMapping("/applyStart")
     public String startProject(@RequestParam(value = "projectId") Integer projectId,
-                               ModelMap modelMap){
+                               ModelMap modelMap) {
         String projectName = projectService.queryOpportunityNameByOpportunityId(projectId);
         modelMap.addAttribute("projectId", projectId);
         modelMap.addAttribute("projectName", projectName);
@@ -152,13 +163,13 @@ public class ProjectController {
 
     @RequestMapping("/getContractInfo")
     public GsonView getContractInfo(@RequestParam("projectId") Integer projectId,
-                                    HttpServletRequest request){
+                                    HttpServletRequest request) {
         String userId = (String) request.getSession().getAttribute("userId");
         GsonView gsonView = new GsonView();
         ProjectStart projectStart = projectService.getProjectStart(projectId, userId);
         Contract contract = projectService.getContract(projectId);
         List<Refund> refunds = projectService.getRefunds(projectId);
-        if (projectStart != null){
+        if (projectStart != null) {
             projectStart.setContract(contract);
             projectStart.setRefunds(refunds);
         }
@@ -169,7 +180,7 @@ public class ProjectController {
 
     @RequestMapping("/submitProject")
     public GsonView submitProject(@RequestBody ProjectStart projectStart,
-                                  HttpServletRequest request){
+                                  HttpServletRequest request) {
         String userId = (String) request.getSession().getAttribute("userId");
         projectStart.setUserId(userId);
         GsonView gsonView = new GsonView();
@@ -178,4 +189,101 @@ public class ProjectController {
         return gsonView;
     }
 
+    @RequestMapping("/missionList")
+    public GsonView missionList(HttpServletRequest request) {
+        String userId = (String) request.getSession().getAttribute("userId");
+        GsonView gsonView = new GsonView();
+        boolean admin = false;
+        String userType = companyMapper.queryUserType(userId);
+        if (userType.equals("ADMIN")) {
+            admin = true;
+        }
+        List<Member> members = memberService.searchSubMemberList(userId);
+        List<String> subUserId = new ArrayList<>();
+        Iterator<Member> it = members.iterator();
+        while (it.hasNext()) {
+            subUserId.add(it.next().getMemberId());
+        }
+        if(subUserId.isEmpty()){
+            subUserId.add("000");
+        }
+        List<ProjectDetail> unfinish = projectService.queryMissionUn(userId, admin,subUserId);
+        List<ProjectDetail> finish = projectService.queryMission(userId, admin,subUserId);
+        gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("unfinish", unfinish);
+        gsonView.addStaticAttribute("finish", finish);
+        return gsonView;
+    }
+
+    @RequestMapping("/missionDetail")
+    public GsonView missionDetail(@RequestParam("supportId") Integer supportId,
+                                  HttpServletRequest request) {
+        String userId = (String) request.getSession().getAttribute("userId");
+        GsonView gsonView = new GsonView();
+        ProjectDetail support = projectService.queryMissionDetail(supportId);
+        List<Support> information = projectService.querySupportInformation(supportId);
+        boolean admin = false;
+        boolean operator = false;
+        if (support.support.getLeader() != null) {
+            if (userId.equals(support.support.getLeader())) {
+                operator = true;
+            }
+
+        }
+        String userType = companyMapper.queryUserType(userId);
+        if (userType.equals("ADMIN")) {
+            admin = true;
+        }
+        gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("support", support);
+        gsonView.addStaticAttribute("information", information);
+        gsonView.addStaticAttribute("admin", admin);
+        gsonView.addStaticAttribute("operator", operator);
+        return gsonView;
+    }
+
+    @RequestMapping("/addProgressInform")
+    public GsonView addProgressInform(@RequestParam("supportId") Integer supportId,
+                                      @RequestParam("progress") String progress,
+                                      HttpServletRequest request) {
+        String userId = (String) request.getSession().getAttribute("userId");
+        GsonView gsonView = new GsonView();
+        projectService.insertProgressInform(supportId, userId, progress);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
+
+
+    @RequestMapping("/updateSupportProgress")
+    public GsonView updateSupportProgress(@RequestParam("supportId") Integer supportId,
+                                          @RequestParam("progress") Integer progress,
+                                          HttpServletRequest request) {
+        String userId = (String) request.getSession().getAttribute("userId");
+        GsonView gsonView = new GsonView();
+        projectService.updateSupportProgress(userId, supportId, progress);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
+
+    @RequestMapping("/queryCompanyUser")
+    public GsonView queryCompanyUser(@RequestParam("keyword")String keyword,
+                                     HttpServletRequest request) {
+        String userId = (String) request.getSession().getAttribute("userId");
+        GsonView gsonView = new GsonView();
+        List<CompanyUser> companyUsers = projectService.queryCompanyUser(userId,keyword);
+        gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("companyUsers", companyUsers);
+        return gsonView;
+    }
+
+    @RequestMapping("/chooseExecutor")
+    public GsonView chooseExecutor(@RequestParam("supportId") Integer supportId,
+                                   @RequestParam("leaderId") String leaderId,
+                                   HttpServletRequest request) {
+        String userId = (String) request.getSession().getAttribute("userId");
+        GsonView gsonView = new GsonView();
+        projectService.setSupportLeader(userId, supportId, leaderId);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
 }

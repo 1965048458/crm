@@ -1,5 +1,6 @@
 package com.xuebei.crm.project;
 
+import com.google.gson.annotations.Expose;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -18,6 +19,7 @@ public class ProjectSearchParam {
     private String userId;
     private Integer before;
     private Integer after;
+
 
     public String getUserId() {
         return userId;

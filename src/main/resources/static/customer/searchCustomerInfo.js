@@ -15,7 +15,8 @@ $(document).ready(function () {
             errMsg: undefined,
             customerList: [],
             myCustomers: [],
-            commonCustomers: []
+            commonCustomers: [],
+            loading:true
         },
         methods: {
             'showResult': function () {
@@ -33,6 +34,7 @@ $(document).ready(function () {
                         thisVue.$set(thisVue, 'customerList', result.customerList);
                         thisVue.$set(thisVue, 'myCustomers', result.myCustomers);
                         thisVue.$set(thisVue, 'commonCustomers', result.commonCustomers);
+                        thisVue.loading = false;
                     } else {
                         thisVue.errMsg = result.errMsg;
                     }
