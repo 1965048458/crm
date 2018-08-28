@@ -25,6 +25,12 @@ public interface ProjectMapper {
 
     void updateRefund(Refund refund);
 
+    void refuseProject(@Param("projectId")Integer projectId);
+
+    void passProject(@Param("projectId")Integer projectId);
+
+    void assignLeader(@Param("projectId")Integer projectId, @Param("leader") String leader);
+
     ProjectStart getProjectStart(@Param("projectId")Integer projectId, @Param("userId") String userId);
 
     Contract getContract(Integer projectId);

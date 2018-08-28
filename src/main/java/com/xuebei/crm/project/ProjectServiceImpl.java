@@ -58,6 +58,21 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
+    public void refuseProject(Integer projectId) {
+        projectMapper.refuseProject(projectId);
+    }
+
+    @Override
+    public void passProject(Integer projectId) {
+        projectMapper.passProject(projectId);
+    }
+
+    @Override
+    public void assignLeader(Integer projectId, String leader) {
+        projectMapper.assignLeader(projectId, leader);
+    }
+
+    @Override
     public void startProject(ProjectStart projectStart) {
 
         if (projectStart == null)

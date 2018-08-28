@@ -32,10 +32,8 @@ $(document).ready(function () {
                 }).done(function (result) {
                     thisVue.$set(thisVue, 'projectApplyList', result.projectApplyList);
                 });
-                    thisVue.applyList=result.applyList;
-                })
             },
-            'applyAgree':function (applyType,applyId) {
+            'applyAgree': function (applyType,applyId) {
                 var thisVue = this;
                 $.ajax({
                     type:'get',

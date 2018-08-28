@@ -188,6 +188,30 @@ public class ProjectController {
         return "checkProject";
     }
 
+    @RequestMapping("/refuseProject")
+    public GsonView refuse(@RequestParam("projectId") Integer projectId){
+        GsonView gsonView = new GsonView();
+        projectService.refuseProject(projectId);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
+
+    @RequestMapping("/passProject")
+    public GsonView pass(@RequestParam("projectId") Integer projectId){
+        GsonView gsonView = new GsonView();
+        projectService.passProject(projectId);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
+
+    @RequestMapping("/assignLeader")
+    public GsonView assignLeader(@RequestParam("projectId") Integer projectId, @RequestParam("leader") String leader){
+        GsonView gsonView = new GsonView();
+        projectService.assignLeader(projectId, leader);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
+
     @RequestMapping("/getContractInfo")
     public GsonView getContractInfo(@RequestParam("projectId") Integer projectId,
                                     HttpServletRequest request){

@@ -68,159 +68,227 @@
 <div id="startProjectVue" style="height: 100%;">
 
     <div class="weui-tab">
-
-        <input type="hidden" id="projectId" th:value="${projectId}">
-        <div class="navi-bar">
-            <div class="top-bar center-box">
+        <div id="main" v-show="show === 'main'">
+            <input type="hidden" id="projectId" th:value="${projectId}">
+            <div class="navi-bar">
+                <div class="top-bar center-box">
                 <span @click="history.back()" class="pull-left">
                     <img src="/images/back_icon.svg" style="margin-top: 7px;"/>
                 </span>
-                <span class="center" style="margin-top: 3px;">启动项目</span>
+                    <span class="center" style="margin-top: 3px;">启动项目</span>
+                </div>
+            </div>
+
+            <div class="weui-tab__panel" style="padding-top: 50px;">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">项目名称 :</label></div>
+                    <div class="weui-cell__bd">
+                        <span th:text="${projectName}"></span>
+                    </div>
+                </div>
+
+                <div class="weui-cells" style="font-size: small; margin-top: 20px;">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd" style="font-weight: bold">基本信息</div>
+                        <div class="weui-cell__ft" @click="changeFold1"><img class="pull-right" :src="imgPath1"/> </div>
+                    </div>
+                    <div v-show="showBasicInfo">
+                        <label style="margin-left: 15px;color: grey">项目内容</label>
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd">
+                                <span th:text="${projectDetail.getContent()}"></span>
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">交付日期</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <span th:text="${projectDetail.showClinch()}">2018-10-30</span>
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">
+                                    金额(元)
+                                </label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <span th:text="${projectDetail.showAmount()}">2000,000</span>
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">客户名称</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <span th:text="${projectDetail.showCustomerName()}"></span>
+                            </div>
+                        </div>
+
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">二级学院</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <span th:text="${projectDetail.showTopDeptName()}">商学院</span>
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">客户联系人</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <span th:text="${projectDetail.showContacts()}">主任-刘建国</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weui-cell" style="margin-top: 20px;">
+                    <div class="weui-cell__bd" style="color: #19191A; font-size: 16px">合同信息</div>
+                    <div class="weui-cell__ft" @click="changeFold"><img class="pull-right" :src="imgPath"/> </div>
+                </div>
+                <div class="weui-cells weui-cells_form" v-show="showContract">
+                    <div class="weui-cell" style="border-top: thin solid #666666;">
+                        <div class="weui-cell__hd"><label class="weui-label label">合同金额(元)</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="number" pattern="[0-9]*" placeholder="    输入总金额" v-model="totalAmount">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label label"></label>预付款(元)</div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="number" pattern="[0-9]*" placeholder="    输入预付款金额" v-model="advancePay">
+                        </div>
+                    </div>
+                    <div class="weui-cell" style="border-bottom: thin solid #666666; ">
+                        <div class="weui-cell__hd"><label for="" class="weui-label label">预计交付时间</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" value="" placeholder="    输入预期时间" v-model="advanceTime">
+                        </div>
+                    </div>
+
+                    <div class="weui-cells" v-for="(pay, index) in pays" :key="'refunds_' + index">
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd label">回款<span :style="getStyle(pays.length)" v-text="numToCha(index)"></span></div>
+                            <!--<div class="weui-cell__ft" @click="remove(index)"><img src="/images/project/delete.svg"/> </div>-->
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label label_2">
+                                <img style="width: 20px; height: 15px;" src="/images/project/payBack.png"/> &nbsp; 回款金额(元)</label></div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="number" pattern="[0-9]*" placeholder="     输入回款金额"
+                                       :id="'refund' +index" v-model="pay.refundNum">
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd label_2"><img style="width: 20px; height: 15px;"
+                                                                    src="/images/project/payCondition.png"/> &nbsp; 回款条件:</div>
+                            <div class="weui-cell__ft"></div>
+                        </div>
+                        <div class="weui-cell" style="border-bottom: thin solid #666666; ">
+                            <div class="weui-cell__bd label">
+                                <input class="weui-input" type="text" placeholder="      输入回款条件" :id="'cond' + index" v-model="pay.condition">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="content" style="background: #FFFFFF;">
+                    <div class="weui-cells__title"><label style="color: #19191A; font-size: 16px" class="weui-label">申请内容:</label></div>
+                    <div class="weui-cells weui-cells_form" style="margin-top: 0; padding: 0;">
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd">
+                                <textarea class="weui-textarea" placeholder="填写申请内容" rows="3" v-model="content"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="attachment" style="background: #FFFFFF;">
+                    <div class="weui-cells__title"><label style="color: #19191A; font-size: 16px" class="weui-label">附件:</label></div>
+                    <div class="weui-cell" style="margin-top: 0;">
+                        <div class="weui-cell__bd" style="color: #CCCCCC; font-size: 16px;">还没有上传附件</div>
+                    </div>
+                </div>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__bd center-box">
+                        <a href="javascript:refuse();" class="weui-btn weui-btn_mini weui-btn_plain-default" style="background-color: #38A4F2; color:#FFFFFF; font-size: 18px; margin-top: 20px; width: 165px;">不通过</a>
+                        <a @click="pass" class="weui-btn weui-btn_mini weui-btn_plain-default" style="background-color: #38A4F2; color:#FFFFFF; font-size: 18px; margin-top: 20px; width: 165px;">通过</a>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="weui-tab__panel" style="padding-top: 50px;">
-            <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">项目名称 :</label></div>
-                <div class="weui-cell__bd">
-                    <span th:text="${projectName}"></span>
-                </div>
+        <div id="executor" v-show="show ==='chooseExe'" style="display: none">
+
+
+            <div class="top-bar" style="height: 30px">
+
+                <span style="height: 30px;display: inline-block ;padding-top: 5px;">选择项目负责人</span>
+
+                <span class="pull-right" style="margin-top: 7px; color: #28b3ff"
+                      @click="skip"> 跳过 &nbsp; </span>
+                <span style="float:right;margin-top: 7px;margin-right: 20px" @click="search">&nbsp;
+                                    <img src="/images/search.svg"/>
+                                </span>
             </div>
 
-            <div class="weui-cells" style="font-size: small; margin-top: 20px;">
-                <div class="weui-cell">
-                    <div class="weui-cell__bd" style="font-weight: bold">基本信息</div>
-                    <div class="weui-cell__ft" @click="changeFold1"><img class="pull-right" :src="imgPath1"/> </div>
-                </div>
-                <div v-show="showBasicInfo">
-                    <label style="margin-left: 15px;color: grey">项目内容</label>
-                    <div class="weui-cell">
-                        <div class="weui-cell__bd">
-                            <span th:text="${projectDetail.getContent()}"></span>
+            <div class="list">
+                <div class="page__bd">
+                    <div v-if="searchBar">
+                        <div class="weui-search-bar" id="searchBar">
+                            <div class="weui-search-bar__form">
+                                <div class="weui-search-bar__box">
+                                    <i class="weui-icon-search"></i>
+                                    <input type="text" class="weui-search-bar__input" id="searchInput"
+                                           placeholder="搜索" v-model="keyWord">
+                                    <a href="javascript:" class="weui-icon-clear" id="searchClear"
+                                       @click="clear"></a>
+                                </div>
+                                <label class="weui-search-bar__label" id="searchText" @click="text"
+                                       style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                                    <i class="weui-icon-search"></i>
+                                    <span>搜索</span>
+                                </label>
+                            </div>
+                            <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel"
+                               @click="cancel">取消</a>
                         </div>
                     </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <label class="weui-label">交付日期</label>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <span th:text="${projectDetail.showClinch()}">2018-10-30</span>
-                        </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <label class="weui-label">
-                                金额(元)
+                    <div class="weui-cells weui-cells_radio" style="margin-top: 1px">
+                        <div v-for=" user in userList">
+                            <div></div>
+                            <label class="weui-cell weui-check__label">
+                                <div class="weui-cell__bd">
+                                    <p>{{user.crmUserName}}</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <input type="radio" class="weui-check" name="radio1" id="x11" :value="user.userId" v-model="chosenExe"/>
+                                    <span class="weui-icon-checked"></span>
+                                </div>
                             </label>
                         </div>
-                        <div class="weui-cell__bd">
-                            <span th:text="${projectDetail.showAmount()}">2000,000</span>
-                        </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <label class="weui-label">客户名称</label>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <span th:text="${projectDetail.showCustomerName()}"></span>
-                        </div>
-                    </div>
-
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <label class="weui-label">二级学院</label>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <span th:text="${projectDetail.showTopDeptName()}">商学院</span>
-                        </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <label class="weui-label">客户联系人</label>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <span th:text="${projectDetail.showContacts()}">主任-刘建国</span>
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="weui-cell" style="margin-top: 20px;">
-                <div class="weui-cell__bd" style="color: #19191A; font-size: 16px">合同信息</div>
-                <div class="weui-cell__ft" @click="changeFold"><img class="pull-right" :src="imgPath"/> </div>
-            </div>
-            <div class="weui-cells weui-cells_form" v-show="showContract">
-                <div class="weui-cell" style="border-top: thin solid #666666;">
-                    <div class="weui-cell__hd"><label class="weui-label label">合同金额(元)</label></div>
-                    <div class="weui-cell__bd">
-                        <input class="weui-input" type="number" pattern="[0-9]*" placeholder="    输入总金额" v-model="totalAmount">
-                    </div>
-                </div>
-                <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label label"></label>预付款(元)</div>
-                    <div class="weui-cell__bd">
-                        <input class="weui-input" type="number" pattern="[0-9]*" placeholder="    输入预付款金额" v-model="advancePay">
-                    </div>
-                </div>
-                <div class="weui-cell" style="border-bottom: thin solid #666666; ">
-                    <div class="weui-cell__hd"><label for="" class="weui-label label">预计交付时间</label></div>
-                    <div class="weui-cell__bd">
-                        <input class="weui-input" type="text" value="" placeholder="    输入预期时间" v-model="advanceTime">
-                    </div>
-                </div>
-
-                <div class="weui-cells" v-for="(pay, index) in pays" :key="'refunds_' + index">
-                    <div class="weui-cell">
-                        <div class="weui-cell__bd label">回款<span :style="getStyle(pays.length)" v-text="numToCha(index)"></span></div>
-                        <!--<div class="weui-cell__ft" @click="remove(index)"><img src="/images/project/delete.svg"/> </div>-->
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd"><label class="weui-label label_2">
-                            <img style="width: 20px; height: 15px;" src="/images/project/payBack.png"/> &nbsp; 回款金额(元)</label></div>
-                        <div class="weui-cell__bd">
-                            <input class="weui-input" type="number" pattern="[0-9]*" placeholder="     输入回款金额"
-                                  :id="'refund' +index" v-model="pay.refundNum">
-                        </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__bd label_2"><img style="width: 20px; height: 15px;"
-                                src="/images/project/payCondition.png"/> &nbsp; 回款条件:</div>
-                        <div class="weui-cell__ft"></div>
-                    </div>
-                    <div class="weui-cell" style="border-bottom: thin solid #666666; ">
-                        <div class="weui-cell__bd label">
-                            <input class="weui-input" type="text" placeholder="      输入回款条件" :id="'cond' + index" v-model="pay.condition">
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="content" style="background: #FFFFFF;">
-                <div class="weui-cells__title"><label style="color: #19191A; font-size: 16px" class="weui-label">申请内容:</label></div>
-                <div class="weui-cells weui-cells_form" style="margin-top: 0; padding: 0;">
-                    <div class="weui-cell">
-                        <div class="weui-cell__bd">
-                            <textarea class="weui-textarea" placeholder="填写申请内容" rows="3" v-model="content"></textarea>
-                        </div>
-                    </div>
+            <!--BEGIN toast-->
+            <div id="toast" style="display: none;">
+                <div class="weui-mask_transparent"></div>
+                <div class="weui-toast">
+                    <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                    <p class="weui-toast__content">指派成功</p>
                 </div>
             </div>
+            <!--end toast-->
 
+            <a @click="confirm" class="weui-btn weui-btn_plain-default" style="background-color: #38A4F2; color:#FFFFFF; font-size: 18px; margin-top: 20px;">确认</a>
 
-            <div class="attachment" style="background: #FFFFFF;">
-                <div class="weui-cells__title"><label style="color: #19191A; font-size: 16px" class="weui-label">附件:</label></div>
-                <div class="weui-cell" style="margin-top: 0;">
-                    <div class="weui-cell__bd" style="color: #CCCCCC; font-size: 16px;">还没有上传附件</div>
-                </div>
-            </div>
-
-            <div class="weui-cell">
-                <div class="weui-cell__bd center-box">
-                    <a href="javascript:refuse();" class="weui-btn weui-btn_mini weui-btn_plain-default" style="background-color: #38A4F2; color:#FFFFFF; font-size: 18px; margin-top: 20px; width: 165px;">不通过</a>
-                    <a href="javascript:pass();" class="weui-btn weui-btn_mini weui-btn_plain-default" style="background-color: #38A4F2; color:#FFFFFF; font-size: 18px; margin-top: 20px; width: 165px;">通过</a>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -230,13 +298,19 @@
     function refuse() {
         var reason = prompt("请输入不通过原因，可不填");
         if(reason != null && reason != ""){
-            $.ajax({});
+            $.ajax({
+                type: 'get',
+                url: '/project/refuseProject',
+                dataType: 'json',
+                cache: false
+            }).done(function (result) {
+                if(result.successFlg){
+                    //todo
+                }
+            });
         }
     }
-    
-    function pass() {
-        //
-    }
+
 </script>
 
 </html>

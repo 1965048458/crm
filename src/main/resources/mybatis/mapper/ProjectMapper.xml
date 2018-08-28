@@ -170,6 +170,24 @@
             status = 'applying', apply_content = #{applyContent}
         WHERE start_project_id = #{id}
     </update>
+    
+    <update id="refuseProject" parameterType="java.lang.Integer">
+        UPDATE project_start SET
+            status = 'refused'
+        WHERE sales_opportunity_id = #{projectId}
+    </update>
+
+    <update id="passProject" parameterType="java.lang.Integer">
+        UPDATE project_start SET
+        status = 'permitted'
+        WHERE sales_opportunity_id = #{projectId}
+    </update>
+    
+    <update id="assignLeader">
+        UPDATE sales_opportunity SET
+            leader = #{leader}
+        WHERE sales_opportunity_id = #{projectId}
+    </update>
 
     <update id="updateContract" parameterType="com.xuebei.crm.project.Contract">
         UPDATE contract SET
