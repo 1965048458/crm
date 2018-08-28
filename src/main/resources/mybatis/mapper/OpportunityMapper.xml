@@ -93,6 +93,18 @@
         ) and cu.user_id = s.user_id
         LEFT JOIN crm_customer c ON c.customer_id = s.customer_id
         WHERE s.sales_status IN ('A','B','C','D','F') AND  s.has_delete = 0
+
+
+        <if test="!admin">
+            And ( s.user_id = #{curUserId} OR s.user_id IN
+            <foreach collection="subUserIdWhole" index="index" item="subId" open="(" separator="," close=")">
+                #{subId}
+            </foreach>
+            )
+        </if>
+
+
+
         <if test="createStart != null">
             AND s.create_ts &gt; #{createStart}
         </if>

@@ -1,5 +1,6 @@
 package com.xuebei.crm.opportunity;
 
+import com.xuebei.crm.company.CompanyMapper;
 import com.xuebei.crm.customer.Contacts;
 import com.xuebei.crm.customer.Customer;
 import com.xuebei.crm.customer.CustomerServiceImpl;
@@ -38,6 +39,9 @@ public class OpportunityController {
     private CustomerServiceImpl customerService;
     @Autowired
     private OpportunityMapper opportunityMapper;
+    @Autowired
+    private CompanyMapper companyMapper;
+
 
     @InitBinder
     public void initBinder(WebDataBinder binder, WebRequest request) {
@@ -90,6 +94,24 @@ public class OpportunityController {
         String userId = (String) request.getSession().getAttribute("userId");
         opportunitySearchParam.setScene(userId);
         GsonView gsonView = new GsonView();
+        boolean admin = false;
+        String userType = companyMapper.queryUserType(userId);
+        if (userType.equals("ADMIN")) {
+            admin = true;
+        }
+        List<Member> membersWhole = memberService.searchSubMemberList(userId);
+        List<String> subUserIdWhole = new ArrayList<>();
+        Iterator<Member> itWhole = membersWhole.iterator();
+        while (itWhole.hasNext()) {
+            subUserIdWhole.add(itWhole.next().getMemberId());
+        }
+        if(subUserIdWhole.isEmpty()){
+            subUserIdWhole.add("000");
+        }
+        opportunitySearchParam.setCurUserId(userId);
+        opportunitySearchParam.setAdmin(admin);
+        opportunitySearchParam.setSubUserIdWhole(subUserIdWhole);
+
         if (opportunitySearchParam.getUserId() != null && !opportunitySearchParam.getUserId().equals("")) {
             if (opportunitySearchParam.getUserId().equals("mine")) {
                 opportunitySearchParam.setUserId(userId);
