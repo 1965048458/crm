@@ -108,6 +108,21 @@
                                 </div>
                             </div>
 
+
+                            <div class="page__bd" v-if="loading">
+                                <div class="weui-loadmore">
+                                    <i class="weui-loading"></i>
+                                    <span class="weui-loadmore__tips">正在加载</span>
+                                </div>
+                                <div class="weui-loadmore weui-loadmore_line">
+                                    <span class="weui-loadmore__tips">暂无数据</span>
+                                </div>
+                                <div class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
+                                    <span class="weui-loadmore__tips"></span>
+                                </div>
+                            </div>
+
+
                             <div id="customers" v-show="customers">
                                 <div class="myCustomerList weui-panel weui-panel_access">
                                     <div class="weui-panel__hd weui-media-box__title">我的客户</div>

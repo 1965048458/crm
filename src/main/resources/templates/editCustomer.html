@@ -91,9 +91,9 @@
     <input type="hidden" id="customerId" th:value="${customerId}"/>
 
     <div class="top-bar center-box" style="border: hidden">
-        <!--<span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;" onclick="cancel()">取消</span>-->
+        <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;" onclick="cancel()">取消</span>
         <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);">编辑组织架构</span>
-        <span class="pull-right" style="color: rgb(61, 168, 244); font-size: 16px;" onclick="confirm()">完成</span>
+        <!--<span class="pull-right" style="color: rgb(61, 168, 244); font-size: 16px;" @click="confirm()">完成</span>-->
     </div>
 
     <div class="add-dept">
@@ -192,7 +192,9 @@
             $('#dept_'+deptId).css('display', 'block');
         }
     }
-
+    function cancel() {
+        window.location = '/customer/organization?customerId=' + $('#customerId').val();
+    }
     function confirm() {
         window.location = '/customer/organization?customerId=' + $('#customerId').val();
     }

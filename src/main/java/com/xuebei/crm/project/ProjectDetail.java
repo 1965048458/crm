@@ -45,6 +45,15 @@ public class ProjectDetail {
     private List<FollowUpRecord> followUpRecords;
     @Expose
     private List<Support> projectSupports;
+    @Expose Support support;
+
+    public Support getSupport() {
+        return support;
+    }
+
+    public void setSupport(Support support) {
+        this.support = support;
+    }
 
     public String getIsAdmin() {
         return isAdmin;

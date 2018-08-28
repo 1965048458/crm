@@ -9,15 +9,15 @@ $(document).ready(function () {
             applyList: [],
             projectApplyList: []
         },
-        methods: {
-            'init': function () {
+        methods:{
+            'init':function () {
                 var thisVue = this;
                 $.ajax({
-                    type: 'get',
-                    url: '/message/applyList',
-                    data: {},
-                    dataType: 'json',
-                    cache: false
+                    type:'get',
+                    url:'/message/applyList',
+                    data:{},
+                    dataType:'json',
+                    cache:false
                 }).done(function (result) {
                     console.log(result);
                     thisVue.applyList = result.applyList;
@@ -32,26 +32,80 @@ $(document).ready(function () {
                 }).done(function (result) {
                     thisVue.$set(thisVue, 'projectApplyList', result.projectApplyList);
                 });
+                    thisVue.applyList=result.applyList;
+                })
+            },
+            'applyAgree':function (applyType,applyId) {
+                var thisVue = this;
+                $.ajax({
+                    type:'get',
+                    url:'/message/applyCheck',
+                    data:{
+                        applyType:applyType,
+                        applyId:applyId,
+                        isApprove:true
+                    },
+                    dataType:'json',
+                    cache:false
+                }).done(function (result) {
+                    console.log(result);
+                    thisVue.init()
+                })
+            },
+            'applyDecline':function (applyType,applyId) {
+                var thisVue = this;
+                $.ajax({
+                    type:'get',
+                    data:{
+                        applyType:applyType,
+                        applyId:applyId,
+                        isApprove:false
+                    },
+                    url:'/message/applyCheck',
+                    cache:false,
+                    dataType:'json'
+                }).done(function (result) {
+                    console.log(result);
+                    thisVue.init()
+                })
             }
         }
     });
 
-    Vue.component('enclosure-apply-component', {
-        template: '#enclosureApplyComponent',
-        props: ['apply'],
-        data: function () {
-            return {}
+    Vue.component('enclosure-apply-component',{
+        template:'#enclosureApplyComponent',
+        props:['apply'],
+        data:function () {
+            return{
+
+            }
         },
-        methods: {}
+        methods:{
+            'applyAgree':function (applyType,applyId) {
+                examAndApprovalVue.applyAgree(applyType,applyId);
+            },
+            'applyDecline':function (applyType,applyId) {
+                examAndApprovalVue.applyDecline(applyType,applyId);
+            }
+        }
     });
 
-    Vue.component('enclosure-delay-apply-component', {
-        template: '#enclosureDelayApplyComponent',
-        props: ['apply'],
-        data: function () {
-            return {}
+    Vue.component('enclosure-delay-apply-component',{
+        template:'#enclosureDelayApplyComponent',
+        props:['apply'],
+        data:function () {
+            return{
+
+            }
         },
-        methods: {}
+        methods:{
+            'applyAgree':function (applyType,applyId) {
+                examAndApprovalVue.applyAgree(applyType,applyId);
+            },
+            'applyDecline':function (applyType,applyId) {
+                examAndApprovalVue.applyDecline(applyType,applyId);
+            }
+        }
     });
 
     examAndApprovalVue.init();

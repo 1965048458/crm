@@ -38,6 +38,36 @@ public class OpportunitySearchParam {
     @Expose
     private List<String> subUserId;
 
+    @Expose
+    private boolean admin;
+    @Expose
+    private List<String> subUserIdWhole;
+    @Expose
+    private String curUserId;
+
+    public String getCurUserId() {
+        return curUserId;
+    }
+
+    public void setCurUserId(String curUserId) {
+        this.curUserId = curUserId;
+    }
+
+    public List<String> getSubUserIdWhole() {
+        return subUserIdWhole;
+    }
+
+    public void setSubUserIdWhole(List<String> subUserIdWhole) {
+        this.subUserIdWhole = subUserIdWhole;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
 
     private String subUser;
 

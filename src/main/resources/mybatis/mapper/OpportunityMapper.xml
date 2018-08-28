@@ -50,6 +50,8 @@
         <result property="expireDate" column="expire_date"/>
         <result property="order" column="support_order"/>
         <result property="content" column="content"/>
+        <result property="leader" column="leader"/>
+        <result property="leaderName" column="real_nm"/>
     </resultMap>
 
     <insert id="addSale" parameterType="com.xuebei.crm.opportunity.Opportunity"
@@ -91,6 +93,18 @@
         ) and cu.user_id = s.user_id
         LEFT JOIN crm_customer c ON c.customer_id = s.customer_id
         WHERE s.sales_status IN ('A','B','C','D','F') AND  s.has_delete = 0
+
+
+        <if test="!admin">
+            And ( s.user_id = #{curUserId} OR s.user_id IN
+            <foreach collection="subUserIdWhole" index="index" item="subId" open="(" separator="," close=")">
+                #{subId}
+            </foreach>
+            )
+        </if>
+
+
+
         <if test="createStart != null">
             AND s.create_ts &gt; #{createStart}
         </if>
@@ -236,5 +250,13 @@
         set sales_status = 0
         where sales_opportunity_id= #{opportunityId}
     </update>
+    
+    <select id="queryApplySupport" resultMap="supportMap">
+        select s.*,c.real_nm from support  s
+        left join crm_user c on c.crm_user_id =
+        (select cu.crm_user_id from company_user cu where cu.user_id = s.leader)
+          where s.sales_opportunity_id = #{opportunityId}
+    </select>
+
 
 </mapper>

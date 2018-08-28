@@ -72,138 +72,164 @@
                 </div>
 
                 <div class="weui-tab__panel" style="padding-top: 82px; background: #FFFFFF;">
-                    <!--<div v-for=""> </div>-->
+
 
                     <div id="notFinish" v-show="showPage ==='unfinish'" style="display: none">
 
-                        <div class="weui-panel weui-panel_access" style="border-top: solid 1px #B2B2B2;">
-                            <div class="weui-form-preview">
-                                <div class="weui-form-preview__item" style="font-size: small;padding: 3px 0px;">
-                                    <label class="weui-form-preview__label" style="padding-left: 15px;color: #0D0D0D">截止日期：2018-08-02</label>
-                                    <label class="weui-form-preview__label" style="float: right;color: #0D0D0D">发起日期：2018-02-15</label>
-                                </div>
-                            </div>
-                            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
-                               style="padding: 8px 10px ;">
-                                <div class="weui-media-box__bd">
-                                    <p class="weui-media-box__title" style="font-size: 13px;">
-                                        任务名称: 方案撰写
-                                        <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
-                                            紧急</label>
-                                    </p>
-                                    <p class="weui-media-box__title" style="font-size: 13px;">
-                                        相关项目：浙江大学-机械学院 仿真实验项目&nbsp;
+                        <div v-for="support in unfinishList">
 
-                                    </p>
-                                    <p class="weui-media-box__title" style="font-size: 13px;">
-                                        执行者: 封口费
-                                        <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
-                                            0%</label>
-                                    </p>
-                                    <p class="weui-media-box__title" style="font-size: 13px;">
-                                        发起人: 我刘二妈
-                                    </p>
+                            <div class="weui-panel weui-panel_access" style="border-top: solid 1px #B2B2B2;"
+                                 @click="toDetail(support.support.supportId)">
+                                <div class="weui-form-preview">
+                                    <div class="weui-form-preview__item" style="font-size: small;padding: 3px 0px;">
+                                        <label class="weui-form-preview__label"
+                                               style="padding-left: 15px;color: #0D0D0D">截止日期：{{support.support.expireDate.substring(0,11)}}</label>
+                                        <label class="weui-form-preview__label" style="float: right;color: #0D0D0D">发起日期：{{support.createTs.substring(0,11)}}</label>
+                                    </div>
                                 </div>
-                            </a>
+                                <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
+                                   style="padding: 8px 10px ;">
+                                    <div class="weui-media-box__bd">
+                                        <p class="weui-media-box__title" style="font-size: 13px;">
+                                            任务名称: {{supportType(support.support.supportType)}}
+                                            <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
+                                                {{supportOrder(support.support.order)}}</label>
+                                        </p>
+                                        <p class="weui-media-box__title" style="font-size: 13px;">
+                                            相关项目：
+                                            <span v-if="support.projectContacts === undefined"></span>
+                                            <span v-else>
+                                                <span v-if="support.projectContacts.customerName === undefined"></span>
+                                                <span v-else>{{support.projectContacts.customerName}}-</span>
+                                                <span v-if="support.projectContacts.subDeptName ===undefined"></span>
+                                                <span v-else>{{support.projectContacts.subDeptName}}-</span>
+                                            </span>
+                                            {{support.projectName}}&nbsp;
+                                        </p>
+                                        <p class="weui-media-box__title" style="font-size: 13px;">
+                                            执行者: <span v-if="support.leaderName=== undefined">待管理员指配</span>
+                                            <span v-else>{{support.leaderName}}</span>
+                                            <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
+                                                {{support.support.percent}}%</label>
+                                        </p>
+                                        <p class="weui-media-box__title" style="font-size: 13px;">
+                                            发起人: {{support.creatorName}}
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
 
+                        <!--<div class="weui-panel weui-panel_access" style="border-top: solid 1px #B2B2B2;">-->
+                        <!--<div class="weui-form-preview">-->
+                        <!--<div class="weui-form-preview__item" style="font-size: small;padding: 3px 0px;">-->
+                        <!--<label class="weui-form-preview__label" style="padding-left: 15px;color: #0D0D0D">截止日期：2018-08-02</label>-->
+                        <!--<label class="weui-form-preview__label" style="float: right;color: #0D0D0D">发起日期：2018-02-15</label>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--<a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"-->
+                        <!--style="padding: 8px 10px ;" @click="toDetail">-->
+                        <!--<div class="weui-media-box__bd">-->
+                        <!--<p class="weui-media-box__title" style="font-size: 13px;">-->
+                        <!--任务名称: 方案撰写-->
+                        <!--<label class="pull-right" style="font-size: 13px;color: #00A4FF;">-->
+                        <!--紧急</label>-->
+                        <!--</p>-->
+                        <!--<p class="weui-media-box__title" style="font-size: 13px;">-->
+                        <!--相关项目：浙江大学-机械学院 仿真实验项目&nbsp;-->
 
-                        <div class="weui-panel weui-panel_access" style="border-top: solid 1px #B2B2B2;">
-                            <div class="weui-form-preview">
-                                <div class="weui-form-preview__item" style="font-size: small;padding: 3px 0px;">
-                                    <label class="weui-form-preview__label" style="padding-left: 15px;color: #0D0D0D">截止日期：2018-08-02</label>
-                                    <label class="weui-form-preview__label" style="float: right;color: #0D0D0D">发起日期：2018-02-15</label>
-                                </div>
-                            </div>
-                            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
-                               style="padding: 8px 10px ;" @click="toDetail">
-                                <div class="weui-media-box__bd">
-                                    <p class="weui-media-box__title" style="font-size: 13px;">
-                                        任务名称: 方案撰写
-                                        <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
-                                            紧急</label>
-                                    </p>
-                                    <p class="weui-media-box__title" style="font-size: 13px;">
-                                        相关项目：浙江大学-机械学院 仿真实验项目&nbsp;
-
-                                    </p>
-                                    <p class="weui-media-box__title" style="font-size: 13px;">
-                                        执行者: 封口费
-                                        <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
-                                            0%</label>
-                                    </p>
-                                    <p class="weui-media-box__title" style="font-size: 13px;">
-                                        发起人: 我
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
+                        <!--</p>-->
+                        <!--<p class="weui-media-box__title" style="font-size: 13px;">-->
+                        <!--执行者: 封口费-->
+                        <!--<label class="pull-right" style="font-size: 13px;color: #00A4FF;">-->
+                        <!--0%</label>-->
+                        <!--</p>-->
+                        <!--<p class="weui-media-box__title" style="font-size: 13px;">-->
+                        <!--发起人: 我-->
+                        <!--</p>-->
+                        <!--</div>-->
+                        <!--</a>-->
+                        <!--</div>-->
                     </div>
 
                     <div id="hasFinish" v-show="showPage ==='finish'" style="display: none">
 
-                        <div class="weui-panel weui-panel_access" style="border-top: solid 1px #B2B2B2;">
-                            <div class="weui-form-preview">
-                                <div class="weui-form-preview__item" style="font-size: small;padding: 3px 0px;">
-                                    <label class="weui-form-preview__label" style="padding-left: 15px;color: #0D0D0D">截止日期：2018-08-02</label>
-                                    <label class="weui-form-preview__label" style="float: right;color: #0D0D0D">发起日期：2018-02-15</label>
-                                </div>
-                            </div>
-                            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
-                               style="padding: 8px 10px ;">
-                                <div class="weui-media-box__bd">
-                                    <p class="weui-media-box__title" style="font-size: 13px;">
-                                        任务名称: 方案撰写
-                                        <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
-                                            紧急</label>
-                                    </p>
-                                    <p class="weui-media-box__title" style="font-size: 13px;">
-                                        相关项目：浙江大学-机械学院 仿真实验项目&nbsp;
 
-                                    </p>
-                                    <p class="weui-media-box__title" style="font-size: 13px;">
-                                        执行者: 封口费
-                                        <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
-                                            0%</label>
-                                    </p>
-                                    <p class="weui-media-box__title" style="font-size: 13px;">
-                                        发起人: 我刘二妈
-                                    </p>
+                        <div v-for="support in finishList">
+
+                            <div class="weui-panel weui-panel_access" style="border-top: solid 1px #B2B2B2;"
+                                 @click="toDetail(support.support.supportId)">
+                                <div class="weui-form-preview">
+                                    <div class="weui-form-preview__item" style="font-size: small;padding: 3px 0px;">
+                                        <label class="weui-form-preview__label"
+                                               style="padding-left: 15px;color: #0D0D0D">截止日期：{{support.support.expireDate.substring(0,11)}}</label>
+                                        <label class="weui-form-preview__label" style="float: right;color: #0D0D0D">发起日期：{{support.createTs.substring(0,11)}}</label>
+                                    </div>
                                 </div>
-                            </a>
+                                <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
+                                   style="padding: 8px 10px ;">
+                                    <div class="weui-media-box__bd">
+                                        <p class="weui-media-box__title" style="font-size: 13px;">
+                                            任务名称: {{supportType(support.support.supportType)}}
+                                            <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
+                                                {{supportOrder(support.support.order)}}</label>
+                                        </p>
+                                        <p class="weui-media-box__title" style="font-size: 13px;">
+                                            相关项目：
+                                            <span v-if="support.projectContacts === undefined"></span>
+                                            <span v-else>
+                                                <span v-if="support.projectContacts.customerName === undefined"></span>
+                                                <span v-else>{{support.projectContacts.customerName}}-</span>
+                                                <span v-if="support.projectContacts.subDeptName ===undefined"></span>
+                                                <span v-else>{{support.projectContacts.subDeptName}}-</span>
+                                            </span>
+                                            {{support.projectName}}&nbsp;
+                                        </p>
+                                        <p class="weui-media-box__title" style="font-size: 13px;">
+                                            执行者: <span v-if="support.leaderName=== undefined">待管理员指配</span>
+                                            <span v-else>{{support.leaderName}}</span>
+                                            <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
+                                                {{support.support.percent}}%</label>
+                                        </p>
+                                        <p class="weui-media-box__title" style="font-size: 13px;">
+                                            发起人: {{support.creatorName}}
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
 
 
-                        <div class="weui-panel weui-panel_access" style="border-top: solid 1px #B2B2B2;">
-                            <div class="weui-form-preview">
-                                <div class="weui-form-preview__item" style="font-size: small;padding: 3px 0px;">
-                                    <label class="weui-form-preview__label" style="padding-left: 15px;color: #0D0D0D">截止日期：2018-08-02</label>
-                                    <label class="weui-form-preview__label" style="float: right;color: #0D0D0D">发起日期：2018-02-15</label>
-                                </div>
-                            </div>
-                            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
-                               style="padding: 8px 10px ;">
-                                <div class="weui-media-box__bd">
-                                    <p class="weui-media-box__title" style="font-size: 13px;">
-                                        任务名称: 方案撰写
-                                        <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
-                                            紧急</label>
-                                    </p>
-                                    <p class="weui-media-box__title" style="font-size: 13px;">
-                                        相关项目：浙江大学-机械学院 仿真实验项目&nbsp;
+                        <!--<div class="weui-panel weui-panel_access" style="border-top: solid 1px #B2B2B2;">-->
+                        <!--<div class="weui-form-preview">-->
+                        <!--<div class="weui-form-preview__item" style="font-size: small;padding: 3px 0px;">-->
+                        <!--<label class="weui-form-preview__label" style="padding-left: 15px;color: #0D0D0D">截止日期：2018-08-02</label>-->
+                        <!--<label class="weui-form-preview__label" style="float: right;color: #0D0D0D">发起日期：2018-02-15</label>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--<a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"-->
+                        <!--style="padding: 8px 10px ;">-->
+                        <!--<div class="weui-media-box__bd">-->
+                        <!--<p class="weui-media-box__title" style="font-size: 13px;">-->
+                        <!--任务名称: 方案撰写-->
+                        <!--<label class="pull-right" style="font-size: 13px;color: #00A4FF;">-->
+                        <!--紧急</label>-->
+                        <!--</p>-->
+                        <!--<p class="weui-media-box__title" style="font-size: 13px;">-->
+                        <!--相关项目：浙江大学-机械学院 仿真实验项目&nbsp;-->
 
-                                    </p>
-                                    <p class="weui-media-box__title" style="font-size: 13px;">
-                                        执行者: 封口费
-                                        <label class="pull-right" style="font-size: 13px;color: #00A4FF;">
-                                            0%</label>
-                                    </p>
-                                    <p class="weui-media-box__title" style="font-size: 13px;">
-                                        发起人: 我刘二妈
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
+                        <!--</p>-->
+                        <!--<p class="weui-media-box__title" style="font-size: 13px;">-->
+                        <!--执行者: 封口费-->
+                        <!--<label class="pull-right" style="font-size: 13px;color: #00A4FF;">-->
+                        <!--0%</label>-->
+                        <!--</p>-->
+                        <!--<p class="weui-media-box__title" style="font-size: 13px;">-->
+                        <!--发起人: 我刘二妈-->
+                        <!--</p>-->
+                        <!--</div>-->
+                        <!--</a>-->
+                        <!--</div>-->
                     </div>
 
 
@@ -241,7 +267,7 @@
         </div>
     </div>
 
-    <div id="missionDetail" v-show="show==='detail'">
+    <div id="missionDetail" v-show="show==='detail'" style="display: none">
         <div class="page tabbar js_show" style="height: 100%">
             <div class="weui-tab">
                 <div class="navi-bar">
@@ -254,7 +280,7 @@
 
                 </div>
 
-
+                <span v-if="curSupport !=''">
                 <div class="weui-tab__panel" style="padding-top: 25px; background: #FFFFFF;">
                     <div class="weui-cells" style="font-size: medium">
                         <div class="weui-cell">
@@ -262,7 +288,7 @@
                                 <label class="weui-label">任务名称：</label>
                             </div>
                             <div class="weui-cell__bd">
-                                <label class="weui-input">家里蹲大学晒太阳</label>
+                                <label class="weui-input">{{supportType(curSupport.support.supportType)}}</label>
                             </div>
                         </div>
                         <div class="weui-cell">
@@ -270,7 +296,7 @@
                                 <label class="weui-label">项目名称：</label>
                             </div>
                             <div class="weui-cell__bd">
-                                <label class="weui-input">都太阳湾项目</label>
+                                <label class="weui-input">{{curSupport.projectName}}</label>
                             </div>
                         </div>
                         <div class="weui-cell">
@@ -278,7 +304,7 @@
                                 <label class="weui-label">发起日期：</label>
                             </div>
                             <div class="weui-cell__bd">
-                                <label class="weui-input">2018-02-03</label>
+                                <label class="weui-input">{{curSupport.createTs.substring(0,11)}}</label>
                             </div>
                         </div>
                         <div class="weui-cell">
@@ -286,7 +312,7 @@
                                 <label class="weui-label">截止日期：</label>
                             </div>
                             <div class="weui-cell__bd">
-                                <label class="weui-input">2018-09-31</label>
+                                <label class="weui-input">{{curSupport.support.expireDate.substring(0,11)}}</label>
                             </div>
                         </div>
                         <div class="weui-cell">
@@ -294,29 +320,59 @@
                                 <label class="weui-label">发起人：</label>
                             </div>
                             <div class="weui-cell__bd">
-                                <label class="weui-input">六儿妈</label>
-                            </div>
-                        </div>
-                        <div class="weui-cell">
-                            <div class="weui-cell__hd">
-                                <label class="weui-label">执行人：</label>
-                            </div>
-                            <div class="weui-cell__bd">
-                                <label class="weui-input">未指定</label>
+                                <label class="weui-input">{{curSupport.creatorName}}</label>
                             </div>
                         </div>
 
-                        <a class="weui-cell weui-cell_access" href="javascript:;">
-                            <div class="weui-cell__hd">
-                                <label class="weui-label">执行人：</label>
+
+
+                        <span v-if="admin">
+
+
+
+                                <span v-if="curSupport.leaderName== undefined">
+                                    <div></div>
+                                     <a class="weui-cell weui-cell_access" href="javascript:;" @click="chooseExe('')">
+                                    <div class="weui-cell__hd">
+                                        <label class="weui-label">执行人：</label>
+                                    </div>
+                                    <div class="weui-cell__bd">
+                                        <label class="weui-input">未指定</label>
+                                    </div>
+                                    <div class="weui-cell__ft">指定执行者</div>
+                                          </a>
+                                </span>
+
+                                <span v-else>
+                                    <div></div>
+                                     <a class="weui-cell weui-cell_access" href="javascript:;" @click="chooseExe('')">
+                                     <div class="weui-cell__hd">
+                                        <label class="weui-label">执行人：</label>
+                                     </div>
+                                     <div class="weui-cell__bd">
+                                        <label class="weui-input">{{curSupport.leaderName}}</label>
+                                     </div>
+                                          <div class="weui-cell__ft">指定执行者</div>
+                                     </a>
+                                </span>
+
+                        </span>
+
+                        <span v-else>
+                            <div></div>
+                            <div class="weui-cell">
+                                <div class="weui-cell__hd">
+                                    <label class="weui-label">执行人：</label>
+                                </div>
+                                <div class="weui-cell__bd">
+                                    <label class="weui-input">
+                                        <span v-if="curSupport.leaderName== undefined">未指定</span>
+                                        <span v-else>{{curSupport.leaderName}}</span>
+                                     </label>
+                                </div>
                             </div>
-                            <div class="weui-cell__bd">
-                                <label class="weui-input">未指定</label>
-                            </div>
-                            <div class="weui-cell__ft">
-                                指定执行者
-                            </div>
-                        </a>
+
+                        </span>
 
 
                     </div>
@@ -329,8 +385,7 @@
                             <div class="weui-cell">
                                 <div class="weui-cell__bd" style="color: darkgray;">
 
-                                    <span>飞机上的浪费哈绥芬河哈哈司法局
-                                        傻家伙发来贺电 号号快乐就好好师傅发生大富翁</span>
+                                    <span>{{curSupport.support.content}}</span>
 
                                 </div>
                             </div>
@@ -343,94 +398,209 @@
                                 <label class="weui-label">任务完成度</label>
                             </div>
                             <div class="weui-cell__bd">
-                                <p></p>
+                                <p v-if="operator">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default"
+                                       @click="modify">{{button}}</a>
+                                </p>
                             </div>
                             <div class="weui-cell__ft">
-                                <div id="wan" class="weui-cell__ft" style="float: right">0</div>
+                                <div id="wan" class="weui-cell__ft" style="float: right">
+                                    {{curSupport.support.percent}}%
+                                </div>
                             </div>
                         </div>
                     </div>
 
+                 <span v-if="showSlider">
 
-                            <div class="weui-slider-box slider js_show">
-                                <div class="weui-slider">
-                                    <div id="sliderInner" class="weui-slider__inner">
-                                        <div id="sliderTrack" style="width: 80%;" class="weui-slider__track"></div>
-                                        <div id="sliderHandler" style="left: 80%;" class="weui-slider__handler"></div>
+                    <div class="weui-slider-box slider js_show">
+                        <div class="weui-slider" style="margin-top: 13px">
+                            <div id="sliderInner" class="weui-slider__inner">
+                                <div id="sliderTrack" style="width: 80%;" class="weui-slider__track"></div>
+                                <div id="sliderHandler" style="left: 80%;" class="weui-slider__handler"></div>
+                            </div>
+                        </div>
+                        <div id="sliderValue" class="weui-slider-box__value" style="display: none">80</div>
+                    </div>
+
+                 </span>
+                    <!--<div class="weui-cells" style="font-size: medium">-->
+                    <!--<div class="weui-cell">-->
+                    <!--<div class="weui-cell__hd">-->
+                    <!--<label class="weui-label">任务完成度</label>-->
+                    <!--</div>-->
+                    <!--<div class="weui-cell__bd">-->
+                    <!--<p></p>-->
+                    <!--</div>-->
+                    <!--<div class="weui-cell__ft">-->
+                    <!--<div class="weui-cell__ft" style="float: right">80%</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+
+                    <!--</div>-->
+
+
+                    <!--<div class="weui-cells" style="font-size: medium">-->
+                    <!--<div class="weui-cell">-->
+                    <!--<div class="weui-cell__hd">-->
+                    <!--<label class="weui-label">任务信息</label>-->
+                    <!--</div>-->
+                    <!--<div class="weui-cell__bd">-->
+                    <!--<label class="weui-input">暂无</label>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="weui-cells" style="font-size: medium">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">任务信息</label>
+                            </div>
+                        </div>
+
+                        <span v-if="operator">
+                            <div></div>
+                            <div class="weui-cell" style="padding: 5px 8px" @click="addProgress">
+                                <div class="weui-cell__bd" style="color: darkgray;">
+                                    <span  class="pull-left" style="height: 24px">
+                                        <img src="/images/project/add.svg" style="margin-left: 5px"/>
+                                    </span>
+                                    <span>添加新的进度信息</span>
+                                </div>
+                            </div>
+                        </span>
+
+                        <span v-if="information.length != 0">
+
+                            <div v-for="inform in information">
+                                <div></div>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__bd" style="color: darkgray;">
+
+                                        <div>{{inform.createTs}}</div>
+                                        <span>{{inform.content}}</span>
                                     </div>
                                 </div>
-                                <div id="sliderValue" class="weui-slider-box__value" style="display: none">80</div>
                             </div>
 
-
-
-                    <div class="weui-cells" style="font-size: medium">
-                        <div class="weui-cell">
-                            <div class="weui-cell__hd">
-                                <label class="weui-label">任务完成度</label>
-                            </div>
-                            <div class="weui-cell__bd">
-                                <p></p>
-                            </div>
-                            <div class="weui-cell__ft">
-                                <div class="weui-cell__ft" style="float: right">10%</div>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-
-                    <div class="weui-cells" style="font-size: medium">
-                        <div class="weui-cell">
-                            <div class="weui-cell__hd">
-                                <label class="weui-label">任务信息</label>
-                            </div>
-                            <div class="weui-cell__bd">
+                        </span>
+                        <span v-else>
+                            <div></div>
+                             <div class="weui-cell">
+                             <div class="weui-cell__bd">
                                 <label class="weui-input">暂无</label>
                             </div>
-                        </div>
+                             </div>
+                        </span>
+
+                        <!--<div class="weui-cell">-->
+                        <!--<div class="weui-cell__bd" style="color: darkgray;">-->
+                        <!--<div>6分钟前</div>-->
+                        <!--<span>飞机上的浪费哈绥芬河哈哈司法局-->
+                        <!--傻家伙发来贺电 号号快乐就好好师傅发生大富翁</span>-->
+
+                        <!--</div>-->
+                        <!--</div>-->
                     </div>
-
-                    <div class="weui-cells" style="font-size: medium">
-                        <div class="weui-cell">
-                            <div class="weui-cell__hd">
-                                <label class="weui-label">任务信息</label>
-                            </div>
-                        </div>
-
-                        <div class="weui-cell" style="padding: 5px 8px">
-                            <div class="weui-cell__bd" style="color: darkgray;">
-                                <span @click="" class="pull-left">
-                            <img src="/images/project/add.svg"/></span>
-                                <div>添加新的进度信息</div>
-                            </div>
-                        </div>
-                        <div class="weui-cell">
-                            <div class="weui-cell__bd" style="color: darkgray;">
-
-                                <div>5分钟前</div>
-                                <span>飞机上的浪费哈绥芬河哈哈司法局
-                                        傻家伙发来贺电 号号快乐就好好师傅发生大富翁</span>
-                            </div>
-                        </div>
-
-                        <div class="weui-cell">
-                            <div class="weui-cell__bd" style="color: darkgray;">
-                                <div>6分钟前</div>
-                                <span>飞机上的浪费哈绥芬河哈哈司法局
-                                        傻家伙发来贺电 号号快乐就好好师傅发生大富翁</span>
-
-                            </div>
-                        </div>
-                    </div>
-
 
                 </div>
+                </span>
 
 
             </div>
         </div>
+    </div>
+
+    <div id="executor" v-show="show ==='chooseExe'" style="display: none">
+
+
+        <div class="top-bar" style="height: 30px">
+                        <span @click="chooseBack" class="pull-left">
+                                <img src="/images/back_icon.svg"
+                                     style="margin-top:8px;margin-left: 5px"/>
+                        </span>
+
+            <span style="height: 30px;display: inline-block ;padding-top: 5px;">选择执行者</span>
+
+            <span class="pull-right" style="margin-top: 7px; color: #28b3ff"
+                  @click="confirm"> 完成 &nbsp; </span>
+            <span style="float:right;margin-top: 7px;margin-right: 20px" @click="search">&nbsp;
+                                    <img src="/images/search.svg"/>
+                                </span>
+        </div>
+
+        <div class="list">
+            <div class="page__bd">
+                <div v-if="searchBar">
+                    <div class="weui-search-bar" id="searchBar">
+                        <div class="weui-search-bar__form">
+                            <div class="weui-search-bar__box">
+                                <i class="weui-icon-search"></i>
+                                <input type="text" class="weui-search-bar__input" id="searchInput"
+                                       placeholder="搜索" v-model="keyWord">
+                                <a href="javascript:" class="weui-icon-clear" id="searchClear"
+                                   @click="clear"></a>
+                            </div>
+                            <label class="weui-search-bar__label" id="searchText" @click="text"
+                                   style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                                <i class="weui-icon-search"></i>
+                                <span>搜索</span>
+                            </label>
+                        </div>
+                        <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel"
+                           @click="cancel">取消</a>
+                    </div>
+                </div>
+                <div class="weui-cells weui-cells_radio" style="margin-top: 1px">
+                    <div v-for=" user in userList">
+                        <div></div>
+                        <label class="weui-cell weui-check__label">
+                            <div class="weui-cell__bd">
+                                <p>{{user.crmUserName}}</p>
+                            </div>
+                            <div class="weui-cell__ft">
+                                <input type="radio" class="weui-check" name="radio1" id="x11" :value="user.userId" v-model="chosenExe"/>
+                                <span class="weui-icon-checked"></span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div id="addInform" v-show="show ==='addProgress'" style="display: none">
+
+
+        <div class="top-bar" style="height: 30px">
+                        <span @click="addBack" class="pull-left">
+                                <img src="/images/back_icon.svg"
+                                     style="margin-top:10px;margin-left: 10px"/>
+                        </span>
+
+            <span style="height: 30px;display: inline-block ;padding-top: 5px;">进度信息</span>
+
+            <span class="pull-right" style="margin-top: 7px; color: #28b3ff"
+                  @click="submit"> 完成 &nbsp; </span>
+        </div>
+
+        <div class="list">
+            <div class="page__bd">
+                <div class="weui-cells weui-cells_form" style="margin-top: 1px">
+                    <div class="weui-cell" style="margin-top: 0px">
+                        <div class="weui-cell__bd">
+                                        <textarea class="weui-textarea" placeholder="请输入新的进度信息" rows="24"
+                                                  v-model="progress"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
 
@@ -449,54 +619,8 @@
 </script>
 <script type="text/javascript" class="slider js_show">
     $(function () {
-        var $sliderTrack = $('#sliderTrack'),
-            $sliderHandler = $('#sliderHandler'),
-            $sliderValue = $('#sliderValue');
-
-        var totalLen,
-            startLeft = 0,
-            startX = 0;
-
-        $sliderHandler
-            .on('touchstart', function (e) {
-                totalLen = $('#sliderInner').width();
-                startLeft = parseInt($sliderHandler.css('left'));
-                startX = e.originalEvent.changedTouches[0].clientX;
-            })
-            .on('mousedown', function (e) {
-                totalLen = $('#sliderInner').width();
-                startLeft = parseInt($sliderHandler.css('left'));
-                startX = e.originalEvent.pageX;
-
-                $sliderHandler.unbind('mousemove').on('mousemove', function (e) {
-                    totalLen = $('#sliderInner').width();
-                    var moveX = e.originalEvent.pageX;
-                    var dist = startLeft + moveX - startX,
-                        percent;
-                    dist = dist < 0 ? 0 : dist > totalLen ? totalLen : dist;
-                    percent = parseInt(dist / totalLen * 100);
-                    $sliderTrack.css('width', percent + '%');
-                    $sliderHandler.css('left', percent + '%');
-                    $sliderValue.text(percent);
-
-                    e.preventDefault();
-                })
-            })
-            .on('touchmove', function (e) {
-                var moveX = e.originalEvent.changedTouches[0].clientX;
-                var dist = startLeft + moveX - startX,
-                    percent;
-                dist = dist < 0 ? 0 : dist > totalLen ? totalLen : dist;
-                percent = parseInt(dist / totalLen * 100);
-                $sliderTrack.css('width', percent + '%');
-                $sliderHandler.css('left', percent + '%');
-                $sliderValue.text(percent);
-                $('#wan').text(percent+'%');
-                e.preventDefault();
-            })
-        ;
         $('body').on('mouseup', function (e) {
-            $sliderHandler.unbind('mousemove');
+            $('#sliderHandler').unbind('mousemove');
         })
     });
 </script>

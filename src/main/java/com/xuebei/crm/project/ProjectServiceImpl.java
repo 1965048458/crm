@@ -1,5 +1,6 @@
 package com.xuebei.crm.project;
 
+import com.xuebei.crm.company.CompanyUser;
 import com.xuebei.crm.utils.UUIDGenerator;
 import com.xuebei.crm.customer.CustomerMapper;
 import com.xuebei.crm.customer.FollowUpRecord;
@@ -113,14 +114,22 @@ public class ProjectServiceImpl implements ProjectService{
 
 
     @Override
-    public List<Support> queryMission(String userId){
-        List<Support> projectDetail = projectMapper.queryMission(userId);
+    public List<ProjectDetail> queryMissionUn(String userId,boolean admin,List<String> subUserId){
+        List<ProjectDetail> projectDetail = projectMapper.queryMissionUn(userId,admin,subUserId);
         if (projectDetail == null) {
             return null;
         }
         return projectDetail;
     }
 
+    @Override
+    public List<ProjectDetail> queryMission(String userId,boolean admin,List<String> subUserId) {
+        List<ProjectDetail> projectDetail = projectMapper.queryMission(userId,admin,subUserId);
+        if (projectDetail == null) {
+            return null;
+        }
+        return projectDetail;
+    }
 
     @Override
     public ProjectStart getProjectStart(Integer projectId, String userId) {
@@ -140,5 +149,35 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public String queryOpportunityNameByOpportunityId(Integer projectId) {
         return projectMapper.queryOpportunityNameByOpportunityId(projectId);
+    }
+
+    @Override
+    public ProjectDetail queryMissionDetail(Integer supportId) {
+        return projectMapper.queryMissionDetail(supportId);
+    }
+
+    @Override
+    public List<Support> querySupportInformation(Integer supportId) {
+        return projectMapper.querySupportInformation(supportId);
+    }
+
+    @Override
+    public void insertProgressInform(Integer supportId, String userId, String progress) {
+        projectMapper.insertProgressInform(supportId,userId,progress);
+    }
+
+    @Override
+    public void updateSupportProgress(String userId,Integer supportId, Integer progress) {
+        projectMapper.updateSupportProgress(userId,supportId,progress);
+    }
+
+    @Override
+    public List<CompanyUser> queryCompanyUser(String userId,String keyword) {
+        return projectMapper.queryCompanyUser(userId,keyword);
+    }
+
+    @Override
+    public void setSupportLeader(String userId,Integer supportId, String leaderId) {
+        projectMapper.setSupportLeader(userId,supportId,leaderId);
     }
 }
