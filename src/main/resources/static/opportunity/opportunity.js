@@ -341,8 +341,6 @@ $(document).ready(function () {
                 thisVue.showPage = 'toDetail';
 
             },
-
-
             'showDetailResult': function () {
                 var thisVue = this;
                 $.ajax({
@@ -498,6 +496,7 @@ $(document).ready(function () {
                             $("#modif").css('color', 'black');
                             thisVue.show = 'home';
                             thisVue.showDetailPage = 'detailPage';
+                            thisVue.showResult();
 
                         }, 1000);
                     }
