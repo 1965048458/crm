@@ -50,13 +50,18 @@
                 <label class="weui-label" style="width: 130px;">学院/部门名称</label>
             </div>
             <div class="weui-cell__bd" >
-                <input  class="weui-input" placeholder="请输入学院或部门全称" v-model="deptName">
+                <input  class="weui-input" placeholder="请输入学院或部门全称" v-model="deptName" @input="deptNameInputChanged()">
             </div>
         </div>
-        <div style="padding: 0px 15px;line-height: 1;" v-show="showPromptMessage">
+
+    </div>
+
+    <div class="weui-cell" v-show="showPromptMessage">
+        <div style="padding: 0px 15px;line-height: 1;">
             <span style="padding-left: 122px;color: red;font-size: 7px;" v-text="promptMessage"></span>
         </div>
     </div>
+
 
     <div class="weui-cells weui-cells_form">
         <div class="weui-cell" style="padding-bottom: 0">

@@ -158,17 +158,17 @@ public class CustomerController {
             return GsonView.createErrorView(DEPT_NAME_BLANK_ERROR_MSG);
         }
         String userId = (String) request.getSession().getAttribute("userId");
-        WarningBeforeCreateEnum warning = deptService.warningBeforeCreate(deptName,customerId,userId);
-        switch (warning){
-            case APPLY_BY_ME:
-                return GsonView.createErrorView(WarningBeforeCreateEnum.APPLY_BY_ME.getName());
-            case APPLY_BY_OTHERS:
-                return GsonView.createErrorView(WarningBeforeCreateEnum.APPLY_BY_OTHERS.getName());
-            case NO_ONE_APPLY:
-            default:
-                break;
-        }
-        if(customerMapper.isDepartNameExist(customerId,deptName)){
+//        WarningBeforeCreateEnum warning = deptService.warningBeforeCreate(deptName,customerId,userId);
+//        switch (warning){
+//            case APPLY_BY_ME:
+//                return GsonView.createErrorView(WarningBeforeCreateEnum.APPLY_BY_ME.getName());
+//            case APPLY_BY_OTHERS:
+//                return GsonView.createErrorView(WarningBeforeCreateEnum.APPLY_BY_OTHERS.getName());
+//            case NO_ONE_APPLY:
+//            default:
+//                break;
+//        }
+        if(customerMapper.isTopDepartNameExist(customerId,deptName)){
             Department expiredDept = customerMapper.searchDeptByName(customerId,deptName);
             customerMapper.updateDept(website,profile,expiredDept.getDeptId());
             customerMapper.updateEnclosureApply(expiredDept.getDeptId(),userId);
@@ -391,7 +391,8 @@ public class CustomerController {
                                     HttpServletRequest request) {
         GsonView gsonView = new GsonView();
         final String EMPTY_REASONS_ERROR = "申请理由不能为空";
-        if(reasons == null || reasons.equals("")) {
+        reasons.trim();
+        if(StringUtils.isEmptyOrWhitespace(reasons)) {
             gsonView.addStaticAttribute("successFlg", false);
             gsonView.addStaticAttribute("errMsg",EMPTY_REASONS_ERROR);
         }

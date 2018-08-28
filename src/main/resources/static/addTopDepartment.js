@@ -27,12 +27,14 @@ jQuery(document).ready(function () {
                     type: 'get',
                     url: '/customer/action/addTopDepartment',
                     data: {
-                        customerId: jQuery('#customerId').val(),
+                        customerId: $('#customerId').val(),
                         deptName: this.deptName,
-                        profile: this.profile,
-                        website: this.website
+                        website: this.website,
+                        profile: this.profile
+
                     },
                     dataType: "json",
+                    cache:false,
                     success: function (result) {
                         if (result.successFlg) {
                             window.location = '/customer/editCustomer?customerId=' + jQuery('#customerId').val();
@@ -53,7 +55,8 @@ jQuery(document).ready(function () {
                     type:'get',
                     url:'/customer/action/departmentCheck',
                     data:{deptName:this.deptName,
-                            customerId:$('#cusomerId').val()},
+                         customerId:$('#customerId').val()
+                    },
                     dataType:'json',
                     cache:false,
                     success:function (result) {

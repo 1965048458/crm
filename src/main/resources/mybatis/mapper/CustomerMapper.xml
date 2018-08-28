@@ -111,10 +111,17 @@
         WHERE company_user.user_id = #{userId} AND company_customer.customer_id = #{customerId};
     </select>
 
-    <select id="isDepartNameExist" resultType="java.lang.Boolean">
+    <select id="isSubDepartNameExist" resultType="java.lang.Boolean">
         SELECT COUNT(customer_dept_id)
         FROM customer_dept
         WHERE prt_id = #{deptId}
+        AND department_nm = #{departmentName};
+    </select>
+
+    <select id="isTopDepartNameExist" resultType="java.lang.Boolean">
+        SELECT COUNT(customer_dept_id)
+        FROM customer_dept
+        WHERE customer_id = #{customerId}
         AND department_nm = #{departmentName};
     </select>
     

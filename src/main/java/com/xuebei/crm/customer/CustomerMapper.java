@@ -14,8 +14,12 @@ public interface CustomerMapper {
     Boolean isUserHasCustomer(@Param("userId") String userId,
                               @Param("customerId") String customerId);
 
-    Boolean isDepartNameExist(@Param("deptId") String deptId,
-                              @Param("departmentName") String departmentName);
+    Boolean isTopDepartNameExist(@Param("customerId") String customerId,
+                                 @Param("departmentName") String departmentName);
+
+    Boolean isSubDepartNameExist(@Param("prtId")String parentId,
+                                 @Param("departmentName")String departmentName);
+
 
     Department searchDeptByName(@Param("customerId") String customerId,
                                 @Param("departmentName")String departmentName);
