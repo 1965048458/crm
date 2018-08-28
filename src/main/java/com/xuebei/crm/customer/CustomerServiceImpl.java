@@ -38,7 +38,8 @@ public class CustomerServiceImpl implements CustomerService {
      * @throws DepartmentNameDuplicatedException
      */
     public void addTopDepartment(Department department) throws DepartmentNameDuplicatedException {
-        if (customerMapper.isDepartNameExist(department.getCustomer().getCustomerId(), department.getDeptName())) {
+        if (customerMapper.isTopDepartNameExist(department.getCustomer().getCustomerId(), department.getDeptName())) {
+
             throw new DepartmentNameDuplicatedException("二级学院名已存在，请重新输入");
         }
 
@@ -287,6 +288,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public Boolean isDepartmentNameDuplicated(String customerId, String deptName) {
+        return null;
+    }
+
+    @Override
     public String lastFollowTs(String customerId) {
         return customerMapper.lastFollowTs(customerId);
     }
@@ -298,8 +304,8 @@ public class CustomerServiceImpl implements CustomerService {
      * @param customerId 客户ID
      * @param deptName   新增机构名
      */
-    public Boolean isDepartmentNameDuplicated(String customerId, String deptName) {
-        return customerMapper.isDepartNameExist(customerId, deptName);
+    public Boolean isTopDepartmentNameDuplicated(String customerId, String deptName) {
+        return customerMapper.isTopDepartNameExist(customerId, deptName);
     }
 
     /**
@@ -307,8 +313,8 @@ public class CustomerServiceImpl implements CustomerService {
      * 创建子机构时，参数只有父机构的ID；由于同一学校（企业）下都不能有重名机构，因此检查机构名重复调用相同的接口
      */
     public Boolean isSubDepartmentNameDuplicated(String parentDeptId, String deptName) {
-        Department parentDept = customerMapper.queryDepartmentById(parentDeptId);
-        return customerMapper.isDepartNameExist(parentDept.getCustomer().getCustomerId(), deptName);
+
+        return customerMapper.isSubDepartNameExist(parentDeptId, deptName);
     }
 
 }
