@@ -114,8 +114,8 @@ public class ProjectServiceImpl implements ProjectService{
 
 
     @Override
-    public List<ProjectDetail> queryMissionUn(String userId){
-        List<ProjectDetail> projectDetail = projectMapper.queryMissionUn(userId);
+    public List<ProjectDetail> queryMissionUn(String userId,boolean admin,List<String> subUserId){
+        List<ProjectDetail> projectDetail = projectMapper.queryMissionUn(userId,admin,subUserId);
         if (projectDetail == null) {
             return null;
         }
@@ -123,8 +123,8 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public List<ProjectDetail> queryMission(String userId) {
-        List<ProjectDetail> projectDetail = projectMapper.queryMission(userId);
+    public List<ProjectDetail> queryMission(String userId,boolean admin,List<String> subUserId) {
+        List<ProjectDetail> projectDetail = projectMapper.queryMission(userId,admin,subUserId);
         if (projectDetail == null) {
             return null;
         }
@@ -167,17 +167,17 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public void updateSupportProgress(Integer supportId, Integer progress) {
-        projectMapper.updateSupportProgress(supportId,progress);
+    public void updateSupportProgress(String userId,Integer supportId, Integer progress) {
+        projectMapper.updateSupportProgress(userId,supportId,progress);
     }
 
     @Override
-    public List<CompanyUser> queryCompanyUser(String userId) {
-        return projectMapper.queryCompanyUser(userId);
+    public List<CompanyUser> queryCompanyUser(String userId,String keyword) {
+        return projectMapper.queryCompanyUser(userId,keyword);
     }
 
     @Override
-    public void setSupportLeader(Integer supportId, String leaderId) {
-        projectMapper.setSupportLeader(supportId,leaderId);
+    public void setSupportLeader(String userId,Integer supportId, String leaderId) {
+        projectMapper.setSupportLeader(userId,supportId,leaderId);
     }
 }

@@ -284,11 +284,21 @@
 		LEFT JOIN user_view U ON S.creator_id = U.user_id
 		LEFT JOIN user_view U2 ON S.leader = U2.user_id
 		where  A.has_delete = 0 and
-		 S.percent != 100 And
-		 S.creator_id in (select cu.user_id from company_user cu where cu.company_id =
+		 S.percent != 100
+        <if test="admin">
+            And S.creator_id in (select cu.user_id from company_user cu where cu.company_id =
 		(select cu.company_id from company_user cu
 		where cu.user_id = #{userId})
-		) order by S.create_ts DESC
+		)
+        </if>
+        <if test="!admin">
+            And ( S.creator_id = #{userId} OR S.leader = #{userId} OR S.creator_id IN
+            <foreach collection="subUserId" index="index" item="subId" open="(" separator="," close=")">
+                #{subId}
+            </foreach>
+            )
+        </if>
+        order by S.create_ts DESC
 
     </select>
 
@@ -310,11 +320,21 @@
         LEFT JOIN user_view U ON S.creator_id = U.user_id
         LEFT JOIN user_view U2 ON S.leader = U2.user_id
         where  A.has_delete = 0 and
-        S.percent = 100 And
-        S.creator_id in (select cu.user_id from company_user cu where cu.company_id =
-        (select cu.company_id from company_user cu
-        where cu.user_id = #{userId})
-        ) order by S.create_ts DESC
+        S.percent = 100
+        <if test="admin">
+            And S.creator_id in (select cu.user_id from company_user cu where cu.company_id =
+            (select cu.company_id from company_user cu
+            where cu.user_id = #{userId})
+            )
+        </if>
+        <if test="!admin">
+            And ( S.creator_id = #{userId} OR S.leader = #{userId} OR S.creator_id IN
+            <foreach collection="subUserId" index="index" item="subId" open="(" separator="," close=")">
+                #{subId}
+            </foreach>
+            )
+        </if>
+        order by S.create_ts DESC
     </select>
 
     <select id="queryMissionDetail" resultMap="missionMap">
@@ -347,7 +367,7 @@
     </insert>
 
     <update id="updateSupportProgress">
-        update support s set s.percent = ${progress} where s.support_id = #{supportId}
+        update support s set s.percent = #{progress},s.updater_id = #{userId},s.update_ts= NOW() where s.support_id = #{supportId}
     </update>
 
     <select id="queryCompanyUser" resultMap="companyUserMap">
@@ -355,10 +375,11 @@
         inner join crm_user cu on cu.crm_user_id = c.crm_user_id
         where c.user_id in (select c.user_id from  company_user c where c.company_id =
         (select c.company_id from company_user c where c.user_id =#{userId}))
+        AND cu.real_nm LIKE CONCAT ('%', #{keyword},'%')
     </select>
 
     <update id="setSupportLeader">
-        update support s set s.leader =#{leaderId} where s.support_id =#{supportId}
+        update support s set s.leader =#{leaderId},s.updater_id = #{userId},s.update_ts= NOW() where s.support_id =#{supportId}
     </update>
 
 </mapper>

@@ -142,7 +142,6 @@ public class OpportunityController {
     @RequestMapping("opportunityDetail")
     public GsonView opportunityDetal(@RequestParam("opportunityId")String opportunityId ,
                                      HttpServletRequest request) {
-//        String opportunityId = (String) request.getSession().getAttribute("opportunityId");
         GsonView gsonView = new GsonView();
         Opportunity opportunity = opportunityService.opportunityDetail(opportunityId);
         if(opportunity.getCheckDate() != null){

@@ -32,7 +32,9 @@ $(document).ready(function () {
             showSlider:false,
             button:'修改',
             userList:'',
-            chosenExe:''
+            chosenExe:'',
+            searchBar:false,
+            keyWord:''
 
         },
         methods: {
@@ -87,22 +89,23 @@ $(document).ready(function () {
                 var thisVue = this;
                 if(this.progress == ''){
                     alert("请填写内容后提交");
+                }else {
+                    $.ajax({
+                        type: 'get',
+                        url: '/project/addProgressInform',
+                        data: {
+                            supportId: thisVue.curSupport.support.supportId,
+                            progress: thisVue.progress
+                        },
+                        dataType: 'json',
+                        cache: false
+                    }).done(function (result) {
+                        if (result.successFlg) {
+                            thisVue.toDetail(thisVue.curSupport.support.supportId);
+                            thisVue.show = 'detail';
+                        }
+                    });
                 }
-                $.ajax({
-                    type: 'get',
-                    url: '/project/addProgressInform',
-                    data: {
-                        supportId: thisVue.curSupport.support.supportId,
-                        progress: thisVue.progress
-                    },
-                    dataType: 'json',
-                    cache: false
-                }).done(function (result) {
-                    if (result.successFlg) {
-                        thisVue.toDetail(thisVue.curSupport.support.supportId);
-                        thisVue.show = 'detail';
-                    }
-                });
             },
             'back': function () {
                 this.show = 'home';
@@ -141,11 +144,14 @@ $(document).ready(function () {
                     });
                 }
             },
-            'chooseExe':function () {
+            'chooseExe':function (keyword) {
                 var thisVue = this;
                 $.ajax({
                     type: 'get',
                     url: '/project/queryCompanyUser',
+                    data:{
+                      keyword:keyword
+                    },
                     dataType: 'json',
                     cache: false
                 }).done(function (result) {
@@ -163,27 +169,54 @@ $(document).ready(function () {
             },
             'confirm': function () {
                 var thisVue = this;
-                $.ajax({
-                    type: 'get',
-                    url: '/project/chooseExecutor',
-                    data:{
-                        supportId: thisVue.curSupport.support.supportId,
-                        leaderId:thisVue.chosenExe
-                    },
-                    dataType: 'json',
-                    cache: false
-                }).done(function (result) {
-                    if (result.successFlg) {
-                        thisVue.toDetail(thisVue.curSupport.support.supportId);
-                        thisVue.show = 'detail';
-                    }else{
-                        alert("系统出错");
-                    }
-                });
-
+                if(this.chosenExe==''){
+                    alert("请选择执行人");
+                }else {
+                    $.ajax({
+                        type: 'get',
+                        url: '/project/chooseExecutor',
+                        data: {
+                            supportId: thisVue.curSupport.support.supportId,
+                            leaderId: thisVue.chosenExe
+                        },
+                        dataType: 'json',
+                        cache: false
+                    }).done(function (result) {
+                        if (result.successFlg) {
+                            thisVue.toDetail(thisVue.curSupport.support.supportId);
+                            thisVue.chosenExe ='';
+                            thisVue.show = 'detail';
+                        } else {
+                            alert("系统出错");
+                        }
+                    });
+                }
+            },
+            'clear': function () {
+                this.keyWord = '';
+                $('#searchInput').focus();
+            },
+            'text': function () {
+                $('#searchBar').addClass('weui-search-bar_focusing');
+                $('#searchInput').focus();
+            },
+            'cancel': function () {
+                this.keyWord = '';
+                $('#searchInput').blur();
+                this.searchBar = false;
+            },
+            'search': function () {
+                this.searchBar = !this.searchBar;
+                if(!this.searchBar){
+                    this.keyWord ='';
+                }
             },
         },
-        watch: {},
+        watch: {
+            'keyWord':function () {
+                this.chooseExe(this.keyWord);
+            }
+        },
         updated: function () {
             if (this.curSupport !== undefined &&
                 this.curSupport.support !== undefined) {

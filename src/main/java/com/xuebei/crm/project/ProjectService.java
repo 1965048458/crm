@@ -35,9 +35,9 @@ public interface ProjectService {
 
     String queryOpportunityNameByOpportunityId(Integer projectId);
 
-    List<ProjectDetail> queryMissionUn(String userId);
+    List<ProjectDetail> queryMissionUn(String userId,boolean admin,List<String> subUserId);
 
-    List<ProjectDetail> queryMission(String userId);
+    List<ProjectDetail> queryMission(String userId,boolean admin,List<String> subUserId);
 
     ProjectDetail queryMissionDetail(Integer supportId);
 
@@ -45,11 +45,11 @@ public interface ProjectService {
 
     void insertProgressInform(Integer supportId,String userId, String progress);
 
-    void updateSupportProgress(Integer supportId, Integer progress);
+    void updateSupportProgress(String userId,Integer supportId, Integer progress);
 
-    List<CompanyUser> queryCompanyUser(String userId);
+    List<CompanyUser> queryCompanyUser(String userId,String keyword);
 
-    void setSupportLeader(Integer supportId,String leaderId);
+    void setSupportLeader(String userId,Integer supportId,String leaderId);
 
 
 }

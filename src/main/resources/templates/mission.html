@@ -267,7 +267,7 @@
         </div>
     </div>
 
-    <div id="missionDetail" v-show="show==='detail'">
+    <div id="missionDetail" v-show="show==='detail'" style="display: none">
         <div class="page tabbar js_show" style="height: 100%">
             <div class="weui-tab">
                 <div class="navi-bar">
@@ -332,7 +332,7 @@
 
                                 <span v-if="curSupport.leaderName== undefined">
                                     <div></div>
-                                     <a class="weui-cell weui-cell_access" href="javascript:;" @click="chooseExe">
+                                     <a class="weui-cell weui-cell_access" href="javascript:;" @click="chooseExe('')">
                                     <div class="weui-cell__hd">
                                         <label class="weui-label">执行人：</label>
                                     </div>
@@ -345,7 +345,7 @@
 
                                 <span v-else>
                                     <div></div>
-                                     <a class="weui-cell weui-cell_access" href="javascript:;">
+                                     <a class="weui-cell weui-cell_access" href="javascript:;" @click="chooseExe('')">
                                      <div class="weui-cell__hd">
                                         <label class="weui-label">执行人：</label>
                                      </div>
@@ -460,11 +460,13 @@
                         </div>
 
                         <span v-if="operator">
-                            <div class="weui-cell" style="padding: 5px 8px">
+                            <div></div>
+                            <div class="weui-cell" style="padding: 5px 8px" @click="addProgress">
                                 <div class="weui-cell__bd" style="color: darkgray;">
-                                    <span @click="addProgress" class="pull-left">
-                                <img src="/images/project/add.svg"/></span>
-                                    <div>添加新的进度信息</div>
+                                    <span  class="pull-left" style="height: 24px">
+                                        <img src="/images/project/add.svg" style="margin-left: 5px"/>
+                                    </span>
+                                    <span>添加新的进度信息</span>
                                 </div>
                             </div>
                         </span>
@@ -510,23 +512,46 @@
         </div>
     </div>
 
-    <div id="executor" v-show="show ==='chooseExe'">
+    <div id="executor" v-show="show ==='chooseExe'" style="display: none">
 
 
-        <div class="top-bar" style="height: 40px">
+        <div class="top-bar" style="height: 30px">
                         <span @click="chooseBack" class="pull-left">
                                 <img src="/images/back_icon.svg"
-                                     style="margin-top:10px;margin-left: 10px"/>
+                                     style="margin-top:8px;margin-left: 5px"/>
                         </span>
 
-            <span style="height: 40px;display: inline-block ;padding-top: 5px;">选择执行者</span>
+            <span style="height: 30px;display: inline-block ;padding-top: 5px;">选择执行者</span>
 
             <span class="pull-right" style="margin-top: 7px; color: #28b3ff"
                   @click="confirm"> 完成 &nbsp; </span>
+            <span style="float:right;margin-top: 7px;margin-right: 20px" @click="search">&nbsp;
+                                    <img src="/images/search.svg"/>
+                                </span>
         </div>
 
         <div class="list">
             <div class="page__bd">
+                <div v-if="searchBar">
+                    <div class="weui-search-bar" id="searchBar">
+                        <div class="weui-search-bar__form">
+                            <div class="weui-search-bar__box">
+                                <i class="weui-icon-search"></i>
+                                <input type="text" class="weui-search-bar__input" id="searchInput"
+                                       placeholder="搜索" v-model="keyWord">
+                                <a href="javascript:" class="weui-icon-clear" id="searchClear"
+                                   @click="clear"></a>
+                            </div>
+                            <label class="weui-search-bar__label" id="searchText" @click="text"
+                                   style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                                <i class="weui-icon-search"></i>
+                                <span>搜索</span>
+                            </label>
+                        </div>
+                        <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel"
+                           @click="cancel">取消</a>
+                    </div>
+                </div>
                 <div class="weui-cells weui-cells_radio" style="margin-top: 1px">
                     <div v-for=" user in userList">
                         <div></div>
@@ -547,16 +572,16 @@
 
     </div>
 
-    <div id="addInform" v-show="show ==='addProgress'">
+    <div id="addInform" v-show="show ==='addProgress'" style="display: none">
 
 
-        <div class="top-bar" style="height: 40px">
+        <div class="top-bar" style="height: 30px">
                         <span @click="addBack" class="pull-left">
                                 <img src="/images/back_icon.svg"
                                      style="margin-top:10px;margin-left: 10px"/>
                         </span>
 
-            <span style="height: 40px;display: inline-block ;padding-top: 5px;">进度信息</span>
+            <span style="height: 30px;display: inline-block ;padding-top: 5px;">进度信息</span>
 
             <span class="pull-right" style="margin-top: 7px; color: #28b3ff"
                   @click="submit"> 完成 &nbsp; </span>

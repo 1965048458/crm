@@ -43,9 +43,9 @@ public interface ProjectMapper {
 
     List<Support> querySupportsByProjectId(String projectId);
 
-    List<ProjectDetail> queryMissionUn(@Param("userId") String userId);
+    List<ProjectDetail> queryMissionUn(@Param("userId") String userId,@Param("admin") boolean admin,@Param("subUserId") List<String> subUserId);
 
-    List<ProjectDetail> queryMission(@Param("userId") String userId);
+    List<ProjectDetail> queryMission(@Param("userId") String userId,@Param("admin") boolean admin,@Param("subUserId") List<String> subUserId);
 
     ProjectDetail queryMissionDetail(@Param("supportId") Integer supportId);
 
@@ -55,9 +55,9 @@ public interface ProjectMapper {
                               @Param("userId")String userId,
                               @Param("progress")String progress);
 
-    void updateSupportProgress(@Param("supportId")Integer supportId,@Param("progress")Integer progress);
+    void updateSupportProgress(@Param("userId")String userId,@Param("supportId")Integer supportId,@Param("progress")Integer progress);
 
-    List<CompanyUser> queryCompanyUser(@Param("userId")String userId);
+    List<CompanyUser> queryCompanyUser(@Param("userId")String userId,@Param("keyword")String keyword);
 
-    void setSupportLeader(@Param("supportId")Integer supportId,@Param("leaderId")String leaderId);
+    void setSupportLeader(@Param("userId")String userId,@Param("supportId")Integer supportId,@Param("leaderId")String leaderId);
 }
