@@ -29,7 +29,7 @@ jQuery(document).ready(function () {
             isRead: "",
             tip: '',
             errMsg: "",
-            showErrMsg: false
+            showErrMsg: false,
         },
         methods: {
             'searchList': function (data) {
