@@ -167,18 +167,8 @@ public class DeptServiceImpl implements DeptService {
             e.printStackTrace();
         }
         if (diffMillis <= 1000*3600*24*7 && diffMillis>=0) {
-            String delayApplyStatus = deptMapper.delayApplyStatus(department.getDeptId());
-            if (delayApplyStatus.equals("") || delayApplyStatus==null) {
-                OpenSeaWarning openSeaWarning = new OpenSeaWarning();
-                openSeaWarning.setDeptId(department.getDeptId());
-                openSeaWarning.setCreatedTime(enclosureApply.getStartTime());
-                openSeaWarning.setLastTimeFollow(enclosureApply.getUpdateTime());
-                openSeaWarning.setDeptName(department.getDeptName());
-                openSeaWarning.setLeftDays(String.valueOf(diffDays));
-                openSeaWarning.setLeftHours(String.valueOf(diffHours));
-                openSeaWarning.setDelayApplied(false);
-                department.setOpenSeaWarning(openSeaWarning);
-            } else {
+            try{
+                String delayApplyStatus = deptMapper.delayApplyStatus(department.getDeptId());
                 switch (delayApplyStatus) {
                     case "APPLYING":
                     case "REJECTED":
@@ -196,6 +186,16 @@ public class DeptServiceImpl implements DeptService {
                     default:
                         break;
                 }
+            }catch (NullPointerException e){
+                OpenSeaWarning openSeaWarning = new OpenSeaWarning();
+                openSeaWarning.setDeptId(department.getDeptId());
+                openSeaWarning.setCreatedTime(enclosureApply.getStartTime());
+                openSeaWarning.setLastTimeFollow(enclosureApply.getUpdateTime());
+                openSeaWarning.setDeptName(department.getDeptName());
+                openSeaWarning.setLeftDays(String.valueOf(diffDays));
+                openSeaWarning.setLeftHours(String.valueOf(diffHours));
+                openSeaWarning.setDelayApplied(false);
+                department.setOpenSeaWarning(openSeaWarning);
             }
         }
         if(diffMillis<0){
