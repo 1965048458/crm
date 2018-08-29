@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>编辑项目</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css">
+
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/weui.min.js"></script>
+    <script src="/project/modifyProject.js"></script>
+    <style>
+        .top-bar {
+            font-size: 18px;
+            text-align: center;
+            background: #ffffff;
+            border-bottom: solid 1px #DDDDDD;
+        }
+
+        .center-ele {
+            display: inline-block;
+        }
+
+        .pull-left {
+            float: left !important;
+        }
+
+        .pull-right {
+            float: right !important;
+        }
+
+        .sortSelect {
+            position: absolute;
+            top: 90px;
+            width: 100%;
+            z-index: 99999;
+        }
+
+        .filterSelect {
+            position: absolute;
+            top: 90px;;
+            width: 100%;
+            z-index: 99999;
+        }
+
+        .filterDetail {
+            position: absolute;
+            top: 90px;
+            left: 25%;
+            width: 75%;
+            z-index: 99999;
+        }
+
+        .weui-cells {
+            margin-top: 0;
+            padding: 0px;
+        }
+
+        .navi-bar {
+            height: 44px;
+            padding: 8px 15px;
+
+        }
+
+        .center-box {
+            font-size: large;
+            height: 40px;
+        }
+
+        .other-option {
+            position: absolute;
+            bottom: 50px;
+            right: 60px;
+            z-index: 99999;
+        }
+
+    </style>
+</head>
+<body>
+<div id="modifyProjectVue">
+
+    <input type="hidden" th:value="${projectId}" id="projectId">
+
+    <div id="modifyProject" v-show="show ==='modif'">
+
+        <div class="center-box">
+
+            <div id="basicInfo">
+                <div class="top-bar" style="height: 40px">
+                        <span @click="modifBack" class="pull-left">
+                                <img src="/images/back_icon.svg"
+                                     style="margin-top:10px;margin-left: 10px"/>
+                        </span>
+
+                    <span style="height: 40px;display: inline-block ;padding-top: 5px;">编辑项目</span>
+
+                    <span class="pull-right" style="margin-top: 7px; color: #28b3ff"
+                          @click="detailSubmit"> 完成 &nbsp; </span>
+                </div>
+
+                <div class="list">
+                    <div class="page__bd">
+                        <div class="weui-cells">
+                            <div class="weui-cell">基本信息</div>
+                            <label style="margin-left: 15px">项目内容</label>
+                            <div class="weui-cell">
+                                <div class="weui-cell__bd">
+                                    <input class="weui-input" type="text" placeholder="请填写项目内容" v-model="content">
+                                </div>
+                            </div>
+                            <div class="weui-cell">
+                                <div class="weui-cell__hd"><label class="weui-label">代理商</label></div>
+                                <div class="weui-cell__bd">
+                                    <input class="weui-input"  placeholder="请输入代理商名称(选填)" v-model="agent">
+                                </div>
+                            </div>
+                            <a class="weui-cell weui-cell_access" @click="deliverDatePicker">
+                                <div class="weui-cell__bd">
+                                    <p>交付日期</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <span v-text="deliverDate"></span>
+                                </div>
+                            </a>
+                            <a class="weui-cell weui-cell_access" @click="selStatus">
+                                <div class="weui-cell__hd">
+                                    <label class="weui-label">
+                                        <label>项目状态</label>
+                                    </label>
+                                </div>
+                                <div class="weui-cell__bd">
+                                    &nbsp;
+                                </div>
+                                <div class="weui-cell__ft">{{status}}</div>
+                            </a>
+                            <div class="weui-cell">
+                                <div class="weui-cell__hd"><label class="weui-label">金额(元)</label></div>
+                                <div class="weui-cell__bd">
+                                    <input class="weui-input" type="number" placeholder="请输入项目金额" v-model="amount">
+                                </div>
+                            </div>
+                            <a class="weui-cell weui-cell_access">
+                                <div class="weui-cell__bd">
+                                    <p><span style="color: red">*</span>客户及联系人</p>
+                                    <p style="color: grey">
+                                        <span v-if="contact.customerName === undefined"></span>
+                                        <span v-else>{{contact.customerName}}-</span>
+                                        <span v-if="contact.topDeptName ===undefined"></span>
+                                        <span v-else>{{contact.topDeptName}}-</span>
+                                        <span v-if="contact.subDeptName ===undefined"></span>
+                                        <span v-else>{{contact.subDeptName}}-</span>
+                                        <span v-if="contact.type === undefined"></span>
+                                        <span v-else>{{contact.type}}-</span>
+                                        <span v-if="contact.contactsName ===undefined"></span>
+                                        <span v-else>{{contact.contactsName}}</span>
+                                    </p>
+                                </div>
+
+                            </a>
+                            <div class="weui-cell">
+                                <div><span style="color: red">*</span>项目名称</div>
+                            </div>
+                            <div class="weui-cell">
+                                <div class="weui-cell__bd">
+                                    <input class="weui-input" type="text" v-model="projectName"
+                                           placeholder="请输入项目名称">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--BEGIN toast-->
+                <div id="toast" style="display: none;">
+                    <div class="weui-mask_transparent"></div>
+                    <div class="weui-toast">
+                        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                        <p class="weui-toast__content">修改成功</p>
+                    </div>
+                </div>
+                <!--end toast-->
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <div id="status" v-show="show === 'status'" style="display: none">
+        <div class="top-bar" style="height: 36px;padding: 8px 10px">
+            <span @click="backToInfo" class="pull-left">
+                <img src="/images/back_icon.svg"
+                     style="margin-top:5px;"/></span>
+            <span class="center" style="margin-top: 3px;">选择项目状态</span>
+            <span class="pull-right" style="margin-top: 0px; color: #28b3ff"
+                  @click="done1"> 完成 &nbsp; </span>
+        </div>
+
+
+        <div class="weui-cells weui-cells_radio" style="margin-top: 5px">
+            <label class="weui-cell weui-check__label" v-for="(stage, index) in stages">
+                <div class="weui-cell__bd">
+                    <p v-text="stage"></p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check"
+                           :value="index"
+                           v-model="selStage">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+</div>
+</body>
+
+</html>

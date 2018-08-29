@@ -26,6 +26,7 @@
         <result property="projectName" column="project_nm"/>
         <result property="amount" column="amount"/>
         <result property="content" column="content"/>
+        <result property="agent" column="agent"/>
         <result property="clinchDate" column="clinch_date"/>
         <result property="creatorName" column="creator"/>
         <result property="createTs" column="create_ts"/>
@@ -246,7 +247,7 @@
     </select>
 
     <select id="queryProjectDetailById" resultMap="projectDetailMap">
-        SELECT A.sales_opportunity_id AS project_id, A.opportunity_nm AS project_nm, A.amount, A.content, A.clinch_date,
+        SELECT A.sales_opportunity_id AS project_id, A.opportunity_nm AS project_nm, A.amount, A.agent,A.content, A.clinch_date,
 						U.real_nm AS creator, A.create_ts,
 						C.real_nm AS contacts_nm, C.department_nm AS dept_nm, D.customer_nm, F.department_nm AS prt_dept_nm, H.type_name AS contacts_type, U2.real_nm AS leader_nm, U2.TEL AS leader_t
 		FROM sales_opportunity A LEFT JOIN opportunity_contacts B ON a.sales_opportunity_id = B.sales_opportunity_id
@@ -381,5 +382,7 @@
     <update id="setSupportLeader">
         update support s set s.leader =#{leaderId},s.updater_id = #{userId},s.update_ts= NOW() where s.support_id =#{supportId}
     </update>
+    
+
 
 </mapper>

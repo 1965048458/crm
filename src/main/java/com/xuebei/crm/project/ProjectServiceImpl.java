@@ -1,6 +1,7 @@
 package com.xuebei.crm.project;
 
 import com.xuebei.crm.company.CompanyUser;
+import com.xuebei.crm.opportunity.Opportunity;
 import com.xuebei.crm.utils.UUIDGenerator;
 import com.xuebei.crm.customer.CustomerMapper;
 import com.xuebei.crm.customer.FollowUpRecord;
@@ -180,4 +181,6 @@ public class ProjectServiceImpl implements ProjectService{
     public void setSupportLeader(String userId,Integer supportId, String leaderId) {
         projectMapper.setSupportLeader(userId,supportId,leaderId);
     }
+
+
 }

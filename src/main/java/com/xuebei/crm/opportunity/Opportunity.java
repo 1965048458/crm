@@ -54,6 +54,16 @@ public class Opportunity {
     private String checkDateString;
     @Expose
     private String clinchDateString;
+    @Expose
+    private String agent;
+
+    public String getAgent() {
+        return agent;
+    }
+
+    public void setAgent(String agent) {
+        this.agent = agent;
+    }
 
     public String getUpdater_id() {
         return updater_id;

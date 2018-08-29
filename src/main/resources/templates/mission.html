@@ -529,29 +529,30 @@
             </div>
         <div class="list">
             <div class="page__bd">
-                <div v-if="searchBar">
-                    <div class="weui-search-bar" id="searchBar">
-                        <div class="weui-search-bar__form">
-                            <div class="weui-search-bar__box">
-                                <i class="weui-icon-search"></i>
-                                <input type="text" class="weui-search-bar__input" id="searchInput"
-                                       placeholder="搜索" v-model="keyWord">
-                                <a href="javascript:" class="weui-icon-clear" id="searchClear"
-                                   @click="clear"></a>
-                            </div>
-                            <label class="weui-search-bar__label" id="searchText" @click="text"
-                                   style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                                <i class="weui-icon-search"></i>
-                                <span>搜索</span>
-                            </label>
-                        </div>
-                        <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel"
-                           @click="cancel">取消</a>
-                    </div>
-                </div>
+
 
                 <div class="weui-tab__panel" style="padding-top: 25px; background: #FFFFFF;">
-                    <div style="height: 25px;"></div>
+                     <div style="height: 25px;"></div>
+                    <div v-if="searchBar">
+                        <div class="weui-search-bar" id="searchBar">
+                            <div class="weui-search-bar__form">
+                                <div class="weui-search-bar__box">
+                                    <i class="weui-icon-search"></i>
+                                    <input type="text" class="weui-search-bar__input" id="searchInput"
+                                           placeholder="搜索" v-model="keyWord">
+                                    <a href="javascript:" class="weui-icon-clear" id="searchClear"
+                                       @click="clear"></a>
+                                </div>
+                                <label class="weui-search-bar__label" id="searchText" @click="text"
+                                       style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                                    <i class="weui-icon-search"></i>
+                                    <span>搜索</span>
+                                </label>
+                            </div>
+                            <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel"
+                               @click="cancel">取消</a>
+                        </div>
+                    </div>
                 <div class="weui-cells weui-cells_radio" style="margin-top: 1px">
                     <div v-for=" user in userList">
                         <div></div>

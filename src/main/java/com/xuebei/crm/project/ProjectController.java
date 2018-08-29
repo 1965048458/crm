@@ -8,6 +8,7 @@ import com.xuebei.crm.customer.CustomerService;
 import com.xuebei.crm.journal.JournalService;
 import com.xuebei.crm.member.Member;
 import com.xuebei.crm.member.MemberService;
+import com.xuebei.crm.opportunity.Opportunity;
 import com.xuebei.crm.opportunity.OpportunityService;
 import com.xuebei.crm.opportunity.Support;
 import org.apache.ibatis.annotations.Param;
@@ -65,6 +66,13 @@ public class ProjectController {
         }
 
         return "projectDetail";
+    }
+
+    @RequestMapping("/modifyProject")
+    public String modifyProject(@RequestParam("projectId") String projectId,
+                                ModelMap modelMap) {
+        modelMap.addAttribute("projectId", projectId);
+        return "modifyProject";
     }
 
 
@@ -283,6 +291,29 @@ public class ProjectController {
         String userId = (String) request.getSession().getAttribute("userId");
         GsonView gsonView = new GsonView();
         projectService.setSupportLeader(userId, supportId, leaderId);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
+
+    //todo
+    @RequestMapping("modification")
+    public GsonView modificationOpportunity(@RequestBody Opportunity opportunity,
+                                            HttpServletRequest request) {
+        String userId = (String) request.getSession().getAttribute("userId");
+        opportunity.setUserId(userId);
+        opportunityService.modifyOpportunity(opportunity);
+        GsonView gsonView = new GsonView();
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
+
+    @RequestMapping("modify/projectDetail")
+    public  GsonView projectDetail (@RequestParam("projectId")String projectId,
+                                    HttpServletRequest request){
+        String userId = (String)request.getSession().getAttribute("userId");
+        GsonView gsonView = new GsonView();
+        ProjectDetail project =projectService.getProjectDetail(projectId);
+        gsonView.addStaticAttribute("project",project);
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }

@@ -24,6 +24,8 @@ public class ProjectDetail {
     @Expose
     private Date clinchDate;
     @Expose
+    private String agent;
+    @Expose
     private String creatorName;
     @Expose
     private Date createTs;
@@ -36,6 +38,14 @@ public class ProjectDetail {
     @Expose
     private List<Support> projectSupports;
     @Expose Support support;
+
+    public String getAgent() {
+        return agent;
+    }
+
+    public void setAgent(String agent) {
+        this.agent = agent;
+    }
 
     public Support getSupport() {
         return support;
