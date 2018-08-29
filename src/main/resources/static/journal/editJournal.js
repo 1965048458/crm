@@ -61,22 +61,26 @@ jQuery(document).ready(function () {
            },
            'doSaveJournal': function (postData) {
                var thisVue = this;
-               jQuery.ajax({
-                   type: 'post',
-                   url: '/journal/action/editSubmit',
-                   data: JSON.stringify(postData),
-                   dataType: 'json',
-                   contentType: 'application/json',
-                   cache: false
-               }).done(function (result){
-                   if (result.successFlg) {
-                       thisVue.doToList();
-                   } else {
-                       thisVue.errMsg = result.errMsg;
-                       thisVue.showErrMsg = true;
-                   }
-               });
-               this.isJournalSubmitted = true;
+                if(this.summary=='' && this.plan ==''){
+                    return;
+                }else {
+                    jQuery.ajax({
+                        type: 'post',
+                        url: '/journal/action/editSubmit',
+                        data: JSON.stringify(postData),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        cache: false
+                    }).done(function (result) {
+                        if (result.successFlg) {
+                            thisVue.doToList();
+                        } else {
+                            thisVue.errMsg = result.errMsg;
+                            thisVue.showErrMsg = true;
+                        }
+                    });
+                    this.isJournalSubmitted = true;
+                }
            },
            'doToList': function () {
                window.location = '/journal/toList';

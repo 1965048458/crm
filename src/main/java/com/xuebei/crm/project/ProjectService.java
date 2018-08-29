@@ -1,6 +1,7 @@
 package com.xuebei.crm.project;
 
 import com.xuebei.crm.company.CompanyUser;
+import com.xuebei.crm.opportunity.Opportunity;
 import com.xuebei.crm.opportunity.Support;
 
 import java.util.List;
@@ -20,6 +21,12 @@ public interface ProjectService {
     void updateContract(Contract contract);
 
     void updateRefund(Refund refund);
+
+    void refuseProject(Integer projectId);
+
+    void passProject(Integer projectId);
+
+    void assignLeader(Integer projectId, String leadaer);
 
     ProjectStart getProjectStart(Integer projectId,  String userId);
 
@@ -50,6 +57,8 @@ public interface ProjectService {
     List<CompanyUser> queryCompanyUser(String userId,String keyword);
 
     void setSupportLeader(String userId,Integer supportId,String leaderId);
+
+    void modifyProject(Opportunity opportunity);
 
 
 }

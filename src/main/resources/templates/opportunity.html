@@ -605,14 +605,19 @@
                                         <span style="font-weight: 100">{{opportunity.customerName}}</span>
                                     </p>
                                     <p class="weui-media-box__desc" style="padding: 3px;font-weight: bold">二级学院&nbsp;
-                                        <span style="font-weight: 100">{{contact.departmentName}}</span>
+                                        <span style="font-weight: 100">
+                                           <span v-if="contact.topDeptName ===undefined"></span>
+                                            <span v-else>{{contact.topDeptName}}-</span>
+                                            <span v-if="contact.subDeptName ===undefined"></span>
+                                            <span v-else>{{contact.subDeptName}}</span>
+                                        </span>
                                     </p>
                                     <p class="weui-media-box__desc" style="padding: 3px;font-weight: bold">客户联系人&nbsp;
                                         <span style="font-weight: 100">
-                                            <span v-if="contact.typeName === undefined"></span>
-                                            <span v-else>{{contact.typeName}}-</span>
-                                            <span v-if="contact.realName ===undefined"></span>
-                                            <span v-else>{{contact.realName}}</span>
+                                            <span v-if="contact.type === undefined"></span>
+                                            <span v-else>{{contact.type}}-</span>
+                                            <span v-if="contact.contactsName ===undefined"></span>
+                                            <span v-else>{{contact.contactsName}}</span>
                                         </span>
                                     </p>
                                     <p class="weui-media-box__desc" style="padding: 3px;font-weight: bold">金额（元）&nbsp;
@@ -699,7 +704,12 @@
                                             二级学院</label>
                                     </div>
                                     <div class="weui-cell__bd">
-                                        <span>{{contact.departmentName}}</span>
+                                        <span>
+                                            <span v-if="contact.topDeptName ===undefined"></span>
+                                            <span v-else>{{contact.topDeptName}}-</span>
+                                            <span v-if="contact.subDeptName ===undefined"></span>
+                                            <span v-else>{{contact.subDeptName}}</span>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="weui-cell">
@@ -709,10 +719,10 @@
                                     </div>
                                     <div class="weui-cell__bd">
                                         <span>
-                                            <span v-if="contact.typeName ===undefined"></span>
-                                            <span v-else>{{contact.typeName}}-</span>
-                                            <span v-if="contact.realName ===undefined"></span>
-                                            <span v-else>{{contact.realName}}</span>
+                                            <span v-if="contact.type === undefined"></span>
+                                            <span v-else>{{contact.type}}-</span>
+                                            <span v-if="contact.contactsName ===undefined"></span>
+                                            <span v-else>{{contact.contactsName}}</span>
                                         </span>
                                     </div>
                                 </div>
@@ -827,7 +837,9 @@
 
                                 <div v-for="support in applySupports">
                                     <div></div>
-                                    <div class="weui-cell" style="font-weight: bold">{{supportType(support.supportType)}}</div>
+                                    <div class="weui-cell" style="font-weight: bold">
+                                        {{supportType(support.supportType)}}
+                                    </div>
                                     <div class="weui-media-box weui-media-box_text">
                                         <ul class="weui-media-box__info" style="margin-top: 0px">
                                             <span v-if="support.leader === undefined">
@@ -848,38 +860,9 @@
                                     </div>
                                 </div>
 
-
-                                <!--<div class="weui-cell" style="font-weight: bold">方案支持</div>-->
-                                <!--<div class="weui-media-box weui-media-box_text">-->
-                                <!--<ul class="weui-media-box__info" style="margin-top: 0px">-->
-                                <!--<li class="weui-media-box__info__meta">负责人：冯婷婷</li>-->
-                                <!--<li class="weui-media-box__info__meta weui-media-box__info__meta_extra">-->
-                                <!--重要不紧急-->
-                                <!--</li>-->
-                                <!--<li class="weui-media-box__info__meta weui-media-box__info__meta_extra">-->
-                                <!--8月10日截止-->
-                                <!--</li>-->
-                                <!--</ul>-->
-                                <!--<p class="weui-media-box__desc" style="line-height: 25px">方案支持说明</p>-->
-                                <!--</div>-->
-                                <!--<div class="weui-cell" style="font-weight: bold">项目评估</div>-->
-                                <!--<div class="weui-media-box weui-media-box_text">-->
-                                <!--<ul class="weui-media-box__info" style="margin-top: 0px">-->
-                                <!--<li class="weui-media-box__info__meta">负责人：常兴</li>-->
-                                <!--<li class="weui-media-box__info__meta weui-media-box__info__meta_extra">-->
-                                <!--重要不紧急-->
-                                <!--</li>-->
-                                <!--<li class="weui-media-box__info__meta weui-media-box__info__meta_extra">-->
-                                <!--8月10日截止-->
-                                <!--</li>-->
-                                <!--</ul>-->
-                                <!--<p class="weui-media-box__desc" style="line-height: 25px">软件类项目评估说明</p>-->
-                                <!--</div>-->
                                 <div class="weui-panel__ft">
                                     <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
                                         <div class="weui-cell__bd">以上为全部支持记录</div>
-                                        <!--<div class="weui-cell__bd">查看全部支持记录</div>-->
-                                        <!--<span class="weui-cell__ft"></span>-->
                                     </a>
                                 </div>
                             </div>
@@ -1155,18 +1138,21 @@
                                             <!--<span v-text="contact.customerName+'-'+contact.departmentName+'-'+contact.typeName+'-'+contact.realName"></span>-->
                                             <span v-if="contact.customerName === undefined"></span>
                                             <span v-else>{{contact.customerName}}-</span>
-                                            <span v-if="contact.departmentName ===undefined"></span>
-                                            <span v-else>{{contact.departmentName}}-</span>
-                                            <span v-if="contact.typeName === undefined"></span>
-                                            <span v-else>{{contact.typeName}}-</span>
-                                            <span v-if="contact.realName ===undefined"></span>
-                                            <span v-else>{{contact.realName}}</span>
+                                            <span v-if="contact.topDeptName ===undefined"></span>
+                                            <span v-else>{{contact.topDeptName}}-</span>
+                                            <span v-if="contact.subDeptName ===undefined"></span>
+                                            <span v-else>{{contact.subDeptName}}-</span>
+                                            <span v-if="contact.type === undefined"></span>
+                                            <span v-else>{{contact.type}}-</span>
+                                            <span v-if="contact.contactsName ===undefined"></span>
+                                            <span v-else>{{contact.contactsName}}</span>
                                         </p>
                                     </div>
 
                                 </a>
-
-                                <label style="margin-left: 15px"><span style="color: red">*</span>商机名称</label>
+                                <div class="weui-cell">
+                                    <label><span style="color: red">*</span>商机名称</label>
+                                </div>
                                 <div class="weui-cell">
                                     <div class="weui-cell__bd">
                                         <input class="weui-input" type="text" v-model="opportunityName"

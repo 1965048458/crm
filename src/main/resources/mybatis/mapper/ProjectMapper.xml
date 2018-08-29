@@ -13,7 +13,9 @@
         <result property="amount" column="amount"/>
         <result property="deadLine" column="clinch_date"/>
         <result property="content" column="content"/>
-        <result property="leader" column="leader"/>
+        <result property="leaderId" column="leader"/>
+        <result property="leaderName" column="leader_nm"/>
+        <result property="progress" column="progress"/>
         <result property="userId" column="user_id"/>
         <result property="agent" column="agent"/>
         <result property="createTime" column="create_ts"/>
@@ -26,9 +28,15 @@
         <result property="projectName" column="project_nm"/>
         <result property="amount" column="amount"/>
         <result property="content" column="content"/>
+        <result property="status" column="sales_status"/>
+        <result column="status" property="applyStatus"/>
+        <result property="agent" column="agent"/>
         <result property="clinchDate" column="clinch_date"/>
+        <result property="creatorId" column="user_id"/>
         <result property="creatorName" column="creator"/>
         <result property="createTs" column="create_ts"/>
+        <result property="progress" column="progress"/>
+        <result property="leaderId" column="leader"/>
         <result property="leaderName" column="leader_nm"/>
         <result property="leaderPhone" column="leader_t"/>
         <association property="projectContacts" javaType="com.xuebei.crm.project.ProjectContacts">
@@ -167,6 +175,30 @@
             status = 'applying', apply_content = #{applyContent}
         WHERE start_project_id = #{id}
     </update>
+    
+    <update id="refuseProject" parameterType="java.lang.Integer">
+        UPDATE project_start SET
+            status = 'refused'
+        WHERE sales_opportunity_id = #{projectId}
+    </update>
+
+    <update id="passProject" parameterType="java.lang.Integer">
+        UPDATE project_start SET
+        status = 'permitted'
+        WHERE sales_opportunity_id = #{projectId}
+    </update>
+
+    <update id="updateProjectStatus" parameterType="java.lang.Integer">
+        UPDATE sales_opportunity SET
+            sales_status = '1', progress = 0
+        WHERE sales_opportunity_id = #{projectId}
+    </update>
+
+    <update id="assignLeader">
+        UPDATE sales_opportunity SET
+            leader = #{leader}
+        WHERE sales_opportunity_id = #{projectId}
+    </update>
 
     <update id="updateContract" parameterType="com.xuebei.crm.project.Contract">
         UPDATE contract SET
@@ -181,13 +213,25 @@
     </update>
 
     <select id="searchProject" resultMap="projectMap">
-        SELECT s.sales_opportunity_id, s.opportunity_nm, s.customer_id, s.sales_status, s.amount, s.clinch_date,
-            s.agent, s.leader, s.content, s.user_id, s.create_ts, s.updater_id, s.update_ts FROM sales_opportunity s
+        SELECT s.sales_opportunity_id, s.opportunity_nm, s.customer_id, s.sales_status, s.amount, s.clinch_date, uv.real_nm AS leader_nm,
+            s.agent, s.leader,s.progress, s.content, s.user_id, s.create_ts, s.updater_id, s.update_ts FROM sales_opportunity s
         INNER JOIN crm_customer v ON s.customer_id = v.customer_id
+        LEFT JOIN project_start ps ON ps.sales_opportunity_id = s.sales_opportunity_id
         LEFT JOIN company_customer c ON c.customer_id = s.customer_id
         LEFT JOIN company_user u ON u.company_id = c.company_id
+        LEFT JOIN user_view uv ON s.leader = uv.user_id
         WHERE u.user_id = #{userId}
         AND s.sales_status in ( '0' , '1', '2', '3')
+       <if test="isAdmin != 'ADMIN'">
+            AND ((s.user_id IN
+            <foreach item="subId" collection="subMember" open="(" separator="," close=")">
+                #{subId}
+            </foreach>)
+            OR (s.leader = #{userId} AND ps.status = 'permitted'))
+        </if>
+        <!--<if test="isAdmin == 'ADMIN'">-->
+            <!--AND ps.status != 'refused'-->
+        <!--</if>-->
         <if test="startTime != null">
             AND s.create_ts &gt; #{startTime}
         </if>
@@ -200,7 +244,7 @@
         <if test="creator == 'mine'">
             AND s.user_id = #{userId}
         </if>
-        <if test="subMember != null">
+        <if test="creator == 'sub' or subUsers != null">
             AND s.user_id IN
             <foreach item="subId" collection="subMember" open="(" separator="," close=")">
                 #{subId}
@@ -246,8 +290,8 @@
     </select>
 
     <select id="queryProjectDetailById" resultMap="projectDetailMap">
-        SELECT A.sales_opportunity_id AS project_id, A.opportunity_nm AS project_nm, A.amount, A.content, A.clinch_date,
-						U.real_nm AS creator, A.create_ts,
+        SELECT A.sales_opportunity_id AS project_id, A.opportunity_nm AS project_nm, A.amount, A.content,A.agent, A.clinch_date, A.sales_status,
+						U.real_nm AS creator, A.create_ts, A.leader,A.progress, A.user_id, p.status,
 						C.real_nm AS contacts_nm, C.department_nm AS dept_nm, D.customer_nm, F.department_nm AS prt_dept_nm, H.type_name AS contacts_type, U2.real_nm AS leader_nm, U2.TEL AS leader_t
 		FROM sales_opportunity A LEFT JOIN opportunity_contacts B ON a.sales_opportunity_id = B.sales_opportunity_id
 		LEFT JOIN contacts_view C ON B.contacts_id = C.contacts_id
@@ -257,6 +301,7 @@
 		LEFT JOIN contacts_type H ON G.contacts_type_id = H.contacts_type_id
 		LEFT JOIN user_view U ON A.user_id = U.user_id
 		LEFT JOIN user_view U2 ON A.leader = U2.user_id
+            LEFT JOIN project_start p ON A.sales_opportunity_id = p.sales_opportunity_id
 		WHERE A.has_delete = 0 AND A.sales_opportunity_id = #{projectId};
     </select>
 
@@ -381,5 +426,19 @@
     <update id="setSupportLeader">
         update support s set s.leader =#{leaderId},s.updater_id = #{userId},s.update_ts= NOW() where s.support_id =#{supportId}
     </update>
+
+    <update id="modifyProject" parameterType="com.xuebei.crm.opportunity.Opportunity">
+        UPDATE sales_opportunity SET
+        opportunity_nm =#{opportunityName},
+        sales_status=#{salesStatus},
+        amount = #{amount},
+        clinch_date =#{clinchDate},
+        content=#{content},
+        agent = #{agent},
+        updater_id= #{userId} ,
+        update_ts= NOW()
+        WHERE sales_opportunity_id =#{opportunityId}
+    </update>
+
 
 </mapper>

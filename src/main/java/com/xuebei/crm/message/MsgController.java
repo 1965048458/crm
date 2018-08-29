@@ -50,4 +50,15 @@ public class MsgController {
         return "examAndApproval";
     }
 
+    @RequestMapping("/projectApply")
+    public GsonView projectApply(HttpServletRequest request){
+        GsonView gsonView = new GsonView();
+        String userId = (String) request.getSession().getAttribute("userId");
+        List<ProjectApply> projectApplyList =  msgService.getProjectApply(userId);
+        gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("projectApplyList", projectApplyList);
+        return gsonView;
+    }
+
+
 }

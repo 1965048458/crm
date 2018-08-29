@@ -23,7 +23,9 @@ public class Project {
     @Expose
     private String strDeadLine;
     @Expose
-    private String leader;
+    private String leaderId;
+    @Expose
+    private String leaderName;
     @Expose
     private String status;
     @Expose
@@ -32,6 +34,8 @@ public class Project {
     private String agent;
     @Expose
     private Double amount;
+    @Expose
+    private Integer progress;
     @Expose
     private String contactId;
     @Expose
@@ -44,6 +48,14 @@ public class Project {
     private String updaterId;
     @Expose
     private String updateTime;
+
+    public Integer getProgress() {
+        return progress;
+    }
+
+    public void setProgress(Integer progress) {
+        this.progress = progress;
+    }
 
     public Double getAmount() {
         return amount;
@@ -117,12 +129,20 @@ public class Project {
         this.projectName = projectName;
     }
 
-    public String getLeader() {
-        return leader;
+    public String getLeaderId() {
+        return leaderId;
     }
 
-    public void setLeader(String leader) {
-        this.leader = leader;
+    public void setLeaderId(String leaderId) {
+        this.leaderId = leaderId;
+    }
+
+    public String getLeaderName() {
+        return leaderName;
+    }
+
+    public void setLeaderName(String leaderName) {
+        this.leaderName = leaderName;
     }
 
     public String getStatus() {

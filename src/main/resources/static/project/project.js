@@ -7,7 +7,7 @@ $(document).ready(function () {
             projectList: [],
             searchBar: false,
             keyWord: '',
-            stages: ['未开始', '未交付', '交付及回款', '已结束'],
+            stages: ['未开始', '进行中', '交付及回款', '已结束'],
             filterPage: false,
             filterCondition: '',
             dateValueStart: '',
@@ -137,17 +137,22 @@ $(document).ready(function () {
                 $('#status').css('background-color', '#FFFFFF');
                 this.filterCondition = 'status';
             },
-            'showStatus':function (statusId) {
+            'showStatus': function (statusId) {
                 return this.stages[statusId];
+            },
+            'showPercent': function (project) {
+                if(project.status == 1){
+                    return  project.progress + '%';
+                }
             },
             'getStyle': function (statusId) {
                 var style;
-                if (statusId === '0'){
+                if (statusId === '0') {
                     style = {
                         'font-size': '12px',
                         'color': '#00A4FF'
                     };
-                }else{
+                } else {
                     style = {
                         'font-size': '12px',
                         'color': '#A0B4BB'
@@ -160,7 +165,7 @@ $(document).ready(function () {
                 this.dateValueStart = '';
                 this.dateValueEnd = '';
             },
-            'removeAll':function () {
+            'removeAll': function () {
                 this.newDate = '';
             },
             'creatorChecked': function () {

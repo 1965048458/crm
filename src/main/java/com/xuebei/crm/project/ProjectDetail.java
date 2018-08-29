@@ -7,7 +7,9 @@ import com.xuebei.crm.opportunity.Support;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProjectDetail {
 
@@ -22,20 +24,52 @@ public class ProjectDetail {
     @Expose
     private String content;
     @Expose
+    private String status;
+    @Expose
+    private String applyStatus;
+    @Expose
     private Date clinchDate;
+    @Expose
+    private String userId;
+    @Expose
+    private String creatorId;
+    @Expose
+    private String agent;
     @Expose
     private String creatorName;
     @Expose
     private Date createTs;
     @Expose
+    private Integer progress;
+    @Expose
+    private String leaderId;
+    @Expose
     private String leaderName;
     @Expose
     private String leaderPhone;
+    @Expose
+    private String isAdmin;
     @Expose
     private List<FollowUpRecord> followUpRecords;
     @Expose
     private List<Support> projectSupports;
     @Expose Support support;
+
+    public String getApplyStatus() {
+        return applyStatus;
+    }
+
+    public void setApplyStatus(String applyStatus) {
+        this.applyStatus = applyStatus;
+    }
+
+    public String getAgent() {
+        return agent;
+    }
+
+    public void setAgent(String agent) {
+        this.agent = agent;
+    }
 
     public Support getSupport() {
         return support;
@@ -43,6 +77,46 @@ public class ProjectDetail {
 
     public void setSupport(Support support) {
         this.support = support;
+    }
+
+    public String getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(String isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public String getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public String getLeaderId() {
+        return leaderId;
+    }
+
+    public Integer getProgress() {
+        return progress;
+    }
+
+    public void setProgress(Integer progress) {
+        this.progress = progress;
+    }
+
+    public void setLeaderId(String leaderId) {
+        this.leaderId = leaderId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getProjectId() {
@@ -141,6 +215,14 @@ public class ProjectDetail {
         this.projectSupports = projectSupports;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String showClinch() {
         if (clinchDate != null) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -214,5 +296,17 @@ public class ProjectDetail {
         } else {
             return "-";
         }
+    }
+
+    public String showStatus(){
+        Map<String, String> map = new HashMap<>();
+        map.put("0", "未开始");
+        map.put("1", "进行中");
+        map.put("2", "交付及回款");
+        map.put("3", "已结束");
+        if(getStatus().equals("1")){
+            //
+        }
+        return map.get(getStatus());
     }
 }

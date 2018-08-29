@@ -1,6 +1,7 @@
 package com.xuebei.crm.project;
 
 import com.xuebei.crm.company.CompanyUser;
+import com.xuebei.crm.opportunity.Opportunity;
 import com.xuebei.crm.utils.UUIDGenerator;
 import com.xuebei.crm.customer.CustomerMapper;
 import com.xuebei.crm.customer.FollowUpRecord;
@@ -55,6 +56,22 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public void updateRefund(Refund refund) {
         projectMapper.updateRefund(refund);
+    }
+
+    @Override
+    public void refuseProject(Integer projectId) {
+        projectMapper.refuseProject(projectId);
+    }
+
+    @Override
+    public void passProject(Integer projectId) {
+        projectMapper.passProject(projectId);
+        projectMapper.updateProjectStatus(projectId);
+    }
+
+    @Override
+    public void assignLeader(Integer projectId, String leader) {
+        projectMapper.assignLeader(projectId, leader);
     }
 
     @Override
@@ -179,5 +196,10 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public void setSupportLeader(String userId,Integer supportId, String leaderId) {
         projectMapper.setSupportLeader(userId,supportId,leaderId);
+    }
+
+    @Override
+    public void modifyProject(Opportunity opportunity) {
+        projectMapper.modifyProject(opportunity);
     }
 }
