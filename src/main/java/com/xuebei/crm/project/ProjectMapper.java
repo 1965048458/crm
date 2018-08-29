@@ -25,6 +25,10 @@ public interface ProjectMapper {
 
     void updateRefund(Refund refund);
 
+    void isRefunded(@Param("projectId") Integer projectId, @Param("refundId") Integer refundId);
+
+    void updateProgress(@Param("projectId") Integer projectId, @Param("progress") Integer progress);
+
     void refuseProject(@Param("projectId")Integer projectId);
 
     void passProject(@Param("projectId")Integer projectId);

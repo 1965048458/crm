@@ -12,9 +12,15 @@ jQuery(document).ready(function () {
             searchBar: false,
             userList: [],
             showSlider:false,
-            projectId: ''
+            projectId: '',
+            progress: '',
+            btnText: '更新进度'
         },
         methods: {
+            'init':function () {
+                this.projectId = $("#salesOpportunityId").val();
+                this.progress = $("#progress").val();;
+            },
             'back': function () {
                 window.location.href = '/project/projectList';
             },
@@ -73,10 +79,29 @@ jQuery(document).ready(function () {
                 window.location.href = '/project/applyStart?projectId=' + $("#salesOpportunityId").val();
             },
             'refund':function () {
-                //
+                window.location.href = '/project/deliverRefund?projectId=' + this.projectId;
             },
             'updateProgress':function () {
-                this.showSlider = true;
+                this.showSlider = !this.showSlider;
+                if(this.showSlider){
+                    this.btnText = '确认';
+                }else{
+                    var thisVue = this;
+                    $.ajax({
+                        type: 'get',
+                        url: '/project/updateProgress',
+                        data: {
+                            projectId: thisVue.projectId,
+                            progress: thisVue.progress
+                        },
+                        dataType: 'json',
+                        cache : false
+                    }).done(function (result) {
+                        if(result.successFlg){
+                            thisVue.btnText = '更新进度';
+                        }
+                    });
+                }
             },
             'clear': function () {
                 this.keyWord = '';
@@ -121,17 +146,13 @@ jQuery(document).ready(function () {
             }
         },
         updated: function () {
-            /*if (this.curSupport !== undefined &&
-                this.curSupport.support !== undefined) {
-                var percent = this.curSupport.support.percent;
-                jQuery("#sliderTrack").css('width', percent + '%');
-                jQuery("#sliderHandler").css('left', percent + '%');
-                initSilder();
-            }*/
+            var percent = this.progress;
+            jQuery("#sliderTrack").css('width', percent + '%');
+            jQuery("#sliderHandler").css('left', percent + '%');
             initSilder();
         }
     });
-
+    projDetailVue.init();
 });
 
 var totalLen,

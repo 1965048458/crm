@@ -22,6 +22,10 @@ public interface ProjectService {
 
     void updateRefund(Refund refund);
 
+    void isRefunded(Integer projectId, Integer refundId);
+
+    void updateProgress(Integer projectId, Integer progress);
+
     void refuseProject(Integer projectId);
 
     void passProject(Integer projectId);

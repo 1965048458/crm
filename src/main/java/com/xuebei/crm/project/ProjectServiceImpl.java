@@ -1,15 +1,14 @@
 package com.xuebei.crm.project;
 
 import com.xuebei.crm.company.CompanyUser;
-import com.xuebei.crm.opportunity.Opportunity;
-import com.xuebei.crm.utils.UUIDGenerator;
 import com.xuebei.crm.customer.CustomerMapper;
 import com.xuebei.crm.customer.FollowUpRecord;
+import com.xuebei.crm.opportunity.Opportunity;
 import com.xuebei.crm.opportunity.Support;
+import com.xuebei.crm.utils.UUIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,6 +55,16 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public void updateRefund(Refund refund) {
         projectMapper.updateRefund(refund);
+    }
+
+    @Override
+    public void isRefunded(Integer projectId, Integer refundId) {
+        projectMapper.isRefunded(projectId, refundId);
+    }
+
+    @Override
+    public void updateProgress(Integer projectId, Integer progress) {
+        projectMapper.updateProgress(projectId, progress);
     }
 
     @Override

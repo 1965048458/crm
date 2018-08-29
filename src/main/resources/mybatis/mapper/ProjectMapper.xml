@@ -164,11 +164,17 @@
     <insert id="insertRefund" parameterType="com.xuebei.crm.project.Refund"
             useGeneratedKeys="true" keyColumn="refund_id" keyProperty="refundId">
         INSERT INTO refund_log (
-            `project_id`, `refund_amount`, `refund_condition`
+            `project_id`, `refund_amount`, `refund_condition`, `is_refunded`
         ) VALUES (
-            #{projectId}, #{refundNum}, #{condition}
+            #{projectId}, #{refundNum}, #{condition}, 0
         )
     </insert>
+
+    <update id="isRefunded">
+        UPDATE refund_log SET
+            is_refunded = 1
+        WHERE project_id = #{projectId} AND refund_id = #{refundId}
+    </update>
 
     <update id="updateProjectStart" parameterType="com.xuebei.crm.project.ProjectStart">
         UPDATE project_start SET
@@ -191,6 +197,12 @@
     <update id="updateProjectStatus" parameterType="java.lang.Integer">
         UPDATE sales_opportunity SET
             sales_status = '1', progress = 0
+        WHERE sales_opportunity_id = #{projectId}
+    </update>
+    
+    <update id="updateProgress">
+        UPDATE sales_opportunity SET
+            progress = #{progress}
         WHERE sales_opportunity_id = #{projectId}
     </update>
 
@@ -264,7 +276,6 @@
     <select id="getProjectStart" resultMap="projectStartMap">
         SELECT * FROM project_start ps
         WHERE ps.sales_opportunity_id = #{projectId} AND ps.user_id = #{userId}
-              AND ps.status = 'applying'
     </select>
 
     <select id="getRefunds" resultMap="refundLogMap">

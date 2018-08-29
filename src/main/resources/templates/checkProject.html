@@ -157,7 +157,7 @@
                         </div>
                     </div>
                     <div class="weui-cell">
-                        <div class="weui-cell__hd"><label class="weui-label label"></label>预付款(元)</div>
+                        <div class="weui-cell__hd"><label class="weui-label label">预付款(元)</label></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input" type="number" pattern="[0-9]*" placeholder="    输入预付款金额" v-model="advancePay">
                         </div>
@@ -287,6 +287,16 @@
             </div>
             <!--end toast-->
 
+            <!--BEGIN toast-->
+            <div id="toastRefuse" style="display: none;">
+                <div class="weui-mask_transparent"></div>
+                <div class="weui-toast">
+                    <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                    <p class="weui-toast__content">操作成功</p>
+                </div>
+            </div>
+            <!--end toast-->
+
             <a @click="confirm" class="weui-btn weui-btn_plain-default" style="background-color: #38A4F2; color:#FFFFFF; font-size: 18px; margin-top: 20px;">确认</a>
 
         </div>
@@ -301,11 +311,18 @@
             $.ajax({
                 type: 'get',
                 url: '/project/refuseProject',
+                data: {
+                    projectId: $('#projectId').val()
+                },
                 dataType: 'json',
                 cache: false
             }).done(function (result) {
                 if(result.successFlg){
-                    //todo
+                    $('#toastRefuse').fadeIn(100);
+                    setTimeout(function () {
+                        $('#toastRefuse').fadeOut(100);
+                        window.location = '/message/showApplyList';
+                    }, 1000);
                 }
             });
         }

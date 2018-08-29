@@ -12,6 +12,19 @@ public class Refund {
     private Double refundNum;
     @Expose
     private String condition;
+    @Expose
+    private String time;
+
+    @Expose
+    private Integer isRefunded;
+
+    public Integer getIsRefunded() {
+        return isRefunded;
+    }
+
+    public void setIsRefunded(Integer isRefunded) {
+        this.isRefunded = isRefunded;
+    }
 
     public Integer getRefundId() {
         return refundId;
@@ -43,5 +56,13 @@ public class Refund {
 
     public void setCondition(String condition) {
         this.condition = condition;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }
