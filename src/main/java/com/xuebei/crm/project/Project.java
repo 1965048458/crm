@@ -35,6 +35,8 @@ public class Project {
     @Expose
     private Double amount;
     @Expose
+    private Integer progress;
+    @Expose
     private String contactId;
     @Expose
     private String contactName;
@@ -46,6 +48,14 @@ public class Project {
     private String updaterId;
     @Expose
     private String updateTime;
+
+    public Integer getProgress() {
+        return progress;
+    }
+
+    public void setProgress(Integer progress) {
+        this.progress = progress;
+    }
 
     public Double getAmount() {
         return amount;

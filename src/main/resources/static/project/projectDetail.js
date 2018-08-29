@@ -1,6 +1,8 @@
+
+var projDetailVue;
 jQuery(document).ready(function () {
 
-    var projDetailVue = new Vue({
+    projDetailVue = new Vue({
         el: '#projDetailVue',
         data: {
             show: 'projectDetail',
@@ -9,6 +11,7 @@ jQuery(document).ready(function () {
             chosenExe: '',
             searchBar: false,
             userList: [],
+            showSlider:false,
             projectId: ''
         },
         methods: {
@@ -63,6 +66,18 @@ jQuery(document).ready(function () {
                     }
                 });
             },
+            'edit':function () {
+                window.location.href = '/project/modifyProject?projectId=' +  $("#salesOpportunityId").val();
+            },
+            'apply':function () {
+                window.location.href = '/project/applyStart?projectId=' + $("#salesOpportunityId").val();
+            },
+            'refund':function () {
+                //
+            },
+            'updateProgress':function () {
+                this.showSlider = true;
+            },
             'clear': function () {
                 this.keyWord = '';
                 $('#searchInput').focus();
@@ -104,7 +119,65 @@ jQuery(document).ready(function () {
                     }
                 });
             }
+        },
+        updated: function () {
+            /*if (this.curSupport !== undefined &&
+                this.curSupport.support !== undefined) {
+                var percent = this.curSupport.support.percent;
+                jQuery("#sliderTrack").css('width', percent + '%');
+                jQuery("#sliderHandler").css('left', percent + '%');
+                initSilder();
+            }*/
+            initSilder();
         }
     });
 
 });
+
+var totalLen,
+    startLeft = 0,
+    startX = 0;
+function initSilder() {
+    var $sliderTrack = $('#sliderTrack'),
+        $sliderHandler = $('#sliderHandler'),
+        $sliderValue = $('#sliderValue');
+
+    $sliderHandler.unbind('touchstart')
+        .on('touchstart', function (e) {
+            totalLen = $('#sliderInner').width();
+            startLeft = parseInt($sliderHandler.css('left'));
+            startX = e.originalEvent.changedTouches[0].clientX;
+        }).unbind('mousedown')
+        .on('mousedown', function (e) {
+            totalLen = $('#sliderInner').width();
+            startLeft = parseInt($sliderHandler.css('left'));
+            startX = e.originalEvent.pageX;
+
+            $sliderHandler.unbind('mousemove').on('mousemove', function (e) {
+                totalLen = $('#sliderInner').width();
+                var moveX = e.originalEvent.pageX;
+                var dist = startLeft + moveX - startX,
+                    percent;
+                dist = dist < 0 ? 0 : dist > totalLen ? totalLen : dist;
+                percent = parseInt(dist / totalLen * 100);
+                $sliderTrack.css('width', percent + '%');
+                $sliderHandler.css('left', percent + '%');
+                $sliderValue.text(percent);
+
+                e.preventDefault();
+            })
+        }).unbind('touchmove')
+        .on('touchmove', function (e) {
+            var moveX = e.originalEvent.changedTouches[0].clientX;
+            var dist = startLeft + moveX - startX,
+                percent;
+            dist = dist < 0 ? 0 : dist > totalLen ? totalLen : dist;
+            percent = parseInt(dist / totalLen * 100);
+            $sliderTrack.css('width', percent + '%');
+            $sliderHandler.css('left', percent + '%');
+            $sliderValue.text(percent);
+            projDetailVue.progress = percent;
+            e.preventDefault();
+        })
+    ;
+}

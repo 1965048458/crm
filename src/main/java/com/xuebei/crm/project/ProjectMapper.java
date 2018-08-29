@@ -29,6 +29,8 @@ public interface ProjectMapper {
 
     void passProject(@Param("projectId")Integer projectId);
 
+    void updateProjectStatus(@Param("projectId")Integer projectId);
+
     void assignLeader(@Param("projectId")Integer projectId, @Param("leader") String leader);
 
     ProjectStart getProjectStart(@Param("projectId")Integer projectId, @Param("userId") String userId);

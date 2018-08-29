@@ -142,16 +142,41 @@
             <div style="padding-top: 6px;padding-left: 15px;">
                 <span class="pro-status-title">状态</span>
                 <span class="pro-status-content" th:text="${projectDetail.showStatus()}"></span>
-                <th:block th:if="${projectDetail.getLeaderName() == null && projectDetail.showStatus() == '进行中' && projectDetail.getIsAdmin() == 'ADMIN'}">
+                <th:block th:if="${projectDetail.getLeaderName() == null && projectDetail.getStatus() == '1' && projectDetail.getIsAdmin() == 'ADMIN'}">
                     <span class="pro-status-content" style="color: #00A4FF;">(无负责人)</span>
                     <span class="pull-right" style="color: #00A4FF;" @click="assignLeader"><img style="width: 25px; height:18px;" src="/images/project/assign.png"/> 指派负责人&nbsp;&nbsp;</span>
                 </th:block>
-                <th:block th:if="${projectDetail.getLeaderName() != null && projectDetail.showStatus() == '进行中'}">
-                    (<span class="pro-status-content" style="color: #00A4FF;">&nbsp;0%&nbsp;</span>)
+                <th:block th:if="${projectDetail.getCreatorId() == projectDetail.getUserId() && projectDetail.getStatus() == '1'}">
+                    (&nbsp;<span class="pro-status-content" style="color: #00A4FF;" th:text="${projectDetail.getProgress()} + '%'">0%</span>&nbsp;)
+                    <th:block th:if="${projectDetail.getProgress() != 100}">
+                        <span class="pull-right" style="color: #00A4FF; opacity: 0.5;" >
+                            <img style="width: 25px; height:18px;" src="/images/project/refund.png"/> 交付及回款&nbsp;&nbsp;</span>
+                    </th:block>
+                    <th:block th:if="${projectDetail.getProgress() == 100}">
+                        <span class="pull-right" style="color: #00A4FF;" @click="refund">
+                            <img style="width: 25px; height:18px;" src="/images/project/refund.png"/> 交付及回款&nbsp;&nbsp;</span>
+                    </th:block>
                 </th:block>
-                <!--<th:block th:if="${projectDetail.getLeaderName() != null && projectDetail.showStatus() == '进行中'}">-->
-                    <!--(<span class="pro-status-content" style="color: #00A4FF;">&nbsp;0%&nbsp;</span>)-->
-                <!--</th:block>-->
+                <th:block th:if="${projectDetail.getCreatorId() == projectDetail.getUserId() && projectDetail.getStatus() == '0'}">
+                    (&nbsp;<span class="pro-status-content" style="color: #00A4FF;"></span>&nbsp;)
+                    <span class="pull-right" style="color: #00A4FF;"@click="apply" >
+                        <img style="width: 25px; height:18px;" src="/images/project/startProject.png"/>&nbsp;&nbsp;启动申请&nbsp;&nbsp;</span>
+                </th:block>
+                <th:block th:if="${projectDetail.getLeaderId() == projectDetail.getUserId() && projectDetail.getStatus() == '1'}">
+                    (&nbsp;<span class="pro-status-content" style="color: #00A4FF;" th:text="${projectDetail.getProgress()} + '%'">0%</span>&nbsp;)
+                    <span class="pull-right" style="color: #00A4FF;" @click="updateProgress"><img style="width: 25px; height:18px;" src="/images/project/update.png"/> 更新进度&nbsp;&nbsp;</span>
+                </th:block>
+            </div>
+
+
+            <div class="weui-slider-box" style="margin-top: 10px; margin-bottom: 10px;" v-if="showSlider">
+                <div class="weui-slider">
+                    <div id="sliderInner" class="weui-slider__inner">
+                        <div id="sliderTrack" style="width: 80%;" class="weui-slider__track"></div>
+                        <div id="sliderHandler" style="left: 80%;" class="weui-slider__handler"></div>
+                    </div>
+                </div>
+                <div id="sliderValue" class="weui-slider-box__value" style="padding-right: 8px;">80</div>
             </div>
         </div>
 
@@ -173,7 +198,7 @@
             <div class="weui-cells" style="font-size: small; margin-top: 0px;">
                 <div class="weui-cell">
                     <div class="weui-cell__bd" style="font-weight: bold">基本信息</div>
-                    <div class="weui-cell__ft"><img src="/images/opportunity/editOpportunity.svg"/></div>
+                    <div class="weui-cell__ft" @click="edit"><img src="/images/opportunity/editOpportunity.svg"/></div>
                 </div>
                 <label style="margin-left: 15px;color: grey">项目内容</label>
                 <div class="weui-cell">

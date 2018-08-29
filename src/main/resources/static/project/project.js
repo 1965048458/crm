@@ -142,7 +142,7 @@ $(document).ready(function () {
             },
             'showPercent': function (project) {
                 if(project.status == 1){
-                    return  0+ '%';//project.percent
+                    return  project.progress + '%';
                 }
             },
             'getStyle': function (statusId) {

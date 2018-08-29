@@ -62,6 +62,7 @@ public class ProjectController {
         ProjectDetail projectDetail = projectService.getProjectDetail(projectId);
         String userType = companyMapper.queryUserType(userId);
         projectDetail.setIsAdmin(userType);
+        projectDetail.setUserId(userId);
         modelMap.addAttribute("projectDetail", projectDetail);
 
         if (projectDetail == null) {

@@ -26,15 +26,21 @@ public class ProjectDetail {
     @Expose
     private String status;
     @Expose
+    private String applyStatus;
+    @Expose
     private Date clinchDate;
     @Expose
     private String userId;
+    @Expose
+    private String creatorId;
     @Expose
     private String agent;
     @Expose
     private String creatorName;
     @Expose
     private Date createTs;
+    @Expose
+    private Integer progress;
     @Expose
     private String leaderId;
     @Expose
@@ -48,6 +54,14 @@ public class ProjectDetail {
     @Expose
     private List<Support> projectSupports;
     @Expose Support support;
+
+    public String getApplyStatus() {
+        return applyStatus;
+    }
+
+    public void setApplyStatus(String applyStatus) {
+        this.applyStatus = applyStatus;
+    }
 
     public String getAgent() {
         return agent;
@@ -73,8 +87,24 @@ public class ProjectDetail {
         this.isAdmin = isAdmin;
     }
 
+    public String getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
+    }
+
     public String getLeaderId() {
         return leaderId;
+    }
+
+    public Integer getProgress() {
+        return progress;
+    }
+
+    public void setProgress(Integer progress) {
+        this.progress = progress;
     }
 
     public void setLeaderId(String leaderId) {

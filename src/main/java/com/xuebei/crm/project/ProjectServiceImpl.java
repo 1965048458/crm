@@ -66,6 +66,7 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public void passProject(Integer projectId) {
         projectMapper.passProject(projectId);
+        projectMapper.updateProjectStatus(projectId);
     }
 
     @Override
