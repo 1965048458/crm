@@ -10,7 +10,7 @@ jQuery(document).ready(function () {
     var newProject = new Vue({
         el: '#newProject',
         data: {
-            stages: ['未开始', '未交付', '交付及回款', '已结束'],
+            stages: ['未开始', '进行中', '交付及回款', '已结束'],
             showPage: 'addProject',
             name: '',
             content: '',
@@ -95,7 +95,7 @@ jQuery(document).ready(function () {
                 });
             },
             'selStatus': function () {
-                this.showPage = 'status';
+                //this.showPage = 'status';
             },
             'done1': function () {
                 if (this.selStage === "") {

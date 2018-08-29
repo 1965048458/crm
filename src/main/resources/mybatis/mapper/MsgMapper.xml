@@ -25,6 +25,33 @@
         <result property="applyDetails" column="apply_reason"/>
     </resultMap>
 
+    <resultMap id="projectApplyMap" type="com.xuebei.crm.message.ProjectApply">
+        <id column="start_project_id" property="applyId"/>
+        <result column="apply_content" property="content"/>
+        <result column="sales_opportunity_id" property="projectId"/>
+        <result column="user_id" property="applyerId"/>
+        <result column="real_nm" property="applyerName"/>
+        <result property="applyTime" column="create_ts"/>
+        <result property="customerName" column="customer_nm"/>
+        <result property="deptName" column="prt_dept_nm"/>
+        <result column="opportunity_nm" property="projectName"/>
+    </resultMap>
+
+    <select id="getProjectApply" resultMap="projectApplyMap">
+        SELECT p.start_project_id, p.sales_opportunity_id, p.apply_content, p.user_id, date_format(p.create_ts, '%Y年%c月%e日 %H:%i') AS create_ts, A.opportunity_nm, D.customer_nm, F.department_nm AS prt_dept_nm, U.real_nm AS real_nm
+          from project_start p
+        LEFT JOIN sales_opportunity A ON p.sales_opportunity_id = A.sales_opportunity_id
+        LEFT JOIN opportunity_contacts B ON a.sales_opportunity_id = B.sales_opportunity_id
+        LEFT JOIN contacts_view C ON B.contacts_id = C.contacts_id
+        LEFT JOIN crm_customer D ON C.customer_id = D.customer_id
+        LEFT JOIN customer_dept F ON c.prt_id = F.customer_dept_id
+        LEFT JOIN user_view U ON p.user_id = U.user_id
+              LEFT JOIN company_user cu ON A.user_id = cu.user_id
+              LEFT JOIN company_user cc ON p.user_id = cc.user_id
+        WHERE p.status = 'applying' AND cu.company_id = cc.company_id
+        AND cc.company_id = (SELECT d.company_id FROM company_user d WHERE d.user_id = #{userId})
+    </select>
+
     <select id="searchEnclosureApply" resultMap="enclosureApplyMap">
         select h1.*,h2.customer_nm from
             (select t1.*,t2.department_nm,t2.customer_id from

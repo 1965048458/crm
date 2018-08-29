@@ -142,11 +142,13 @@
                                             {{project.strDeadLine}}</label>
                                     </p>
                                     <p class="weui-media-box__desc" style="font-size: 12px;color: #888888;">
-                                        项目负责人 : {{project.leader}}
+                                        项目负责人 : {{project.leaderName}}
                                         <label class="pull-right" style="font-size: 15px;color: #A0B4BB;">
                                             {{project.amount}}元</label>
                                     </p>
-                                    <p class="weui-media-box__desc" :id="'pStatus' + index" :style="getStyle(project.status)" v-text="showStatus(project.status)">
+                                    <p class="weui-media-box__desc" :id="'pStatus' + index">
+                                        <span :style="getStyle(project.status)" v-text="showStatus(project.status)"></span>&nbsp;&nbsp;
+                                        <span style="color: #00A4FF;" v-text="showPercent(project)"></span>
                                          &nbsp;
                                     </p>
                                 </div>

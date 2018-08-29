@@ -33,4 +33,6 @@ public interface MsgMapper {
     void enclosureDelayApplyDecline(@Param("enclosureDelayApplyId") String enclosureDelayApplyId,
                                     @Param("userId")String userId);
 
+    List<ProjectApply> getProjectApply(@Param("userId")String userId);
+
 }

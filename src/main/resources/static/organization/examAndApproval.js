@@ -4,9 +4,10 @@
 
 $(document).ready(function () {
     var examAndApprovalVue = new Vue({
-        el:"#examAndApprovalVue",
-        data:{
-            applyList:[],
+        el: "#examAndApprovalVue",
+        data: {
+            applyList: [],
+            projectApplyList: []
         },
         methods:{
             'init':function () {
@@ -19,10 +20,20 @@ $(document).ready(function () {
                     cache:false
                 }).done(function (result) {
                     console.log(result);
-                    thisVue.applyList=result.applyList;
-                })
+                    thisVue.applyList = result.applyList;
+                });
+
+                $.ajax({
+                    type: 'get',
+                    url: '/message/projectApply',
+                    data: {},
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    thisVue.$set(thisVue, 'projectApplyList', result.projectApplyList);
+                });
             },
-            'applyAgree':function (applyType,applyId) {
+            'applyAgree': function (applyType,applyId) {
                 var thisVue = this;
                 $.ajax({
                     type:'get',

@@ -111,281 +111,361 @@
 
     <input type="hidden"  th:value="${projectDetail.getProjectId()}" id="salesOpportunityId">
 
-    <div class="top-bar" style="border-bottom: 1px solid #EAE4E4">
+    <div id="projectDetail" v-show="show === 'projectDetail'">
+        <div class="top-bar" style="border-bottom: 1px solid #EAE4E4">
         <span class="pull-left" style="margin-top: 7px" @click="back">&nbsp;
             <img src="/images/back_icon.svg"/>
         </span>
-        <span style="width: 76%;text-align: center;font-size: 18px;margin-top: 5px">项目详情</span>
-    </div>
-
-    <div class="top-div"></div>
-
-    <div class="pro">
-        <p class="pro-title" th:text="${projectDetail.getProjectName()}">广东机电职业技术学院vr工程中心项目</p>
-        <p class="pro-detail-div">
-            <span class="pro-detail-title">客户名称</span>
-            <span th:text="${projectDetail.showCustomerName()}">广东机电职业技术学院</span>
-        </p>
-        <p class="pro-detail-div">
-            <span class="pro-detail-title">二级学院</span>
-            <span th:text="${projectDetail.showTopDeptName()}">机械学院</span>
-        </p>
-        <p class="pro-detail-div">
-            <span class="pro-detail-title">客户联系人</span>
-            <span th:text="${projectDetail.showContactsName()}">刘建国</span>
-        </p>
-        <p class="pro-detail-div">
-            <span class="pro-detail-title">金额（元）</span>
-            <span th:text="${projectDetail.showAmount()}">120,000</span>
-        </p>
-        <div style="padding-top: 6px;padding-left: 15px;">
-            <span class="pro-status-title">状态</span>
-            <span class="pro-status-content">进行中</span>
+            <span style="width: 76%;text-align: center;font-size: 18px;margin-top: 5px">项目详情</span>
         </div>
-    </div>
 
-    <div style="height: 8px;"></div>
+        <div class="top-div"></div>
 
-    <div class="weui-grids">
-        <a id="detailBox" class="weui-grid navi-bar my-weui-grid weui-grid-select" @click="toDetailPage">
-            <p id="detail" class="weui-grid__label weui-grid-select-content" style=" font-size: medium;">详细信息</p>
-        </a>
-        <a id="relevantBox" class="weui-grid navi-bar my-weui-grid" @Click="toRelevantPage">
-            <p id="relevant" class="weui-grid__label" style=" font-size: medium;">相关</p>
-        </a>
-        <a id="modifBox" class="weui-grid navi-bar my-weui-grid" @Click="toModifyPage">
-            <p id="modif" class="weui-grid__label" style=" font-size: medium;">修改记录</p>
-        </a>
-    </div>
-
-    <div id="detailPage" v-show="showPage == 'detailPage'">
-        <div class="weui-cells" style="font-size: small; margin-top: 0px;">
-            <div class="weui-cell" style="font-weight: bold">基本信息</div>
-            <label style="margin-left: 15px;color: grey">项目内容</label>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <span th:text="${projectDetail.getContent()}">项目内容项目内容项目内容项目内容项目内容项目内容项目内容</span>
-                </div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__hd">
-                    <label class="weui-label">交付日期</label>
-                </div>
-                <div class="weui-cell__bd">
-                    <span th:text="${projectDetail.showClinch()}">2018-10-30</span>
-                </div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__hd">
-                    <label class="weui-label">
-                        金额(元)
-                    </label>
-                </div>
-                <div class="weui-cell__bd">
-                    <span th:text="${projectDetail.showAmount()}">2000,000</span>
-                </div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__hd">
-                    <label class="weui-label">客户名称</label>
-                </div>
-                <div class="weui-cell__bd">
-                    <span th:text="${projectDetail.showCustomerName()}"></span>
-                </div>
-            </div>
-
-            <div class="weui-cell">
-                <div class="weui-cell__hd">
-                    <label class="weui-label">二级学院</label>
-                </div>
-                <div class="weui-cell__bd">
-                    <span th:text="${projectDetail.showTopDeptName()}">商学院</span>
-                </div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__hd">
-                    <label class="weui-label">客户联系人</label>
-                </div>
-                <div class="weui-cell__bd">
-                    <span th:text="${projectDetail.showContacts()}">主任-刘建国</span>
-                </div>
+        <div class="pro">
+            <p class="pro-title" th:text="${projectDetail.getProjectName()}">广东机电职业技术学院vr工程中心项目</p>
+            <p class="pro-detail-div">
+                <span class="pro-detail-title">客户名称</span>
+                <span th:text="${projectDetail.showCustomerName()}">广东机电职业技术学院</span>
+            </p>
+            <p class="pro-detail-div">
+                <span class="pro-detail-title">二级学院</span>
+                <span th:text="${projectDetail.showTopDeptName()}">机械学院</span>
+            </p>
+            <p class="pro-detail-div">
+                <span class="pro-detail-title">客户联系人</span>
+                <span th:text="${projectDetail.showContactsName()}">刘建国</span>
+            </p>
+            <p class="pro-detail-div">
+                <span class="pro-detail-title">金额（元）</span>
+                <span th:text="${projectDetail.showAmount()}">120,000</span>
+            </p>
+            <div style="padding-top: 6px;padding-left: 15px;">
+                <span class="pro-status-title">状态</span>
+                <span class="pro-status-content" th:text="${projectDetail.showStatus()}"></span>
+                <th:block th:if="${projectDetail.getLeaderName() == null && projectDetail.showStatus() == '进行中' && projectDetail.getIsAdmin() == 'ADMIN'}">
+                    <span class="pro-status-content" style="color: #00A4FF;">(无负责人)</span>
+                    <span class="pull-right" style="color: #00A4FF;" @click="assignLeader"><img style="width: 25px; height:18px;" src="/images/project/assign.png"/> 指派负责人&nbsp;&nbsp;</span>
+                </th:block>
+                <th:block th:if="${projectDetail.getLeaderName() != null && projectDetail.showStatus() == '进行中'}">
+                    (<span class="pro-status-content" style="color: #00A4FF;">&nbsp;0%&nbsp;</span>)
+                </th:block>
+                <!--<th:block th:if="${projectDetail.getLeaderName() != null && projectDetail.showStatus() == '进行中'}">-->
+                    <!--(<span class="pro-status-content" style="color: #00A4FF;">&nbsp;0%&nbsp;</span>)-->
+                <!--</th:block>-->
             </div>
         </div>
 
-        <div class="weui-cells" style="font-size: small;">
-            <div class="weui-cell" style="font-weight: bold">系统信息</div>
-            <div class="weui-cell">
-                <div class="weui-cell__hd">
-                    <label class="weui-label">最后跟进时间</label>
-                </div>
-                <div class="weui-cell__bd">
-                    <span>2018-08-01 06:49</span>
-                </div>
-            </div>
+        <div style="height: 8px;"></div>
 
-            <div class="weui-cell">
-                <div class="weui-cell__hd">
-                    <label class="weui-label">状态</label>
-                </div>
-                <div class="weui-cell__bd">
-                    <span>进行中</span>
-                </div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__hd">
-                    <label class="weui-label">创建人</label>
-                </div>
-                <div class="weui-cell__bd">
-                    <span th:text="${projectDetail.showCreatorName()}">刘二麻</span>
-                </div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__hd">
-                    <label class="weui-label">创建时间</label>
-                </div>
-                <div class="weui-cell__bd">
-                    <span th:text="${projectDetail.showCreateTs()}">2018-07-01 06:49</span>
-                </div>
-            </div>
+        <div class="weui-grids">
+            <a id="detailBox" class="weui-grid navi-bar my-weui-grid weui-grid-select" @click="toDetailPage">
+                <p id="detail" class="weui-grid__label weui-grid-select-content" style=" font-size: medium;">详细信息</p>
+            </a>
+            <a id="relevantBox" class="weui-grid navi-bar my-weui-grid" @Click="toRelevantPage">
+                <p id="relevant" class="weui-grid__label" style=" font-size: medium;">相关</p>
+            </a>
+            <a id="modifBox" class="weui-grid navi-bar my-weui-grid" @Click="toModifyPage">
+                <p id="modif" class="weui-grid__label" style=" font-size: medium;">修改记录</p>
+            </a>
         </div>
 
-        <div class="weui-cells" style="font-size: small;">
-            <div class="weui-cell" style="font-weight: bold">项目负责人信息</div>
-            <th:block th:if="${projectDetail.getLeaderPhone() == null}">
+        <div id="detailPage" v-show="showPage == 'detailPage'">
+            <div class="weui-cells" style="font-size: small; margin-top: 0px;">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd" style="font-weight: bold">基本信息</div>
+                    <div class="weui-cell__ft"><img src="/images/opportunity/editOpportunity.svg"/></div>
+                </div>
+                <label style="margin-left: 15px;color: grey">项目内容</label>
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
-                        <label class="weui-label">管理员暂未指配</label>
-                    </div>
-                </div>
-            </th:block>
-            <th:block th:if="${projectDetail.getLeaderPhone() != null}">
-                <div class="weui-cell">
-                    <div class="weui-cell__bd">
-                        <label class="weui-label" th:text="${projectDetail.getLeaderName()}">我</label>
+                        <span th:text="${projectDetail.getContent()}"></span>
                     </div>
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd">
-                        <label class="weui-label">联系方式</label>
+                        <label class="weui-label">交付日期</label>
                     </div>
                     <div class="weui-cell__bd">
-                        <span th:text="${projectDetail.getLeaderPhone()}">13233618026</span>
+                        <span th:text="${projectDetail.showClinch()}">2018-10-30</span>
                     </div>
                 </div>
-            </th:block>
-        </div>
-    </div>
-
-    <div id="relevantPage" v-show="showPage == 'relevantPage'">
-        <div class="weui-footer" style="margin-top: 5px;margin-bottom: 5px">
-            <p class="weui-footer__text">——————&nbsp; 项目支持 &nbsp;——————</p>
-        </div>
-        <div class="weui-cells" style="font-size: small;">
-            <th:block
-                    th:if="${projectDetail.getProjectSupports() != null && projectDetail.getProjectSupports().size() > 0}">
-                <th:block th:each="support: ${projectDetail.getProjectSupports()}">
-                    <div class="weui-cell" style="font-weight: bold" th:text="${support.getSupportType().getName()}">
-                        撰写招标参数
-                    </div>
-                    <div class="weui-media-box weui-media-box_text">
-                        <ul class="weui-media-box__info" style="margin-top: 0px">
-                            <th:block th:if="${projectDetail.getLeaderName() == null}">
-                                <li class="weui-media-box__info__meta" th:text="'负责人：需管理员指定'">负责人：冯婷婷</li>
-                            </th:block>
-                            <th:block th:if="${projectDetail.getLeaderName() != null}">
-                                <li class="weui-media-box__info__meta" th:text="${projectDetail.getLeaderName()}">
-                                    负责人：冯婷婷
-                                </li>
-                            </th:block>
-                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra"
-                                th:text="${support.getOrder().getName()}">
-                                重要且紧急
-                            </li>
-                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra"
-                                th:text="${support.showExpire()}+'截止'">
-                                8月20日截止
-                            </li>
-                        </ul>
-                        <p class="weui-media-box__desc" style="line-height: 25px" th:text="${support.getContent()}">
-                            引擎节点，加工中心，奇迹人事假变成、
-                            垃圾分类游戏软件（1节点），山东华宇工学院创业学院招标技术参数、评分标准</p>
-                    </div>
-                </th:block>
-            </th:block>
-            <th:block
-                    th:if="${projectDetail.getProjectSupports() == null || projectDetail.getProjectSupports().size() == 0}">
                 <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">
+                            金额(元)
+                        </label>
+                    </div>
                     <div class="weui-cell__bd">
-                        <label class="weui-label">项目支持暂无</label>
+                        <span th:text="${projectDetail.showAmount()}">2000,000</span>
                     </div>
                 </div>
-            </th:block>
-        </div>
-
-        <div class="weui-cells" style="font-size: small">
-
-            <div class="weui-cell" style="font-weight: bold;">拜访记录</div>
-
-            <th:block
-                    th:if="${projectDetail.getFollowUpRecords() != null && projectDetail.getFollowUpRecords().size() > 0}">
-                <div class="weui-media-box weui-media-box_text"
-                     th:each="followUpRecord: ${projectDetail.getFollowUpRecords()}">
-                    <ul class="weui-media-box__info" style="margin-top: 0px">
-                        <li class="weui-media-box__info__meta" th:text="${followUpRecord.getFollowUpPersonRealName()}">
-                            realName
-                        </li>
-                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra"
-                            th:text="${followUpRecord.getFollowUpType().getName()}">
-                            visitType
-                        </li>
-                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra"
-                            th:text="${followUpRecord.getFollowUpTimeStr()}">
-                            updateTime
-                        </li>
-                    </ul>
-                    <p class="weui-media-box__desc" style="line-height: 25px"
-                       th:text="${followUpRecord.getFollowUpResult()}">visitResult</p>
-                </div>
-            </th:block>
-            <th:block
-                    th:if="${projectDetail.getFollowUpRecords() == null || projectDetail.getFollowUpRecords().size() == 0}">
                 <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">客户名称</label>
+                    </div>
                     <div class="weui-cell__bd">
-                        <label class="weui-label">跟进记录暂无</label>
+                        <span th:text="${projectDetail.showCustomerName()}"></span>
                     </div>
                 </div>
-            </th:block>
-        </div>
-    </div>
 
-    <div id="modifyPage" v-show="showPage == 'modifyPage'">
-        <div class="weui-cells" style="font-size: small">
-            <div class="weui-cell" style="font-weight: bold">修改记录</div>
-
-            <div class="weui-media-box weui-media-box_text">
-                <ul class="weui-media-box__info" style="margin-top: 0px">
-                    <li class="weui-media-box__info__meta">李炳华</li>
-                    <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
-                        2018年8月23日
-                    </li>
-                </ul>
-                <p class="weui-media-box__desc" style="line-height: 25px">创建 商机 &nbsp;这个商机，客户&nbsp;环境</p>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">二级学院</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <span th:text="${projectDetail.showTopDeptName()}">商学院</span>
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">客户联系人</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <span th:text="${projectDetail.showContacts()}">主任-刘建国</span>
+                    </div>
+                </div>
             </div>
 
+            <div class="weui-cells" style="font-size: small;">
+                <div class="weui-cell" style="font-weight: bold">系统信息</div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">最后跟进时间</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <span>2018-08-01 06:49</span>
+                    </div>
+                </div>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">状态</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <span th:text="${projectDetail.showStatus()}">进行中</span>
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">创建人</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <span th:text="${projectDetail.showCreatorName()}">刘二麻</span>
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">创建时间</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <span th:text="${projectDetail.showCreateTs()}">2018-07-01 06:49</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui-cells" style="font-size: small;">
+                <div class="weui-cell" style="font-weight: bold">项目负责人信息</div>
+                <th:block th:if="${projectDetail.getLeaderPhone() == null}">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <label class="weui-label">管理员暂未指配</label>
+                        </div>
+                    </div>
+                </th:block>
+                <th:block th:if="${projectDetail.getLeaderPhone() != null}">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <label class="weui-label" th:text="${projectDetail.getLeaderName()}">我</label>
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">联系方式</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <span th:text="${projectDetail.getLeaderPhone()}">13233618026</span>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+
+        <div id="relevantPage" v-show="showPage == 'relevantPage'">
+            <div class="weui-footer" style="margin-top: 5px;margin-bottom: 5px">
+                <p class="weui-footer__text">——————&nbsp; 项目支持 &nbsp;——————</p>
+            </div>
+            <div class="weui-cells" style="font-size: small;">
+                <th:block
+                        th:if="${projectDetail.getProjectSupports() != null && projectDetail.getProjectSupports().size() > 0}">
+                    <th:block th:each="support: ${projectDetail.getProjectSupports()}">
+                        <div class="weui-cell" style="font-weight: bold" th:text="${support.getSupportType().getName()}">
+                            撰写招标参数
+                        </div>
+                        <div class="weui-media-box weui-media-box_text">
+                            <ul class="weui-media-box__info" style="margin-top: 0px">
+                                <th:block th:if="${projectDetail.getLeaderName() == null}">
+                                    <li class="weui-media-box__info__meta" th:text="'负责人：需管理员指定'">负责人：冯婷婷</li>
+                                </th:block>
+                                <th:block th:if="${projectDetail.getLeaderName() != null}">
+                                    <li class="weui-media-box__info__meta" th:text="${projectDetail.getLeaderName()}">
+                                        负责人：冯婷婷
+                                    </li>
+                                </th:block>
+                                <li class="weui-media-box__info__meta weui-media-box__info__meta_extra"
+                                    th:text="${support.getOrder().getName()}">
+                                    重要且紧急
+                                </li>
+                                <li class="weui-media-box__info__meta weui-media-box__info__meta_extra"
+                                    th:text="${support.showExpire()}+'截止'">
+                                    8月20日截止
+                                </li>
+                            </ul>
+                            <p class="weui-media-box__desc" style="line-height: 25px" th:text="${support.getContent()}">
+                                引擎节点，加工中心，奇迹人事假变成、
+                                垃圾分类游戏软件（1节点），山东华宇工学院创业学院招标技术参数、评分标准</p>
+                        </div>
+                    </th:block>
+                </th:block>
+                <th:block
+                        th:if="${projectDetail.getProjectSupports() == null || projectDetail.getProjectSupports().size() == 0}">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <label class="weui-label">项目支持暂无</label>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+
+            <div class="weui-cells" style="font-size: small">
+
+                <div class="weui-cell" style="font-weight: bold;">拜访记录</div>
+
+                <th:block
+                        th:if="${projectDetail.getFollowUpRecords() != null && projectDetail.getFollowUpRecords().size() > 0}">
+                    <div class="weui-media-box weui-media-box_text"
+                         th:each="followUpRecord: ${projectDetail.getFollowUpRecords()}">
+                        <ul class="weui-media-box__info" style="margin-top: 0px">
+                            <li class="weui-media-box__info__meta" th:text="${followUpRecord.getFollowUpPersonRealName()}">
+                                realName
+                            </li>
+                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra"
+                                th:text="${followUpRecord.getFollowUpType().getName()}">
+                                visitType
+                            </li>
+                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra"
+                                th:text="${followUpRecord.getFollowUpTimeStr()}">
+                                updateTime
+                            </li>
+                        </ul>
+                        <p class="weui-media-box__desc" style="line-height: 25px"
+                           th:text="${followUpRecord.getFollowUpResult()}">visitResult</p>
+                    </div>
+                </th:block>
+                <th:block
+                        th:if="${projectDetail.getFollowUpRecords() == null || projectDetail.getFollowUpRecords().size() == 0}">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <label class="weui-label">跟进记录暂无</label>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+
+        <div id="modifyPage" v-show="showPage == 'modifyPage'">
+            <div class="weui-cells" style="font-size: small">
+                <div class="weui-cell" style="font-weight: bold">修改记录</div>
+
+                <div class="weui-media-box weui-media-box_text">
+                    <ul class="weui-media-box__info" style="margin-top: 0px">
+                        <li class="weui-media-box__info__meta">李炳华</li>
+                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                            2018年8月23日
+                        </li>
+                    </ul>
+                    <p class="weui-media-box__desc" style="line-height: 25px">创建 商机 &nbsp;这个商机，客户&nbsp;环境</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="h-bottom"></div>
+
+        <div class="weui-tabbar my-weui-tabbar">
+            <a class="weui-tabbar__item" @click="clickApplySupport">
+                <img src="/images/opportunity/applySupport.svg" class="weui-tabbar__icon">
+                <p class="weui-tabbar__label">申请支持</p>
+            </a>
+            <a class="weui-tabbar__item">
+                <img src="/images/opportunity/uploadFile.svg" class="weui-tabbar__icon">
+                <p class="weui-tabbar__label">上传附件</p>
+            </a>
         </div>
     </div>
 
-    <div class="h-bottom"></div>
+    <div id="executor" v-show="show ==='chooseExe'" style="display: none">
 
-    <div class="weui-tabbar my-weui-tabbar">
-        <a class="weui-tabbar__item" @click="clickApplySupport">
-            <img src="/images/opportunity/applySupport.svg" class="weui-tabbar__icon">
-            <p class="weui-tabbar__label">申请支持</p>
-        </a>
-        <a class="weui-tabbar__item">
-            <img src="/images/opportunity/uploadFile.svg" class="weui-tabbar__icon">
-            <p class="weui-tabbar__label">上传附件</p>
-        </a>
+
+        <div class="top-bar" style="height: 30px">
+
+            <span style="height: 30px;display: inline-block ;padding-top: 5px;">选择项目负责人</span>
+
+            <span class="pull-right" style="margin-top: 7px; color: #28b3ff; margin-right: 15px;"
+                  @click="confirm"> 选择 &nbsp; </span>
+            <span style="float:right;margin-top: 7px;margin-right: 20px" @click="search">
+                                    <img src="/images/search.svg"/>
+                                </span>
+        </div>
+
+        <div class="list">
+            <div class="page__bd">
+                <div style="height: 50px;"></div>
+                <div v-if="searchBar">
+                    <div class="weui-search-bar" id="searchBar">
+                        <div class="weui-search-bar__form">
+                            <div class="weui-search-bar__box">
+                                <i class="weui-icon-search"></i>
+                                <input type="text" class="weui-search-bar__input" id="searchInput"
+                                       placeholder="搜索" v-model="keyWord">
+                                <a href="javascript:" class="weui-icon-clear" id="searchClear"
+                                   @click="clear"></a>
+                            </div>
+                            <label class="weui-search-bar__label" id="searchText" @click="text"
+                                   style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                                <i class="weui-icon-search"></i>
+                                <span>搜索</span>
+                            </label>
+                        </div>
+                        <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel"
+                           @click="cancel">取消</a>
+                    </div>
+                </div>
+                <div class="weui-cells weui-cells_radio" style="margin-top: 1px">
+                    <div v-for=" user in userList">
+                        <div></div>
+                        <label class="weui-cell weui-check__label">
+                            <div class="weui-cell__bd">
+                                <p>{{user.crmUserName}}</p>
+                            </div>
+                            <div class="weui-cell__ft">
+                                <input type="radio" class="weui-check" name="radio1" id="x11" :value="user.userId" v-model="chosenExe"/>
+                                <span class="weui-icon-checked"></span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--BEGIN toast-->
+        <div id="toast" style="display: none;">
+            <div class="weui-mask_transparent"></div>
+            <div class="weui-toast">
+                <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                <p class="weui-toast__content">指派成功</p>
+            </div>
+        </div>
+        <!--end toast-->
     </div>
 
 </div>

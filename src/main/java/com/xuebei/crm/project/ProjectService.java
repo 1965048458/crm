@@ -22,6 +22,12 @@ public interface ProjectService {
 
     void updateRefund(Refund refund);
 
+    void refuseProject(Integer projectId);
+
+    void passProject(Integer projectId);
+
+    void assignLeader(Integer projectId, String leadaer);
+
     ProjectStart getProjectStart(Integer projectId,  String userId);
 
     Contract getContract(Integer projectId);
