@@ -67,4 +67,6 @@ public interface ProjectMapper {
 
     void setSupportLeader(@Param("userId")String userId,@Param("supportId")Integer supportId,@Param("leaderId")String leaderId);
 
+    void modifyProject(Opportunity opportunity);
+
 }

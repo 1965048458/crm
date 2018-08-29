@@ -50,6 +50,8 @@ $(document).ready(function () {
                         thisVue.$set(thisVue, 'agent', result.project.agent);
                         thisVue.$set(thisVue, 'deliverDate', result.project.clinchDate.substring(0,11));
                         thisVue.$set(thisVue, 'amount', result.project.amount);
+                        thisVue.$set(thisVue, 'lastStatus', result.project.status);
+                        thisVue.$set(thisVue, 'status', thisVue.stages[result.project.status]);
                         thisVue.$set(thisVue, 'projectName', result.project.projectName);
                         if (result.project.projectContacts != null) {
                             thisVue.$set(thisVue, 'contact', result.project.projectContacts);
@@ -62,17 +64,17 @@ $(document).ready(function () {
             'detailSubmit': function () {
                 var thisVue = this;
                 var postData = {
-                    opportunityId: thisVue.opportunity.opportunityId,
-                    opportunityName: this.opportunityName,
-                    salesStatus: this.lastStage,
+                    opportunityId: jQuery("#projectId").val(),
+                    opportunityName: this.projectName,
+                    salesStatus: this.lastStatus,
                     amount: this.amount,
-                    checkDate: this.preDate,
                     clinchDate: this.deliverDate,
                     content: this.content,
+                    agent:this.agent
                 };
                 $.ajax({
                     type: 'post',
-                    url: '/opportunity/modification',
+                    url: '/project/modification',
                     data: JSON.stringify(postData),
                     dataType: 'json',
                     contentType: 'application/json',
@@ -82,14 +84,6 @@ $(document).ready(function () {
                         $('#toast').fadeIn(100);
                         setTimeout(function () {
                             $('#toast').fadeOut(100);
-                            thisVue.showDetailResult();
-                            $("#detailBox").css('border-bottom', 'solid 2px #38A4F2');
-                            $("#detail").css('color', '#38A4F2');
-                            $("#relevantBox").removeAttr("style");
-                            $("#relevant").css('color', 'black');
-                            $("#modifBox").removeAttr("style");
-                            $("#modif").css('color', 'black');
-                            thisVue.show = 'home';
                             history.back();
                         }, 1000);
                     }
@@ -126,7 +120,7 @@ $(document).ready(function () {
                 }
                 this.status = this.stages[this.selStage];
                 this.lastStatus = this.selStage;
-                this.showPage = 'addProject';
+                this.show = 'modif';
             },
         },
     });

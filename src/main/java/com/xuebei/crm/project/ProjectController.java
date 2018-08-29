@@ -346,18 +346,6 @@ public class ProjectController {
         return gsonView;
     }
 
-    //todo
-    @RequestMapping("modification")
-    public GsonView modificationOpportunity(@RequestBody Opportunity opportunity,
-                                            HttpServletRequest request) {
-        String userId = (String) request.getSession().getAttribute("userId");
-        opportunity.setUserId(userId);
-        opportunityService.modifyOpportunity(opportunity);
-        GsonView gsonView = new GsonView();
-        gsonView.addStaticAttribute("successFlg", true);
-        return gsonView;
-    }
-
     @RequestMapping("modify/projectDetail")
     public  GsonView projectDetail (@RequestParam("projectId")String projectId,
                                     HttpServletRequest request){
@@ -365,6 +353,17 @@ public class ProjectController {
         GsonView gsonView = new GsonView();
         ProjectDetail project =projectService.getProjectDetail(projectId);
         gsonView.addStaticAttribute("project",project);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
+
+    @RequestMapping("modification")
+    public GsonView modificationOpportunity(@RequestBody Opportunity opportunity,
+                                            HttpServletRequest request) {
+        String userId = (String) request.getSession().getAttribute("userId");
+        opportunity.setUserId(userId);
+        projectService.modifyProject(opportunity);
+        GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }

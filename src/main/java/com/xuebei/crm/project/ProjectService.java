@@ -58,7 +58,7 @@ public interface ProjectService {
 
     void setSupportLeader(String userId,Integer supportId,String leaderId);
 
-
+    void modifyProject(Opportunity opportunity);
 
 
 }

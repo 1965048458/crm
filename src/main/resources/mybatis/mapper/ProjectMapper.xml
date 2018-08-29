@@ -416,6 +416,18 @@
         update support s set s.leader =#{leaderId},s.updater_id = #{userId},s.update_ts= NOW() where s.support_id =#{supportId}
     </update>
 
+    <update id="modifyProject" parameterType="com.xuebei.crm.opportunity.Opportunity">
+        UPDATE sales_opportunity SET
+        opportunity_nm =#{opportunityName},
+        sales_status=#{salesStatus},
+        amount = #{amount},
+        clinch_date =#{clinchDate},
+        content=#{content},
+        agent = #{agent},
+        updater_id= #{userId} ,
+        update_ts= NOW()
+        WHERE sales_opportunity_id =#{opportunityId}
+    </update>
 
 
 </mapper>

@@ -197,5 +197,8 @@ public class ProjectServiceImpl implements ProjectService{
         projectMapper.setSupportLeader(userId,supportId,leaderId);
     }
 
-
+    @Override
+    public void modifyProject(Opportunity opportunity) {
+        projectMapper.modifyProject(opportunity);
+    }
 }
