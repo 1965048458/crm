@@ -451,7 +451,7 @@
         LIMIT 1;
     </select>
 
-    <update id="updateEnclosureApplyEndTs" parameterType="java.lang.String">
+    <update id="updateEnclosureApplyEndTs">
         UPDATE enclosure_apply AS ea
         SET ea.apply_end_ts = date_add(NOW(), INTERVAL 3 MONTH),
             ea.update_ts    = NOW(),

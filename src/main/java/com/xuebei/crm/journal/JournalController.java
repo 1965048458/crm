@@ -1,6 +1,7 @@
 package com.xuebei.crm.journal;
 
 import com.xuebei.crm.company.CompanyMapper;
+import com.xuebei.crm.customer.CustomerMapper;
 import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
@@ -37,6 +38,9 @@ public class JournalController {
     @Autowired
     private JournalMapper journalMapper;
 
+    @Autowired
+    private CustomerMapper customerMapper;
+
     private String acquireUserId(HttpServletRequest request) throws AuthenticationException {
         String userId = (String) request.getSession().getAttribute("userId");
         if (userId == null) {
@@ -61,6 +65,12 @@ public class JournalController {
             } else {
                 // 插入新日志
                 journalService.createJournal(journal);
+                List<String> deptIdList = journalMapper.queryDeptIdByJournalId(journal.getJournalId());
+                String userId = (String)request.getSession().getAttribute("userId");
+                for(String deptId:deptIdList){
+                    customerMapper.updateEnclosureApplyEndTs(userId,deptId);
+                }
+
             }
         } catch (InformationNotCompleteException | AuthenticationException e) {
             GsonView failedView = new GsonView();

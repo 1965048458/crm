@@ -291,5 +291,28 @@
         SELECT user_id FROM company_user
 		WHERE leader_id = #{userId};
     </select>
+    
+    <select id="queryDeptIdByJournalId" resultType="java.lang.String">
+        select p2.des_id from
+            (select t2.contacts_id from
+                (select r1.journal_id,r1.user_id, r2.visit_log_id
+                 from journal as r1
+                     inner join visit_log as r2
+                         on r1.journal_id = r2.journal_id
+                 where r1.journal_id = #{journalId}) as t1
+                left join visit_contacts as t2
+                    on t1.visit_log_id = t2.visit_log_id) as p1
+            inner join
+            (select t1.contacts_id,t2.customer_dept_id,t2.des_id from contacts as t1
+                left join
+                ((select customer_dept_id,prt_id as des_id from customer_dept
+                where prt_id is not null)
+                 union
+                 (select customer_dept_id,customer_dept_id as des_id from customer_dept
+                 where prt_id is null)) as t2
+                    on t1.customer_dept_id = t2.customer_dept_id) as p2
+                on p1.contacts_id = p2.contacts_id
+
+    </select>
 
 </mapper>
