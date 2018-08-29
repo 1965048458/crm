@@ -255,15 +255,15 @@
                 </div>
 
                 <div id="journalDetail" v-show="showPage === 'journalDetail'">
-                    <div class="top-bar">
 
-                        <div class="top-bar" style="height: 40px;">
+
+                        <div class="top-bar" style="height: 40px;padding: 0px 0px;">
                             <span @click="backToList" class="pull-left" style="margin-top: 4px;"><img
                                     src="/images/back_icon.svg"
                                     style="margin-top:3px"/></span>
                             <span style="display:block;padding-top:3px" v-text="journalName(curJournal)"></span>
                         </div>
-                    </div>
+
                     <div id="journalContent">
                         <div class="weui-panel__bd" style=" height: 40px;margin-top: 10px">
                             <a href="javascript:;" class="weui-media-box weui-media-box_appmsg"
