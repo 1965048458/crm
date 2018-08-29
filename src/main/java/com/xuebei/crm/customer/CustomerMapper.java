@@ -14,8 +14,21 @@ public interface CustomerMapper {
     Boolean isUserHasCustomer(@Param("userId") String userId,
                               @Param("customerId") String customerId);
 
-    Boolean isDepartNameExist(@Param("customerId") String customerId,
+    Boolean isTopDepartNameExist(@Param("customerId") String customerId,
                                  @Param("departmentName") String departmentName);
+
+    Boolean isSubDepartNameExist(@Param("prtId")String parentId,
+                                 @Param("departmentName")String departmentName);
+
+
+    Department searchDeptByName(@Param("customerId") String customerId,
+                                @Param("departmentName")String departmentName);
+
+    void updateDept(@Param("website")String website,
+                          @Param("profile") String profile,
+                          @Param("deptId") String deptId);
+
+
 
     void insertDepartment(Department department);
 
@@ -47,6 +60,9 @@ public interface CustomerMapper {
 
 
     List<Contacts> queryContacts(@Param("customerId") String customerId);
+
+    void updateEnclosureApply(@Param("deptId") String deptId,
+                              @Param("userId") String userId);
 
     void insertEnclosureApply(EnclosureApply enclosureApply);
 

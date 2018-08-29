@@ -102,10 +102,10 @@ jQuery(document).ready(function () {
             'applySubmit':function () {
                 var thisVue = this;
                 jQuery.ajax({
-                    type:'post',
+                    type:'get',
                     url:'/customer/organization/apply',
                     data:{
-                        submitReasons:this.submitReasons,
+                        applyReasons:this.submitReasons,
                         applyDeptId:this.applyDeptId,
                     },
                     dataType:'json',
@@ -127,7 +127,7 @@ jQuery(document).ready(function () {
             'submitDialogCheck':function () {
                 this.showSubmitDialog = false;
                 this.submitReasons = '';
-                this.showPage= 'showCustomerOrganization';
+                this.searchOrganizations();
             },
             'openSea2Organization':function () {
                 this.showPage = 'showCustomerOrganization';

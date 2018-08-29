@@ -111,12 +111,34 @@
         WHERE company_user.user_id = #{userId} AND company_customer.customer_id = #{customerId};
     </select>
 
-    <select id="isDepartNameExist" resultType="java.lang.Boolean">
-        SELECT COUNT(customer_id)
+    <select id="isSubDepartNameExist" resultType="java.lang.Boolean">
+        SELECT COUNT(customer_dept_id)
+        FROM customer_dept
+        WHERE prt_id = #{prtId}
+        AND department_nm = #{departmentName};
+    </select>
+
+    <select id="isTopDepartNameExist" resultType="java.lang.Boolean">
+        SELECT COUNT(customer_dept_id)
         FROM customer_dept
         WHERE customer_id = #{customerId}
-              AND department_nm = #{departmentName};
+        AND department_nm = #{departmentName};
     </select>
+    
+    <select id="searchDeptByName" resultMap="deptMap">
+        select *
+        from customer_dept
+        WHERE  customer_id=#{customerId}
+        AND department_nm=#{departmentName};
+    </select>
+    
+    <update id="updateDept">
+        UPDATE customer_dept
+        set website=#{website},
+            profile=#{profile}
+        WHERE customer_dept_id=#{deptId};
+
+    </update>
 
     <insert id="insertDepartment" parameterType="com.xuebei.crm.customer.Department">
         INSERT INTO customer_dept (
@@ -269,6 +291,20 @@
             LEFT JOIN crm_customer cu ON cd.customer_id = cu.customer_id
         WHERE cd.customer_id = #{customerId}
     </select>
+
+    <update id="updateEnclosureApply" >
+        UPDATE enclosure_apply
+        SET apply_ts=NOW(),
+            customer_dept_id=#{deptId},
+            user_id= #{userId},
+            apply_reason= '机构编辑申请',
+            apply_start_ts=NOW(),
+            apply_end_ts=date_add(NOW(), INTERVAL 3 MONTH),
+            status_cd= 'APPLYING',
+            updater_id=#{userId},
+            update_ts= NOW()
+        WHERE customer_dept_id=#{deptId}
+    </update>
 
     <insert id="insertEnclosureApply" parameterType="com.xuebei.crm.customer.EnclosureApply">
         INSERT INTO enclosure_apply (

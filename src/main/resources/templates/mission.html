@@ -324,11 +324,7 @@
                             </div>
                         </div>
 
-
-
                         <span v-if="admin">
-
-
 
                                 <span v-if="curSupport.leaderName== undefined">
                                     <div></div>
@@ -514,7 +510,8 @@
 
     <div id="executor" v-show="show ==='chooseExe'" style="display: none">
 
-
+        <div class="weui-tab">
+            <div class="navi-bar">
         <div class="top-bar" style="height: 30px">
                         <span @click="chooseBack" class="pull-left">
                                 <img src="/images/back_icon.svg"
@@ -529,7 +526,7 @@
                                     <img src="/images/search.svg"/>
                                 </span>
         </div>
-
+            </div>
         <div class="list">
             <div class="page__bd">
                 <div v-if="searchBar">
@@ -552,6 +549,9 @@
                            @click="cancel">取消</a>
                     </div>
                 </div>
+
+                <div class="weui-tab__panel" style="padding-top: 25px; background: #FFFFFF;">
+                    <div style="height: 25px;"></div>
                 <div class="weui-cells weui-cells_radio" style="margin-top: 1px">
                     <div v-for=" user in userList">
                         <div></div>
@@ -567,8 +567,9 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
-
+        </div>
 
     </div>
 
