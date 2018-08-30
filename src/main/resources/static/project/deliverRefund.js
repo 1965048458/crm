@@ -12,11 +12,11 @@ $(document).ready(function () {
         data: {
             selected: [],
             refundDate: '',
-            deliverDate: '请选择',
             pays: [{
                 refundId: '',
                 refundNum: '',
-                time: ''
+                time: '',
+                isRefunded: ''
             }],
             contract: {
                 contractId: '',
@@ -57,6 +57,11 @@ $(document).ready(function () {
                             thisVue.advancePay = thisVue.contract.advancePay;
                             thisVue.advanceTime = thisVue.contract.advanceTime;
                             thisVue.id = thisVue.projectStart.id;
+                            for(var i in thisVue.pays){
+                                if (thisVue.pays[i].isRefunded == 1){
+                                    thisVue.selected.push(thisVue.pays[i].refundId);
+                                }
+                            }
                         }
                     }
                 });
@@ -77,23 +82,7 @@ $(document).ready(function () {
                 }
                 return style;
             },
-            'deliverDatePicker': function () {
-                var thisVue = this;
-                const nowDate = new Date();
-                weui.datePicker({
-                    start: 1990,
-                    end: 2030,
-                    defaultValue: [nowDate.getFullYear(), nowDate.getMonth() + 1, nowDate.getDate()],
-                    onChange: function (result) {
-                        console.log(result);
-                    },
-                    onConfirm: function (result) {
-                        thisVue.deliverDate = result[0] + '-' + handleTime(result[1]) + '-' + handleTime(result[2]);
-                        console.log(thisVue.deliverDate);
-                    }
-                });
-            },
-            'refundDatePicker':function () {
+            'refundDatePicker':function (index) {
                 var temp = this;
                 const nowDate = new Date();
                 weui.datePicker({
@@ -105,9 +94,8 @@ $(document).ready(function () {
                     },
                     onConfirm: function (result) {
                         var t = result[0] + '-' + handleTime(result[1]) + '-' + handleTime(result[2]);
-                        temp.deliverDate = t;
-                        //temp.$set(temp.pays[index], 'time', t);
-                        //console.log(temp.pays[index].time);
+                        temp.$set(temp.pays[index], 'time', t);
+                        console.log(temp.pays[index].time);
                     }
                 });
             },
@@ -115,20 +103,25 @@ $(document).ready(function () {
                 return this.character[index];
             },
             'confirm': function () {
-                console.log(this.pays);
-                var str = '';
                 for(var i in this.selected){
-                    str += this.selected[i] + ',';
+                    for(var j in this.pays){
+                        if (this.selected[i] === this.pays[j].refundId){
+                            this.pays[j].isRefunded = 1;
+                        }
+                    }
                 }
+                console.log(this.pays);
                 var thisVue = this;
+                var postData = {
+                    projectId: thisVue.projectId,
+                    refunds: thisVue.pays
+                };
                 $.ajax({
-                    type: 'get',
+                    type: 'post',
                     url: '/project/submitRefund',
-                    data: {
-                        refunds: str,
-                        projectId: thisVue.projectId
-                    },
+                    data: JSON.stringify(postData),
                     dataType: 'json',
+                    contentType: 'application/json',
                     cache: false
                 }).done(function (result) {
                     if (result.successFlg) {

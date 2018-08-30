@@ -58,8 +58,18 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public void isRefunded(Integer projectId, Integer refundId) {
-        projectMapper.isRefunded(projectId, refundId);
+    public void isRefunded(Refund refund) {
+        projectMapper.isRefunded(refund);
+    }
+
+    @Override
+    public void refundProject(Integer projectId) {
+        projectMapper.refundProject(projectId);
+    }
+
+    @Override
+    public void endProject(Integer projectId) {
+        projectMapper.endProject(projectId);
     }
 
     @Override
@@ -135,6 +145,16 @@ public class ProjectServiceImpl implements ProjectService{
         projectDetail.setFollowUpRecords(records);
         List<Support> supports = projectMapper.querySupportsByProjectId(projectId);
         projectDetail.setProjectSupports(supports);
+
+        Integer allRefunds = projectMapper.getRefundStage(Integer.parseInt(projectId), 2);
+        Integer hasRefunded = projectMapper.getRefundStage(Integer.parseInt(projectId), 1);
+        String str = hasRefunded + "/" + allRefunds;
+        projectDetail.setRefundStage(str);
+
+        if(allRefunds == hasRefunded){
+            projectDetail.setDone(true);
+        }
+
         return projectDetail;
     }
 

@@ -189,6 +189,13 @@ public class ProjectController {
         return "deliverRefund";
     }
 
+    @RequestMapping("/endProject")
+    public GsonView endProject(@RequestParam("projectId") Integer projectId){
+        projectService.endProject(projectId);
+        GsonView gsonView = GsonView.createSuccessView();
+        return  gsonView;
+    }
+
     @RequestMapping("/projectCheck")
     public String checkProject(@RequestParam(value = "projectId") Integer projectId,
                                ModelMap modelMap){
@@ -262,13 +269,14 @@ public class ProjectController {
     }
 
     @RequestMapping("/submitRefund")
-    public GsonView submitRefund(@RequestParam("projectId") Integer projectId, @RequestParam("refunds") String refunds) {
+    public GsonView submitRefund(@RequestBody ProjectStart projectStart) {
         GsonView gsonView = new GsonView();
-
-        String[] refund = refunds.split(",");
-        for (String s : refund){
-            projectService.isRefunded(projectId, Integer.parseInt(s));
+        Integer projectId = projectStart.getProjectId();
+        List<Refund> refunds = projectStart.getRefunds();
+        for (Refund s : refunds){
+            projectService.isRefunded(s);
         }
+        projectService.refundProject(projectId);
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }

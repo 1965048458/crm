@@ -103,6 +103,21 @@ jQuery(document).ready(function () {
                     });
                 }
             },
+            'endProject':function () {
+                var thisVue = this;
+                $.ajax({
+                    type: 'get',
+                    url: '/project/endProject',
+                    data: {
+                        projectId: thisVue.projectId
+                    },
+                    dataType: 'json',
+                    cache : false,
+                    success: function () {
+                        location.reload(true);
+                    }
+                });
+            },
             'clear': function () {
                 this.keyWord = '';
                 $('#searchInput').focus();
@@ -124,7 +139,6 @@ jQuery(document).ready(function () {
             },
             'confirm': function () {
                 var thisVue = this;
-                thisVue.projectId = $("#salesOpportunityId").val();
                 $.ajax({
                     type: 'get',
                     url: '/project/assignLeader',

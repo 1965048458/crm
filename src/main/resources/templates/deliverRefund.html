@@ -86,7 +86,7 @@
                 </div>
             </div>
 
-            <div class="weui-cells weui-cells_form">
+            <div class="weui-cells">
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label for="" class="weui-label label">交付时间</label></div>
                     <div class="weui-cell__bd">
@@ -114,15 +114,6 @@
                     </div>
                 </div>
 
-                <a class="weui-cell weui-cell_access" @click="deliverDatePicker">
-                    <div class="weui-cell__bd">
-                        <p>交付日期</p>
-                    </div>
-                    <div class="weui-cell__ft">
-                        <span v-text="deliverDate"></span>
-                    </div>
-                </a>
-
                 <div class="weui-cells weui-cells_checkbox" v-for="(pay, index) in pays" :key="'refunds_' + index">
                     <label class="weui-cell weui-check__label">
                         <div class="weui-cell__hd" style="padding-left: 20px;">
@@ -146,7 +137,7 @@
                         <div class="weui-cell__bd label_2"><img style="width: 20px; height: 15px;" src="/images/project/payCondition.png"/> &nbsp; 回款时间:
                         </div>
                         <div class="weui-cell__ft">
-                            <span v-text=""></span>
+                            <span v-text="pay.time"></span>
                         </div>
                     </a>
                 </div>

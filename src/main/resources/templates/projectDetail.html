@@ -156,11 +156,24 @@
 
                     <th:block th:if="${projectDetail.getProgress() != 100}">
                         <span class="pull-right" style="color: #00A4FF; opacity: 0.5;" >
-                            <img style="width: 25px; height:18px;" src="/images/project/refund.png"/> 交付及回款&nbsp;&nbsp;</span>
+                            <img style="width: 25px; height:18px;" src="/images/project/refund.png"/>&nbsp;&nbsp; 交付及回款&nbsp;&nbsp;</span>
                     </th:block>
                     <th:block th:if="${projectDetail.getProgress() == 100}">
                         <span class="pull-right" style="color: #00A4FF;" @click="refund">
-                            <img style="width: 25px; height:18px;" src="/images/project/refund.png"/> 交付及回款&nbsp;&nbsp;</span>
+                            <img style="width: 25px; height:18px;" src="/images/project/refund.png"/>&nbsp;&nbsp; 交付及回款&nbsp;&nbsp;</span>
+                    </th:block>
+                </th:block>
+                <th:block th:if="${ projectDetail.getStatus() == '2' &&  projectDetail.getCreatorId() == projectDetail.getUserId() }">
+                    (&nbsp;<span class="pro-status-content" style="color: #00A4FF;" th:text="${projectDetail.getRefundStage()}"></span>&nbsp;)
+                    <th:block th:if="${projectDetail.getProgress() == 100}">
+                        <th:block th:if="${ !projectDetail.getDone()}">
+                            <span class="pull-right" style="color: #00A4FF;" @click="refund">
+                            <img style="width: 25px; height:18px;" src="/images/project/refund.png"/>&nbsp;&nbsp; 更新回款进度&nbsp;&nbsp;</span>
+                        </th:block>
+                        <th:block th:if="${ projectDetail.getDone()}">
+                            <span class="pull-right" style="color: #00A4FF;" @click="endProject">
+                            <img style="width: 25px; height:18px;" src="/images/project/endProject.png"/>&nbsp;&nbsp; 结束项目&nbsp;&nbsp;</span>
+                        </th:block>
                     </th:block>
                 </th:block>
                 <th:block th:if="${projectDetail.getCreatorId() == projectDetail.getUserId() && projectDetail.getStatus() == '0'}">
@@ -181,7 +194,7 @@
                 </th:block>
                 <th:block th:if="${projectDetail.getLeaderId() == projectDetail.getUserId() && projectDetail.getStatus() == '1' && projectDetail.getProgress() != 100}">
                     <span class="pull-right" style="color: #00A4FF;" @click="updateProgress">
-                        <img style="width: 25px; height:18px;" src="/images/project/update.png"/> {{btnText}}&nbsp;&nbsp;</span>
+                        <img style="width: 25px; height:18px;" src="/images/project/update.png"/>&nbsp;{{btnText}}&nbsp;&nbsp;</span>
                 </th:block>
             </div>
 
