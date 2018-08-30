@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class GsonView extends AbstractView {
 
-    private static Logger  logger = LoggerFactory.getLogger(GsonView.class);
+    private static Logger logger = LoggerFactory.getLogger(GsonView.class);
 
     private String datePattern = "yyyy-MM-dd HH:mm:ss";
     /** Default content type. Overridable as bean property. */
