@@ -409,6 +409,10 @@ public class CustomerController {
                                @RequestParam("delayApplyReasons") String reasons,
                                HttpServletRequest request){
         GsonView gsonView = new GsonView();
+        reasons.trim();
+        if(StringUtils.isEmptyOrWhitespace(reasons)){
+            return GsonView.createErrorView("申请理由不能为空");
+        }
         String userId = (String) request.getSession().getAttribute("userId");
         deptService.enclosureDelayApply(deptId,userId,reasons);
         gsonView.addStaticAttribute("successFlg",true);

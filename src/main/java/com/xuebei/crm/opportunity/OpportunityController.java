@@ -8,6 +8,8 @@ import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.journal.VisitRecord;
 import com.xuebei.crm.member.Member;
 import com.xuebei.crm.member.MemberServiceImpl;
+import com.xuebei.crm.project.ProjectContacts;
+import com.xuebei.crm.project.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -41,6 +43,8 @@ public class OpportunityController {
     private OpportunityMapper opportunityMapper;
     @Autowired
     private CompanyMapper companyMapper;
+    @Autowired
+    private ProjectService projectService;
 
 
     @InitBinder
@@ -172,7 +176,7 @@ public class OpportunityController {
         if(opportunity.getClinchDate()!=null){
             opportunity.setClinchDateString(opportunity.getClinchDateString());
         }
-        Contacts contact =customerService.queryOpportunityDetail(opportunityId);
+        ProjectContacts contact =projectService.getProjectDetail(opportunityId).getProjectContacts();
         gsonView.addStaticAttribute("opportunity", opportunity);
         gsonView.addStaticAttribute("opportunityId", opportunityId);
         String creatorName = opportunityService.queryOpportunityCreator(opportunityId);

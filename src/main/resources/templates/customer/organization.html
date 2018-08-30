@@ -225,15 +225,6 @@
                     <span>{{warningDetails.createdTime}}</span>
                 </div>
             </div>
-            <!--<div class="weui-cell">-->
-                <!--<div class="weui-cell__hd" style="color: #101010;font-size: 16px;">-->
-                    <!--<span>跟进次数 : </span>-->
-                <!--</div>-->
-                <!--<div class="weui-cell__bd">-->
-                    <!--<span style="color: #3DA8F4;font-size: 16px;">{{warningDetails.times}}</span>-->
-                    <!--<span style="color: #101010;font-size: 16px;">次</span>-->
-                <!--</div>-->
-            <!--</div>-->
             <div class="weui-cell">
                 <div class="weui-cell__hd" style="color: #101010;font-size: 16px;">
                     <span>最后跟进 : </span>
@@ -257,10 +248,12 @@
             </div>
         </div>
 
-        <div class="weui-cell">
-            <div class="weui-cell__bd">
-                <textarea class="weui-textarea" style="font-size:16px "
+        <div class="weui-cells" style="margin-top: 15px">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" style="font-size:16px "
                           placeholder="请输入延期理由" rows="5" v-model="delayApplyReasons"></textarea>
+                </div>
             </div>
         </div>
 

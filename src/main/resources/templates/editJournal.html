@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>WeUI</title>
+    <title>填写日志</title>
     <!-- 引入 WeUI -->
     <link rel="stylesheet" href="/weui.css"/>
     <link rel="stylesheet" href="/example.css"/>
@@ -142,61 +142,36 @@
             </div>
         </div>
 
-        <!--
-        <div class="weui-cells__title">发给谁</div>
-        <div class="weui-cells weui-cells_form">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <div v-for="(receiver, index) in receivers" :key="'receivers_' + index" class="weui-grid receiver-box">
-                        <div class="weui-grid__icon">
-                            <img :src="receiver.avatarUrl" alt="">
-                        </div>
-                        <span class="receiver-name" v-text="receiver.realName"></span>
-                    </div>
-                    <div class="weui-grid receiver-box" @click="editReceivers">
-                        <div class="weui-grid__icon">
-                            <img src="/images/journal/plus.png" alt="">
-                        </div>
-                        <span class="receiver-name">修改</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        -->
-
-        <br>
-
         <button @click="submitJournal" class="weui-btn weui-btn_primary">提交</button>
     </div>
 
     <div v-show="showPage === 'selectContacts'" id="selectContacts">
         <div class="top-bar">
-            <span @click="cancelSelectContacts" class="pull-left">取消</span>
+            <span @click="cancelSelectContacts" style="color: rgb(61, 168, 244); font-size: 16px;" class="pull-left">取消</span>
             <span>选择拜访客户</span>
-            <span @click="confirmSelectContacts" class="pull-right">完成</span>
+            <span @click="confirmSelectContacts" style="color: rgb(61, 168, 244); font-size: 16px;" class="pull-right">完成</span>
         </div>
 
         <div class="weui-cells weui-cells_form">
             <div v-for="(customer, index) in customers" :key="'customers_' + index">
-                <div class="weui-cell">
+                <div class="weui-cell" @click="changeContactsFold(index)">
                     <div class="weui-cell__bd">
                         <label v-text="customer.name"></label>
                     </div>
-                    <div @click="changeContactsFold(index)">
-                        <span>V</span>
+                    <div >
+                        <img :src="setImgPath(index)" id="customer.name+'_img'"/>
                     </div>
                 </div>
                 <div v-show="!customer.contactsFold" class="weui-cells_checkbox">
                     <label v-for="(contacts, index_2) in customer.contactsGroup"
-                           class="weui-cell weui-check__label" :for="'contacts_' + index + '-' + index_2">
+                           class="weui-cell weui-check__label">
                         <div class="weui-cell__bd">
                             <p v-text="contacts.realName"></p>
                         </div>
                         <div class="weui-cell__ft">
                             <input type="checkbox" class="weui-check"
                                    v-model="chosenContactsTmp"
-                                   :value="contacts"
-                                   :id="'contacts_' + index + '-' + index_2">
+                                   :value="contacts"/>
                             <i class="weui-icon-checked"></i>
                         </div>
                     </label>
@@ -208,9 +183,9 @@
 
     <div v-show="showPage === 'selectVisitType'" id="selectVisitType">
         <div class="top-bar">
-            <span @click="cancelSelectVisitType" class="pull-left">取消</span>
+            <span @click="cancelSelectVisitType" style="color: rgb(61, 168, 244); font-size: 16px;" class="pull-left">取消</span>
             <span>选择拜访类型</span>
-            <span @click="confirmSelectVisitType" class="pull-right">完成</span>
+            <span @click="confirmSelectVisitType" style="color: rgb(61, 168, 244); font-size: 16px;" class="pull-right">完成</span>
         </div>
 
         <div class="weui-cells_radio visit-type-sel" style="background:#ffffff;">
@@ -237,9 +212,9 @@
 
     <div v-show="showPage === 'selectOpportunity'" id="selectOpportunity">
         <div class="top-bar">
-            <span @click="cancelSelectOpportunity" class="pull-left">取消</span>
+            <span @click="cancelSelectOpportunity" style="color: rgb(61, 168, 244); font-size: 16px;" class="pull-left">取消</span>
             <span>选择商机</span>
-            <span @click="confirmSelectOpportunity" class="pull-right">完成</span>
+            <span @click="confirmSelectOpportunity" style="color: rgb(61, 168, 244); font-size: 16px;" class="pull-right">完成</span>
         </div>
 
         <div class="weui-cells_radio visit-type-sel" style="background:#ffffff;">
@@ -255,37 +230,6 @@
             </label>
         </div>
     </div>
-
-    <!--
-    <div v-show="showPage === 'selectReceiver'" id="selectReceiver">
-        <div class="top-bar">
-            <span @click="cancelSelectReceiver" class="pull-left">取消</span>
-            <span>选择日志接收人</span>
-            <span @click="confirmSelectReceiver" class="pull-right">完成</span>
-        </div>
-        <div id="receiverList">
-            <div class="weui-cells__title"><span>公司同事</span><span>(已选择{{receivers.length}}人)</span></div>
-            <div class="weui-cells weui-cells_form">
-                <div class="weui-cells_checkbox">
-                    <label v-for="(colleague, index) in colleagues" class="weui-cell weui-check__label"
-                           :for="'colleague' + colleague.userId">
-                        <div class="weui-cell__bd">
-                            <p v-text="colleague.realName">
-                                张三
-                            </p>
-                        </div>
-                        <div class="weui-cell__ft">
-                            <input type="checkbox" class="weui-check"
-                                   v-model="receiversTmp" :value="colleague"
-                                   :id="'colleague' + colleague.userId">
-                            <i class="weui-icon-checked"></i>
-                        </div>
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div>
-    -->
 
     <div style="display:none" id="draftDiv">
         <div class="weui-mask" id="iosMask" style="opacity: 1;"></div>

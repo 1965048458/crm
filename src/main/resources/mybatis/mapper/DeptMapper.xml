@@ -182,7 +182,10 @@
               WHERE a.customer_dept_id = #{deptId}
               AND a.status_cd = 'PERMITTED'
               AND a.apply_end_ts &gt; NOW()
-              ORDER BY a.update_ts)
+              ORDER BY a.update_ts DESC
+              LIMIT 1)
+            order by apply_ts DESC
+             limit 1
     </select>
 
 </mapper>

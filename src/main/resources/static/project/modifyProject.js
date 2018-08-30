@@ -48,7 +48,9 @@ $(document).ready(function () {
                         thisVue.$set(thisVue, 'project', result.project);
                         thisVue.$set(thisVue, 'content', result.project.content);
                         thisVue.$set(thisVue, 'agent', result.project.agent);
-                        thisVue.$set(thisVue, 'deliverDate', result.project.clinchDate.substring(0,11));
+                        if(result.project.clinchDate != null || result.project.clinchDate!= undefined){
+                            thisVue.$set(thisVue, 'deliverDate', result.project.clinchDate.substring(0,11));
+                        }
                         thisVue.$set(thisVue, 'amount', result.project.amount);
                         thisVue.$set(thisVue, 'lastStatus', result.project.status);
                         thisVue.$set(thisVue, 'status', thisVue.stages[result.project.status]);
@@ -84,7 +86,7 @@ $(document).ready(function () {
                         $('#toast').fadeIn(100);
                         setTimeout(function () {
                             $('#toast').fadeOut(100);
-                            history.back();
+                            window.location.href ='/project/projectDetail?projectId='+jQuery("#projectId").val();
                         }, 1000);
                     }
                 });
@@ -104,7 +106,7 @@ $(document).ready(function () {
                     }
                 });
             },
-            modifBack: function () {
+            'modifBack': function () {
               history.back();
             },
             'selStatus': function () {

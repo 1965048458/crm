@@ -80,5 +80,7 @@ public interface JournalMapper {
 
     List<String> querySubordinatesByUserId(@Param("userId") String userId);
 
+    List<String> queryDeptIdByJournalId(@Param("journalId") String journalId);
+
 
 }

@@ -42,7 +42,8 @@ jQuery(document).ready(function () {
            visitTypeTmp: 'VISIT',
            colleagues: [{userId: "userId1", realName: '用户1',avatarUrl: '/images/journal/defaultUserIcon.png'},
                {userId: "userId2", realName: '用户2', avatarUrl: '/images/journal/defaultUserIcon.png'}],
-           isJournalSubmitted: false
+           isJournalSubmitted: false,
+           imgPath:"/images/customer/fold.svg"
        },
        methods: {
            'backToList': function () {
@@ -60,23 +61,28 @@ jQuery(document).ready(function () {
                }
            },
            'doSaveJournal': function (postData) {
+               console.log(postData);
                var thisVue = this;
-               jQuery.ajax({
-                   type: 'post',
-                   url: '/journal/action/editSubmit',
-                   data: JSON.stringify(postData),
-                   dataType: 'json',
-                   contentType: 'application/json',
-                   cache: false
-               }).done(function (result){
-                   if (result.successFlg) {
-                       thisVue.doToList();
-                   } else {
-                       thisVue.errMsg = result.errMsg;
-                       thisVue.showErrMsg = true;
-                   }
-               });
-               this.isJournalSubmitted = true;
+                if(this.summary=='' && this.plan ==''){
+                    return;
+                }else {
+                    jQuery.ajax({
+                        type: 'post',
+                        url: '/journal/action/editSubmit',
+                        data: JSON.stringify(postData),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        cache: false
+                    }).done(function (result) {
+                        if (result.successFlg) {
+                            thisVue.doToList();
+                        } else {
+                            thisVue.errMsg = result.errMsg;
+                            thisVue.showErrMsg = true;
+                        }
+                    });
+                    this.isJournalSubmitted = true;
+                }
            },
            'doToList': function () {
                window.location = '/journal/toList';
@@ -98,6 +104,13 @@ jQuery(document).ready(function () {
            'changeContactsFold': function (index) {
                this.customers[index].contactsFold = !this.customers[index].contactsFold;
            },
+           'setImgPath':function (index) {
+               if(this.customers[index].contactsFold){
+                   return "/images/customer/fold.svg";
+               }else {
+                   return"/images/customer/unfold.svg";
+               }
+           },
            'choseVisitType': function (index) {
                this.curVisit = this.visits[index];
                this.visitTypeTmp = this.curVisit.visitType;
@@ -115,9 +128,11 @@ jQuery(document).ready(function () {
            'cancelSelectContacts': function () {
                this.$set(this, 'chosenContactsTmp', []);
                this.showPage = 'journalPage';
+               this.curVisit.chosenContacts = [];
            },
            'confirmSelectContacts': function () {
                this.curVisit.chosenContacts = this.chosenContactsTmp;
+               console.log(this.chosenContactsTmp);
                this.$set(this, 'chosenContactsTmp', []);
                this.showPage = 'journalPage';
            },
@@ -210,6 +225,9 @@ jQuery(document).ready(function () {
                this.curVisit.opportunityId = this.opportunityTmp;
                this.opportunityTmp = '';
                this.showPage = 'journalPage';
+           },
+           'onTransferValue': function (contactsInfo) {
+               this.chosenContactsTmp=this.chosenContactsTmp.concat(contactsInfo);
            }
        },
        computed: {
@@ -227,6 +245,38 @@ jQuery(document).ready(function () {
            },
            'planPlaceHolder': function () {
                return "请输入" + planLabels[this.journalType];
+           }
+       },
+       components:{
+           'customer':{
+               template:'#customer',
+               props:['customer','index'],
+               data:function () {
+                   return{
+                       chosenContactsTmp:[],
+                       showSub:false,
+                       imgPath:"/images/customer/fold.svg"
+                   }
+               },
+               methods:{
+                   'changeSubFold' : function () {
+                       this.showSub = !this.showSub;
+                       this.setImgPath();
+                   },
+                   'setImgPath':function () {
+                       if(this.showSub == false){
+                           this.imgPath = "/images/customer/fold.svg";
+                       }else {
+                           this.imgPath = "/images/customer/unfold.svg";
+                       }
+                   }
+               },
+               watch: {
+                   'chosenContactsTmp': function () {
+
+                       this.$emit('transfer_value', this.chosenContactsTmp);
+                   }
+               }
            }
        }
    });

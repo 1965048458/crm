@@ -110,4 +110,7 @@ public interface CustomerMapper {
 
     List<FollowUpRecord> queryFollowUpRecordsByProjectId(@Param("projectId") String projectId);
 
+    void updateEnclosureApplyEndTs(@Param("userId") String userId,
+                                   @Param("deptId") String deptId);
+
 }

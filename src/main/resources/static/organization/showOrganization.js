@@ -17,7 +17,7 @@ jQuery(document).ready(function () {
             applyDeptName:'',
             applyDeptId:'',
             applyReasons:'',
-            delayApplyReasons:'gggg',
+            delayApplyReasons:'',
             showSubmitDialog:false,
             showSubmitErrDialog:false,
             showSearchResult:false,
@@ -130,6 +130,7 @@ jQuery(document).ready(function () {
                 this.searchOrganizations();
             },
             'openSea2Organization':function () {
+                this.delayApplyReasons='';
                 this.showPage = 'showCustomerOrganization';
             },
             'openSeaWarningDetail':function (warning) {
@@ -167,9 +168,8 @@ jQuery(document).ready(function () {
             },
             'delayApplyDialogCheck':function () {
                 this.showDelayApplyDialog=false;
-                //
-                //this.searchOrganizations();
-                this.showPage='showCustomerOrganization';
+                this.searchOrganizations();
+                this.delayApplyReasons='';
             },
             'delayApplyErrDialogCheck':function () {
                 this.showDelayApplyErrDialog = false;
