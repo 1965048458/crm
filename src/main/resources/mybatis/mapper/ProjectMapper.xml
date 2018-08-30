@@ -280,7 +280,7 @@
     <select id="queryOpportunitiesByUserId" resultMap="opportunityMap">
         SELECT sales_opportunity_id, opportunity_nm
         FROM sales_opportunity
-        WHERE user_id = #{userId};
+        WHERE user_id = #{userId} AND has_delete = 0;
     </select>
 
     <select id="queryOpportunityNameByOpportunityId" resultType="java.lang.String">
