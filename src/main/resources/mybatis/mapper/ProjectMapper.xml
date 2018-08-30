@@ -255,9 +255,9 @@
             </foreach>)
             OR (s.leader = #{userId} AND ps.status = 'permitted'))
         </if>
-        <if test="isAdmin == 'ADMIN'">
-            AND ps.status != 'refused'
-        </if>
+        <!--<if test="isAdmin == 'ADMIN'">-->
+            <!--OR ps.status != 'refused'-->
+        <!--</if>-->
         <if test="startTime != null">
             AND s.create_ts &gt; #{startTime}
         </if>
