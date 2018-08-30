@@ -218,10 +218,20 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
-    public List<JournalCustomer> getAllContacts(String companyId) {
+    public List<JournalCustomer> getAllContacts(String companyId,String userId) {
         List<JournalCustomer> customerList = journalMapper.queryJournalCustomersByCompanyId(companyId);
-        for (JournalCustomer customer: customerList) {
-            customer.setContactsGroup(journalMapper.queryContactsByCustomerId(customer.getCustomerId()));
+        for(JournalCustomer customer:customerList){
+            try{
+                String customerId = customer.getCustomerId();
+                List<String> deptList = journalMapper.queryDeptId(userId,customerId);
+                List<Contacts> contactsList = new ArrayList<>();
+                for(String deptId:deptList){
+                    contactsList.addAll(journalMapper.queryContactsByCustomerId(deptId));
+                }
+                customer.setContactsGroup(contactsList);
+            }catch(NullPointerException e){
+                break;
+            }
         }
         return customerList;
     }

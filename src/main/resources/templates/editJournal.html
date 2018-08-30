@@ -162,7 +162,7 @@
                         <img :src="setImgPath(index)" id="customer.name+'_img'"/>
                     </div>
                 </div>
-                <div v-show="!customer.contactsFold" class="weui-cells_checkbox">
+                <div v-show="!customer.contactsFold" class="weui-cells_checkbox" style="padding-left: 10px">
                     <label v-for="(contacts, index_2) in customer.contactsGroup"
                            class="weui-cell weui-check__label">
                         <div class="weui-cell__bd">
