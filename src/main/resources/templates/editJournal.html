@@ -158,18 +158,20 @@
                     <div class="weui-cell__bd">
                         <label v-text="customer.name"></label>
                     </div>
+                    <div >
+                        <img :src="setImgPath(index)" id="customer.name+'_img'"/>
+                    </div>
                 </div>
-                <div v-show="!customer.contactsFold" class="weui-cells_checkbox" style="padding-left: 10px">
+                <div v-show="!customer.contactsFold" class="weui-cells_checkbox">
                     <label v-for="(contacts, index_2) in customer.contactsGroup"
-                           class="weui-cell weui-check__label" :for="'contacts_' + index + '-' + index_2">
+                           class="weui-cell weui-check__label">
                         <div class="weui-cell__bd">
                             <p v-text="contacts.realName"></p>
                         </div>
                         <div class="weui-cell__ft">
                             <input type="checkbox" class="weui-check"
                                    v-model="chosenContactsTmp"
-                                   :value="contacts"
-                                   :id="'contacts_' + index + '-' + index_2">
+                                   :value="contacts"/>
                             <i class="weui-icon-checked"></i>
                         </div>
                     </label>
@@ -255,32 +257,4 @@
     </div>
 </div>
 </body>
-
-<template id="customer">
-    <div class="weui-cells" style="margin-top: 2px" >
-        <div>
-            <div class="weui-cell" @click="changeSubFold">
-                <div class="weui-cell__bd">
-                    <label v-text="customer.name"></label>
-                </div>
-                <div >
-                    <img :src="imgPath"/>
-                </div>
-            </div>
-            <div v-show="showSub" class=" weui-cells_checkbox" style="padding-left: 10px">
-                <label v-for="(contacts, index_2) in customer.contactsGroup"
-                       class="weui-cell weui-check__label" >
-                    <div class="weui-cell__bd">
-                        <p v-text="contacts.realName"></p>
-                    </div>
-                    <div class="weui-cell__ft">
-                        <input type="checkbox" class="weui-check" name="checkbox"
-                               v-model="chosenContactsTmp" :value="contacts" />
-                        <i class="weui-icon-checked"></i>
-                    </div>
-                </label>
-            </div>
-        </div>
-    </div>
-</template>
 </html>

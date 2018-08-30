@@ -103,13 +103,12 @@ jQuery(document).ready(function () {
            },
            'changeContactsFold': function (index) {
                this.customers[index].contactsFold = !this.customers[index].contactsFold;
-               this.setImgPath(index);
            },
            'setImgPath':function (index) {
                if(this.customers[index].contactsFold){
-                   this.imgPath = "/images/customer/fold.svg";
+                   return "/images/customer/fold.svg";
                }else {
-                   this.imgPath = "/images/customer/unfold.svg";
+                   return"/images/customer/unfold.svg";
                }
            },
            'choseVisitType': function (index) {
