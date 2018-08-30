@@ -283,45 +283,6 @@
                         </div>
                     </div>
 
-                    <!--<div id="filterScene" style="display:none;" v-show="filterCondition === 'scene'">-->
-                    <!--<div class="filterDetail">-->
-                    <!--<div class="weui-cells weui-cells_radio">-->
-                    <!--<label class="weui-cell weui-check__label" for="scene1">-->
-                    <!--<div class="weui-cell__bd">-->
-                    <!--<p style="font-size: 14px;color: #101010;">全部</p>-->
-                    <!--</div>-->
-                    <!--<div class="weui-cell__ft">-->
-                    <!--<input id="scene1" type="radio" class="weui-check" name="selectScene" value="all"-->
-                    <!--v-model="sceneValue"/>-->
-                    <!--<span class="weui-icon-checked"></span>-->
-                    <!--</div>-->
-
-                    <!--</label>-->
-                    <!--<label class="weui-cell weui-check__label" for="scene2">-->
-                    <!--<div class="weui-cell__bd">-->
-                    <!--<p style="font-size: 14px;color: #101010;">我负责的商机</p>-->
-                    <!--</div>-->
-                    <!--<div class="weui-cell__ft">-->
-                    <!--<input id="scene2" type="radio" class="weui-check" name="selectScene" value="mine"-->
-                    <!--v-model="sceneValue"/>-->
-                    <!--<span class="weui-icon-checked"></span>-->
-                    <!--</div>-->
-                    <!--</label>-->
-                    <!--<label class="weui-cell weui-check__label" for="scene3">-->
-                    <!--<div class="weui-cell__bd">-->
-                    <!--<p style="font-size: 14px;color: #101010;">下属负责的商机</p>-->
-                    <!--</div>-->
-                    <!--<div class="weui-cell__ft">-->
-                    <!--<input id="scene3" type="radio" class="weui-check" name="selectScene" value="sub"-->
-                    <!--v-model="sceneValue"/>-->
-                    <!--<span class="weui-icon-checked"></span>-->
-                    <!--</div>-->
-                    <!--</label>-->
-                    <!--<div style="height: 135px"></div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-
                     <div id="filterDate" style="display:none;" v-show="filterCondition === 'date'">
                         <div class="filterDetail">
                             <div class="weui-cells weui-cells_radio">
@@ -512,7 +473,20 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- loading toast -->
+                    <div id="loadingToast" style="display:none;">
+                        <div class="weui-mask_transparent"></div>
+                        <div class="weui-toast">
+                            <i class="weui-loading weui-icon_toast"></i>
+                            <p class="weui-toast__content">数据加载中</p>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <br/>
                 </div>
+
             </div>
 
         </div>
@@ -1226,7 +1200,6 @@
 
 </div>
 
-</div>
 </body>
 
 </html>

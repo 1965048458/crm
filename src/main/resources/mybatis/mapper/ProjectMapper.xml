@@ -88,6 +88,8 @@
         <result column="project_id" property="projectId"/>
         <result column="refund_amount" property="refundNum"/>
         <result column="refund_condition" property="condition"/>
+        <result column="is_refunded" property="isRefunded"/>
+        <result column="refund_time" property="time"/>
     </resultMap>
 
     <resultMap id="missionMap" type="com.xuebei.crm.project.ProjectDetail">
@@ -137,7 +139,7 @@
           `content`, `user_id`, `create_ts`, `updater_id`, `update_ts`)
         VALUES
         ( #{customerId},#{projectName},  #{status}, #{amount}, #{deadLine},
-        #{agent}, #{leader},#{content}, #{userId}, NOW(),
+        #{agent}, #{leaderId},#{content}, #{userId}, NOW(),
          #{userId}, NOW()
         )
     </insert>
@@ -145,9 +147,9 @@
     <insert id="insertProjectStart" parameterType="com.xuebei.crm.project.ProjectStart"
             useGeneratedKeys="true" keyColumn="start_project_id" keyProperty="id">
         INSERT INTO project_start(
-          `status`, `apply_content`, `sales_opportunity_id`, `user_id`
+          `status`, `apply_content`, `sales_opportunity_id`, `user_id`, `create_ts`
         ) VALUES (
-                'applying', #{applyContent}, #{projectId}, #{userId}
+                'applying', #{applyContent}, #{projectId}, #{userId}, NOW()
         )
     </insert>
 
@@ -164,11 +166,17 @@
     <insert id="insertRefund" parameterType="com.xuebei.crm.project.Refund"
             useGeneratedKeys="true" keyColumn="refund_id" keyProperty="refundId">
         INSERT INTO refund_log (
-            `project_id`, `refund_amount`, `refund_condition`
+            `project_id`, `refund_amount`, `refund_condition`, `is_refunded`
         ) VALUES (
-            #{projectId}, #{refundNum}, #{condition}
+            #{projectId}, #{refundNum}, #{condition}, 0
         )
     </insert>
+
+    <update id="isRefunded">
+        UPDATE refund_log SET
+            is_refunded = #{isRefunded}, refund_time = #{time}
+        WHERE project_id = #{projectId} AND refund_id = #{refundId} AND refund_log.is_refunded = 0;
+    </update>
 
     <update id="updateProjectStart" parameterType="com.xuebei.crm.project.ProjectStart">
         UPDATE project_start SET
@@ -191,6 +199,24 @@
     <update id="updateProjectStatus" parameterType="java.lang.Integer">
         UPDATE sales_opportunity SET
             sales_status = '1', progress = 0
+        WHERE sales_opportunity_id = #{projectId}
+    </update>
+
+    <update id="refundProject" parameterType="java.lang.Integer">
+        UPDATE sales_opportunity SET
+        sales_status = '2'
+        WHERE sales_opportunity_id = #{projectId} AND sales_status != '2'
+    </update>
+    
+    <update id="endProject" parameterType="java.lang.Integer">
+        UPDATE sales_opportunity SET
+            sales_status = '3'
+        WHERE sales_opportunity_id = #{projectId}
+    </update>
+    
+    <update id="updateProgress">
+        UPDATE sales_opportunity SET
+            progress = #{progress}
         WHERE sales_opportunity_id = #{projectId}
     </update>
 
@@ -229,9 +255,9 @@
             </foreach>)
             OR (s.leader = #{userId} AND ps.status = 'permitted'))
         </if>
-        <!--<if test="isAdmin == 'ADMIN'">-->
-            <!--AND ps.status != 'refused'-->
-        <!--</if>-->
+        <if test="isAdmin == 'ADMIN'">
+            AND ps.status != 'refused'
+        </if>
         <if test="startTime != null">
             AND s.create_ts &gt; #{startTime}
         </if>
@@ -264,7 +290,14 @@
     <select id="getProjectStart" resultMap="projectStartMap">
         SELECT * FROM project_start ps
         WHERE ps.sales_opportunity_id = #{projectId} AND ps.user_id = #{userId}
-              AND ps.status = 'applying'
+    </select>
+
+    <select id="getRefundStage" resultType="java.lang.Integer">
+        SELECT count(*) FROM refund_log
+        WHERE  project_id = #{projectId}
+          <if test="isRefunded != 2 ">
+              AND is_refunded = #{isRefunded}
+          </if>
     </select>
 
     <select id="getRefunds" resultMap="refundLogMap">

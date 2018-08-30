@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>交付与回款</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="/weui.css"/>
+    <link rel="stylesheet" href="/example.css"/>
+
+    <script src="/lib/jquery-2.1.1.js"></script>
+    <script src="/vue.v2.5.13.js"></script>
+    <script src="/weui.min.js"></script>
+    <script src="/project/deliverRefund.js"></script>
+
+    <style>
+        .pull-left {
+            float: left !important;
+        }
+
+        .pull-right {
+            float: right !important;
+        }
+
+        .top-bar {
+            background: #FFFFFF;
+            text-align: center;
+            padding: 7px 10px;
+            font-size: 18px;
+        }
+
+        .center-box {
+            text-align: center;
+        }
+
+        .navi-bar {
+            z-index: 9999;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        .weui-cells {
+            padding: 0;
+            margin-top: 0;
+        }
+
+        .weui-cell {
+            background: #FFFFFF;
+        }
+
+        .label {
+            font-size: 15px;
+            color: #333333;
+        }
+
+        .label_2 {
+            color: #101010;
+            font-size: 14px;
+            width: 130px;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<div id="refundVue" style="height: 100%;">
+
+    <div class="weui-tab">
+
+        <input type="hidden" id="projectId" th:value="${projectId}">
+        <div class="navi-bar">
+            <div class="top-bar center-box">
+                <span @click="backToDetail" class="pull-left">
+                    <img src="/images/back_icon.svg" style="margin-top: 7px;"/>
+                </span>
+                <span class="center" style="margin-top: 3px;">交付与回款</span>
+            </div>
+        </div>
+
+        <div class="weui-tab__panel" style="padding-top: 50px;">
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">项目名称 :</label></div>
+                <div class="weui-cell__bd">
+                    <span th:text="${projectName}"></span>
+                </div>
+            </div>
+
+            <div class="weui-cells">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label for="" class="weui-label label">交付时间</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" value="" placeholder="    输入预期时间" v-model="advanceTime">
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label label">合同金额(元)</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="number" pattern="[0-9]*" placeholder="    输入总金额"
+                               v-model="totalAmount">
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label label">预付金额(元)</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="number" pattern="[0-9]*" placeholder="    输入预付款金额"
+                               v-model="advancePay">
+                    </div>
+                </div>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__bd"
+                         style="color: #101010; font-size: 14px; border-bottom: thin solid #666666; height: 49px; margin-top: 10px;">选择回款阶段
+                    </div>
+                </div>
+
+                <div class="weui-cells weui-cells_checkbox" v-for="(pay, index) in pays" :key="'refunds_' + index">
+                    <label class="weui-cell weui-check__label">
+                        <div class="weui-cell__hd" style="padding-left: 20px;">
+                            <input type="checkbox" class="weui-check" name="checkbox1"
+                                   :value="pay.refundId " v-model="selected">
+                            <i class="weui-icon-checked"></i>
+                        </div>
+                        <div class="weui-cell__bd label" style="padding-left: 11px;">回款
+                            <span :style="getStyle(pays.length)" v-text="numToCha(index)"></span></div>
+                    </label>
+                    <div class="weui-cell" style="padding-left: 81px;">
+                        <div class="weui-cell__hd"><label class="weui-label label_2">
+                            <img style="width: 20px; height: 15px;" src="/images/project/payBack.png"/> &nbsp;
+                            回款金额(元)</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="number" pattern="[0-9]*" placeholder="     输入回款金额"
+                                   :id="'refund' +index" v-model="pay.refundNum">
+                        </div>
+                    </div>
+                    <a class="weui-cell weui-cell_access" @click="refundDatePicker(index)" style="padding-left: 81px;">
+                        <div class="weui-cell__bd label_2"><img style="width: 20px; height: 15px;" src="/images/project/payCondition.png"/> &nbsp; 回款时间:
+                        </div>
+                        <div class="weui-cell__ft">
+                            <span v-text="pay.time"></span>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+            <!--BEGIN toast-->
+            <div id="toast" style="display: none;">
+                <div class="weui-mask_transparent"></div>
+                <div class="weui-toast">
+                    <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                    <p class="weui-toast__content">提交成功</p>
+                </div>
+            </div>
+            <!--end toast-->
+
+            <a @click="confirm" class="weui-btn weui-btn_plain-default"
+               style="background-color: #38A4F2; color:#FFFFFF; font-size: 18px; margin-top: 20px;">确认</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

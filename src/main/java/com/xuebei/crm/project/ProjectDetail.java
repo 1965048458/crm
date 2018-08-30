@@ -54,6 +54,26 @@ public class ProjectDetail {
     @Expose
     private List<Support> projectSupports;
     @Expose Support support;
+    @Expose
+    private String refundStage;
+    @Expose
+    private Boolean done = false;
+
+    public Boolean getDone() {
+        return done;
+    }
+
+    public void setDone(Boolean done) {
+        this.done = done;
+    }
+
+    public String getRefundStage() {
+        return refundStage;
+    }
+
+    public void setRefundStage(String refundStage) {
+        this.refundStage = refundStage;
+    }
 
     public String getApplyStatus() {
         return applyStatus;

@@ -25,11 +25,21 @@ public interface ProjectMapper {
 
     void updateRefund(Refund refund);
 
+    void isRefunded(Refund refund);
+
+    Integer getRefundStage(@Param("projectId")Integer projectId ,@Param("isRefunded")Integer isRefunded);
+
+    void updateProgress(@Param("projectId") Integer projectId, @Param("progress") Integer progress);
+
     void refuseProject(@Param("projectId")Integer projectId);
 
     void passProject(@Param("projectId")Integer projectId);
 
+    void endProject(@Param("projectId")Integer projectId);
+
     void updateProjectStatus(@Param("projectId")Integer projectId);
+
+    void refundProject(@Param("projectId")Integer projectId);
 
     void assignLeader(@Param("projectId")Integer projectId, @Param("leader") String leader);
 

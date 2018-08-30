@@ -27,7 +27,14 @@ $(document).ready(function ()  {
                 });
             },
             'orgDisplay':function () {
-                location.href = '/customer/organization?customerId='+this.customerId;
+                var $loadingToast = $('#loadingToast');
+                if ($loadingToast.css('display') != 'none') return;
+                var temp = this;
+                $loadingToast.fadeIn(100);
+                setTimeout(function () {
+                    $loadingToast.fadeOut(100);
+                    location.href = '/customer/organization?customerId=' + temp.customerId;
+                }, 500);
             }
         }
     });
@@ -36,9 +43,6 @@ $(document).ready(function ()  {
     var customerName = $("#customerName").val();
 
     customerVue.init(customerId,customerName);
-
-    // customerVue.customerId = customerId;
-    // customerVue.customerName = customerName;
 
     for (var i = 1; i <= 3; i++) {
         var canvas = document.getElementById('canvas' + i),  //获取canvas元素

@@ -1,35 +1,29 @@
 package com.xuebei.crm.project;
 
-import com.google.gson.Gson;
 import com.xuebei.crm.company.CompanyMapper;
 import com.xuebei.crm.company.CompanyUser;
 import com.xuebei.crm.customer.Contacts;
 import com.xuebei.crm.customer.CustomerService;
+import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.journal.JournalService;
 import com.xuebei.crm.member.Member;
 import com.xuebei.crm.member.MemberService;
 import com.xuebei.crm.opportunity.Opportunity;
 import com.xuebei.crm.opportunity.OpportunityService;
 import com.xuebei.crm.opportunity.Support;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.xuebei.crm.dto.GsonView;
-import com.xuebei.crm.utils.UUIDGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import static com.xuebei.crm.login.LoginController.SUCCESS_FLG;
 
@@ -186,6 +180,22 @@ public class ProjectController {
         return "applyStartProject";
     }
 
+    @RequestMapping("/deliverRefund")
+    public String deliverRefund(@RequestParam(value = "projectId") Integer projectId,
+                               ModelMap modelMap){
+        String projectName = projectService.queryOpportunityNameByOpportunityId(projectId);
+        modelMap.addAttribute("projectId", projectId);
+        modelMap.addAttribute("projectName", projectName);
+        return "deliverRefund";
+    }
+
+    @RequestMapping("/endProject")
+    public GsonView endProject(@RequestParam("projectId") Integer projectId){
+        projectService.endProject(projectId);
+        GsonView gsonView = GsonView.createSuccessView();
+        return  gsonView;
+    }
+
     @RequestMapping("/projectCheck")
     public String checkProject(@RequestParam(value = "projectId") Integer projectId,
                                ModelMap modelMap){
@@ -221,6 +231,15 @@ public class ProjectController {
         return gsonView;
     }
 
+    @RequestMapping("/updateProgress")
+    public GsonView updateProgress(@RequestParam("projectId") Integer projectId, @RequestParam("progress") Integer progress)
+    {
+        GsonView gsonView = new GsonView();
+        projectService.updateProgress(projectId, progress);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
+
     @RequestMapping("/getContractInfo")
     public GsonView getContractInfo(@RequestParam("projectId") Integer projectId,
                                     HttpServletRequest request){
@@ -245,6 +264,19 @@ public class ProjectController {
         projectStart.setUserId(userId);
         GsonView gsonView = new GsonView();
         projectService.startProject(projectStart);
+        gsonView.addStaticAttribute("successFlg", true);
+        return gsonView;
+    }
+
+    @RequestMapping("/submitRefund")
+    public GsonView submitRefund(@RequestBody ProjectStart projectStart) {
+        GsonView gsonView = new GsonView();
+        Integer projectId = projectStart.getProjectId();
+        List<Refund> refunds = projectStart.getRefunds();
+        for (Refund s : refunds){
+            projectService.isRefunded(s);
+        }
+        projectService.refundProject(projectId);
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }

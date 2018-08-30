@@ -12,11 +12,20 @@ jQuery(document).ready(function () {
             searchBar: false,
             userList: [],
             showSlider:false,
-            projectId: ''
+            projectId: '',
+            progress: '',
+            btnText: '更新进度'
         },
         methods: {
+            'init':function () {
+                this.projectId = $("#salesOpportunityId").val();
+                this.progress = $("#progress").val();;
+            },
             'back': function () {
                 window.location.href = '/project/projectList';
+            },
+            'chooseBack':function () {
+                this.show = 'projectDetail';
             },
             'clearStyle': function () {
                 $('#detailBox').attr("class", "weui-grid navi-bar my-weui-grid");
@@ -73,10 +82,44 @@ jQuery(document).ready(function () {
                 window.location.href = '/project/applyStart?projectId=' + $("#salesOpportunityId").val();
             },
             'refund':function () {
-                //
+                window.location.href = '/project/deliverRefund?projectId=' + this.projectId;
             },
             'updateProgress':function () {
-                this.showSlider = true;
+                this.showSlider = !this.showSlider;
+                if(this.showSlider){
+                    this.btnText = '确认';
+                }else{
+                    var thisVue = this;
+                    $.ajax({
+                        type: 'get',
+                        url: '/project/updateProgress',
+                        data: {
+                            projectId: thisVue.projectId,
+                            progress: thisVue.progress
+                        },
+                        dataType: 'json',
+                        cache : false
+                    }).done(function (result) {
+                        if(result.successFlg){
+                            thisVue.btnText = '更新进度';
+                        }
+                    });
+                }
+            },
+            'endProject':function () {
+                var thisVue = this;
+                $.ajax({
+                    type: 'get',
+                    url: '/project/endProject',
+                    data: {
+                        projectId: thisVue.projectId
+                    },
+                    dataType: 'json',
+                    cache : false,
+                    success: function () {
+                        location.reload(true);
+                    }
+                });
             },
             'clear': function () {
                 this.keyWord = '';
@@ -99,7 +142,6 @@ jQuery(document).ready(function () {
             },
             'confirm': function () {
                 var thisVue = this;
-                thisVue.projectId = $("#salesOpportunityId").val();
                 $.ajax({
                     type: 'get',
                     url: '/project/assignLeader',
@@ -121,17 +163,13 @@ jQuery(document).ready(function () {
             }
         },
         updated: function () {
-            /*if (this.curSupport !== undefined &&
-                this.curSupport.support !== undefined) {
-                var percent = this.curSupport.support.percent;
-                jQuery("#sliderTrack").css('width', percent + '%');
-                jQuery("#sliderHandler").css('left', percent + '%');
-                initSilder();
-            }*/
+            var percent = this.progress;
+            jQuery("#sliderTrack").css('width', percent + '%');
+            jQuery("#sliderHandler").css('left', percent + '%');
             initSilder();
         }
     });
-
+    projDetailVue.init();
 });
 
 var totalLen,

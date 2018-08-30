@@ -35,6 +35,9 @@ jQuery(document).ready(function () {
             'searchList': function (data) {
                 //todo 从服务器搜索日志
                 console.log(data);
+                var $loadingToast = $('#loadingToast');
+                if ($loadingToast.css('display') != 'none') return;
+                $loadingToast.fadeIn(100);
                 var thisVue = this;
                 jQuery.ajax({
                     type: 'get',
@@ -47,6 +50,7 @@ jQuery(document).ready(function () {
                         console.log(result);
                         thisVue.$set(thisVue, 'journalList', result.journalList);
                         thisVue.showPage = 'journalList';
+                        $loadingToast.fadeOut(100);
                     } else {
                         thisVue.errMsg = result.errMsg;
                         thisVue.showErrMsg = true;
