@@ -102,6 +102,9 @@ $(document).ready(function () {
         },
         methods: {
             'showResult': function (data) {
+                var $loadingToast = $('#loadingToast');
+                if ($loadingToast.css('display') != 'none') return;
+                $loadingToast.fadeIn(100);
                 var thisVue = this;
                 $.ajax({
                     type: 'get',
@@ -112,6 +115,7 @@ $(document).ready(function () {
                 }).done(function (result) {
                     if (result.successFlg) {
                         thisVue.$set(thisVue, 'opportunityList', result.opportunityList);
+                        $loadingToast.fadeOut(100);
                         if (result.opportunityList == null || result.opportunityList == '') {
                             thisVue.showNull = 'null';
                         } else {

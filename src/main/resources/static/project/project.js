@@ -26,6 +26,9 @@ $(document).ready(function () {
         },
         methods: {
             'showResult': function (data) {
+                var $loadingToast = $('#loadingToast');
+                if ($loadingToast.css('display') != 'none') return;
+                $loadingToast.fadeIn(100);
                 var thisVue = this;
                 $.ajax({
                     type: 'get',
@@ -38,6 +41,7 @@ $(document).ready(function () {
                     if (result.successFlg) {
                         console.log(result.projectList);
                         thisVue.$set(thisVue, 'projectList', result.projectList);
+                        $loadingToast.fadeOut(100);
                     } else {
                         thisVue.errMsg = result.errMsg;
                         thisVue.showErrMsg = true;

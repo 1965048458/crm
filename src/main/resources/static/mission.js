@@ -39,6 +39,9 @@ $(document).ready(function () {
         },
         methods: {
             init: function () {
+                var $loadingToast = $('#loadingToast');
+                if ($loadingToast.css('display') != 'none') return;
+                $loadingToast.fadeIn(100);
                 var thisVue = this;
                 $.ajax({
                     type: 'get',
@@ -49,6 +52,7 @@ $(document).ready(function () {
                     if (result.successFlg) {
                         thisVue.$set(thisVue, 'unfinishList', result.unfinish);
                         thisVue.$set(thisVue, 'finishList', result.finish);
+                        $loadingToast.fadeOut(100);
                     }
                 });
             },

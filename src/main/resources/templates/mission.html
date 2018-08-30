@@ -120,36 +120,6 @@
                             </div>
                         </div>
 
-                        <!--<div class="weui-panel weui-panel_access" style="border-top: solid 1px #B2B2B2;">-->
-                        <!--<div class="weui-form-preview">-->
-                        <!--<div class="weui-form-preview__item" style="font-size: small;padding: 3px 0px;">-->
-                        <!--<label class="weui-form-preview__label" style="padding-left: 15px;color: #0D0D0D">截止日期：2018-08-02</label>-->
-                        <!--<label class="weui-form-preview__label" style="float: right;color: #0D0D0D">发起日期：2018-02-15</label>-->
-                        <!--</div>-->
-                        <!--</div>-->
-                        <!--<a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"-->
-                        <!--style="padding: 8px 10px ;" @click="toDetail">-->
-                        <!--<div class="weui-media-box__bd">-->
-                        <!--<p class="weui-media-box__title" style="font-size: 13px;">-->
-                        <!--任务名称: 方案撰写-->
-                        <!--<label class="pull-right" style="font-size: 13px;color: #00A4FF;">-->
-                        <!--紧急</label>-->
-                        <!--</p>-->
-                        <!--<p class="weui-media-box__title" style="font-size: 13px;">-->
-                        <!--相关项目：浙江大学-机械学院 仿真实验项目&nbsp;-->
-
-                        <!--</p>-->
-                        <!--<p class="weui-media-box__title" style="font-size: 13px;">-->
-                        <!--执行者: 封口费-->
-                        <!--<label class="pull-right" style="font-size: 13px;color: #00A4FF;">-->
-                        <!--0%</label>-->
-                        <!--</p>-->
-                        <!--<p class="weui-media-box__title" style="font-size: 13px;">-->
-                        <!--发起人: 我-->
-                        <!--</p>-->
-                        <!--</div>-->
-                        <!--</a>-->
-                        <!--</div>-->
                     </div>
 
                     <div id="hasFinish" v-show="showPage ==='finish'" style="display: none">
@@ -199,43 +169,18 @@
                             </div>
                         </div>
 
-
-                        <!--<div class="weui-panel weui-panel_access" style="border-top: solid 1px #B2B2B2;">-->
-                        <!--<div class="weui-form-preview">-->
-                        <!--<div class="weui-form-preview__item" style="font-size: small;padding: 3px 0px;">-->
-                        <!--<label class="weui-form-preview__label" style="padding-left: 15px;color: #0D0D0D">截止日期：2018-08-02</label>-->
-                        <!--<label class="weui-form-preview__label" style="float: right;color: #0D0D0D">发起日期：2018-02-15</label>-->
-                        <!--</div>-->
-                        <!--</div>-->
-                        <!--<a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"-->
-                        <!--style="padding: 8px 10px ;">-->
-                        <!--<div class="weui-media-box__bd">-->
-                        <!--<p class="weui-media-box__title" style="font-size: 13px;">-->
-                        <!--任务名称: 方案撰写-->
-                        <!--<label class="pull-right" style="font-size: 13px;color: #00A4FF;">-->
-                        <!--紧急</label>-->
-                        <!--</p>-->
-                        <!--<p class="weui-media-box__title" style="font-size: 13px;">-->
-                        <!--相关项目：浙江大学-机械学院 仿真实验项目&nbsp;-->
-
-                        <!--</p>-->
-                        <!--<p class="weui-media-box__title" style="font-size: 13px;">-->
-                        <!--执行者: 封口费-->
-                        <!--<label class="pull-right" style="font-size: 13px;color: #00A4FF;">-->
-                        <!--0%</label>-->
-                        <!--</p>-->
-                        <!--<p class="weui-media-box__title" style="font-size: 13px;">-->
-                        <!--发起人: 我刘二妈-->
-                        <!--</p>-->
-                        <!--</div>-->
-                        <!--</a>-->
-                        <!--</div>-->
                     </div>
 
+                    <!-- loading toast -->
+                    <div id="loadingToast" style="display:none;">
+                        <div class="weui-mask_transparent"></div>
+                        <div class="weui-toast">
+                            <i class="weui-loading weui-icon_toast"></i>
+                            <p class="weui-toast__content">数据加载中</p>
+                        </div>
+                    </div>
 
                 </div>
-
-
             </div>
         </div>
 
@@ -420,33 +365,6 @@
                     </div>
 
                  </span>
-                    <!--<div class="weui-cells" style="font-size: medium">-->
-                    <!--<div class="weui-cell">-->
-                    <!--<div class="weui-cell__hd">-->
-                    <!--<label class="weui-label">任务完成度</label>-->
-                    <!--</div>-->
-                    <!--<div class="weui-cell__bd">-->
-                    <!--<p></p>-->
-                    <!--</div>-->
-                    <!--<div class="weui-cell__ft">-->
-                    <!--<div class="weui-cell__ft" style="float: right">80%</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-
-
-                    <!--</div>-->
-
-
-                    <!--<div class="weui-cells" style="font-size: medium">-->
-                    <!--<div class="weui-cell">-->
-                    <!--<div class="weui-cell__hd">-->
-                    <!--<label class="weui-label">任务信息</label>-->
-                    <!--</div>-->
-                    <!--<div class="weui-cell__bd">-->
-                    <!--<label class="weui-input">暂无</label>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
 
                     <div class="weui-cells" style="font-size: medium">
                         <div class="weui-cell">
@@ -490,14 +408,6 @@
                              </div>
                         </span>
 
-                        <!--<div class="weui-cell">-->
-                        <!--<div class="weui-cell__bd" style="color: darkgray;">-->
-                        <!--<div>6分钟前</div>-->
-                        <!--<span>飞机上的浪费哈绥芬河哈哈司法局-->
-                        <!--傻家伙发来贺电 号号快乐就好好师傅发生大富翁</span>-->
-
-                        <!--</div>-->
-                        <!--</div>-->
                     </div>
 
                 </div>

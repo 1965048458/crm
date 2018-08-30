@@ -244,6 +244,15 @@
                         </div>
                     </div>
 
+                    <!-- loading toast -->
+                    <div id="loadingToast" style="display:none;">
+                        <div class="weui-mask_transparent"></div>
+                        <div class="weui-toast">
+                            <i class="weui-loading weui-icon_toast"></i>
+                            <p class="weui-toast__content">数据加载中</p>
+                        </div>
+                    </div>
+
                     <div class="blank" style="margin:20% auto auto auto; text-align:center; "
                          v-if="journalList.length === 0">
                         <p>
