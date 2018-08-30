@@ -24,6 +24,9 @@ jQuery(document).ready(function () {
             'back': function () {
                 window.location.href = '/project/projectList';
             },
+            'chooseBack':function () {
+                this.show = 'projectDetail';
+            },
             'clearStyle': function () {
                 $('#detailBox').attr("class", "weui-grid navi-bar my-weui-grid");
                 $('#detail').attr("class", "weui-grid__label");
