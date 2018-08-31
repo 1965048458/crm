@@ -127,7 +127,7 @@
 </body>
 <script type="text/x-template" id="enclosureApplyComponent">
     <div class="weui-cells">
-        <div class="weui-cell" style="text-align: center">
+        <div class="weui-cell" style="text-align: center;border-top: solid 1px gainsboro">
             <span v-text="apply.applyTime"></span>
         </div>
         <div style="padding-left: 15px">
@@ -148,13 +148,13 @@
             <div class="weui-flex__item" style="text-align: center;">
                 <div class="placeholder" style="text-align: center;">
                     <a @click="applyDecline(apply.applyType,apply.applyId)"
-                       class="weui-btn weui-btn_plain-default" style="margin-right: 10px;">不通过</a>
+                       class="weui-btn weui-btn_warn" style="margin-right: 10px;">不通过</a>
                 </div>
             </div>
             <div class="weui-flex__item" style="text-align: center;">
                 <div class="placeholder">
                     <a @click="applyAgree(apply.applyType,apply.applyId)"
-                       class="weui-btn weui-btn_plain-primary" style="margin-left: 10px;">通过</a>
+                       class="weui-btn weui-btn_primary" style="margin-left: 10px;">通过</a>
                 </div>
             </div>
         </div>
