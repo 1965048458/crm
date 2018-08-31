@@ -9,7 +9,7 @@ jQuery(document).ready(function () {
         data:{
             customerId:'',
             customerName:'',
-            showPage:'',
+            showPage:'showCustomerOrganization',
             showOrganization: false,
             showApplyDialog: false,
             customerList: '',
