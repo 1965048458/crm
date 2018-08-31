@@ -243,21 +243,31 @@
             s.agent, s.leader,s.progress, s.content, s.user_id, s.create_ts, s.updater_id, s.update_ts FROM sales_opportunity s
         INNER JOIN crm_customer v ON s.customer_id = v.customer_id
         LEFT JOIN project_start ps ON ps.sales_opportunity_id = s.sales_opportunity_id
-        LEFT JOIN company_customer c ON c.customer_id = s.customer_id
-        LEFT JOIN company_user u ON u.company_id = c.company_id
-        LEFT JOIN user_view uv ON s.leader = uv.user_id
-        WHERE u.user_id = #{userId}
-        AND s.sales_status in ( '0' , '1', '2', '3')
-       <if test="isAdmin != 'ADMIN'">
-            AND ((s.user_id IN
+        Left JOIN user_view uv ON s.leader = uv.user_id
+        WHERE s.sales_status in ( '0' , '1', '2', '3')
+
+        <if test="isAdmin != 'ADMIN'">
+            AND ( ( s.leader = #{userId} AND ps.status = 'permitted' )
+            OR s.user_id IN
             <foreach item="subId" collection="subMember" open="(" separator="," close=")">
                 #{subId}
-            </foreach>)
-            OR (s.leader = #{userId} AND ps.status = 'permitted'))
+            </foreach>
+            )
         </if>
-        <!--<if test="isAdmin == 'ADMIN'">-->
-            <!--OR ps.status != 'refused'-->
-        <!--</if>-->
+        <if test="isAdmin == 'ADMIN'">
+            AND s.user_id in ( select m.user_id from company_user m where m.company_id =
+            ( select n.company_id from company_user n  where n.user_id = #{userId}))
+            AND ( ps.status != 'refused' OR ps.status IS NULL )
+        </if>
+
+
+        <if test="creator == 'sub' or subUsers != null">
+            AND s.user_id IN
+            <foreach item="subId" collection="subMember" open="(" separator="," close=")">
+                #{subId}
+            </foreach>
+        </if>
+
         <if test="startTime != null">
             AND s.create_ts &gt; #{startTime}
         </if>
@@ -270,12 +280,7 @@
         <if test="creator == 'mine'">
             AND s.user_id = #{userId}
         </if>
-        <if test="creator == 'sub' or subUsers != null">
-            AND s.user_id IN
-            <foreach item="subId" collection="subMember" open="(" separator="," close=")">
-                #{subId}
-            </foreach>
-        </if>
+
         <if test="customerName != null and customerName != ''">
             AND v.customer_nm LIKE CONCAT('%', #{customerName}, '%')
         </if>
