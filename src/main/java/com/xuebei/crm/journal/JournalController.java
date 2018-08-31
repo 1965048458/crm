@@ -127,10 +127,11 @@ public class JournalController {
     public GsonView getJournalInfoById(@RequestParam("journalId") String journalId,
                                        HttpServletRequest request) throws AuthenticationException {
         GsonView gsonView = new GsonView();
+        String userId = (String)request.getSession().getAttribute("userId");
         Journal journal = journalService.queryJournalById(acquireUserId(request), journalId);
         List<User> colleagues = journalMapper.queryColleagues(acquireUserId(request));
         String companyId = companyMapper.queryCompanyIdByUserId(acquireUserId(request));
-        List<JournalCustomer> customerList = journalService.getAllContacts(companyId);
+        List<JournalCustomer> customerList = journalService.getAllContacts(companyId,userId);
         Set<String> userGroup = journalService.getAllSubordinatesUserId(acquireUserId(request));
 //        Set<Project> projectList = journalService.getAllSubordinatesProjects(userGroup);
         Set<Opportunity> opportunitySet = journalService.getAllSubordinatesOpportunity(userGroup);
@@ -147,10 +148,11 @@ public class JournalController {
         List<JournalCustomer> customerList;
         List<User> colleagues;
         Set<Opportunity> opportunitySet;
+        String userId = (String)request.getSession().getAttribute("userId");
         try {
             colleagues = journalMapper.queryColleagues(acquireUserId(request));
             String companyId = companyMapper.queryCompanyIdByUserId(acquireUserId(request));
-            customerList = journalService.getAllContacts(companyId);
+            customerList = journalService.getAllContacts(companyId,userId);
             Set<String> userGroup = journalService.getAllSubordinatesUserId(acquireUserId(request));
             opportunitySet = journalService.getAllSubordinatesOpportunity(userGroup);
         } catch (AuthenticationException e) {
@@ -286,7 +288,7 @@ public class JournalController {
         Set<String> userSet = new HashSet<>();
         userSet.add(userId);
         GsonView gsonView = new GsonView();
-        List<JournalCustomer> customers = journalService.getAllContacts(companyId);
+        List<JournalCustomer> customers = journalService.getAllContacts(companyId,userId);
         Set<Opportunity> opportunities = journalService.getAllSubordinatesOpportunity(userSet);
         gsonView.addStaticAttribute("successFlg", true);
         gsonView.addStaticAttribute("customers", customers);

@@ -15,8 +15,14 @@
     <script src="/staffAudit.js"></script>
     <style>
         .top-bar {
-            text-align: center;
             background: #FFFFFF;
+            text-align: center;
+            padding: 7px 10px;
+            font-size: 18px;
+        }
+
+        .center-box {
+            text-align: center;
         }
 
         .pull-left {
@@ -26,28 +32,44 @@
         .pull-right {
             float: right !important;
         }
+
+        .navi-bar {
+            z-index: 9999;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
 <div id="staffAudit">
 
 
-    <div id="check" >
+    <div id="check">
         <div class="weui-tab">
-            <div class="weui-navbar">
-                <div id="titleBar2" class="weui-navbar__item top-bar" style="height: 28px; padding: 10px 10px;">
-                            <span @click="back" class="pull-left">
-                                <img src="/images/back_icon.svg" style="margin-top:7px;"/></span>
-                    <span class="center" style="font-size: 22px; margin-top: 1px">人员审核</span>
-                    <a>
-                                        <span class="pull-right" style="margin-top: 7px;display: none"><img
-                                                src="/images/add.png"
-                                                style="width: 16px; height: 16px; display: block"/></span>
-                    </a>
+            <!--<div class="weui-navbar">-->
+            <!--<div id="titleBar2" class="weui-navbar__item top-bar" style="height: 28px; padding: 10px 10px;">-->
+            <!--<span @click="back" class="pull-left">-->
+            <!--<img src="/images/back_icon.svg" style="margin-top:7px;"/></span>-->
+            <!--<span class="center" style="font-size: 22px; margin-top: 1px">人员审核</span>-->
+            <!--<a>-->
+            <!--<span class="pull-right" style="margin-top: 7px;display: none"><img-->
+            <!--src="/images/add.png"-->
+            <!--style="width: 16px; height: 16px; display: block"/></span>-->
+            <!--</a>-->
+            <!--</div>-->
+            <!--</div>-->
+            <div class="navi-bar">
+
+                <div class="top-bar center-box">
+                    <span class="pull-left" @click="back">
+                        <img src="/images/back_icon.svg" style="margin-top: 7px;">
+                    </span>
+                    <span style="margin-top: 3px;">人员审核</span>
                 </div>
             </div>
             <div class="weui-tab__panel">
-
+                <div style="height: 43px;"></div>
                 <div v-for="applyStaff in applyStaffList">
                     <div class="weui-panel weui-panel_access">
                         <div class="weui-panel__bd" style=" height: 90px;margin-top: 0px">
@@ -66,7 +88,7 @@
                                         <span style="float: right;font-size: 13px"
                                         >申请时间：{{applyStaff.createTs}}</span>
                                     </p>
-                                    <p><span >联系方式：</span><span>{{applyStaff.tel}}</span></p>
+                                    <p><span>联系方式：</span><span>{{applyStaff.tel}}</span></p>
 
                                     <p><span>职位：</span></p>
                                     </p>
@@ -78,12 +100,14 @@
                             <div class="weui-flex__item" style="text-align: center;"
                                  @click="agree(applyStaff.userId)">
                                 <div class="placeholder" style="text-align: center">
-                                    <a href="javascript:;" class="weui-btn weui-btn_plain-primary" style="margin-right: 10px">同意</a>
-                                    </div>
+                                    <a href="javascript:;" class="weui-btn weui-btn_plain-primary"
+                                       style="margin-right: 10px">同意</a>
+                                </div>
                             </div>
                             <div class="weui-flex__item" style="text-align: center" @click="refuse(applyStaff.userId)">
                                 <div class="placeholder">
-                                    <a href="javascript:;" class="weui-btn weui-btn_plain-default" style="margin-left: 10px">拒绝</a></div>
+                                    <a href="javascript:;" class="weui-btn weui-btn_plain-default"
+                                       style="margin-left: 10px">拒绝</a></div>
                             </div>
 
                         </div>

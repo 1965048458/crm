@@ -22,7 +22,7 @@ public interface JournalService {
 
     List  searchDatail(String journalId);
 
-    List<JournalCustomer> getAllContacts(String companyId);
+    List<JournalCustomer> getAllContacts(String companyId,String userId);
 
     Set<String> getAllSubordinatesUserId(String userId);
 

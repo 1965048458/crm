@@ -60,6 +60,9 @@
             top: 0;
             width: 100%;
         }
+        .center-ele {
+            display: inline-block;
+        }
 
     </style>
 </head>
@@ -68,20 +71,21 @@
 <div id="organizationVue" >
     <input id="customerId" type="hidden" th:value="${customerId}">
     <input id="customerName" type="hidden" th:value="${customerName}">
-    <div class="page navbar js_show" v-show="showPage === 'showCustomerOrganization'">
+    <div class="page navbar js_show" >
         <div class="page__bd" style="height: 100%;">
             <div class="narvi-bar">
                 <div class="top-bar center-box" style="border: hidden">
-                    <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;" @click="toCustomerList()">返回</span>
-                    <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);" v-text="customerName"></span>
+                    <span class="pull-left" @click="toCustomerList()">
+                         <img src="/images/back_icon.svg" /></span>
+                    <span class="center-ele" style="font-size: 18px; color: rgb(51, 51, 51);" th:text="${customerName}"></span>
                     <span class="pull-right" style="color: rgb(61, 168, 244); font-size: 16px;" @click="toModifyPage()">编辑</span>
                 </div>
                 <div class="weui-navbar" style="position: relative;height: 40px;background-color: #ffffff">
-                    <div id="customerInfoBtn" class="weui-navbar__item" style="padding: 10px 0;border: hidden" @click="toCustomerInfo()">
+                    <div id="customerInfoBtn" class="weui-navbar__item" style="border: hidden" @click="toCustomerInfo()">
                         客户信息
                     </div>
                     <div id="organizationInfoBtn" class="weui-navbar__item weui-bar__item_on"
-                         style="padding: 10px 0;border: hidden" >
+                         style="border: hidden" >
                         组织机构
                     </div>
                 </div>
@@ -116,7 +120,6 @@
                     </div>
                 </div>
             </div>
-
             <div style="padding-top: 130px" >
                 <div v-show="showOrganization">
                     <div class="customer-item">

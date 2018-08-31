@@ -6,6 +6,9 @@ import com.xuebei.crm.customer.Customer;
 import com.xuebei.crm.customer.CustomerMapper;
 import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
+import com.xuebei.crm.member.Member;
+import com.xuebei.crm.member.MemberMapper;
+import com.xuebei.crm.member.MemberService;
 import com.xuebei.crm.opportunity.Opportunity;
 import com.xuebei.crm.project.Project;
 import com.xuebei.crm.project.ProjectMapper;
@@ -27,6 +30,12 @@ public class JournalServiceImpl implements JournalService {
 
     @Autowired
     private ProjectMapper projectMapper;
+
+    @Autowired
+    private MemberMapper memberMapper;
+
+    @Autowired
+    private MemberService memberService;
 
     /**
      * 创建一个新日志
@@ -218,10 +227,24 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
-    public List<JournalCustomer> getAllContacts(String companyId) {
+    public List<JournalCustomer> getAllContacts(String companyId,String userId) {
         List<JournalCustomer> customerList = journalMapper.queryJournalCustomersByCompanyId(companyId);
-        for (JournalCustomer customer: customerList) {
-            customer.setContactsGroup(journalMapper.queryContactsByCustomerId(customer.getCustomerId()));
+        List<Member> memberList = memberService.searchSubMemberList(userId);
+        for(JournalCustomer customer:customerList){
+            try{
+                String customerId = customer.getCustomerId();
+                List<String> deptList = journalMapper.queryDeptId(userId,customerId);
+                for(Member member:memberList){
+                    deptList.addAll(journalMapper.queryDeptId(member.getMemberId(),customerId));
+                }
+                List<Contacts> contactsList = new ArrayList<>();
+                for(String deptId:deptList){
+                    contactsList.addAll(journalMapper.queryContactsByCustomerId(deptId));
+                }
+                customer.setContactsGroup(contactsList);
+            }catch(NullPointerException e){
+                break;
+            }
         }
         return customerList;
     }

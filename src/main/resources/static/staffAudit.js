@@ -25,7 +25,7 @@ jQuery(document).ready(function () {
                 })
             },
             'back': function () {
-                window.location.href = "/administrator";
+                window.location.href = "/myAccountInfor";
             },
             'agree': function(userId){
                 var thisVue = this;

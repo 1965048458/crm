@@ -278,7 +278,7 @@
 
     <select id="queryContactsByCustomerId" resultMap="contactsMap">
         SELECT * FROM contacts_view
-		WHERE customer_id = #{customerId};
+		WHERE customer_dept_id=#{deptId};
     </select>
 
     <select id="queryJournalPatch" resultMap="journalPatchMap">
@@ -313,6 +313,21 @@
                     on t1.customer_dept_id = t2.customer_dept_id) as p2
                 on p1.contacts_id = p2.contacts_id
 
+    </select>
+
+    <select id="queryDeptId" resultType="java.lang.String">
+        select r2.customer_dept_id from enclosure_apply as r1
+            inner join
+            ((select customer_dept_id,customer_id,prt_id as des_id from customer_dept
+            where prt_id is not null)
+             union
+             (select customer_dept_id,customer_id,customer_dept_id as des_id from customer_dept
+             where prt_id is null)) as r2
+                on r1.customer_dept_id = r2.des_id
+        where r1.status_cd='PERMITTED'
+              and r1.user_id = #{userId}
+              and r1.apply_end_ts &gt; NOW()
+              AND r2.customer_id=#{customerId};
     </select>
 
 </mapper>

@@ -74,13 +74,16 @@ public interface JournalMapper {
 
     List<JournalCustomer> queryJournalCustomersByCompanyId(@Param("companyId") String companyId);
 
-    List<Contacts> queryContactsByCustomerId(@Param("customerId") String customerId);
+    List<Contacts> queryContactsByCustomerId(@Param("deptId") String deptId);
 
     List<JournalPatch> queryJournalPatch(@Param("journalId") String journalId);
 
     List<String> querySubordinatesByUserId(@Param("userId") String userId);
 
     List<String> queryDeptIdByJournalId(@Param("journalId") String journalId);
+
+    List<String> queryDeptId(@Param("userId") String userId,
+                             @Param("customerId")String customerId);
 
 
 }

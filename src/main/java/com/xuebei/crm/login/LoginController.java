@@ -7,6 +7,9 @@ import com.xuebei.crm.company.Company;
 import com.xuebei.crm.company.CompanyMapper;
 import com.xuebei.crm.company.CompanyUser;
 import com.xuebei.crm.dto.GsonView;
+import com.xuebei.crm.message.Apply;
+import com.xuebei.crm.message.MsgService;
+import com.xuebei.crm.message.ProjectApply;
 import com.xuebei.crm.user.User;
 import com.xuebei.crm.utils.UUIDGenerator;
 import org.apache.ibatis.annotations.Param;
@@ -40,6 +43,9 @@ public class LoginController {
     @Autowired
     private CompanyMapper companyMapper;
 
+    @Autowired
+    private MsgService msgService;
+
     public static final String SUCCESS_FLG = "successFlg";
     public static final String ERRMSG = "errMsg";
 
@@ -48,8 +54,20 @@ public class LoginController {
         return "login";
     }
 
+
+    @RequestMapping("myAccountInfor")
+    public String mine() {
+        return "mine";
+    }
+
+
+
     @RequestMapping("staffAudit")
-    public String staffAudit() {
+    public String staffAudit(@RequestParam("companyId")String companyId,
+                             HttpServletRequest request) {
+        String crmUserId = (String) request.getSession().getAttribute("crmUserId");
+        String userId = loginRegisterMapper.queryUserIdByCompanyId(crmUserId, companyId);
+        request.getSession().setAttribute("userId", userId);
         return "staffAudit";
     }
 
@@ -87,7 +105,6 @@ public class LoginController {
         GsonView gsonView = new GsonView();
         String userId = (String) request.getSession().getAttribute("userId");
 
-//        String userType = companyMapper.queryUserType(crmUserId);
 
         List<CompanyUser> companyUsers = companyMapper.queryApplyStaff(userId);
         gsonView.addStaticAttribute(SUCCESS_FLG, true);
@@ -155,10 +172,32 @@ public class LoginController {
         String crmUserId = (String) request.getSession().getAttribute("crmUserId");
 
         List<Company> company = companyMapper.queryCompanyList(crmUserId);
-        gsonView.addStaticAttribute(SUCCESS_FLG, true);
-        gsonView.addStaticAttribute("myCompany", company);
-        return gsonView;
-    }
+        for(Company c : company) {
+            String userId = loginRegisterMapper.queryUserIdByCompanyId(crmUserId, c.getCompanyId());
+            if (userId != null) {
+                String userType = companyMapper.queryUserType(userId);
+                if (userType.equals("ADMIN")) {
+                    c.setAdmin(true);
+                }
+                List<CompanyUser> companyUsers = companyMapper.queryApplyStaff(userId);
+                if (companyUsers == null) {
+                    c.setApplyStaff(0);
+                } else {
+                   c.setApplyStaff(companyUsers.size());
+                }
+
+                List<Apply> applyList = msgService.applyList(userId);
+                List<ProjectApply> projectApplyList =  msgService.getProjectApply(userId);
+
+                int messageNum = applyList.size() + projectApplyList.size();
+                c.setMessage(messageNum);
+            }
+        }
+            gsonView.addStaticAttribute(SUCCESS_FLG, true);
+            gsonView.addStaticAttribute("myCompany", company);
+            return gsonView;
+        }
+
 
     @RequestMapping("/agreeApply")
     public GsonView agreeApply(@RequestParam("userId") String userId, HttpServletRequest request) {
@@ -169,7 +208,7 @@ public class LoginController {
 
         String realName = loginRegisterMapper.queryRealName(crmUserId);
         String tel = loginRegisterMapper.queryTel(crmUserId);
-//        String  tel ="13777875102";
+
         String companyName = companyMapper.queryCompanyName(userId);
         String result = companyMapper.queryStatus(userId);
 
@@ -366,6 +405,7 @@ public class LoginController {
             String userType = companyMapper.queryUserType(userId);
             if (userType.equals("ADMIN")) {
                 gsonView.addStaticAttribute("ADMIN", true);
+                gsonView.addStaticAttribute("successFlg", true);
                 return gsonView;
             } else {
                 return GsonView.createSuccessView();
