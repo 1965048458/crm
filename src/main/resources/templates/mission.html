@@ -76,8 +76,18 @@
 
                     <div id="notFinish" v-show="showPage ==='unfinish'" style="display: none">
 
-                        <div v-for="support in unfinishList">
+                        <div class="blank" style="margin:20% auto auto auto; text-align:center; "
+                             v-if="unfinishList.length === 0">
+                            <p>
+                                <img src="/images/project/no_project.svg"/>
+                            </p>
+                            <p style="color: #CCCCCC; font-size: small">目前没有相关任务</p>
+                        </div>
 
+
+
+
+                        <div v-for="support in unfinishList">
                             <div class="weui-panel weui-panel_access" style="border-top: solid 1px #B2B2B2;"
                                  @click="toDetail(support.support.supportId)">
                                 <div class="weui-form-preview">
@@ -123,6 +133,14 @@
                     </div>
 
                     <div id="hasFinish" v-show="showPage ==='finish'" style="display: none">
+
+                        <div class="blank" style="margin:20% auto auto auto; text-align:center; "
+                             v-if="finishList.length === 0">
+                            <p>
+                                <img src="/images/project/no_project.svg"/>
+                            </p>
+                            <p style="color: #CCCCCC; font-size: small">目前没有相关任务</p>
+                        </div>
 
 
                         <div v-for="support in finishList">

@@ -520,7 +520,7 @@
         </div>
     </div>
 
-    <div id="selectCreator" v-show="showPage === 'selectCreator'">
+    <div id="selectCreator" style="display:none;" v-show="showPage === 'selectCreator'">
         <div class="weui-tab">
 
             <div class="top-bar " style="border: hidden; padding: 8px 8px;text-align: center">
@@ -550,7 +550,7 @@
     </div>
 
 
-    <div id="toDetail" v-show="showPage === 'toDetail' ">
+    <div id="toDetail" style="display:none;" v-show="showPage === 'toDetail' ">
 
         <div id="opportunityDetail" v-show="show ==='home'">
             <div class="page tabbar js_show">
@@ -626,7 +626,7 @@
                             </a>
                         </div>
 
-                        <div id="detailPage" v-show="showDetailPage ==='detailPage'">
+                        <div id="detailPage" style="display:none;" v-show="showDetailPage ==='detailPage'">
                             <div class="weui-cells" style="font-size: small">
                                 <div class="weui-cell" style="font-weight: bold">基本信息</div>
                                 <label style="margin-left: 15px;color: grey">项目内容</label>
@@ -803,7 +803,7 @@
                         </div>
 
 
-                        <div id="relevantPage" v-show="showDetailPage ==='relevantPage'">
+                        <div id="relevantPage" style="display:none;" v-show="showDetailPage ==='relevantPage'">
                             <div class="weui-footer" style="margin-top: 5px;margin-bottom: 5px">
                                 <p class="weui-footer__text">——————&nbsp; 项目支持 &nbsp;——————</p>
                             </div>
@@ -874,7 +874,7 @@
                         </div>
 
 
-                        <div id="modifPage" v-show="showDetailPage ==='modifPage'">
+                        <div id="modifPage" style="display:none;" v-show="showDetailPage ==='modifPage'">
                             <div class="weui-cells" style="font-size: small">
                                 <div class="weui-cell" style="font-weight: bold">修改记录</div>
 
@@ -1003,7 +1003,7 @@
 
         </div>
 
-        <div id="fail" v-show="show ==='failReason'">
+        <div id="fail" style="display:none;" v-show="show ==='failReason'">
 
             <div class="center-box">
 
@@ -1046,7 +1046,7 @@
         </div>
 
 
-        <div id="modificationOppo" v-show="show ==='modif'">
+        <div id="modificationOppo" style="display:none;" v-show="show ==='modif'">
 
             <div class="center-box">
 

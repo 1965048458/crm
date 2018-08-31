@@ -72,7 +72,7 @@
                 <div style="height: 43px;"></div>
                 <div v-for="applyStaff in applyStaffList">
                     <div class="weui-panel weui-panel_access">
-                        <div class="weui-panel__bd" style=" height: 90px;margin-top: 0px">
+                        <div class="weui-panel__bd" style=" height: 90px;margin-top: 0px;border-top: solid 1px gainsboro">
                             <a href="javascript:;" class="weui-media-box weui-media-box_appmsg"
                                style=" height: 90px; padding: 0px ;">
                                 <div class="weui-media-box__hd" style=" height: 90px;width: 90px; margin-right: 0px; ">
@@ -100,13 +100,13 @@
                             <div class="weui-flex__item" style="text-align: center;"
                                  @click="agree(applyStaff.userId)">
                                 <div class="placeholder" style="text-align: center">
-                                    <a href="javascript:;" class="weui-btn weui-btn_plain-primary"
+                                    <a href="javascript:;" class="weui-btn weui-btn_primary"
                                        style="margin-right: 10px">同意</a>
                                 </div>
                             </div>
                             <div class="weui-flex__item" style="text-align: center" @click="refuse(applyStaff.userId)">
                                 <div class="placeholder">
-                                    <a href="javascript:;" class="weui-btn weui-btn_plain-default"
+                                    <a href="javascript:;" class="weui-btn weui-btn_warn"
                                        style="margin-left: 10px">拒绝</a></div>
                             </div>
 
