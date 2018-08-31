@@ -225,6 +225,21 @@ public class DeptServiceImpl implements DeptService {
                 //三级机构联系人
                 List<Contacts> subContactsList = deptMapper.searchContacts(subDeptId);
                 if (subContactsList != null && !subContactsList.isEmpty()) {
+                    for (Contacts contacts : subContactsList) {
+                        String totalName = "";
+                        String deptName = department.getDeptName();
+                        if (deptName != null && deptName != "") {
+                            totalName = deptName + "-" + totalName;
+                        }
+                        String subDeptName = subDepartment.getDeptName();
+                        if (subDeptName != null && subDeptName != "") {
+                            totalName = totalName + "-" + subDeptName;
+                        }
+                        //合成联系人的部门院校名称
+                        totalName = contacts.getCustomerName() + "-" + totalName + "-" + (contacts.getTypeName() != null? contacts.getTypeName() : "无") + "-" + contacts.getRealName()
+                                + ":" + contacts.getContactsId() + ":" + contacts.getCustomerId();
+                        contacts.setTotalName(totalName);
+                    }
                     subDepartment.setContactsList(subContactsList);
                     //三级机构添加联系人总人数
                     subDepartment.setContactNumber(subContactsList.size());
@@ -236,6 +251,17 @@ public class DeptServiceImpl implements DeptService {
         //二级机构联系人
         List<Contacts> contactsList = deptMapper.searchContacts(deptId);
         if (contactsList != null && !contactsList.isEmpty()) {
+            for (Contacts contacts : contactsList) {
+                String totalName = "";
+                String deptName = department.getDeptName();
+                if (deptName != null && deptName != "") {
+                    totalName = deptName + "-" + totalName;
+                }
+                //合成联系人的部门院校名称
+                totalName = contacts.getCustomerName() + "-" + totalName + (contacts.getTypeName() != null? contacts.getTypeName() : "无") + "-" + contacts.getRealName()
+                        + ":" + contacts.getContactsId() + ":" + contacts.getCustomerId();
+                contacts.setTotalName(totalName);
+            }
             department.setContactsList(contactsList);
             contactsNum += contactsList.size();
         }

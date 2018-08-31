@@ -27,6 +27,8 @@
         <result property="realName" column="real_nm"/>
         <result property="gender" column="gender"/>
         <result property="typeName" column="type_name"/>
+        <result property="customerName" column="customer_nm"/>
+        <result property="customerId" column="customer_id"/>
     </resultMap>
     
     <resultMap id="enclosureApplyMap" type="com.xuebei.crm.customer.EnclosureApply">
@@ -103,10 +105,12 @@
     </select>
     
     <select id="searchContacts" resultMap="contactsMap">
-        SELECT a.contacts_id,a.customer_dept_id,a.real_nm,a.gender,b.type_name
+        SELECT a.contacts_id,a.customer_dept_id,a.real_nm,a.gender,b.type_name,cu.customer_id, cu.customer_nm
         FROM contacts AS a
         LEFT JOIN contacts_type AS b
             ON a.contacts_type_id = b.contacts_type_id
+        LEFT JOIN customer_dept cd ON a.customer_dept_id = cd.customer_dept_id
+        LEFT JOIN crm_customer cu ON cd.customer_id = cu.customer_id
         WHERE a.customer_dept_id=#{deptId};
     </select>
 

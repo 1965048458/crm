@@ -4,6 +4,7 @@ import com.xuebei.crm.customer.Customer;
 import com.xuebei.crm.customer.CustomerMapper;
 import com.xuebei.crm.customer.CustomerService;
 import com.xuebei.crm.customer.Department;
+import com.xuebei.crm.department.DeptService;
 import com.xuebei.crm.journal.VisitRecord;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,16 @@ public class OpportunityServiceImpl implements OpportunityService {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private DeptService deptService;
+
     @Override
     public List<Customer> getMyCustomers(String userId) {
         List<Customer> customerList = new ArrayList<>();
         try {
             customerList = customerService.getMyCustomers(userId);
             for (Customer customer : customerList) {
-                List<Department> departmentList = customerService.queryDepartment(customer.getCustomerId(), userId);
+                List<Department> departmentList = deptService.myDepartmentList(customer.getCustomerId(), userId);
                 customer.setContacts(departmentList);
             }
             return customerList;
