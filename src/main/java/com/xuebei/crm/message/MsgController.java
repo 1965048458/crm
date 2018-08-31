@@ -50,7 +50,7 @@ public class MsgController {
     }
 
     @RequestMapping("showApplyList")
-    public String showApplyList(@RequestParam("companyId")String companyId,
+    public String showApplyList(@RequestParam(value = "companyId",required = false)String companyId,
                                 HttpServletRequest request){
 
         String crmUserId = (String) request.getSession().getAttribute("crmUserId");
