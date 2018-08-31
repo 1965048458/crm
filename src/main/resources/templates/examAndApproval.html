@@ -77,12 +77,22 @@
             <div class="narvi-bar">
                 <div class="top-bar center-box" style="border: hidden">
                     <span class="pull-left" style="color: rgb(61, 168, 244); font-size: 16px;"
-                          onclick="history.back()">返回</span>
+                          @click="back">返回</span>
                     <span class="center-ele">审批</span>
                 </div>
             </div>
 
             <div class="weui-tab__panel" style="padding-top: 44px">
+
+                <div class="blank" style="margin:20% auto auto auto; text-align:center; "
+                     v-if="applyList.length === 0 & projectApplyList.length===0 ">
+                    <p>
+                        <img src="/images/project/no_project.svg"/>
+                    </p>
+                    <p style="color: #CCCCCC; font-size: small">目前没有相关信息</p>
+                </div>
+
+
                 <div v-for="apply in applyList" :apply="apply">
                     <div v-if="apply.applyType == 'ENCLOSURE_APPLY'">
                         <enclosure-apply-component :apply="apply"></enclosure-apply-component>

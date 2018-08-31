@@ -155,6 +155,7 @@
                         <p style="color: #CCCCCC; font-size: small">还没有创建相关的商机哦，快去创建吧</p>
                     </div>
 
+
                     <div v-for="opportunity in opportunityList">
                         <div class="weui-panel weui-panel_access" @click="detail(opportunity.opportunityId)">
                             <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
@@ -163,6 +164,7 @@
                                     <img class="weui-media-box__thumb" :src="imgSrc(opportunity.salesStatus)"
                                          style="width: 40px;height: 40px;margin-top: 10px" alt="">
                                 </div>
+
                                 <div class="weui-media-box__bd">
                                     <label class="weui-media-box__title"
                                            style="font-size: 15px;color: #333333;">{{opportunity.opportunityName}}</label>

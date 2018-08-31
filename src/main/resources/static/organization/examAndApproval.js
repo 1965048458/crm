@@ -33,6 +33,9 @@ $(document).ready(function () {
                     thisVue.$set(thisVue, 'projectApplyList', result.projectApplyList);
                 });
             },
+            'back': function () {
+               window.location.href = "/myAccountInfor";
+            },
             'applyAgree': function (applyType,applyId) {
                 var thisVue = this;
                 $.ajax({

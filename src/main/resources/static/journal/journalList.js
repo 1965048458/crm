@@ -34,7 +34,7 @@ jQuery(document).ready(function () {
         methods: {
             'searchList': function (data) {
                 //todo 从服务器搜索日志
-                console.log(data);
+                // console.log(data);
                 var $loadingToast = $('#loadingToast');
                 if ($loadingToast.css('display') != 'none') return;
                 $loadingToast.fadeIn(100);
@@ -47,7 +47,7 @@ jQuery(document).ready(function () {
                     cache: false
                 }).done(function (result) {
                     if (result.successFlg) {
-                        console.log(result);
+                        // console.log(result);
                         thisVue.$set(thisVue, 'journalList', result.journalList);
                         thisVue.showPage = 'journalList';
                         $loadingToast.fadeOut(100);
@@ -207,7 +207,7 @@ jQuery(document).ready(function () {
                     if (result.successFlg) {
                         thisVue.$set(thisVue, 'customers', result.customers);
                         thisVue.$set(thisVue, 'projects', result.opportunities);
-                        console.log(result);
+                        // console.log(result);
                     } else {
                         thisVue.errMsg = result.errMsg;
                         thisVue.showErrMsg = true;

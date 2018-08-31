@@ -70,7 +70,19 @@
             </div>
             <div class="weui-tab__panel">
                 <div style="height: 43px;"></div>
+
+
+                <div class="blank" style="margin:20% auto auto auto; text-align:center; "
+                     v-if="applyStaffList.length === 0">
+                    <p>
+                        <img src="/images/project/no_project.svg"/>
+                    </p>
+                    <p style="color: #CCCCCC; font-size: small">目前没有相关信息</p>
+                </div>
+
+
                 <div v-for="applyStaff in applyStaffList">
+
                     <div class="weui-panel weui-panel_access">
                         <div class="weui-panel__bd" style=" height: 90px;margin-top: 0px;border-top: solid 1px gainsboro">
                             <a href="javascript:;" class="weui-media-box weui-media-box_appmsg"
