@@ -58,10 +58,7 @@ jQuery(document).ready(function () {
                 });
             },
             'searchAll': function () {
-                var data = {
-                    //userId:"00284bca325c4e77b9f30c5671ec1c44",
-                };
-                this.searchList(data);
+                this.searchList();
             },
             'searchUnRead': function () {
                 var data = {
