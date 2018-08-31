@@ -44,17 +44,18 @@ public class CustomerControllerTest {
     public void queryCustomerInfo() throws Exception {
 
         String searchWord = "张三";
+        String userId = "23959345";
         String url = "/customer/queryCustomer";
         List<Customer> customerList = new ArrayList<>();
 
-        when(customerService.queryCustomerInfo(searchWord)).thenReturn(customerList);
+        when(customerService.queryCustomerInfo(searchWord, userId)).thenReturn(customerList);
 
         mockMvc.perform(get(url)
                 .param("searchWord", searchWord))
                 .andExpect(jsonPath("successFlg").value(true))
                 .andExpect(jsonPath("customerList").exists());
 
-        verify(customerService).queryCustomerInfo(searchWord);
+        verify(customerService).queryCustomerInfo(searchWord, userId);
 
     }
 

@@ -16,7 +16,7 @@ public interface CustomerService {
     void newSchool(String customer_id,String name,String schoolType,String profile,
                    String website,String creator_id,String create_ts,String updater_id,String update_ts);
 
-    List<Customer> queryCustomerInfo(String searchWord);
+    List<Customer> queryCustomerInfo(String searchWord, String userId);
 
     List<Department> queryDepartment(String customerId,String userId);
 
