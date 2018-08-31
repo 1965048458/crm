@@ -299,9 +299,9 @@ public class CustomerController {
 
         // 权限检查
         Department dept = customerMapper.queryDepartmentById(deptId);
-        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(request), dept.getCustomer().getCustomerId())) {
-            return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
-        }
+//        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(request), dept.getCustomer().getCustomerId())) {
+//            return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
+//        }
 
         // 联系人类型检查
         if (dept.getParent() == null || dept.getParent().getDeptId() == null) {
@@ -342,7 +342,7 @@ public class CustomerController {
     @RequestMapping("/action/getContactsTypeList")
     public GsonView getContactsTypeList(@RequestParam("deptId") String deptId, HttpServletRequest request) {
         Department dept = customerMapper.queryDepartmentById(deptId);
-        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(request), dept.getCustomer().getCustomerId())) {
+        if (dept == null) {
             return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
         }
         String customerId = dept.getCustomer().getCustomerId();
