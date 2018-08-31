@@ -60,16 +60,9 @@ $(document).ready(function () {
                     }
                 });
             },
-            /* 'addPay': function () {
-             this.pays.push({
-             refund: '',
-             condition: ''
-             });
+            'back': function () {
+                window.location = '/project/projectList';
              },
-             'remove': function (index) {
-             this.pays.splice(index, 1);
-             // console.log(this.pays.splice(index, 1));
-             },*/
             'changeFold': function () {
                 this.showContract = !this.showContract;
                 if (this.showContract) {

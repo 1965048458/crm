@@ -159,6 +159,9 @@ jQuery(document).ready(function () {
                 });
             },
             'backToFilter': function () {
+                this.sendersId = [];
+                this.sendersName = [];
+                this.tempSenders = [];
                 this.showPage = 'filterDiv';
             },
             'finish': function () {
@@ -172,22 +175,6 @@ jQuery(document).ready(function () {
                 this.showPage = 'filterDiv';
             },
             'loadDetail': function (journalId) {
-                // var thisVue = this;
-                // jQuery.ajax({
-                //     type: 'get',
-                //     url: '/journal/detail',
-                //     data: {
-                //         journalId: journalId
-                //     },
-                //     dataType: 'json',
-                //     cache: false
-                // }).done(function (result) {
-                //     var journal = result.journal;
-                //     journal.unread = result.unread;
-                //     journal.read = result.read;
-                //     thisVue.$set(thisVue, 'curJournal', journal);
-                //     thisVue.showPage = 'journalDetail';
-                // });
                 this.curJournal = journalId;
                 this.showPage = 'journalDetail';
             },

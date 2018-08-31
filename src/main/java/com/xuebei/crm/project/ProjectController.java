@@ -138,6 +138,9 @@ public class ProjectController {
         if (param.getCreator() != null && param.getCreator().equals("sub")){
             //删除自己的ID
             childs.remove(userId);
+            if (childs.isEmpty()){
+                childs.add("000");
+            }
             String[] childsArray = new String[childs.size()];
             childs.toArray(childsArray);
             param.setSubMember(childsArray);

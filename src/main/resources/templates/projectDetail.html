@@ -114,7 +114,7 @@
 
     <div id="projectDetail" v-show="show === 'projectDetail'">
         <div class="top-bar" style="border-bottom: 1px solid #EAE4E4">
-        <span class="pull-left" style="margin-top: 7px" @click="back">&nbsp;
+        <span class="pull-left" style="margin-top: 7px" @click="back">
             <img src="/images/back_icon.svg"/>
         </span>
             <span style="width: 76%;text-align: center;font-size: 18px;margin-top: 5px">项目详情</span>
@@ -152,7 +152,7 @@
                     (&nbsp;<span class="pro-status-content" style="color: #00A4FF;" v-text="progress + '%'">0%</span>&nbsp;)
                 </th:block>
 
-                <th:block th:if="${ projectDetail.getStatus() == '1' &&  projectDetail.getCreatorId() == projectDetail.getUserId() }">
+                <th:block th:if="${ projectDetail.getLeaderName() != null && projectDetail.getStatus() == '1' &&  projectDetail.getCreatorId() == projectDetail.getUserId() }">
 
                     <th:block th:if="${projectDetail.getProgress() != 100}">
                         <span class="pull-right" style="color: #00A4FF; opacity: 0.5;" >

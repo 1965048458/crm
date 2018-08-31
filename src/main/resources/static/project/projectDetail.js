@@ -156,7 +156,8 @@ jQuery(document).ready(function () {
                         $('#toast').fadeIn(100);
                         setTimeout(function () {
                             $('#toast').fadeOut(100);
-                            thisVue.show = 'projectDetail';
+                            //thisVue.show = 'projectDetail';
+                            location.reload(true);
                         }, 1000);
                     }
                 });
