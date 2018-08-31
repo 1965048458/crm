@@ -69,11 +69,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> queryCustomerInfo(String searchWord) {
+    public List<Customer> queryCustomerInfo(String searchWord, String userId) {
 
         List<Customer> customerList = new ArrayList<>();
         try {
-            customerList = customerMapper.queryCustomerInfo(searchWord);
+            customerList = customerMapper.queryCustomerInfo(searchWord, userId);
             for (Customer customer : customerList) {
                 customer.setLastTs(lastFollowTs(customer.getCustomerId()));
             }

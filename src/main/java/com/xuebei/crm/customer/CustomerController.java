@@ -429,7 +429,7 @@ public class CustomerController {
                                       HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
         List<Customer> myCustomers = customerService.getMyCustomers(userId);
-        List<Customer> customerList = customerService.queryCustomerInfo(keyword);
+        List<Customer> customerList = customerService.queryCustomerInfo(keyword, userId);
         List<Customer> commonCustomers = customerService.getCommonCustomers(userId);
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg", true);

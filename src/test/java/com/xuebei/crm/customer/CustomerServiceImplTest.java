@@ -32,15 +32,16 @@ public class CustomerServiceImplTest {
     public void queryCustomerInfo() throws Exception {
 
         String searchWord = "张三";
+        String userId = "23959345";
         List<Customer> customerList = new ArrayList<>();
-        when(customerMapper.queryCustomerInfo(searchWord)).thenReturn(customerList);
+        when(customerMapper.queryCustomerInfo(searchWord, userId)).thenReturn(customerList);
 
-        customerList = customerService.queryCustomerInfo(searchWord);
+        customerList = customerService.queryCustomerInfo(searchWord, userId);
 
         Assert.assertNotNull(customerList);
         Assert.assertEquals(0,customerList.size());
 
-        verify(customerMapper).queryCustomerInfo(searchWord);
+        verify(customerMapper).queryCustomerInfo(searchWord, userId);
 
     }
 }

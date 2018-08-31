@@ -49,7 +49,7 @@ public interface CustomerMapper {
 
     void insertContacts(Contacts contacts);
 
-    List<Customer> queryCustomerInfo(@Param("searchWord") String searchWord);
+    List<Customer> queryCustomerInfo(@Param("searchWord") String searchWord, @Param("userId") String userId);
 
     Customer queryCustomer(@Param("customerId") String customerId);
 

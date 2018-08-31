@@ -189,10 +189,12 @@
     </insert>
 
     <select id="queryCustomerInfo" resultMap="customerMap">
-        SELECT *
-        FROM crm_customer
-        WHERE
-            customer_nm LIKE CONCAT('%', #{searchWord}, '%')
+        select * from crm_customer
+        where creator_id = #{userId} AND
+              customer_nm LIKE CONCAT('%', #{searchWord}, '%')
+              OR customer_id in ( select cd.customer_id from customer_dept cd
+            INNER join enclosure_apply e on e.customer_dept_id = cd.customer_dept_id
+        where e.user_id = #{userId} and e.status_cd = 'PERMITTED');
     </select>
 
     <select id="queryCustomer" resultMap="customerMap">
@@ -202,17 +204,18 @@
     </select>
 
     <select id="getMyCustomers" resultMap="customerMap">
-        SELECT c.*
-        FROM crm_customer c
-            LEFT JOIN company_user cu ON c.creator_id = cu.user_id
-        WHERE cu.user_id = #{userId}
+        select distinct cc.* from crm_customer cc
+            INNER join customer_dept cd on cd.customer_id = cc.customer_id
+            INNER join enclosure_apply e on e.customer_dept_id = cd.customer_dept_id
+        where e.user_id = #{userId} and e.status_cd = 'PERMITTED';
     </select>
 
     <select id="getCommonCustomers" resultMap="customerMap">
-        SELECT c.*
-        FROM crm_customer c
-        LEFT JOIN company_user cu ON c.creator_id = cu.user_id
-        WHERE cu.user_id is NULL OR cu.user_id != #{userId}
+        select distinct cc.* from crm_customer cc
+        where cc.creator_id = #{userId}
+              and cc.customer_id not in ( select cd.customer_id from customer_dept cd
+            INNER join enclosure_apply e on e.customer_dept_id = cd.customer_dept_id
+        where e.user_id = #{userId}  and e.status_cd = 'PERMITTED');
     </select>
 
     <select id="queryDepartmentById" resultMap="deptMap">
