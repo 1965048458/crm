@@ -262,9 +262,9 @@ public class CustomerController {
 
         // 部门ID空 或 用户不能修改该部门（因为客户不属于用户的公司）
         Department dept = customerMapper.queryDepartmentById(deptId);
-        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(request), dept.getCustomer().getCustomerId())) {
-            return "error/404";
-        }
+//        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(request), dept.getCustomer().getCustomerId())) {
+//            return "error/404";
+//        }
 
         // 判断部门是顶级部门
         if (dept.getParent() == null || dept.getParent().getDeptId() == null) {
