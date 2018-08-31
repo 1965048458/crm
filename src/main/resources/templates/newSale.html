@@ -237,7 +237,7 @@
                 </div>
                 <div class="weui-cell__bd">
                     <span v-text="contact.realName" style="color: #333333;font-size: 16px"></span>
-                    <span style="padding-left: 5px;color: #B2B2B2;font-size: 13px; border: solid thin;">{{contact.typeName}}</span>
+                    <span style="padding-left: 5px;color: #B2B2B2;font-size: 13px; border: solid thin;" v-if="contact.typeName != undefined">{{contact.typeName}}</span>
                 </div>
                 <div class="weui-cell__ft">
                     <input type="radio" class="weui-check" name="radio"
