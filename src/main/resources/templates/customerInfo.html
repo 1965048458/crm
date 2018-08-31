@@ -25,12 +25,15 @@
             background: #FFFFFF;
             font-size: 18px;
             text-align: center;
-            height: 40px;
-            padding-top: 8px;
+
+            padding: 8px 15px;
         }
 
         .pull-left {
             float: left !important;
+        }
+        .pull-right{
+            float: right !important;
         }
 
         .weui-cells {
@@ -45,19 +48,21 @@
     <div id="customerVue" class="page navbar js_show">
         <div class="top-bar">
             <span onclick="backToList()" class="pull-left">
-                <img src="/images/back_icon.svg" style="margin-top:5px; margin-left: 12px;"/></span>
-            <span class="center" th:text="${customerName}"></span>
+                <img src="/images/back_icon.svg" /></span>
+            <span class="center" style="padding-left: 4px" th:text="${customerName}"></span>
             <input type="hidden" id="customerId" th:value="${customerId}">
+            <span class="pull-right" style="color: rgb(61, 168, 244); font-size: 16px;opacity: 0">编辑</span>
             <!--<input type="hidden" id="customerName" th:value="${customerName}">-->
         </div>
         <div class="weui-tab" style="margin-top: 0px;">
-            <div class="weui-navbar" style="height: 44px;font-size: 15px; background: #FFFFFF">
+            <div class="weui-navbar" style="height: 40px;font-size: 15px; background: #FFFFFF">
                 <div href="#tab1" class="weui-navbar__item weui-bar__item_on">
                     <span class="center-ele">客户信息</span>
                 </div>
                 <div href="#tab2" class="weui-navbar__item" @click="orgDisplay()">
                     <span class="center-ele">组织机构</span>
                 </div>
+
             </div>
             <div class="weui-tab__panel"  style="background: #FFFFFF">
 

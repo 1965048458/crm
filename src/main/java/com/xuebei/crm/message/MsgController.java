@@ -32,7 +32,7 @@ public class MsgController {
         String userId = (String) request.getSession().getAttribute("userId");
         List<Apply> applyList = msgService.applyList(userId);
         GsonView gsonView = new GsonView();
-        gsonView.addStaticAttribute("successFlag",true);
+        gsonView.addStaticAttribute("successFlg",true);
         gsonView.addStaticAttribute("applyList",applyList);
         return gsonView;
     }
@@ -45,7 +45,7 @@ public class MsgController {
         GsonView gsonView = new GsonView();
         String userId = (String) request.getSession().getAttribute("userId");
         msgService.applyCheck(applyType,applyId,isApprove,userId);
-        gsonView.addStaticAttribute("successFlag",true);
+        gsonView.addStaticAttribute("successFlg",true);
         return gsonView;
     }
 
