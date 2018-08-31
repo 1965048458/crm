@@ -71,7 +71,7 @@
 <div id="organizationVue" >
     <input id="customerId" type="hidden" th:value="${customerId}">
     <input id="customerName" type="hidden" th:value="${customerName}">
-    <div class="page navbar js_show" >
+    <div class="page navbar js_show" v-show="showPage==='showCustomerOrganization'">
         <div class="page__bd" style="height: 100%;">
             <div class="narvi-bar">
                 <div class="top-bar center-box" style="border: hidden">
