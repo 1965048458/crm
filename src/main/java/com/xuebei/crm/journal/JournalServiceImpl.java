@@ -228,7 +228,7 @@ public class JournalServiceImpl implements JournalService {
 
     @Override
     public List<JournalCustomer> getAllContacts(String companyId,String userId) {
-        List<JournalCustomer> customerList = journalMapper.queryJournalCustomersByCompanyId(companyId);
+        List<JournalCustomer> customerList = journalMapper.queryJournalCustomersByCompanyId(userId);
         List<Member> memberList = memberService.searchSubMemberList(userId);
         for(JournalCustomer customer:customerList){
             try{

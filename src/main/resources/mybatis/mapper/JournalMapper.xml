@@ -271,9 +271,12 @@
     </select>
 
     <select id="queryJournalCustomersByCompanyId" resultMap="journalCustomerMap">
-        SELECT customer_id, customer_nm
-		FROM customer_view
-		WHERE company_id = #{companyId};
+        select customer_id,customer_nm from crm_customer
+        where creator_id = #{userId} AND
+              customer_nm LIKE CONCAT('%', '', '%')
+              OR customer_id in ( select cd.customer_id from customer_dept cd
+            INNER join enclosure_apply e on e.customer_dept_id = cd.customer_dept_id
+        where e.user_id = #{userId} and e.status_cd = 'PERMITTED');
     </select>
 
     <select id="queryContactsByCustomerId" resultMap="contactsMap">
