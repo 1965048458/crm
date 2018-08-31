@@ -150,24 +150,14 @@ public class CustomerController {
                                       @RequestParam(value = "website", required = false) String website,
                                       @RequestParam(value = "profile", required = false) String profile,
                                       HttpServletRequest request) {
-        if (!customerService.isUserHasCustomer(acquireUserId(request), customerId)) {
-            return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
-        }
+//        if (!customerService.isUserHasCustomer(acquireUserId(request), customerId)) {
+//            return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
+//        }
 
         if (StringUtils.isEmptyOrWhitespace(deptName)) {
             return GsonView.createErrorView(DEPT_NAME_BLANK_ERROR_MSG);
         }
         String userId = (String) request.getSession().getAttribute("userId");
-//        WarningBeforeCreateEnum warning = deptService.warningBeforeCreate(deptName,customerId,userId);
-//        switch (warning){
-//            case APPLY_BY_ME:
-//                return GsonView.createErrorView(WarningBeforeCreateEnum.APPLY_BY_ME.getName());
-//            case APPLY_BY_OTHERS:
-//                return GsonView.createErrorView(WarningBeforeCreateEnum.APPLY_BY_OTHERS.getName());
-//            case NO_ONE_APPLY:
-//            default:
-//                break;
-//        }
         if(customerMapper.isTopDepartNameExist(customerId,deptName)){
             Department expiredDept = customerMapper.searchDeptByName(customerId,deptName);
             customerMapper.updateDept(website,profile,expiredDept.getDeptId());
