@@ -2,6 +2,7 @@ package com.xuebei.crm.message;
 
 import com.google.gson.Gson;
 import com.xuebei.crm.dto.GsonView;
+import com.xuebei.crm.login.LoginRegisterMapper;
 import com.xuebei.crm.member.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,9 @@ public class MsgController {
 
     @Autowired
     private MsgMapper msgMapper;
+
+    @Autowired
+    private LoginRegisterMapper loginRegisterMapper;
 
     @RequestMapping("applyList")
    public GsonView applyList(HttpServletRequest request){
@@ -46,7 +50,12 @@ public class MsgController {
     }
 
     @RequestMapping("showApplyList")
-    public String showApplyList(){
+    public String showApplyList(@RequestParam("companyId")String companyId,
+                                HttpServletRequest request){
+
+        String crmUserId = (String) request.getSession().getAttribute("crmUserId");
+        String userId = loginRegisterMapper.queryUserIdByCompanyId(crmUserId, companyId);
+        request.getSession().setAttribute("userId", userId);
         return "examAndApproval";
     }
 

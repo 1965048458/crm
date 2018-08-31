@@ -8,8 +8,8 @@ var TYPE_NAMES = {
     'REFUSE': '审核未通过',
 };
 jQuery(document).ready(function () {
-    var myCompany = new Vue({
-        el: '#myCompany',
+    var mineVue = new Vue({
+        el: '#mineVue',
         data: {
             realName: '',
             tel: '',
@@ -40,8 +40,37 @@ jQuery(document).ready(function () {
 
                 })
             },
-            'staffAudit': function () {
-                window.location.href = "/staffAudit";
+            'init': function () {
+                var thisVue = this;
+                jQuery.ajax({
+                    type: 'get',
+                    url: '/accountSecurity/ini',
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        thisVue.$set(thisVue, 'realName', result.user.realName);
+                        thisVue.$set(thisVue, 'tel', result.user.tel);
+                    }
+                })
+            },
+            'dropOut': function () {
+                var thisVue = this;
+                jQuery.ajax({
+                    type: 'get',
+                    url: '/accountSecurity/dropOut',
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        window.location.href = "/";
+                    }
+
+                })
+
+            },
+            'staffAudit': function (id) {
+                window.location.href = "/staffAudit?companyId="+id;
             },
             'accountSecurity': function () {
                 window.location.href = "/accountSecurity";
@@ -158,15 +187,16 @@ jQuery(document).ready(function () {
                     dataType: 'json',
                     cache: false,
                     success: function (result) {
-                        if (result.ADMIN){
-                            window.location = '/administrator';
-                        } else  if (result.successFlg){
+                        if (result.successFlg) {
                             window.location = '/journal/toList';
-                        }else{
+                        } else {
                             alert(result.errMsg);
                         }
                     }
                 });
+            },
+            'toMessage':function (id) {
+                window.location="message/showApplyList?companyId="+id;
             }
         },
         watch: {
@@ -179,5 +209,6 @@ jQuery(document).ready(function () {
             }
         }
     });
-    myCompany.myCompany1();
+    mineVue.myCompany1();
+    mineVue.init();
 })

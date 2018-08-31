@@ -49,12 +49,12 @@ jQuery(document).ready(function () {
                     cache: false
                 }).done(function (result) {
                     if (result.successFlg) {
-                        window.location.href = "/myAccount";
+                        window.location.href = "/myAccountInfor";
                     } else{
                         if(result.loginError) {
                             alert("用户名或密码不正确");
                         }else{
-                            alert("系统错误！");
+                            alert("用户名或密码不正确！");
                         }
                     }
                 });

@@ -12,6 +12,36 @@ public class Company {
     private String companyName;
     @Expose
     List<CompanyUser> companyUserList;
+    @Expose
+    private boolean isAdmin;
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+    @Expose
+    private int applyStaff;
+    @Expose
+    private int message;
+
+    public int getMessage() {
+        return message;
+    }
+
+    public void setMessage(int message) {
+        this.message = message;
+    }
+
+    public int getApplyStaff() {
+        return applyStaff;
+    }
+
+    public void setApplyStaff(int applyStaff) {
+        this.applyStaff = applyStaff;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
 
     public String getStatus() {
         return status;
