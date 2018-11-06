@@ -17,7 +17,7 @@ jQuery(document).ready(function () {
             title: '',
             type: '',
             myCompany: '',
-            name: '杭州浙大旭日科技开发有限公司',
+            name: '浙大旭日',
             companyList: [],
             applyStaffList: [],
             userId: '',
