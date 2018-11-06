@@ -1,0 +1,3365 @@
+[33mcommit 4cadd8c4835a4f7dcfbc3074cdac73b6662a8841[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 17:57:41 2018 +0800
+
+    bug修改
+
+[33mcommit 10eb93bc084a339268bb67ff42753fb49c6944fb[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 17:41:44 2018 +0800
+
+    bug修改
+
+[33mcommit da40a097e7e9769f94e749a1ed7bf709edf731e8[m
+Merge: cf52b42 7bd30b0
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 31 17:22:20 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit cf52b42a4d83160af13386177275578161153ad1[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 31 17:22:10 2018 +0800
+
+    我的、公海客户逻辑修改2
+
+[33mcommit 7bd30b005e3fa58a5226191660c50e81e0f4020b[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 16:36:37 2018 +0800
+
+    bug修改
+
+[33mcommit 89aea525b6a13c60fd17efd6a3da3701bb1cec3d[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 16:21:54 2018 +0800
+
+    bug修改
+
+[33mcommit 2123863845ff0ff6b647ca547c385ba23980c92f[m
+Merge: 9054ef9 58f3001
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 16:12:00 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 58f300143e3122cd180d358de7df07a5f5d4a793[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Aug 31 16:11:39 2018 +0800
+
+    添加联系人权限检查
+
+[33mcommit 9054ef9fb16b0eb8ed129531e1c57ad88c94acf9[m
+Merge: e138782 e95658a
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 16:07:09 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit e95658a2dba699c39236c3750b6621d6f310dfb7[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Aug 31 16:06:53 2018 +0800
+
+    添加联系人
+
+[33mcommit e138782755ef0fa437e6ab4ecf5f1787ecf57ecf[m
+Merge: 44f6ce7 84e09cd
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 15:59:19 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 84e09cd9b15def1576a4abbd23b2413ba7fea4cf[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Aug 31 15:58:47 2018 +0800
+
+    拜访客户up
+
+[33mcommit 44f6ce7dd6c9fd6d60a822dfa0bc5f6e6d8a2882[m
+Merge: 809669c 2a7948f
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 15:56:49 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 2a7948f353926c679a6255fb9da81f0972b1809a[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Aug 31 15:56:38 2018 +0800
+
+    拜访客户
+
+[33mcommit 809669cecdeac12b85ddaf242dfdeed0dbc653ac[m
+Merge: f42eafc a88a44c
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 15:45:53 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit a88a44c4d84544e7a041fb12f66713e2a71ec8bf[m
+Merge: 7e185da 72527cd
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 31 15:40:51 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 7e185da18fc90cf32d4b7e0ea25d8b8f31d3f0ec[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 31 15:40:45 2018 +0800
+
+    我的、公海客户逻辑修改
+
+[33mcommit f42eafc1439a70605d5783277fac7c3ce3fb0c32[m
+Merge: 0bfc1f6 72527cd
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 15:09:48 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 72527cd8137e7bd94901d9837267be7fc9ef14f5[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Aug 31 14:50:00 2018 +0800
+
+    圈地up
+
+[33mcommit 75b73792d6f6e615a5e16e7dd834881fdd904d3e[m
+Merge: 7901065 5e1c81b
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 31 14:39:30 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 7901065d8133627326402000a8012e20efe10a5e[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 31 14:39:21 2018 +0800
+
+    细节修改
+
+[33mcommit 0bfc1f6298e873090c6f118cff4d135fb999d66a[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 14:22:35 2018 +0800
+
+    bug修改
+
+[33mcommit 7e2d7c4129df12a1cbc5e9afcad7417bd5dddce1[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 14:20:09 2018 +0800
+
+    bug修改
+
+[33mcommit 5e1c81ba36b6c597f410cdcd4630c2739747ec11[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 13:40:05 2018 +0800
+
+    bug修改
+
+[33mcommit 539b1684d6ab3a3a49884e979d95631442f9de3f[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 13:27:59 2018 +0800
+
+    bug修改
+
+[33mcommit 8c1ce836d8cad6a85f49c248242d0f6b7151311c[m
+Merge: 0653643 5d18442
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 13:14:36 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 0653643d7d22ab1e34e5cb8fbb8695c5036e8f82[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 13:14:26 2018 +0800
+
+    bug修改
+
+[33mcommit 5d18442f3aee1769a3f10ab76e31f33b7d210b86[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 31 12:40:49 2018 +0800
+
+    final
+
+[33mcommit 7b3857a8f59af59a8a404f58cba6b3b9ef080649[m
+Merge: 37bb0fd 6197a23
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 31 12:36:05 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/resources/mybatis/mapper/ProjectMapper.xml
+
+[33mcommit 37bb0fdf87f8318ba65e65d121b499521d8bfa6d[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 31 12:35:15 2018 +0800
+
+    final
+
+[33mcommit 6197a23864719679b69c732157d8c2ac106ec3c9[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 12:04:30 2018 +0800
+
+    消息审批bug修改
+
+[33mcommit 5a22758c4f9c7794fff10a7893e3ffe90ae64dcc[m
+Merge: 2ab44e8 c7af502
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 11:53:36 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 2ab44e804e2869de64831ba4c285447d7a2ef0f3[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 31 11:53:28 2018 +0800
+
+    我的详情页面修改
+
+[33mcommit c7af5023082585aad6c8d9e493e33a53f6e6a99b[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Aug 31 10:43:23 2018 +0800
+
+    组织机构显示标题
+
+[33mcommit 783a33bb1f8ffab18de0dd832af9d60a1d0d02b1[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 30 18:08:31 2018 +0800
+
+    组织机构显示
+
+[33mcommit 0603937447945607d5b8f70ae326622b402909ec[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 30 17:41:46 2018 +0800
+
+    日志选择拜访对象upup
+
+[33mcommit 293763be314fb0201c44dfb74f0cbf2ef2daee60[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 30 17:34:40 2018 +0800
+
+    细节修改
+
+[33mcommit 6cc4682da317e457d72c59c85eb82f819479c15b[m
+Merge: f8d70bb be5ac31
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 30 17:30:02 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit f8d70bb402422856cd698378132850f64404e736[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 30 17:29:51 2018 +0800
+
+    日志选择拜访对象up
+
+[33mcommit be5ac310105f22046ac38567d86229045f940ae1[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 30 16:54:27 2018 +0800
+
+    细节修改
+
+[33mcommit fdf562c9e5a7955d2c693d5f600f8b1fe59f2056[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 30 16:28:08 2018 +0800
+
+    项目详情final
+
+[33mcommit 8db85a4643a39d36e1bce4af5f5585dbb5771be2[m
+Merge: 0031b07 c34d686
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 30 16:07:58 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 0031b07c556a0fc1ef3b6aca4e9fca752c778d06[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 30 16:07:49 2018 +0800
+
+    日志选择拜访对象
+
+[33mcommit 3fbbde28191e861ca043374c05e3162c95ec12f5[m
+Merge: d5f0e0a 8db85a4
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 30 16:06:34 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit d5f0e0a010c15a79e5a5fa8966f70dcc462faf13[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 30 16:05:58 2018 +0800
+
+    项目详情final
+
+[33mcommit c34d686b2b76c2bed5757414d634f30376efa6e5[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Aug 30 16:03:55 2018 +0800
+
+    填写日志 -商机选择bug
+
+[33mcommit a245bde498d806ac862ede3ffd8d3503c8b324e0[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 30 15:51:59 2018 +0800
+
+    编辑日志与圈地延期
+
+[33mcommit e58807e6e59faeb03171ba58cb5559cdcaa4ba1e[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Aug 29 18:36:09 2018 +0800
+
+    项目详情大体完善
+
+[33mcommit 596d2e26e100d48a26e47581c79a7659316b67d1[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 29 17:40:00 2018 +0800
+
+    商机详情bug修改
+
+[33mcommit 707d8fce40bdea36d084e47b12e29a2ca98e4914[m
+Merge: 4b86903 ba00743
+Author: 郭培林 <1558047230@qq.com>
+Date:   Wed Aug 29 17:04:54 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 4b869033a6eb5b1c3213987eb313fa825794f85d[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Wed Aug 29 17:04:35 2018 +0800
+
+    圈地延期申请修改
+
+[33mcommit 4e0656213167db7bc2cadfc72e0e9fa50cf54721[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Wed Aug 29 16:03:59 2018 +0800
+
+    编辑日志与圈地延期
+
+[33mcommit ba00743f66e1e9366a49d735b9b85e7f26de4e27[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 29 15:38:38 2018 +0800
+
+    日志bug修改
+
+[33mcommit a82ca870537f77f58143cda9a44300afb5f0fe4d[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 29 14:23:39 2018 +0800
+
+    啥也没改好像
+
+[33mcommit a661a7afc7254179ea8f28eca9e413256f7a505e[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 29 14:05:19 2018 +0800
+
+    商机详情 二级学院修改
+
+[33mcommit f221598324310c2ae924d95f1e7843e1a2659218[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Aug 29 14:02:10 2018 +0800
+
+    项目详情developing_4
+
+[33mcommit c7aca9f52ff4779e03d410222c689ea35121c1f5[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 29 12:02:34 2018 +0800
+
+    项目详情修改
+
+[33mcommit c47ef9afa66ea3adc3cc70751871a7cb1e77085f[m
+Merge: 5552c51 aa7db3b
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 29 11:39:18 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/project/ProjectDetail.java
+    #	src/main/resources/mybatis/mapper/ProjectMapper.xml
+
+[33mcommit 5552c513bf470c5e9a3b97f50567f9331a834687[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 29 11:35:53 2018 +0800
+
+    项目详情
+
+[33mcommit aa7db3b3a72ee8cd17f814aaaa81098b0cf43d3b[m
+Merge: 387e150 f0c2390
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Aug 29 09:19:05 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 387e150650537364265ff43ee56c778679275ee4[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Aug 28 18:33:00 2018 +0800
+
+    项目详情developing_3
+
+[33mcommit f0c239019b909ee5afa7bff4ce295f99da5d7536[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Aug 28 17:31:59 2018 +0800
+
+    圈地
+
+[33mcommit 477a7d37682f21c55a8b5fa84dfe5d38dc1e6d12[m
+Merge: 4a10376 1c41f0c
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 28 16:20:48 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 4a103764295ec334136d4f80b8b1c425ebcb2883[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 28 16:20:10 2018 +0800
+
+    任务详情--指派执行者
+
+[33mcommit 1c41f0c68059662a0a32ec8e5da7c6e0b91bd76c[m
+Merge: cb7a502 95f43ee
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Aug 28 16:11:03 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit cb7a502936fb17aad06a8347ff6d691e92de9dac[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Aug 28 16:10:56 2018 +0800
+
+    圈地
+
+[33mcommit 5f75cf6b9d3d33c9d6ddf57919e430340dcbaa62[m
+Merge: 8828cd1 95f43ee
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Aug 28 16:08:18 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/project/ProjectController.java
+    #	src/main/resources/static/organization/examAndApproval.js
+
+[33mcommit 8828cd1e23b30e4772dd697cf600616495c47db5[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Aug 28 16:04:05 2018 +0800
+
+    项目详情developing_2
+
+[33mcommit 95f43ee4a153b37560b5a7e28f90cc733799313f[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 28 15:40:52 2018 +0800
+
+    客户列表 加载状态显示
+
+[33mcommit cdb85808f870ae6f9f599e6c69f8cae08b67206a[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 28 15:30:24 2018 +0800
+
+    商机列表bug修改
+
+[33mcommit c91d21cd2357e802176df2f03ea4df2bd5c76c28[m
+Merge: 9d21a91 dbcaaa4
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 28 14:36:12 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 9d21a914488d40912db941238a06ce7dd57d2372[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 28 14:36:02 2018 +0800
+
+    商机列表
+
+[33mcommit 5130426d5e5b3988448deee00f009f2504c8442d[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 28 14:25:06 2018 +0800
+
+    商机列表
+
+[33mcommit e5818db81e9f78f6aeae4c604ffa7a949a329df1[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 28 11:39:02 2018 +0800
+
+    任务列表，任务详情
+
+[33mcommit eb0a03457d703650ab964ea3f3d7cdeb360f8af0[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Aug 27 18:39:05 2018 +0800
+
+    任务
+
+[33mcommit 398b2dae5329e8ebb56e2b75c58dd680a8a73adf[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Mon Aug 27 18:35:27 2018 +0800
+
+    圈地检查及下属合并
+
+[33mcommit 47791dba74546e0d696a7dff7d2c911129e3d8a6[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 27 18:32:49 2018 +0800
+
+    项目详情developing_1
+
+[33mcommit dbcaaa4028927d6ccd0d55e13832f8c69267ad1c[m
+Merge: 9a4e855 d969362
+Author: 郭培林 <1558047230@qq.com>
+Date:   Mon Aug 27 14:52:00 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/department/DeptServiceImpl.java
+
+[33mcommit 9a4e85513575d319cb8a5642cf35315df74ee9ac[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Mon Aug 27 14:50:52 2018 +0800
+
+    添加二级机构审核
+
+[33mcommit d969362935343d2fbde8876488bb4798bde90969[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 27 11:50:23 2018 +0800
+
+    客户及联系人错误修复，细节修改
+
+[33mcommit fc0fdcdcd32d0fdf95ee4741a34ba1d9acfdfe38[m
+Merge: aa97147 4c6a264
+Author: 郭培林 <1558047230@qq.com>
+Date:   Mon Aug 27 09:45:08 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 4c6a26449a355a8b10e7be4d9e75fe6c14f3a95c[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 24 18:49:35 2018 +0800
+
+    项目详情申请支持跳转
+
+[33mcommit f74bb95c2741759c445fe34a5790d64fbb5f3d79[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 24 18:42:56 2018 +0800
+
+    项目详情bug修改
+
+[33mcommit 1da045db8ae479714a89bbbf1efe5b8621f5fca5[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 24 17:54:40 2018 +0800
+
+    项目merge
+
+[33mcommit ea80a71358e6b39a963b2808b7a223659071c101[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 24 17:46:51 2018 +0800
+
+    项目merge
+
+[33mcommit 0f898b63bbd8b63e6709b0f9e6e31e9bc244ee71[m
+Merge: 15734d4 6eec742
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 24 17:42:22 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/project/ProjectController.java
+    #	src/main/java/com/xuebei/crm/project/ProjectService.java
+    #	src/main/java/com/xuebei/crm/project/ProjectServiceImpl.java
+
+[33mcommit 6eec7426881d08f90a77d50a4b91a61cf7b7641a[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 24 17:42:05 2018 +0800
+
+    项目详情申请支持跳转
+
+[33mcommit 15734d4066b450687f6015f2473917ec765fae21[m
+Merge: 504a3d7 86638f6
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 24 17:38:26 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 504a3d7d00b874e54c2670097cf07cdd9db18445[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 24 17:34:51 2018 +0800
+
+    项目merge
+
+[33mcommit 5ff5185d33ef32ad336d5a75d31aa2193eaa708a[m
+Merge: 3d7fcaf 8704370
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 24 17:27:35 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/project/ProjectService.java
+    #	src/main/java/com/xuebei/crm/project/ProjectServiceImpl.java
+
+[33mcommit 3d7fcafab492f2ebfd4f8cacda34a436ed04a147[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 24 17:26:32 2018 +0800
+
+    启动项目功能完善版
+
+[33mcommit 86638f6aa510346cd831cdc7eae1e40813ae274a[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 24 15:58:24 2018 +0800
+
+    底边栏添加“任务”
+
+[33mcommit 0d82c17de043ed7767c770623783bb4071c6fe1b[m
+Merge: 7a7a0ca 8704370
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 24 15:06:51 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 7a7a0cafdd638aacd86efac4a0812e2a8db9b9ca[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 24 15:06:44 2018 +0800
+
+    商机修改记录
+
+[33mcommit 8704370fd18609baed2a8d185b932d5f6e8145a3[m
+Merge: 9e857b4 dedab40
+Author: 李博 <ncj233@gmail.com>
+Date:   Fri Aug 24 15:02:35 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 9e857b4067b8620d423b1a61fcc0b685f90372bf[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Fri Aug 24 15:02:25 2018 +0800
+
+    项目详细信息的接扣和界面
+
+[33mcommit dedab4036b7dd6207e65a572066ef9bb7e8995c7[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 24 14:26:01 2018 +0800
+
+    登录注册页面 键盘回车绑定
+
+[33mcommit 9bee5e5598c58a5cab61d11eea88f8c5116b96b0[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 24 10:56:01 2018 +0800
+
+    申请加入公司被拒绝后可再次发起申请
+
+[33mcommit 52ea14e0a1a96b1cd5f8b3561d280e89b48b8dcd[m
+Merge: 1cffd26 27dee7d
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 24 10:08:39 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 1cffd260c32e662aedb672243740f4ddd64eff19[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 24 10:08:31 2018 +0800
+
+    任务界面
+
+[33mcommit aa97147bdd9537a73dd84e1a8ce73e42dd1e13ce[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 23 18:26:56 2018 +0800
+
+    审批
+
+[33mcommit 8c75655bd7dbd7b3ebdd20df332731254ce836ad[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 23 18:21:54 2018 +0800
+
+    启动项目后端，前端衔接
+
+[33mcommit 7d67678885a5d5e5b8ebdb27fccaf568803cfefc[m
+Merge: d3f9bb7 27dee7d
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 23 18:21:10 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit d3f9bb7e8094188c276a3f4fd05f32480d6d352c[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 23 18:20:03 2018 +0800
+
+    启动项目后端，前端衔接
+
+[33mcommit 27dee7db3ed8c26b47e9b265f19bfb057975ea55[m
+Merge: 89dffa0 8079ccf
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 23 16:39:35 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 89dffa07e2c81781c6e6465e71e5a59c3a855c31[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 23 16:39:24 2018 +0800
+
+    圈地审核upupup
+
+[33mcommit ee20f444f8f839a97884db00db65a8c7f1123637[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Aug 23 14:02:00 2018 +0800
+
+    任务界面
+
+[33mcommit ac9fe44097fdc6ceda9a029f4ea77597a1998b58[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 23 11:56:58 2018 +0800
+
+    圈地审核upup
+
+[33mcommit 93de79e3648e08642d5ee3b5374b682dbd490ecd[m
+Merge: 8dea701 8079ccf
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Aug 23 11:18:03 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 8dea701773bcad8aa67357b5735db8ecf1303d0d[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Aug 23 11:17:53 2018 +0800
+
+    任务界面
+
+[33mcommit 6b370058670a3c186879699d796366e9cfbffb4a[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Wed Aug 22 18:42:28 2018 +0800
+
+    圈地审核up
+
+[33mcommit 8079ccfc1a6588603f97dff0aa03d96341cc36f9[m
+Merge: 199c18b 3e9534f
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Aug 22 18:39:05 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 199c18b1a2d1c1f11ba7707ddad9f2f2fccd9632[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Aug 22 18:38:56 2018 +0800
+
+    启动项目界面
+
+[33mcommit 3e9534f654ff4d7e327d307c65956db0702c66b7[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 22 15:38:45 2018 +0800
+
+    商机详情bug修改
+
+[33mcommit ad464c85811a85ed92ec303bc3170f3b3fb74bff[m
+Merge: 3112f43 5f87ac4
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 22 15:33:25 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/resources/templates/opportunity.html
+
+[33mcommit 3112f43e981ffd6509748fd72420bb1817da6e58[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 22 15:20:00 2018 +0800
+
+    商机详情中，添加 转为项目功能
+
+[33mcommit 2008b2c9b743f1dfd4a6860375744eeb8efad8a5[m
+Merge: d0b7780 8988ee3
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 22 14:47:37 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit d0b7780396a36a7f88f97c4481c815bc739e89ee[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 22 14:47:24 2018 +0800
+
+    商机详情中，添加  其他-删除商机 功能
+
+[33mcommit 5f87ac4247ebd7f233420ca4bfd411d522918ba6[m
+Merge: 5e5c34e 8988ee3
+Author: 李博 <ncj233@gmail.com>
+Date:   Wed Aug 22 14:47:03 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/opportunity/OpportunityController.java
+    #	src/main/resources/mybatis/mapper/OpportunityMapper.xml
+    #	src/main/resources/templates/opportunity.html
+
+[33mcommit 5e5c34eada755654cea7d892b3d2f09917953593[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Wed Aug 22 14:42:10 2018 +0800
+
+    申请项目支持与商机界面的整合
+
+[33mcommit 8988ee3c960b6c28dace7529ba6627041b1e7bc8[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Aug 22 11:00:57 2018 +0800
+
+    项目新建及列表筛选细节完善
+
+[33mcommit 35fcf91f940dfa142defd2528e2d72d7d33a280f[m
+Merge: 29cebb6 54fd7c5
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Aug 21 18:13:53 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 29cebb6f4d48bf100f8f4b18f022b00696f3a4fd[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Aug 21 18:13:45 2018 +0800
+
+    项目新建及筛选后端2
+
+[33mcommit 2f0f181174b0af5fbc255f631547f44b3681fe1c[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Aug 21 18:13:17 2018 +0800
+
+    圈地审核
+
+[33mcommit 54fd7c55ddeb532afe6cdd5fa0befd65bc82f1cc[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 21 17:59:05 2018 +0800
+
+    商机详情中，输单原因填写
+
+[33mcommit 658f02898a95cc9929e0c2bcfafd749a59e533b8[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 21 16:23:18 2018 +0800
+
+    商机详情中，输单原因填写
+
+[33mcommit 2d3a36d2bcfeb7652f41d332436c41464f0da88e[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 21 14:34:49 2018 +0800
+
+    商机主页bug修改
+
+[33mcommit cbdd810b580ad4963a2985dddb3b1f38b7ca2a52[m
+Merge: f994ec6 9b46d55
+Author: 李博 <ncj233@gmail.com>
+Date:   Tue Aug 21 14:10:00 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 9b46d5548165a816a88007c582f24382556d35a8[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 21 12:54:12 2018 +0800
+
+    商机主页bug修改
+
+[33mcommit 765aeb164ab73fe66c0dfc9b54121fadab45ba1b[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 21 11:55:49 2018 +0800
+
+    商机主页bug修改
+
+[33mcommit f994ec61b0dc30fb4c072fb05dd46dbc6d5fd3d0[m
+Merge: 258b6fe 60a0e55
+Author: 李博 <ncj233@gmail.com>
+Date:   Tue Aug 21 11:54:07 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/opportunity/OpportunityMapper.java
+    #	src/main/resources/mybatis/mapper/OpportunityMapper.xml
+
+[33mcommit 258b6fef54bdf47efa7b5fe984dfab34705695f1[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Tue Aug 21 11:52:56 2018 +0800
+
+    项目支持页面的接口和界面
+
+[33mcommit 60a0e55ad91808c20283677d5bde2c036c870521[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 21 11:51:50 2018 +0800
+
+    商机主页bug修改
+
+[33mcommit 1b208013eaff0771f2abb0bae86aa5b65056d0b1[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 21 11:45:31 2018 +0800
+
+    商机主页按名称搜索
+
+[33mcommit 309fed374c927a1db03e857dc2d41188096ef20d[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 21 10:08:40 2018 +0800
+
+    商机bug 修改
+
+[33mcommit ad3029d8c126fe0818b2386f521a691ee2c4a997[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Mon Aug 20 18:31:38 2018 +0800
+
+    圈地流程
+
+[33mcommit 47c2db6dbacd2d05671f52cc0d7d922b1ea39a2b[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 20 18:30:58 2018 +0800
+
+    项目新建及筛选后端2
+
+[33mcommit 363d6263dea8660bc7bf4920a57308dbeb3c38be[m
+Merge: 31eaa67 3a76ca7
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 20 16:58:51 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 3a76ca70fbebbfdeed6ae1e97cd2736c2867bd27[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Aug 20 16:58:12 2018 +0800
+
+    商机阶段调整
+
+[33mcommit 31eaa67f385b4632063b99802cb3a89088d926b9[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 20 16:46:36 2018 +0800
+
+    项目新建及筛选后端
+
+[33mcommit 06dd7b69563030468386721cd66f4640abc54b58[m
+Merge: 0e03e81 b54eebe
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 20 16:44:40 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 0e03e8142a97aa50bf76e77a21193aca70ec6686[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 20 16:43:41 2018 +0800
+
+    商机阶段修改
+
+[33mcommit b54eebeb598e289454a8be4da41876795e3c220d[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Aug 20 15:58:57 2018 +0800
+
+    商机页面调节
+
+[33mcommit f6432a0a9d94beb0430f9c9dc77bfc23e1c87932[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 17 18:35:11 2018 +0800
+
+    项目列表,筛选，新建
+
+[33mcommit f6d12aa17d1f30e2fb3cf1477500c9f261eb6561[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 17 17:31:52 2018 +0800
+
+    商机页面位置调节
+
+[33mcommit 612afa3e6bfe5c52d3103c1e51f534d71cdf484d[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 17 17:25:38 2018 +0800
+
+    商机修改
+
+[33mcommit 4ffcd6809ba06bea8d5303731302c73905fe6f60[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 17 16:47:30 2018 +0800
+
+    商机查询只显示本公司的商机
+
+[33mcommit 91994395de6f64d23f8ca47a390a1e4ba3481d03[m
+Merge: 4106b4f 95a53fb
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 17 16:09:09 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/resources/static/project/project.js
+
+[33mcommit 95a53fb14c236a7e1124f625376b7961b56e547c[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 17 16:07:34 2018 +0800
+
+    商机详情页面，结果为空显示提醒
+
+[33mcommit 4106b4f0740e52f029409195ded1f19f332bf984[m
+Merge: 27c1247 0a15e1c
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 17 15:37:05 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 27c1247442b011c90c3c2743a8c9c1c336b1cc80[m
+Merge: cb52e32 fa471f9
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 17 15:32:11 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit cb52e32d524598fce0ea92e10a55a949e14d9334[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 17 15:32:01 2018 +0800
+
+    项目列表,筛选，新建
+
+[33mcommit 0a15e1c2cc833e5555d40e7846fc4e0c5eb81c12[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 17 15:30:31 2018 +0800
+
+    商机详情页面，详细信息，修改记录，相关拜访内容
+
+[33mcommit eaa28bb82129160cc3bcaa29ed9a250b00d0dfdf[m
+Merge: 300a825 fa471f9
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 17 15:28:25 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/opportunity/OpportunityController.java
+
+[33mcommit 300a825c08c0b7342538b43f0131d6db8dced9b9[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 17 15:26:58 2018 +0800
+
+    商机详情页面，详细信息，修改记录，相关拜访内容
+
+[33mcommit fa471f9af53fe9d3b0ca72aba9f770e8c76a3142[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Fri Aug 17 15:21:00 2018 +0800
+
+    修改Bug++
+
+[33mcommit 40c03b62994e80de6c7b3fbb4dcd2ee96de4e581[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Fri Aug 17 14:58:37 2018 +0800
+
+    1. 申请销售支持 60%
+    2. 日志Bug修改
+
+[33mcommit 72b64e5c682c475c78eb3b382dcf35e47716b1bb[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Aug 16 19:01:07 2018 +0800
+
+    商机详情页面，详细信息，修改记录
+
+[33mcommit 062187bda4977971dbf7a2871a3a9a85bf72ba6b[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 16 18:56:41 2018 +0800
+
+    项目列表
+
+[33mcommit 196540a24ee9b3a94533ac8edb56329c6ef19cd1[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Thu Aug 16 18:32:28 2018 +0800
+
+    修复了阶段图片找不到的BUG
+
+[33mcommit f8ce34bc5637541626fba56b56bd3e063b18921c[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Thu Aug 16 18:27:36 2018 +0800
+
+    为了推送新版本，暂时不允许使用项目功能
+
+[33mcommit 663ec775b01a7496212cd50a83e122db8fc40811[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Thu Aug 16 17:43:44 2018 +0800
+
+    组织机构的修改
+
+[33mcommit d6972b27b741eda521b4225c1c5e26301e4672c7[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 16 17:33:10 2018 +0800
+
+    圈地
+
+[33mcommit 01d224696c2b31ee6ee6906aa6874f830d946981[m
+Merge: 63b5c12 c8d476c
+Author: 李博 <ncj233@gmail.com>
+Date:   Thu Aug 16 16:49:26 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 63b5c121f5c7637209a82000999184666b684ca5[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Thu Aug 16 16:49:18 2018 +0800
+
+    商机(项目)支持页面的修改
+
+[33mcommit c8d476c287adb8d7ead081229da55f6ae79768c0[m
+Merge: d7d1815 51d189c
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 16 16:36:21 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit d7d18158e4419235a5dc0015a5dde1ab10b340af[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 16 16:35:40 2018 +0800
+
+    新建商机提示，新建项目前端
+
+[33mcommit e48ad1819aca6129a53008f4bc614794c620aa7a[m
+Merge: ca33661 51d189c
+Author: 李博 <ncj233@gmail.com>
+Date:   Thu Aug 16 16:15:33 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 51d189cf98cfd085872435be0bc0d66677f5acb7[m
+Merge: e303c17 1905590
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 16 16:14:09 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit e303c17d69ff06b43bde7b6687d05f0a5346bcc6[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 16 16:12:58 2018 +0800
+
+    客户组织搜索
+
+[33mcommit 6352d03fa2946b3b9f973c6639f2f9adce4f37bb[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 16 15:10:10 2018 +0800
+
+    新建商机提示，新建项目前端
+
+[33mcommit ca33661958f90a392f59d4522068ea540baa32cd[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Thu Aug 16 13:28:40 2018 +0800
+
+    商机(项目)支持页面
+
+[33mcommit 1905590c753eaee3339c02e04422c815c604afae[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 16 10:04:16 2018 +0800
+
+    新建商机选填字段修改
+
+[33mcommit c186619b17820d341696d9c110b5161b39b8819b[m
+Merge: 22d692a bb611d2
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Aug 15 18:23:45 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 22d692ac111de681cf7b1aa023eb0e667633fc03[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Aug 15 18:23:35 2018 +0800
+
+    项目查看列表及新建界面
+
+[33mcommit bb611d23a925c344180d17d01c9fcfc23746297a[m
+Merge: 6d5fe26 8da0e62
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 15 16:13:19 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 6d5fe2610fe6dc8d6d607b9cf1a80ab40cb2453d[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 15 16:12:59 2018 +0800
+
+    商机详情页面、“我的”跳转至账户首页
+
+[33mcommit 8da0e62b93ffbbd6add9af37590dc436454692c0[m
+Author: 容伟成 <1458602611@qq.com>
+Date:   Wed Aug 15 14:29:10 2018 +0800
+
+    maven repositories 配置
+
+[33mcommit cf71939b1ece5ae6156cf516ba55a54099bc2e96[m
+Merge: fb0dd8a 9e476c0
+Author: 郭培林 <1558047230@qq.com>
+Date:   Wed Aug 15 10:31:27 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 9e476c0310f915edf58054e4ffb26fb80ae2e287[m
+Merge: 3a1bb37 3ff06d4
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 15 10:30:57 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 3a1bb370463eab7c73fa198d687546f3cbc402c0[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 15 10:30:40 2018 +0800
+
+    商机筛选排序功能
+
+[33mcommit 3ff06d4d83c7498fef64969d220f67587ab944ad[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Aug 15 10:01:02 2018 +0800
+
+    增加创建公司成员为空异常处理
+
+[33mcommit 0a4ca0592e9cea97dfd605058172f4890d51f994[m
+Merge: 5c4be61 f5f4148
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Aug 15 09:42:39 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 5c4be61d9b53158d4aa76d59aeb2bc0d1597ec4d[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Aug 15 09:41:47 2018 +0800
+
+    增加创建公司已有公司提示
+
+[33mcommit f5f4148acf7f93f8d843bfc43ede68b4efab0e25[m
+Merge: b167c8d 7b1cc7c
+Author: 容伟成 <1458602611@qq.com>
+Date:   Wed Aug 15 09:37:29 2018 +0800
+
+    Merge branch 'develop' of https://git.walkclass.com/r/crm into develop
+
+[33mcommit b167c8d2f85bd05eb830596380c9d7309859c4eb[m
+Author: 容伟成 <1458602611@qq.com>
+Date:   Tue Aug 14 18:31:29 2018 +0800
+
+    mapper不指定数据库
+
+[33mcommit c5e8ff426731e26b1da9e1713f1778fa284afa3b[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Aug 14 18:24:46 2018 +0800
+
+    创建公司修改
+
+[33mcommit fb0dd8ae7d2cfffa41ba94114500917c8c57f272[m
+Merge: 5edfa04 7b1cc7c
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Aug 14 17:33:21 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 5edfa0454a280ae9e8e3785dcf0314de9525c484[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Aug 14 17:33:14 2018 +0800
+
+    客户组织搜索
+
+[33mcommit 7b1cc7c134e78730e7958b9e4ae0eb1e4b81af85[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Aug 14 17:29:57 2018 +0800
+
+    客户细节修改
+
+[33mcommit 33d926dedc79fdaf9de60b37c28215ab654d08b6[m
+Merge: 1764112 2c2fd6d
+Author: 李博 <ncj233@gmail.com>
+Date:   Tue Aug 14 17:09:12 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 1764112dfe22c3f1aa629dc5fcc44ea382dd87c3[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Tue Aug 14 17:09:00 2018 +0800
+
+    修改了编辑组织架构找不到图片的Bug，修改了筛选日志界面看不到底部内容的Bug
+
+[33mcommit 2c2fd6dcdcd45b24b2fca5b7299cdda61fb67327[m
+Merge: e11876a 83113b1
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 14 15:54:45 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit e11876afa9183fa51f6b01a680f8fbacb042ea62[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 14 15:54:38 2018 +0800
+
+    商机筛选排序功能
+
+[33mcommit 83113b107f4ba3e4dacad9d3a730954dc34cbfa5[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Aug 14 15:28:28 2018 +0800
+
+    公司人员标题样式修改
+
+[33mcommit c275b9fecca11e65f6b9b6aa9b8aa24bbc6e31b7[m
+Merge: a889dba 60fd3d5
+Author: 容伟成 <1458602611@qq.com>
+Date:   Tue Aug 14 14:41:01 2018 +0800
+
+    Merge branch 'develop' of https://git.walkclass.com/r/crm into develop
+
+[33mcommit a889dbac81c637cdea23ad8b129c10e28a804726[m
+Author: 容伟成 <1458602611@qq.com>
+Date:   Tue Aug 14 14:40:52 2018 +0800
+
+    组织机构标题栏样式修改
+
+[33mcommit 60fd3d5a227b385108cb985766f321ac7dc3b858[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Aug 14 13:50:49 2018 +0800
+
+    日志界面navbar
+
+[33mcommit 8ee97083d456dec45ec3cf97d01539ca1c1da9c4[m
+Author: 容伟成 <1458602611@qq.com>
+Date:   Tue Aug 14 13:03:26 2018 +0800
+
+    单元测试修复
+
+[33mcommit b397a20e6b345fdff683133620b5f396a9ae83c6[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 14 12:52:29 2018 +0800
+
+    商机列表，客户名称显示
+
+[33mcommit 983465dd6d5eb0cec5d36e31bef2654ee0defc1d[m
+Merge: debaa0a f639eb8
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 14 11:58:36 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit debaa0a07512d95fe28e4565a6efcdce5e6e8912[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Aug 14 11:58:17 2018 +0800
+
+    商机列表
+
+[33mcommit f639eb8d558b7d1c0fbe271a071ac88192a672ab[m
+Merge: 2b6054b aa27f04
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Aug 14 11:53:33 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 2b6054bf4b7ecdc97a9d442c56883c1f3451b80b[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Aug 14 11:53:20 2018 +0800
+
+    商机修改
+
+[33mcommit aa27f047d39a78d3b7ae50ad2e6961e97a0a7325[m
+Merge: 829445a 9936d99
+Author: 李博 <ncj233@gmail.com>
+Date:   Tue Aug 14 11:39:15 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 9936d99280e3c5566a7fa48db30b62f6e0ec4c85[m
+Merge: a9fcaaa 8ca49df
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Aug 14 11:39:14 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/resources/mybatis/mapper/CustomerMapper.xml
+
+[33mcommit 829445a6164d026cf277f0f05eb5a06ce4df9fac[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Tue Aug 14 11:39:07 2018 +0800
+
+    日志修改补充的取消
+
+[33mcommit a9fcaaa4ff3115de90195dbcb927a45af8ff1a7d[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Aug 14 11:37:10 2018 +0800
+
+    客户细节修改
+
+[33mcommit 8ca49dff0b40e2e58df102be7a566613792423e4[m
+Merge: 6dff909 1688e8b
+Author: 容伟成 <1458602611@qq.com>
+Date:   Tue Aug 14 11:18:52 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 6dff909669ed7e2e9f05f5b6703e90f9a329bc01[m
+Author: 容伟成 <1458602611@qq.com>
+Date:   Tue Aug 14 11:18:44 2018 +0800
+
+    登录用户filter
+
+[33mcommit 1688e8b514169b80f7fa3e658f403213ca164658[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Aug 14 10:34:24 2018 +0800
+
+    公司人员上下级设置及人员删除 up2
+
+[33mcommit 903f447626a9acd4d956cc84fcdad018aa1aecfa[m
+Merge: bd43e6c fe752d1
+Author: 李博 <ncj233@gmail.com>
+Date:   Mon Aug 13 17:58:27 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit bd43e6cd745c29f263684873a263811d08051252[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Mon Aug 13 17:58:19 2018 +0800
+
+    选择联系人Type 2/2
+
+[33mcommit fe752d10475b087de2b190b2abe58064afa3651c[m
+Merge: 02a1b86 f651a22
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Aug 13 17:57:11 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 02a1b862fe0eaf44c71d9ce44a68d69ea99de6e0[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Aug 13 17:57:04 2018 +0800
+
+    注册成功后，跳转至注册成功提醒页面，并一键登录
+
+[33mcommit 47fc28b7467183360dc461dd504f6c2d966fbf50[m
+Merge: ad5567d f651a22
+Author: 李博 <ncj233@gmail.com>
+Date:   Mon Aug 13 17:30:36 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit f651a22552114bc9855940f23231d2e6c0e5ca85[m
+Merge: ced9c95 9053e5e
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 13 17:27:30 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 9053e5ea246c96432e491c5b5e3d302013abdb29[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Aug 13 17:26:49 2018 +0800
+
+    注册成功后，跳转至注册成功提醒页面，并一键登录
+
+[33mcommit ced9c95b0a9bd2327f82cf6be2a9d6a1eab02f7e[m
+Merge: b93ae93 f94d19c
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 13 17:24:58 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit b93ae93c1527a2d6e61b1ded8f522a9bfd1b9a44[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 13 17:24:36 2018 +0800
+
+    日志筛选后提示3
+
+[33mcommit f94d19cd68502ba249029767f7faab4047bc7f8a[m
+Merge: 8fe07e3 f5e582a
+Author: 郭培林 <1558047230@qq.com>
+Date:   Mon Aug 13 17:12:47 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 8fe07e37ac9f8edc0d1598924b1abf5120e4db42[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Mon Aug 13 17:12:32 2018 +0800
+
+    公司人员上下级设置及人员删除 up2
+
+[33mcommit f5e582ab790171a9ce235859520d31c9125303c5[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 13 17:08:56 2018 +0800
+
+    日志筛选后提示2
+
+[33mcommit 6aa6139123d637df74b9b328406c9a553938509f[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 13 16:57:13 2018 +0800
+
+    日志筛选后提示
+
+[33mcommit 06eeed08d6e95ec460d5c846c907ad8ebfcd1428[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Aug 13 16:27:02 2018 +0800
+
+    商机筛选页面，筛选项效果bug修改
+
+[33mcommit ad5567d6f470fa6f94685ba34113607785ef4d44[m
+Merge: 4a1307e 5dc39d9
+Author: 李博 <ncj233@gmail.com>
+Date:   Mon Aug 13 16:14:31 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 5dc39d94df37ae959717f4ed43a1f2f5446021d7[m
+Merge: e9beff8 c52af5d
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Aug 13 16:14:24 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit e9beff8344777cf961c72fe0fc27c3647813d3c1[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Aug 13 16:13:52 2018 +0800
+
+    商机筛选页面，筛选项效果
+
+[33mcommit 4a1307eff309d763adf8d0905c18d13e1f51c957[m
+Merge: e1be6ab c52af5d
+Author: 李博 <ncj233@gmail.com>
+Date:   Mon Aug 13 16:09:59 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit e1be6abb9468ebff294bb0cb0eaba56796931482[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Mon Aug 13 16:09:51 2018 +0800
+
+    选择联系人Type
+
+[33mcommit c52af5d019220fbbf98c4e0b9790f24e019594c2[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 13 16:07:13 2018 +0800
+
+    日志筛选后提示
+
+[33mcommit 8d5d4d1bdb4db847aab9f963ea7766081beabc34[m
+Author: 容伟成 <1458602611@qq.com>
+Date:   Mon Aug 13 16:02:49 2018 +0800
+
+    添加单元测试
+
+[33mcommit d0194a103c8ebf06b0ead93380a8c1bb21a9f1e3[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Aug 13 15:57:05 2018 +0800
+
+    商机筛选页面
+
+[33mcommit 03d19639a98c5b4d7b24d99b9c08bea3d8bfac6b[m
+Merge: 65c23bf e99947b
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Aug 13 15:43:29 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 65c23bf9c9e1b41de0db04a0caf395a7fc93b39d[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Aug 13 15:43:18 2018 +0800
+
+    已加入公司和管理员审核
+
+[33mcommit e99947b92e62475c78dd822ac3a50fb7a8f4705d[m
+Merge: 84940a9 478df1f
+Author: 李博 <ncj233@gmail.com>
+Date:   Mon Aug 13 13:47:50 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 84940a9f225e123cd4a17a751964eda2cf329491[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Mon Aug 13 13:47:41 2018 +0800
+
+    商机部分修改1/2
+
+[33mcommit 478df1f5ac4815bba131fe7f3482f19bbfedbc1b[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 13 13:41:06 2018 +0800
+
+    修改筛选日志测试通过版
+
+[33mcommit ac23330cc6db5611a484ebf029404a26a44928fd[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 13 13:39:03 2018 +0800
+
+    修改筛选日志测试通过版
+
+[33mcommit affca1f19ceb55c9935c7b0b43cee841ecb9ad18[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 13 11:48:33 2018 +0800
+
+    修改筛选日志功能5
+
+[33mcommit 03e26386fd496661f178af7f3d2892826d298d2d[m
+Merge: d3598a9 20736c4
+Author: 李博 <ncj233@gmail.com>
+Date:   Mon Aug 13 10:41:56 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit d3598a923350ddc2a5d1ae6405198e295790e680[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Mon Aug 13 10:41:47 2018 +0800
+
+    添加页面跳转
+
+[33mcommit 20736c466c445e3863c9e64de4959364dd401608[m
+Merge: 7085586 bc788f5
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 13 10:29:30 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit bc788f52a0331c704081b32eb7968df2cb7af038[m
+Merge: 5e92b29 152c8ad
+Author: 李博 <ncj233@gmail.com>
+Date:   Fri Aug 10 18:50:09 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 5e92b294052b72ad916b2b72be45fefb034359e9[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Fri Aug 10 18:49:48 2018 +0800
+
+    编辑客户信息页面
+
+[33mcommit 152c8ade9676b9ee7903305d58d1206a671db08c[m
+Author: 容伟成 <1458602611@qq.com>
+Date:   Fri Aug 10 18:48:24 2018 +0800
+
+    添加CrmTestSuite
+
+[33mcommit 70855862a44487d4dfda428be05900bf9ea3ad89[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 10 18:47:14 2018 +0800
+
+    修改organization信息接口
+
+[33mcommit 96d9d4e830a6aabbf96ceb0ed46c020f846fc3bf[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Aug 10 17:35:06 2018 +0800
+
+    公司人员上下级设置及人员删除 up
+
+[33mcommit dbab72791a45371928070f26a6a278b8fa6dd5f6[m
+Merge: 9627e5d 96d9d4e
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 10 17:34:12 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 9627e5d376237fd6d251023bba2626292ca46cc7[m
+Merge: b485139 05d080f
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 10 17:32:35 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit b485139e4d6bca273b03ff1d6328646085354ac5[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 10 17:32:27 2018 +0800
+
+    添加日志发送人筛选4
+
+[33mcommit 05d080f5e50cdaa40830b4f06d78ae49511f34eb[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Aug 10 17:32:23 2018 +0800
+
+    公司人员上下级设置及人员删除 up
+
+[33mcommit 87dd3588720395409d8afebee0c32069a8f1cb9a[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Aug 10 17:07:51 2018 +0800
+
+    公司人员上下级设置及人员删除
+
+[33mcommit e99d063dd43e4b325c17032ef136576d3a278fab[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Aug 10 16:16:11 2018 +0800
+
+    公司人员删除
+
+[33mcommit 101192513cc26550d2f0a04f8a13618f8132545d[m
+Merge: f38719c 4148760
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 10 14:17:19 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit f38719c5a52abe88918ecf0dbdf93167639db82d[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 10 14:16:53 2018 +0800
+
+    添加日志发送人筛选3
+
+[33mcommit 4148760fad4358692e0d487389bbe10d6919c73f[m
+Merge: abeadd0 a80d88b
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Aug 10 14:16:41 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit abeadd0adc08f09f90d34d760e42f68437981813[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Aug 10 14:16:34 2018 +0800
+
+    公司人员删除
+
+[33mcommit a80d88b8488145b074797491baeb9cda076b32f3[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 10 12:59:29 2018 +0800
+
+    添加日志发送人筛选3
+
+[33mcommit 1370bb9309090ec3d74e5076d1c9289a821b2b60[m
+Merge: 515f2f7 41a2a20
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 10 09:46:42 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 41a2a20e0308573be20ade1da5479f5bc55c1e7e[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Aug 10 09:46:40 2018 +0800
+
+    客户组织机构bug修改
+
+[33mcommit 515f2f7708e062a665ba6d1707412d2ee16657ae[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 10 09:46:35 2018 +0800
+
+    添加日志发送人筛选2
+
+[33mcommit 0489254d70acbbf56d4abbd6578a0afccaad5508[m
+Merge: 16666a5 55d716c
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 9 19:09:32 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/member/MemberController.java
+
+[33mcommit 55d716c35b36fda1d44295ca1eee80fa7a2a3eb8[m
+Merge: 61b03ff 97fc587
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 9 19:02:52 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 61b03ffd694693296e111b8dc5ecb2ff3a75ea3e[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 9 19:02:28 2018 +0800
+
+    人员上下级关系
+    人员信息
+    客户信息与客户组织机构整合
+
+[33mcommit 16666a5848fdcdddb87f4121ebda5ced4041b25d[m
+Merge: 00686c7 97fc587
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 9 17:49:17 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/journal/JournalController.java
+    #	src/main/resources/templates/journalList.html
+
+[33mcommit 00686c75b22768e478cbdd90c8fd21ecf6fc7f86[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 9 17:42:02 2018 +0800
+
+    添加日志发送人筛选2
+
+[33mcommit 97fc587cdccbc6f8846dcb62c39a5a375147078d[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Thu Aug 9 17:04:14 2018 +0800
+
+    修改其他人提交的无法编译的代码
+
+[33mcommit e7e5e142393273826be0c3e67a90a2fd8425d4c8[m
+Merge: d7c0264 2dff6cb
+Author: 李博 <ncj233@gmail.com>
+Date:   Thu Aug 9 17:01:13 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit d7c02646937eced3aefdfbf0df79c3ff0d5d6bdd[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Thu Aug 9 17:01:00 2018 +0800
+
+    项目部分逻辑重新整理
+
+[33mcommit 2dff6cb15c89517c790f34cf3a7d72e0b8955203[m
+Merge: 0fc5aca 9f61b8a
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 9 16:34:04 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 8b21602f4de18cceb761cdb40ce67b761259bbbb[m
+Merge: 8ca2dfb 2dff6cb
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 9 16:33:48 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 0fc5acab39bb043e97133112b13f886aa1af6329[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 9 16:33:15 2018 +0800
+
+    人员上下级关系
+
+[33mcommit 8ca2dfb28cc926b5d0c5e1a1e705ad698adb1479[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 9 16:32:40 2018 +0800
+
+    添加日志发送人筛选1
+
+[33mcommit 9f61b8ae3aee2b067b7db1a6115f2563fa3d3a04[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 9 14:24:15 2018 +0800
+
+    新建商机细节修改
+
+[33mcommit 003ca51743760bdd6b1529c332fb6b90972089c6[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 9 14:15:36 2018 +0800
+
+    新建商机页面跳转
+
+[33mcommit cc6b50471ab32dca8f82eee8338abfb2ab35c55f[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 9 13:51:40 2018 +0800
+
+    新建商机页面跳转
+
+[33mcommit 32aa6173f0770fb70f19154679fa13485d971edd[m
+Merge: c73a786 e33ec66
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 9 12:56:42 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit c73a7866663a9441f75f6aab975fdae273850149[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 9 12:56:22 2018 +0800
+
+    新建商机添加新建人ID
+
+[33mcommit e33ec6610c6fd02e6c78247d9e43187615791ef4[m
+Merge: b99d166 af4daaa
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 9 12:00:28 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit af4daaa69056389d5bd98a828f5a7b3bbaacdfb0[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 9 11:43:03 2018 +0800
+
+    新建商机完整模块
+
+[33mcommit d2fc08bdde93a9f8c94b80a3741c549645db1f74[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 9 11:39:11 2018 +0800
+
+    新建商机完整模块
+
+[33mcommit b99d166d46e7a6d11e685c866b674335ad85df01[m
+Merge: 8611373 1adf733
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 9 09:41:11 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/resources/templates/journalList.html
+
+[33mcommit 15a0f893d09de03262993eb1ed05e136782e6b05[m
+Merge: 5e65001 1adf733
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 9 09:18:56 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 1adf733129d75d290ff053207412e85fd5fb9ba6[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 8 18:45:48 2018 +0800
+
+    管理员和销售审核
+
+[33mcommit 86113732d8f22df78778c991335e9923ba7c8d30[m
+Merge: e3c650d d9e52a7
+Author: 郭培林 <1558047230@qq.com>
+Date:   Wed Aug 8 18:32:33 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/resources/templates/opportunity.html
+
+[33mcommit 2141eab5abd59d9ebdbe4f9961ad03b92f1542fa[m
+Merge: 3c38945 d9e52a7
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 8 18:31:05 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/resources/templates/customerInfo.html
+
+[33mcommit e3c650d9a0a5cf10c71c5d4bc82dc49eefb5fe2d[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Wed Aug 8 18:31:03 2018 +0800
+
+    底边栏图标
+    编辑人员关系
+
+[33mcommit 3c38945ab99bb1a33591cfb1067e291b60e380c6[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Aug 8 18:30:03 2018 +0800
+
+    管理员和销售审核
+
+[33mcommit 5e650019404682bf17a798f9eb5fd0142acc4a12[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Aug 8 18:15:01 2018 +0800
+
+    新建商机基本功能完成
+
+[33mcommit 2ab14c3278e640b1d019b9d0f46e664799cdedf6[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Aug 8 14:50:23 2018 +0800
+
+    新建商机客户前端完善
+
+[33mcommit d9e52a77293b3eb3d4200a072aabf626b5fb5acf[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Aug 7 18:55:58 2018 +0800
+
+    新建商机客户修改
+
+[33mcommit a5125f358139f35f6e5f2eb241ffde7633582d4c[m
+Merge: cf82914 9dd80ab
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Aug 7 12:03:11 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/resources/static/organization/showOrganization.js
+
+[33mcommit cf82914c2067dc4e1f4351c6a18bd74dbca1f3ea[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Aug 7 11:59:54 2018 +0800
+
+    客户搜索修改
+
+[33mcommit 9dd80ab949f1bc170e448a08e89661d755adc7c2[m
+Merge: 308bb8a 2508617
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Aug 6 18:38:00 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 308bb8a4ad2ecd6e308d63d7e3aba15a69521c0b[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Aug 6 18:37:50 2018 +0800
+
+    商机主界面，排序和筛选；
+    新建项目界面
+
+[33mcommit f64462db4d27c90648534166dda5e6dced0c9f74[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 6 18:37:02 2018 +0800
+
+    客户信息界面修改
+
+[33mcommit 2508617432409a282ee40fd3aaeba446145eea33[m
+Merge: a341279 29106b0
+Author: 郭培林 <1558047230@qq.com>
+Date:   Mon Aug 6 17:10:27 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit a341279d3e9e63094bdb777030da7393214429d3[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Mon Aug 6 17:10:15 2018 +0800
+
+    组织机构 申请延期 申请圈地
+
+[33mcommit 29106b0012f364d98b729ca48b1ea80d8d810a7d[m
+Merge: 98d8020 a68b22a
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 6 15:48:50 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 98d8020e1424af113a629aebc51def1d8fecd452[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Aug 6 15:48:29 2018 +0800
+
+    客户列表界面优化及添加客户跟进时间
+
+[33mcommit a68b22ac88451e28d3458993658a4714cc96d0a1[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Mon Aug 6 13:59:59 2018 +0800
+
+    联系人跟进记录,接口与界面3
+
+[33mcommit 4cb2d729794466a35c0560565f5882f206110cab[m
+Merge: 70a730b 7ff9cd8
+Author: 李博 <ncj233@gmail.com>
+Date:   Fri Aug 3 18:37:34 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 70a730be1bfa17b36c8417ebf961b08367044513[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Fri Aug 3 18:37:22 2018 +0800
+
+    联系人跟进记录,接口与界面2
+
+[33mcommit 7ff9cd8b065275cd84bd7a7de0329cb287122e62[m
+Merge: d764151 8ae6dab
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 3 18:28:55 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit d76415144288d46c6e21207115a43552e96a6b3e[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 3 18:28:48 2018 +0800
+
+    客户组织机构修改整合
+
+[33mcommit 8ae6dab2039ea805724d91407583924283269161[m
+Merge: f8f83be da37623
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 3 18:24:11 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit f8f83be32651caec34168ae305f5e228cdc41ab8[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 3 18:24:04 2018 +0800
+
+    商机界面
+
+[33mcommit 35f67771d5c1272ca68bd247f50fbc29ad7adc6c[m
+Merge: 54fd58d da37623
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 3 18:17:40 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 54fd58dcda70459915e21752e888a8e586e4a8cf[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 3 18:17:27 2018 +0800
+
+    客户，公司前端修改
+
+[33mcommit da376237cba8e824fc4ad24df4f9b0b1c6618df2[m
+Merge: 59e0426 f5e1b8c
+Author: 李博 <ncj233@gmail.com>
+Date:   Fri Aug 3 17:53:43 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/customer/CustomerMapper.java
+
+[33mcommit 59e0426562311d1bb22d57170cf982886c7303c8[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Fri Aug 3 17:52:44 2018 +0800
+
+    联系人跟进记录,接口与界面
+
+[33mcommit f5e1b8cbe002c5b31a7abe1b672194fd97293cc5[m
+Merge: 2712b49 4afaad8
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Aug 3 17:45:22 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 2712b498136448bfdde0f820021a0d026f099480[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Aug 3 17:45:00 2018 +0800
+
+    组织机构 申请延期 申请圈地
+
+[33mcommit 4afaad8039780a298624e8923e63efb05f63e25b[m
+Merge: aa45722 6e5a7ab
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 3 16:53:48 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit aa45722cf4555a99ffb13324c325d584490610db[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 3 16:53:38 2018 +0800
+
+    客户，公司前端修改
+
+[33mcommit 6e5a7abb1ce40ef493b2bd0321e24fa52ee5b2f8[m
+Merge: 53488ea ac948d8
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 3 13:16:09 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 53488ea0e2841dcb21189f223d9726a2c1a44e17[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Fri Aug 3 13:15:56 2018 +0800
+
+    日志界面修改
+
+[33mcommit ac948d8d63b26e5bc8c02e021af9b328b2bed747[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 3 11:51:09 2018 +0800
+
+    添加我的客户接口及界面格式调整
+
+[33mcommit ee071e971948b834a36716ce3a8d8ed8a17e038c[m
+Merge: 2fb3b4e 2c1b378
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 3 11:41:54 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/customer/CustomerService.java
+    #	src/main/java/com/xuebei/crm/customer/CustomerServiceImpl.java
+    #	src/main/resources/mybatis/mapper/CustomerMapper.xml
+
+[33mcommit 2fb3b4e899e961153ddbe773552b5c9d35af459a[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Aug 3 11:38:54 2018 +0800
+
+    添加我的客户接口及界面格式调整
+
+[33mcommit 2c1b378eb80a741ce04cd7451d6573d57630f5fd[m
+Merge: 6ab9a34 4b195f5
+Author: 李博 <ncj233@gmail.com>
+Date:   Thu Aug 2 18:43:35 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 6ab9a34fc61d3cd0d26646f063f70641648ff92e[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Thu Aug 2 18:43:24 2018 +0800
+
+    1. 增加学院(二级机构) 接口+界面
+    2. 展示联系人信息
+
+[33mcommit aacd3468b1670dbf68d3335ee0b8b0831c040d83[m
+Merge: 2e9515a 4b195f5
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Aug 2 18:32:22 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 2e9515ab6b8ec3fb10504ca2446aaeff754f64a2[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Aug 2 18:32:15 2018 +0800
+
+    添加图标
+
+[33mcommit a216292365e09c26918942bc7a39a8a364305a7f[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 2 18:28:59 2018 +0800
+
+    组织机构
+
+[33mcommit 4b195f54bd9911a203b588cb28b390c72048172e[m
+Merge: eb83186 fbb633a
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 2 17:44:51 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit eb8318680ad43a081e88de0532fc7e6c669b6cb9[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Aug 2 17:44:04 2018 +0800
+
+    添加新建商机界面,成员信息查看，设置
+
+[33mcommit 5a441b35d462893446d1edf322923499e24fb4a9[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Aug 2 17:38:04 2018 +0800
+
+    日志标题栏居中
+
+[33mcommit fbb633a19fc0547b7cec53360b4ac999569f54dd[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Aug 2 16:47:42 2018 +0800
+
+    注册时补充添加个人信息
+
+[33mcommit a5424a0841ff08bc4f9c54462f749260b709e20e[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Aug 2 14:52:48 2018 +0800
+
+    登录注册 获取验证码倒计时，锁定输入
+
+[33mcommit 4fda0ff89d58580845f564b60ffcb2069f0f44d7[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 2 14:35:56 2018 +0800
+
+    组织机构 搜索
+
+[33mcommit a5a0c679edf9c7afe6ab466eeff5aa5d05273b2f[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Aug 2 14:32:27 2018 +0800
+
+    登录注册 获取验证码倒计时，锁定输入
+
+[33mcommit f3fc8928acbffdbaccd6d53b905a55c3e57a4697[m
+Merge: f878f97 a41b394
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 2 09:48:35 2018 +0800
+
+    Merge branch 'develop' of https://git.walkclass.com/r/crm into develop
+
+[33mcommit f878f972ca8dc9f3ff3da5a5dab2fc5dd624039d[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Aug 2 09:48:24 2018 +0800
+
+    组织机构 搜索
+
+[33mcommit 502a739f4b8ef6d24e4d87baee6d631023312625[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Aug 1 14:35:11 2018 +0800
+
+    添加成员详情界面,成员设置
+
+[33mcommit a41b394efe9eabc31a2d45cb494f91e0da17a221[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 31 18:23:05 2018 +0800
+
+    添加成员详情界面
+
+[33mcommit 29078e95e4d75c1bd4a1b4285a038e7448afc370[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 31 18:14:15 2018 +0800
+
+    添加成员详情界面
+
+[33mcommit dfb811e8ca7e875e5d91e9836f902d462d8a394e[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 31 18:08:56 2018 +0800
+
+    添加成员详情界面
+
+[33mcommit 2ee45c53f9437d463a29519223b34e8d76c79f85[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 31 13:47:12 2018 +0800
+
+    创建公司完整模块
+
+[33mcommit bcfc9a2d13d3d918127e63ff837a2bb64f568517[m
+Merge: 5bdd500 50adc74
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Jul 30 18:29:38 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 5bdd500751b777fef0a75bcc24fc50fecc280c90[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Jul 30 18:29:30 2018 +0800
+
+    添加创建公司接口
+
+[33mcommit 50adc7471aa360b5923ef810f38fbd37f6c28445[m
+Merge: e1c433e 15af262
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Jul 30 18:23:56 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit e1c433ee548694b7f128bd3da2c1f2d94e837ca9[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Jul 30 18:23:43 2018 +0800
+
+    登录注册 获取验证码，补充个人信息
+
+[33mcommit e2e52e4802d82962819f70d21792a0f0f8aa30a9[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Mon Jul 30 17:36:21 2018 +0800
+
+    登录注册 获取验证码，补充个人信息
+
+[33mcommit da382dd5aff2d87bf9ac56c7fa4b5db36ae4352d[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Jul 30 17:04:54 2018 +0800
+
+    公司细节信息添加
+
+[33mcommit 15af262cfe6caab51671cf6e221a12895d340d5f[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Mon Jul 30 16:37:26 2018 +0800
+
+    增加联系人界面设计
+
+[33mcommit 1c5eabbc849258a910c537f1e65c2fddf942adcf[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Mon Jul 30 16:36:02 2018 +0800
+
+    手动回退
+
+[33mcommit 4179eeb476e442e5e57a76798232b8dfc633b604[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Jul 30 15:16:43 2018 +0800
+
+    resolve conflicts
+
+[33mcommit 3a0b0d8a34686bb178d413af85bfb79cd7733987[m
+Merge: 2c59342 7d6e3cf
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Jul 30 13:51:09 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/journal/Journal.java
+    #	src/main/java/com/xuebei/crm/journal/JournalMapper.java
+    #	src/main/java/com/xuebei/crm/journal/JournalPatch.java
+    #	src/main/java/com/xuebei/crm/journal/JournalService.java
+    #	src/main/resources/mybatis/mapper/JournalMapper.xml
+
+[33mcommit 2c5934287d265af8e985c72b1d4b2a44f1fc2907[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Jul 30 13:17:19 2018 +0800
+
+    日志详情接口改进
+
+[33mcommit 7d6e3cf8203fee223ee30bec4f87678466709253[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Sat Jul 28 13:04:42 2018 +0800
+
+    日志修修补补2
+
+[33mcommit b9a1be402fc5764a04d32bcc469c79dbb586bb1e[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Sat Jul 28 12:59:51 2018 +0800
+
+    日志修修补补1
+
+[33mcommit ae51076c485229634381c20e621b3b108d5514b8[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Jul 27 11:45:35 2018 +0800
+
+    创建公司模块修改
+
+[33mcommit f811ad7211db5e4cc84556d4a09ac3c4f312f204[m
+Merge: 149a963 df02eab
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Jul 26 18:37:47 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/journal/JournalController.java
+
+[33mcommit 149a963bfe9f27b74819db08c3652de706ee1b15[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Jul 26 18:36:08 2018 +0800
+
+    登录注册 获取验证码
+
+[33mcommit df02eab256c3b5f824740ba7fab863deda50580f[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Jul 26 17:17:34 2018 +0800
+
+    组织机构完善
+
+[33mcommit 2a3c3a20fc74d8bc04f0f6a9842d69a8de73dd0b[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Jul 26 16:44:58 2018 +0800
+
+    整合客户信息与组织机构
+
+[33mcommit 5052e5d8270775e2df3a9014b716e8cef351b0e8[m
+Merge: 7081b1e 1fe59eb
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Jul 26 16:24:40 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/resources/templates/customerList.html
+
+[33mcommit 7081b1e26f4881e90b1c3f1634a3b0e7ade8cd08[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Jul 26 16:21:06 2018 +0800
+
+    组织机构 搜索
+
+[33mcommit 1fe59eb634514f55d3d2b166fd4c872c92de819a[m
+Merge: e42d612 c60361d
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Jul 26 16:04:40 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit e42d612192f3c9b5f90d4d3978963f1f62f35f03[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Jul 26 16:04:13 2018 +0800
+
+    客户列表增加navbar，整合客户搜索及客户信息查看 项目详情添加申请功能
+
+[33mcommit cafee47bcaa87dc3c8208bcee80ff19881662fd9[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Jul 26 12:50:56 2018 +0800
+
+    客户列表增加navbar
+
+[33mcommit c60361dfae469ad13ab42ba21293b98eb2b7cfd3[m
+Merge: b1a8a3f 2648d85
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Jul 26 11:26:52 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit b1a8a3f4a13186ab25a89cf3ca502e990fd4ffc5[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Jul 26 11:26:40 2018 +0800
+
+    圈地状态，公海警告，申请圈地
+
+[33mcommit 2648d8576eb44e91ed9dc6cadefcca0ca97af64c[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Jul 26 11:22:58 2018 +0800
+
+    登录页面返回键修改
+
+[33mcommit f52cd164e3bed2856222148e3b378bbb5dfa323e[m
+Merge: 0149939 783bf76
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Jul 26 11:22:18 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	pom.xml
+    #	src/main/java/com/xuebei/crm/journal/JournalController.java
+
+[33mcommit 0149939f1473ac25eb86aa7ef9a146afaace9eb3[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Jul 26 11:20:56 2018 +0800
+
+    圈地状态，公海警告，申请圈地
+
+[33mcommit 783bf76c4a40ab0f0f85eccf828ff2fcb939accd[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Jul 26 10:38:01 2018 +0800
+
+    工作日志筛选界面修改，解决了屏幕缩小不能全部浏览的问题
+
+[33mcommit a240a17a6782d9c4d1779a16cf2b061e9ad35d0c[m
+Merge: 3fa3beb 8566430
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Jul 26 10:20:22 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 3fa3bebac8f059aca00fc1402ecc923c6682e365[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Jul 26 10:20:12 2018 +0800
+
+    项目详情页面修改
+
+[33mcommit 8566430e6d2967cf94c6f7f399212fd1afad82b3[m
+Merge: 6837fa9 06224f3
+Author: 李博 <ncj233@gmail.com>
+Date:   Wed Jul 25 18:50:16 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 6837fa922db4562e38b225e78ab67c18f6b19ab7[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Wed Jul 25 18:50:08 2018 +0800
+
+    1. 新增所有Demo进入的统一界面
+    2. 日志补丁后端接口~
+
+[33mcommit 4e13c6d4fff7d546f652632b76b0a58ebdd5ded4[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Wed Jul 25 18:45:02 2018 +0800
+
+    圈地状态，公海警告，申请圈地
+
+[33mcommit 06224f38cda30e0754ef397e450f50cdcc813366[m
+Merge: 62220dd b1c76b0
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Jul 25 18:43:28 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/company/CompanyController.java
+
+[33mcommit 62220dd288dfada46bc6530d7f6146ab00e2a636[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Wed Jul 25 18:42:40 2018 +0800
+
+    工作日志相关界面修改
+
+[33mcommit b1c76b04e87c04779a57cf324406ab8fff89a832[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Jul 25 17:39:29 2018 +0800
+
+    增加创建公司页面以及邀请同事
+
+[33mcommit 7b3ac57da47284dc8f1bfb0583b79d46c67bccc9[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Jul 24 18:37:05 2018 +0800
+
+    公海警告
+
+[33mcommit 7c65c9da27515796c0955c7853cacf87c8247573[m
+Merge: d076514 d312be8
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 24 18:24:11 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit d312be8bfe25ad3e438a75231917a4b7dd778f57[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 24 18:23:27 2018 +0800
+
+    修改Project类
+
+[33mcommit d0765147109d53f4db6607705824afda6e6aa10d[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 24 18:23:16 2018 +0800
+
+    项目详情查看界面
+
+[33mcommit 73fbb7ff196d20eb1d7a07c739d3f03260fe1589[m
+Merge: ac81c61 bcb4abb
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 24 17:59:38 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit ac81c61cb04441a62e5f8575d3cf77e91836a19b[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 24 17:59:16 2018 +0800
+
+    客户页面和添加客户页面之间的跳转和返回
+
+[33mcommit bcb4abb749630d2e79293ea3113128caa3141c31[m
+Merge: 37eb750 339658d
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 24 17:56:02 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/project/ProjectController.java
+
+[33mcommit 37eb75069df2ce1803e2b9682a0e9f5e9379e89f[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 24 17:55:06 2018 +0800
+
+    项目详情查看界面
+
+[33mcommit 339658d37d9a4a58c7247aec91abb9fa4fc44a4a[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 24 17:40:04 2018 +0800
+
+    申请项目支持页面
+
+[33mcommit 90df1b469b277816dd4648a9e54ffb8bbf1c6fc7[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 24 16:06:59 2018 +0800
+
+    新建项目 基本功能  访问地址  http://localhost:8080/opportunity/new
+    修改Project类内容了
+    实现新建项目信息插入数据库
+
+[33mcommit 6344ec61c834e017379d4c53c8b46b3d6e1e2410[m
+Merge: ed6959c 3bfaa51
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 24 15:15:31 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit ed6959ce7b7bc3c8345ea9a93a1898aa728f4588[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 24 15:15:04 2018 +0800
+
+    新建项目 基本功能  访问地址  http://localhost:8080/opportunity/new
+
+[33mcommit 3bfaa5106a6485fd6a841a81bf0609087244fdae[m
+Merge: 99ed5ec b027a5d
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 24 10:49:46 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 99ed5ecb93fcb3a30bc62946873e279f5e6ca791[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 24 10:49:11 2018 +0800
+
+    项目文件
+
+[33mcommit b027a5d0933c4ea106143750e165d92f2b193c09[m
+Merge: 5c2e261 2b4ea38
+Author: 李博 <ncj233@gmail.com>
+Date:   Tue Jul 24 10:27:24 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 5c2e2610ccb31940ba41d5b26938393b8c3796b1[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Tue Jul 24 10:27:16 2018 +0800
+
+    日志部分新增功能
+
+[33mcommit 2b4ea38403aaa9839c710e5ace0437ee6f63208d[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 24 09:33:35 2018 +0800
+
+    客户页面错误修改
+
+[33mcommit aa0e9abc1287b84ea7f6234dd48cafb785ccc364[m
+Merge: 7b73db6 74380a6
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 24 09:28:51 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/resources/templates/customerList.html
+
+[33mcommit 7b73db62e5867c7a12dc4a997dcb175bb243e77a[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 24 09:26:56 2018 +0800
+
+    客户、商机、日志tabbar
+    添加商机类
+
+[33mcommit 74380a65f3f6e1a945fbd5d87b869b289cda74f3[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Jul 23 18:17:33 2018 +0800
+
+    完善客户信息页面及搜索客户...
+
+[33mcommit afd33e1302d0554b0daa9ae44b7cebe1b7929341[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Mon Jul 23 15:59:41 2018 +0800
+
+    学院申请
+
+[33mcommit 221b060adb77a57c64a936d685dc13bbbdb73475[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Jul 23 11:36:07 2018 +0800
+
+    完善客户信息页面及搜索跳转..
+
+[33mcommit d86eaa364113306ea797c70f5e153f131aa8f1c6[m
+Merge: 1377995 71368ee
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Jul 20 18:35:40 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 137799558075c70d6c0f39b42133c178d2678c80[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Jul 20 18:35:17 2018 +0800
+
+    增加客户信息页面及搜索跳转..
+
+[33mcommit 71368ee25cff2a936c2b79addb95b3f906d9cfdb[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Fri Jul 20 18:07:09 2018 +0800
+
+    修改日志部分的功能，使其满足要求
+    1.新增日志，选择日周月 2.选择客户拜访类型前显示内容
+
+[33mcommit 76dc1899e5256b92710a7b99156d6bcca0edad10[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Fri Jul 20 14:25:21 2018 +0800
+
+    之前其他用户的Merge操作导致编译不通过
+
+[33mcommit 04795fac7f2d72f68ca1af3459932915eedec045[m
+Merge: 8db156a 1113a45
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Jul 20 13:00:02 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 8db156ab1b65558a90fbbb6e082506a1a8417d09[m
+Merge: d1154a1 9705dd8
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Jul 20 12:57:40 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit d1154a1bd5fbc3c66f5bfb627a7b5e121b08b2fc[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Fri Jul 20 12:57:31 2018 +0800
+
+    增加客户信息页面
+
+[33mcommit 1113a45cf4df746cf0cdba9d98aa9013db016aa1[m
+Merge: 9753443 9705dd8
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Jul 20 12:56:52 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/customer/CustomerController.java
+    #	src/main/java/com/xuebei/crm/customer/CustomerMapper.java
+    #	src/main/java/com/xuebei/crm/customer/CustomerService.java
+    #	src/main/java/com/xuebei/crm/customer/CustomerServiceImpl.java
+    #	src/main/resources/mybatis/mapper/CustomerMapper.xml
+
+[33mcommit 97534436475fd64281b84d7aca324503a6167003[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Jul 20 12:55:05 2018 +0800
+
+    组织展开后端
+
+[33mcommit acf9ae2cba016c92525b5c475ef94048ce998d60[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Jul 20 12:00:43 2018 +0800
+
+    组织机构接口up
+
+[33mcommit 9705dd827dfb98303621951adafedaf8b45b7697[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Fri Jul 20 11:32:47 2018 +0800
+
+    日志部分用户认证
+
+[33mcommit 7c0be7f1f6b8c0ff3be6b040dac4a65574a7c683[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Fri Jul 20 11:16:28 2018 +0800
+
+    显示日志页面，加号暂时直接链接到新增单日日志
+
+[33mcommit 9580d7219dee7277d29b3943f0ab715b7f093ea7[m
+Merge: 65a0d3a 7773102
+Author: 李博 <ncj233@gmail.com>
+Date:   Fri Jul 20 11:03:45 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 65a0d3a31545f4f7a3464618bb8bd692ae4323de[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Fri Jul 20 11:03:37 2018 +0800
+
+    完善登录功能，登录后需要选择公司，用户才userID
+    修改日志部分代码将它们连接起来
+
+[33mcommit 093c8c45f74be8d5fb42e505153e38ca6e7ab53d[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Jul 19 18:32:28 2018 +0800
+
+    组织机构接口
+
+[33mcommit 7773102bb792487c85d6dee0bddbb4eabe881793[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Jul 19 16:22:35 2018 +0800
+
+    增加客户信息页面
+
+[33mcommit 1ccd2d92aea7dfd79356adc353a02c5bf8563797[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Jul 19 16:17:22 2018 +0800
+
+    增加用户搜索接口
+
+[33mcommit ea25753fec306d1496011cf9371cedd5fcdc71f5[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Jul 19 16:08:07 2018 +0800
+
+    增加客户信息查看界面
+
+[33mcommit 887907862f7d0630413ca347fa21b82cc113025e[m
+Merge: c34cc87 6209d83
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Jul 19 16:04:26 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit db740b923ba3a6dadbbe5d1b27cde0681cd3cb75[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Jul 19 15:27:15 2018 +0800
+
+    组织机构前端up
+
+[33mcommit c34cc87bc4f2f024f697b2e5b9fd4c9bc7363b79[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Thu Jul 19 15:14:33 2018 +0800
+
+    增加客户信息查看界面
+
+[33mcommit 6209d839de10f46869dcbcba557c4d69cbfec3e3[m
+Merge: 446c745 08e85a8
+Author: 李博 <ncj233@gmail.com>
+Date:   Thu Jul 19 14:29:28 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/customer/CustomerMapper.java
+    #	src/main/resources/mybatis/mapper/CustomerMapper.xml
+
+[33mcommit 446c7458f5511e497ae279b22cfd09d1c0684056[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Thu Jul 19 14:27:30 2018 +0800
+
+    增加联系人选择职位的功能
+
+[33mcommit 08e85a886fc0425018e4604b7b664b70a6d097da[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Jul 19 12:04:06 2018 +0800
+
+    添加客户信息 完善学校名称数据库搜索
+
+[33mcommit 1549817170a3569a0bae15e557a5159e0ac26bdd[m
+Merge: 141d0b3 946f672
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Jul 19 11:28:14 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/customer/CustomerController.java
+    #	src/main/java/com/xuebei/crm/customer/CustomerMapper.java
+
+[33mcommit 141d0b36a9a23fb30da139f6628114b4539603fd[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Thu Jul 19 11:26:10 2018 +0800
+
+    组织机构前端
+
+[33mcommit 946f67210ddbe38082be887c4cec33e5ccac7e63[m
+Merge: 3c1fa95 e2a6035
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Jul 19 11:20:13 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/customer/CustomerController.java
+    #	src/main/java/com/xuebei/crm/customer/CustomerMapper.java
+    #	src/main/java/com/xuebei/crm/customer/CustomerService.java
+    #	src/main/java/com/xuebei/crm/customer/CustomerServiceImpl.java
+    #	src/main/resources/mybatis/mapper/CustomerMapper.xml
+
+[33mcommit 3c1fa951e90e4b05794f66479378b6e28525d084[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Thu Jul 19 11:14:01 2018 +0800
+
+    添加客户信息 前端和后端基本功能
+    输入程序根目录直接打开登录页面，不要用户再输入login
+    注册和登录的Controller、Service分开成两个单独的类
+    解决了Class里面Sonar检查出来的问题
+    增加了一个获得当前用户ID的Service
+
+[33mcommit e2a603503d1003e505b278f59afa4234ad8a2a20[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Wed Jul 18 18:46:53 2018 +0800
+
+    增加联系人
+
+[33mcommit 2710b7717e556f29053fb53414fab8b55dca681b[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Wed Jul 18 18:40:06 2018 +0800
+
+    组织机构前端
+
+[33mcommit 6d3b0fa3e84703ecb3fa5987f911a72ffa626f1d[m
+Merge: efe3a47 a88685f
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Jul 18 17:57:25 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/customer/CustomerController.java
+    #	src/main/java/com/xuebei/crm/customer/CustomerMapper.java
+    #	src/main/resources/mybatis/mapper/CustomerMapper.xml
+
+[33mcommit efe3a4780cb331cd2aa03f203364a93aa01f2877[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Jul 18 17:54:57 2018 +0800
+
+    增加客户信息搜索界面,接口，测试
+
+[33mcommit a88685f58bf8505544ae9b1aca137418db1a81d4[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Wed Jul 18 17:04:41 2018 +0800
+
+    修日志部分的问题
+
+[33mcommit 0ba84d1eaef006b1b8136b946bf83637b53bb298[m
+Author: 李博 <ncj233@gmail.com>
+Date:   Wed Jul 18 15:55:44 2018 +0800
+
+    增加联系人后端
+
+[33mcommit a1d9118ca0c0abb029dd1527bed72bc007eced13[m
+Merge: de8fe84 95befca
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Jul 18 09:22:22 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit de8fe845fcc9269895293357c8ebd8f8c1755c5b[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Wed Jul 18 09:21:46 2018 +0800
+
+    修改细节错误
+
+[33mcommit 95befcab726db7d21bfffe01d79ab6208d981b3b[m
+Merge: a7886be 1b18ec0
+Author: ncj <ncj233@gmail.com>
+Date:   Tue Jul 17 18:46:25 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit a7886be61b59291de2a5fac02517e19c6248f46c[m
+Author: ncj <ncj233@gmail.com>
+Date:   Tue Jul 17 18:45:56 2018 +0800
+
+    增加联系人界面(1/2)
+
+[33mcommit 1b18ec08c19b2b2f1b228736e9e387cf8a13bbcb[m
+Merge: 3c2585a a9651e9
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Jul 17 18:44:03 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 3c2585a482e0e8b21d432a3d2232074219be8a5b[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Jul 17 18:43:13 2018 +0800
+
+    添加客户中组织机构的页面
+    修改日志
+
+[33mcommit a9651e90626cf77cd0fd13dd51557045ee344ad3[m
+Merge: 398b9e2 60fc7a9
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 17 18:40:52 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/customer/CustomerController.java
+    #	src/main/java/com/xuebei/crm/customer/CustomerMapper.java
+
+[33mcommit 60fc7a95dd0a5429c6756d11606693762200e4d5[m
+Merge: 40ad2bb 8292233
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 17 18:39:29 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 398b9e211e2d7030a63704473ea9ac74a5c42845[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 17 18:39:25 2018 +0800
+
+    增加客户信息搜索界面
+
+[33mcommit 40ad2bbe56df9740f9244626972fa6ded8ae80aa[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 17 18:39:09 2018 +0800
+
+    添加客户信息前端页面
+
+[33mcommit 82922339ce90ab17b5937418e4e602d7bd2103bc[m
+Author: ncj <ncj233@gmail.com>
+Date:   Tue Jul 17 17:58:50 2018 +0800
+
+    增加客户组织机构相关代码 ResolveConflicts
+
+[33mcommit 0849e3707b75a681775cc66a3da64a0c559c9180[m
+Merge: fa0228e 49f4b93
+Author: ncj <ncj233@gmail.com>
+Date:   Tue Jul 17 17:57:42 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/customer/CustomerController.java
+
+[33mcommit fa0228e29d55957821fda2c215d822d3ca5edb98[m
+Author: ncj <ncj233@gmail.com>
+Date:   Tue Jul 17 17:53:33 2018 +0800
+
+    增加客户组织机构相关代码
+
+[33mcommit 17e260346f3dedec04cf2150771481d6a52471c7[m
+Merge: 6f47b88 49f4b93
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Jul 17 17:14:45 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 49f4b93eb27ecc7f8b1b453c26e6189efd85e89e[m
+Merge: cb1a0f1 408b61f
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 17 16:32:12 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit cb1a0f1cc1e6450c2b3d697519edb18b2bb0c6fd[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 17 16:31:53 2018 +0800
+
+    添加客户信息前段页面
+
+[33mcommit 6f47b882cdc6ea560f4e753fefa24ede4e5d88d6[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Jul 17 16:14:07 2018 +0800
+
+    在JournalControllerTest中增加一些test
+
+[33mcommit 3577cfc7d2088a9c1cd28694c1e5637491cea2dd[m
+Merge: 0727507 408b61f
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Jul 17 16:11:22 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/test/java/com/xuebei/crm/journal/JournalControllerTest.java
+
+[33mcommit 07275073d91ac96738a72c0d6faf84283ab084f7[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Jul 17 16:07:45 2018 +0800
+
+    增加JournalControllerTest
+
+[33mcommit 408b61f717a1397053614fb4a89890f5c955bd12[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 17 15:52:49 2018 +0800
+
+    增加日志测试代码
+
+[33mcommit 746e95c7a59c8c7ae6facac04e1cbdf952bcca1e[m
+Merge: bdf2b37 3e60f77
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 17 15:51:13 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/test/java/com/xuebei/crm/journal/JournalControllerTest.java
+
+[33mcommit bdf2b37a5c37f8b36a97165979e8b336ca05a04c[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 17 15:48:46 2018 +0800
+
+    增加日志测试代码
+
+[33mcommit 16eede6ac23838b705a6dd1080b47f6d8a9adaba[m
+Merge: f81f930 3e60f77
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 17 14:19:07 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit f81f930043a2d5fd8f2d358608329aa14a0292eb[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 17 14:18:59 2018 +0800
+
+    添加客户信息
+
+[33mcommit 3e60f77af8d9e12217bb869823731ff54296d8c1[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Jul 17 14:18:21 2018 +0800
+
+    日志前端  增加异常处理 基本完成
+
+[33mcommit 5ab484a8c0d7cb4c4f66ef558c843193b95d8575[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Jul 17 14:17:17 2018 +0800
+
+    日志前端  增加异常处理
+
+[33mcommit da748d41c35f3451608a810272105acfa935b85e[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Jul 17 13:40:46 2018 +0800
+
+    日志前端  异常处理未做
+
+[33mcommit bb8bd34b81fe6cf3b3d57c4c20fb5ab1fe716770[m
+Merge: 9255f5a 0ad420c
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Jul 17 11:45:07 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 0ad420cd4eafcc2f02b86a04097755ea8567c9f0[m
+Merge: 021c6af 37c8446
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 17 11:20:45 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 021c6af4c123bfc68c4be53670a6ccbaefe41654[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 17 11:20:14 2018 +0800
+
+    日志筛选接口获取登录用户id
+
+[33mcommit 37c8446805eccc4dae67fde968d757b9b266a274[m
+Author: 赵文宇 <804544223@qq.com>
+Date:   Tue Jul 17 10:52:52 2018 +0800
+
+    增加单元测试
+
+[33mcommit 9255f5a8e432af893efeae3b5fe93c32d839a234[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Jul 17 10:48:03 2018 +0800
+
+    日志前端up
+
+[33mcommit eb1d4706bb2dcae32d041a975b64d885aec47708[m
+Merge: 6439628 8bdee47
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Jul 17 10:45:39 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 64396280bd757dcdcbda33fcf61ed889167cf304[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Tue Jul 17 10:45:31 2018 +0800
+
+    日志前端up
+
+[33mcommit 8bdee47a49c845fdbd361ed807af01984f155aa0[m
+Merge: a083695 58b7183
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 17 10:43:50 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit a08369561df48b6acfdc27fbcb2b2c439394c043[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Tue Jul 17 10:43:10 2018 +0800
+
+    日志筛选接口完善
+
+[33mcommit 58b7183e89900bc1a3b53a8bb1c3acd8a9bf24ae[m
+Author: ncj <ncj233@gmail.com>
+Date:   Mon Jul 16 19:00:02 2018 +0800
+
+    增加添加顶级机构(二级学院)部分功能
+
+[33mcommit a8225c98673dbbe8983fcf775ccdc49af6eb8778[m
+Merge: ae3b70e b4868f7
+Author: ncj <ncj233@gmail.com>
+Date:   Mon Jul 16 18:58:28 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 56d7120a06814cb3ca59212060346a2e1323e7b2[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Mon Jul 16 18:46:02 2018 +0800
+
+    日志前端
+
+[33mcommit b4868f790a87b7e737fa6cf7e092c65af922f61b[m
+Merge: 97f6362 77d64c0
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Jul 16 16:54:24 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit ae3b70edac139d443b9736338af492bea798a426[m
+Author: ncj <ncj233@gmail.com>
+Date:   Mon Jul 16 16:47:14 2018 +0800
+
+    修改了添加日志相关前端页面代码逻辑
+
+[33mcommit 97f6362957b9d804c4362aeb7489a3c11e029e29[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Jul 16 16:05:55 2018 +0800
+
+    日志筛选已读未读,发送人接口
+
+[33mcommit 77d64c0b8fab1ce6739aead5edf50ae11be66a4a[m
+Merge: 681e9e7 397cca4
+Author: zwy <804544223@qq.com>
+Date:   Mon Jul 16 16:00:05 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 681e9e750f0e363019c64e8bc71153be3e96bae3[m
+Author: zwy <804544223@qq.com>
+Date:   Mon Jul 16 15:59:24 2018 +0800
+
+    增加单元测试
+
+[33mcommit b6335699a50cc41a5651719fb076fccb246bf576[m
+Merge: 7f6d893 397cca4
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Jul 16 14:11:11 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 9dbc93c075a7b7e4cfbfae27711e108d7a5930b1[m
+Author: zwy <804544223@qq.com>
+Date:   Mon Jul 16 14:10:37 2018 +0800
+
+    注册登录、手机号注册、找回密码 前端页面和后端功能
+
+[33mcommit 397cca494d32cc56f270e42c0cdc93cbadd3f5f6[m
+Author: 容伟成 <1458602611@qq.com>
+Date:   Mon Jul 16 13:59:12 2018 +0800
+
+    日志列表demo
+
+[33mcommit b975e73e0df5dc09a91ad15dbd0e83b288e76c92[m
+Author: zwy <804544223@qq.com>
+Date:   Mon Jul 16 13:47:37 2018 +0800
+
+    注册登录、手机号注册、找回密码 前段页面和后端功能
+
+[33mcommit 7f6d893950b6db059899a2fbdeccc82c03d593cf[m
+Merge: e48fcb2 2792dd5
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Mon Jul 16 09:12:22 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/journal/JournalController.java
+    #	src/main/resources/mybatis/mapper/JournalMapper.xml
+
+[33mcommit 2792dd53ee2d6d1eb2b4660fd11886b46fa6880f[m
+Author: 容伟成 <1458602611@qq.com>
+Date:   Sun Jul 15 00:31:06 2018 +0800
+
+    异常处理分离exceptionHandler和errorController
+
+[33mcommit 90d8e752934f50512ab7dbecfc7e528a2ebe78d8[m
+Author: ncj <ncj233@gmail.com>
+Date:   Sat Jul 14 22:06:20 2018 +0800
+
+    增加日志模块功能
+
+[33mcommit 82e23aa0be56b9ff8d38c322a4c7f5b4a2c534d0[m
+Merge: f59e221 986b2cd
+Author: ncj <ncj233@gmail.com>
+Date:   Sat Jul 14 18:56:09 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/resources/templates/editJournal.html
+
+[33mcommit f59e221182db3eadc66240e8a90d3f9e7c0c365b[m
+Author: ncj <ncj233@gmail.com>
+Date:   Sat Jul 14 18:55:31 2018 +0800
+
+    日志后端功能完善2
+
+[33mcommit 986b2cd819e0e29a0eeccf5e8c942cabf7caa961[m
+Merge: 9005a12 c22db74
+Author: 容伟成 <1458602611@qq.com>
+Date:   Sat Jul 14 18:54:55 2018 +0800
+
+    Merge branch 'develop' of https://git.walkclass.com/r/crm into develop
+
+[33mcommit 9005a1210e55b2886e653b1827903f81860c5541[m
+Author: 容伟成 <1458602611@qq.com>
+Date:   Sat Jul 14 18:54:50 2018 +0800
+
+    新增日志界面
+
+[33mcommit e48fcb2046dd355bd2265b4cfeb1fd547a16ac3e[m
+Author: 徐天赐 <1342532052@qq.com>
+Date:   Sat Jul 14 18:40:52 2018 +0800
+
+    日志筛选已读未读
+
+[33mcommit c22db742295c5b699fb2ed5119c432a4f580558d[m
+Author: zwy <804544223@qq.com>
+Date:   Sat Jul 14 18:29:10 2018 +0800
+
+    日志详情
+
+[33mcommit c93816cdcfefa1c65ab5ecf77e5d446c8c1b2656[m
+Author: ncj <ncj233@gmail.com>
+Date:   Sat Jul 14 13:52:19 2018 +0800
+
+    日志后端功能完善
+
+[33mcommit f9c80990aac1d90deba46510592434ce36e43c8f[m
+Author: 容伟成 <1458602611@qq.com>
+Date:   Sat Jul 14 11:31:25 2018 +0800
+
+    日志列表接口（按类型、时间搜索）
+
+[33mcommit 087bffdd2d4ba2e8f4deae0e45d075259b02bbb4[m
+Author: ncj <ncj233@gmail.com>
+Date:   Sat Jul 14 10:31:42 2018 +0800
+
+    增加日志部分后端接口
+
+[33mcommit 5f0f924b4ede8368337c6f5a3617cb620648e3fc[m
+Author: ncj <ncj233@gmail.com>
+Date:   Sat Jul 14 10:28:56 2018 +0800
+
+    Resolve Conflict ,
+
+[33mcommit 277dfb35b955d8721de9a5065bd381ff6db8cb72[m
+Merge: cb1a27f f106585
+Author: ncj <ncj233@gmail.com>
+Date:   Sat Jul 14 10:26:11 2018 +0800
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #	src/main/java/com/xuebei/crm/journal/Journal.java
+    #	src/main/java/com/xuebei/crm/journal/JournalController.java
+    #	src/main/java/com/xuebei/crm/journal/JournalMapper.java
+    #	src/main/java/com/xuebei/crm/journal/JournalService.java
+    #	src/main/java/com/xuebei/crm/journal/JournalServiceImpl.java
+    #	src/main/java/com/xuebei/crm/sample/SampleController.java
+    #	src/main/resources/mybatis/mapper/JournalMapper.xml
+    #	src/main/resources/static/example.css
+
+[33mcommit cb1a27fcdd7bdc32634e9cd5737a04c15d8855bb[m
+Author: ncj <ncj233@gmail.com>
+Date:   Fri Jul 13 17:41:17 2018 +0800
+
+    加入关于Journey部分的代码
+
+[33mcommit f1065853e809fdf48579726b825878b660cb2b48[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Jul 13 16:40:35 2018 +0800
+
+    sample test
+
+[33mcommit b275e7917e7f627ad0a585f5b7d70ebb17771fef[m
+Merge: 242dd7a c17595c
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Jul 13 15:47:52 2018 +0800
+
+    Merge branch 'develop' of https://git.walkclass.com/r/crm into develop
+
+[33mcommit 242dd7af0a1b13b520394b969c37e7e1e23dc7f8[m
+Author: 郭培林 <1558047230@qq.com>
+Date:   Fri Jul 13 15:46:28 2018 +0800
+
+    sample test
+
+[33mcommit c17595c13dcba776d1da4e7b8af8770d2b865d8e[m
+Author: 容伟成 <1458602611@qq.com>
+Date:   Thu Jul 12 17:37:47 2018 +0800
+
+    日志配置
+
+[33mcommit 9ffce4529414f2a7e685ffd78ea2090e56bc7597[m
+Author: XueBei <1558047230@qq.com>
+Date:   Thu Jul 12 17:14:30 2018 +0800
+
+    sample修改
+
+[33mcommit b116b370da2f75d9d67f2e1eb9759dcb9e33ce98[m
+Author: 容伟成 <1458602611@qq.com>
+Date:   Thu Jul 12 15:34:12 2018 +0800
+
+    UUID生成器
+
+[33mcommit bd21864cd0184251861a042dc6ff90634b85c2c8[m
+Author: 容伟成 <1458602611@qq.com>
+Date:   Thu Jul 12 15:28:39 2018 +0800
+
+    统一异常控制器
+
+[33mcommit 8f4da0da62efed6398ec5738ba1ebc0654babc7d[m
+Author: 容伟成 <1458602611@qq.com>
+Date:   Tue Jul 10 11:03:51 2018 +0800
+
+    项目基础框架搭建
+
+[33mcommit 33d1c80af589151186888a7010f0538ced638812[m
+Author: admin <admin@gitblit>
+Date:   Mon Jul 9 18:19:11 2018 +0800
+
+    Initial commit

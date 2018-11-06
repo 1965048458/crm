@@ -80,7 +80,7 @@ public class RegisterController {
         } else {
             User userExist = registerService.searchTel(tel);
             if (userExist != null) {
-                gsonView.addStaticAttribute(SUCCESS_FLG, false);
+                gsonView.addStaticAttribute(SUCCESS_FLG,false);
                 gsonView.addStaticAttribute(ERRMSG, "用户已存在");
             } else {
                 Date start = (Date) request.getSession().getAttribute(CAPTCHA_CREATE_TS);
