@@ -47,7 +47,7 @@
             <span class="pull-right" @Click="confirmAddContacts">完成</span>
         </div>
 
-        <div class="weui-cells" v-show="isTopDept === 'false'">
+        <div class="weui-cells">
             <a class="weui-cell weui-cell_access" href="javascript:;" @Click="chooseContactsType">
                 <div class="weui-cell__bd">
                     <p>选择联系人职位</p>
@@ -79,7 +79,7 @@
                     <label class="weui-label">手机号</label>
                 </div>
                 <div class="weui-cell__bd">
-                    <input  class="weui-input" placeholder="输入联系人手机号" v-model="tel">
+                    <input  class="weui-input" placeholder="输入联系人手机号(选填)" v-model="tel">
                 </div>
             </div>
             <div class="weui-cell">
@@ -87,7 +87,7 @@
                     <label class="weui-label">座机号</label>
                 </div>
                 <div class="weui-cell__bd">
-                    <input  class="weui-input" placeholder="输入联系人座机号" v-model="phone">
+                    <input  class="weui-input" placeholder="输入联系人座机号(选填)" v-model="phone">
                 </div>
             </div>
             <div class="weui-cell">

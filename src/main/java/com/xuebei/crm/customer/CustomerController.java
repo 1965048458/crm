@@ -293,22 +293,22 @@ public class CustomerController {
                                 Contacts contacts,
                                 HttpServletRequest request) {
         final String TOP_DEPT_CONTACTS_TYPE_NOT_NULL_ERROR_MSG = "顶级机构中联系人不允许有职位";
-        final String SUB_DEPT_CONTACTS_NULL_ERROR_MSG = "子机构中联系人需要有职位信息";
+        final String SUB_DEPT_CONTACTS_NULL_ERROR_MSG = "机构中联系人需要有职位信息";
         final String REAL_NAME_BLANK_ERROR_MSG = "联系人姓名不能为空";
         final String TEL_AND_PHONE_BLANK_ERROR_MSG ="联系人手机号和座机号不能同时为空";
-
+        final String TEL_NOT_ELEVEN_ERROR_MSG ="请填写正确的11位手机号码";
         // 权限检查
         Department dept = customerMapper.queryDepartmentById(deptId);
-//        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(request), dept.getCustomer().getCustomerId())) {
-//            return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
-//        }
+        if (dept == null || !customerService.isUserHasCustomer(acquireUserId(request), dept.getCustomer().getCustomerId())) {
+            return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG);
+        }
 
         // 联系人类型检查
-        if (dept.getParent() == null || dept.getParent().getDeptId() == null) {
-            if (contactsTypeId != null) {
-                return GsonView.createErrorView(TOP_DEPT_CONTACTS_TYPE_NOT_NULL_ERROR_MSG);
-            }
-        } else {
+//        if (dept.getParent() == null || dept.getParent().getDeptId() == null) {
+////            if (contactsTypeId != null) {
+////                return GsonView.createErrorView(TOP_DEPT_CONTACTS_TYPE_NOT_NULL_ERROR_MSG);
+////            }
+//        } else {
             if (contactsTypeId == null) {
                 return GsonView.createErrorView(SUB_DEPT_CONTACTS_NULL_ERROR_MSG);
             }
@@ -316,17 +316,21 @@ public class CustomerController {
             if (type == null || !type.getCustomerId().equals(dept.getCustomer().getCustomerId())) {
                 return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG + ", 机构类型错误");
             }
-        }
+//        }
 
         // 联系人信息
         if (contacts.getRealName() == null || StringUtils.isEmptyOrWhitespace(contacts.getRealName())) {
             return GsonView.createErrorView(REAL_NAME_BLANK_ERROR_MSG);
         }
-        if ((contacts.getTel() == null || StringUtils.isEmptyOrWhitespace(contacts.getTel())) &&
-                (contacts.getPhone() == null || StringUtils.isEmptyOrWhitespace(contacts.getPhone()))) {
-            return GsonView.createErrorView(TEL_AND_PHONE_BLANK_ERROR_MSG);
+        //联系人手机号和座机号不能同时为空 条件取消
+//        if ((contacts.getTel() == null || StringUtils.isEmptyOrWhitespace(contacts.getTel())) &&
+//                (contacts.getPhone() == null || StringUtils.isEmptyOrWhitespace(contacts.getPhone()))) {
+//            return GsonView.createErrorView(TEL_AND_PHONE_BLANK_ERROR_MSG);
+//        }
+        if ((contacts.getTel() != null && !StringUtils.isEmptyOrWhitespace(contacts.getTel()))&&contacts.getTel().length()!=11)
+        {
+        	return GsonView.createErrorView(TEL_NOT_ELEVEN_ERROR_MSG);
         }
-
         // 添加联系人
         ContactsType contactsType = new ContactsType();
         contactsType.setContactsTypeId(contactsTypeId);

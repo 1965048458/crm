@@ -8,7 +8,7 @@ jQuery(document).ready(function () {
             showAddContactsType: false,
             errMsg: '',
             showPage: 'addContactsPage',
-            isTopDept: jQuery('#isTopDept').val(),
+            isTopDept: 'false',
             curContactsType: null,
             realName: '',
             gender: null,
@@ -59,15 +59,11 @@ jQuery(document).ready(function () {
                     specialRelationship: thisVue.specialRelationship
                 };
 
-                if (jQuery('#isTopDept').val() === 'true') {
-                    //doNoting
-                } else {
                     if (this.curContactsType == null) {
                         uploadData['contactsTypeId'] = null;
                     } else {
                         uploadData['contactsTypeId'] = this.curContactsType.contactsTypeId;
                     }
-                }
 
                 jQuery.ajax({
                     type: 'post',

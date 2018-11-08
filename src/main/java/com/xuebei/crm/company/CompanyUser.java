@@ -2,7 +2,6 @@ package com.xuebei.crm.company;
 
 import com.google.gson.annotations.Expose;
 
-import java.util.Date;
 
 /**
  * Created by Administrator on 2018/7/25.
