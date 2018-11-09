@@ -186,6 +186,14 @@ public class LoginController {
 						tag1 = true;
 					}
 				}
+				else
+				{
+					if (!tag2) {
+						if (c.getStatus() != null && c.getStatus().equals("PERMITTED")) {
+							tag2 = true;
+						}
+					}
+				}
 				List<CompanyUser> companyUsers = companyMapper.queryApplyStaff(userId);
 				if (companyUsers == null) {
 					c.setApplyStaff(0);
@@ -199,11 +207,6 @@ public class LoginController {
 				int messageNum = applyList.size() + projectApplyList.size();
 				c.setMessage(messageNum);
 			} else {
-				if (!tag2) {
-					if (c.getStatus() != null && c.getStatus().equals("PERMITTED")) {
-						tag2 = true;
-					}
-				}
 				if (!tag3) {
 					if (c.getStatus() != null && c.getStatus().equals("PENDING")) {
 						tag3 = true;
