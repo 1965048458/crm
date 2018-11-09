@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -167,37 +169,55 @@ public class LoginController {
     }
 
     @RequestMapping("/myCompany/query")
-    public GsonView myCompanyQuery(HttpServletRequest request) {
-        GsonView gsonView = new GsonView();
-        String crmUserId = (String) request.getSession().getAttribute("crmUserId");
+	public GsonView myCompanyQuery(HttpServletRequest request) {
+		GsonView gsonView = new GsonView();
+		String crmUserId = (String) request.getSession().getAttribute("crmUserId");
+		boolean tag1 = false;
+		boolean tag2 = false;
+		boolean tag3 = false;
+		List<Company> company = companyMapper.queryCompanyList(crmUserId);
+		for (Company c : company) {
+			String userId = loginRegisterMapper.queryUserIdByCompanyId(crmUserId, c.getCompanyId());
+			if (userId != null) {
+				String userType = companyMapper.queryUserType(userId);
+				if (userType.equals("ADMIN")) {
+					c.setAdmin(true);
+					if (!tag1) {
+						tag1 = true;
+					}
+				}
+				List<CompanyUser> companyUsers = companyMapper.queryApplyStaff(userId);
+				if (companyUsers == null) {
+					c.setApplyStaff(0);
+				} else {
+					c.setApplyStaff(companyUsers.size());
+				}
 
-        List<Company> company = companyMapper.queryCompanyList(crmUserId);
-        for(Company c : company) {
-            String userId = loginRegisterMapper.queryUserIdByCompanyId(crmUserId, c.getCompanyId());
-            if (userId != null) {
-                String userType = companyMapper.queryUserType(userId);
-                if (userType.equals("ADMIN")) {
-                    c.setAdmin(true);
-                }
-                List<CompanyUser> companyUsers = companyMapper.queryApplyStaff(userId);
-                if (companyUsers == null) {
-                    c.setApplyStaff(0);
-                } else {
-                   c.setApplyStaff(companyUsers.size());
-                }
+				List<Apply> applyList = msgService.applyList(userId);
+				List<ProjectApply> projectApplyList = msgService.getProjectApply(userId);
 
-                List<Apply> applyList = msgService.applyList(userId);
-                List<ProjectApply> projectApplyList =  msgService.getProjectApply(userId);
-
-                int messageNum = applyList.size() + projectApplyList.size();
-                c.setMessage(messageNum);
-            }
-        }
-            gsonView.addStaticAttribute(SUCCESS_FLG, true);
-            gsonView.addStaticAttribute("myCompany", company);
-            return gsonView;
-        }
-
+				int messageNum = applyList.size() + projectApplyList.size();
+				c.setMessage(messageNum);
+			} else {
+				if (!tag2) {
+					if (c.getStatus() != null && c.getStatus().equals("PERMITTED")) {
+						tag2 = true;
+					}
+				}
+				if (!tag3) {
+					if (c.getStatus() != null && c.getStatus().equals("PENDING")) {
+						tag3 = true;
+					}
+				}
+			}
+		}
+		gsonView.addStaticAttribute(SUCCESS_FLG, true);
+		gsonView.addStaticAttribute("myCompany", company);
+		gsonView.addStaticAttribute("tag2", tag2);
+		gsonView.addStaticAttribute("tag1", tag1);
+		gsonView.addStaticAttribute("tag3", tag3);
+		return gsonView;
+	}
 
     @RequestMapping("/agreeApply")
     public GsonView agreeApply(@RequestParam("userId") String userId, HttpServletRequest request) {

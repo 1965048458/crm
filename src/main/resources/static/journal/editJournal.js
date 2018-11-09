@@ -60,6 +60,9 @@ jQuery(document).ready(function () {
                    this.doSaveJournal(result);
                }
            },
+           'modifBack': function () {
+        	   this.showPage = 'selectOpportunity';
+           },
            'doSaveJournal': function (postData) {
                console.log(postData);
                var thisVue = this;

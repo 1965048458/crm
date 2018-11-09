@@ -13,6 +13,7 @@ jQuery(document).ready(function () {
             showOrganization: false,
             showApplyDialog: false,
             customerList: '',
+            scustomerList: '',
             departmentList:'',
             applyDeptName:'',
             applyDeptId:'',
@@ -216,6 +217,29 @@ jQuery(document).ready(function () {
                 this.showOrganization = true;
                 $('#searchInput').blur();
             },
+            
+            searchCompany: function () {
+                var thisVue = this;
+                jQuery.ajax({
+                    type: 'get',
+                    url: '/customer/searchCompany',
+                    data: {
+                    	searchWord:this.searchWord,
+                    	customerId:this.customerId,
+                    },
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        if (thisVue.name == '') {
+                            thisVue.$set(thisVue, 'scustomerList', '');
+                        } else {
+                            thisVue.$set(thisVue, 'scustomerList', result.scustomerList);
+                        }
+                    }
+                });
+
+            },
             /*
             searchDone:function (searchItem) {
                 this.clear();
@@ -224,12 +248,21 @@ jQuery(document).ready(function () {
                 this.hideSearchResult();
                 console.log(searchItem);
             }*/
+        },
+        watch: {
+            'searchWord': function () {
+                var thisVue = this;
+                this.searchCompany();
+                if (thisVue.name == '') {
+                    thisVue.$set(thisVue, 'companyList', '');
+                }
+            }
         }
     });
 
     Vue.component('customer', {
-        template: '#customer',
-        props: ['customer'],
+        template: '#customer3',
+        props: ['customer2'],
         data: function () {
             return {
                 showSub: false,

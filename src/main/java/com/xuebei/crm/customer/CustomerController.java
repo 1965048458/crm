@@ -292,10 +292,10 @@ public class CustomerController {
                                 @RequestParam(value = "contactsTypeId", required = false) String contactsTypeId,
                                 Contacts contacts,
                                 HttpServletRequest request) {
-        final String TOP_DEPT_CONTACTS_TYPE_NOT_NULL_ERROR_MSG = "顶级机构中联系人不允许有职位";
+        //final String TOP_DEPT_CONTACTS_TYPE_NOT_NULL_ERROR_MSG = "顶级机构中联系人不允许有职位";
         final String SUB_DEPT_CONTACTS_NULL_ERROR_MSG = "机构中联系人需要有职位信息";
         final String REAL_NAME_BLANK_ERROR_MSG = "联系人姓名不能为空";
-        final String TEL_AND_PHONE_BLANK_ERROR_MSG ="联系人手机号和座机号不能同时为空";
+        //final String TEL_AND_PHONE_BLANK_ERROR_MSG ="联系人手机号和座机号不能同时为空";
         final String TEL_NOT_ELEVEN_ERROR_MSG ="请填写正确的11位手机号码";
         // 权限检查
         Department dept = customerMapper.queryDepartmentById(deptId);
@@ -431,6 +431,72 @@ public class CustomerController {
         gsonView.addStaticAttribute("myCustomers", myCustomers);
         gsonView.addStaticAttribute("customerList", customerList);
         return gsonView;
+    }
+    
+    @RequestMapping("/searchCompany")
+    public GsonView searchCustomerInfo(@RequestParam("searchWord") String keyword,@RequestParam("customerId") String customerId, HttpServletRequest request)
+    {
+    	GsonView gsonView = new GsonView();
+    	String userId = (String) request.getSession().getAttribute("userId");
+        List<Department> departmentList = deptService.departmentList(customerId,userId);
+        recursionCompany(departmentList,keyword);
+        gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("scustomerList", departmentList);
+    	return gsonView;
+    }
+    
+    @SuppressWarnings("unused")
+	private boolean recursionCompany(List<Department> departmentList,String keyword)
+    {
+    	boolean tagFlag=false;
+    	List<Department> listInt=new ArrayList<Department>();
+    	for(Department department:departmentList)
+    	{
+    		boolean tagcFlag=false;
+    		if (department.getDeptName().indexOf(keyword)>-1) {
+    			tagcFlag=true;
+			}
+    		else
+    		{
+				if (department.getDepartmentList() != null && department.getDepartmentList().size() != 0) {
+					if (recursionCompany(department.getDepartmentList(), keyword)) {
+						tagcFlag = true;
+					}
+				}
+				if (department.getContactsList() != null && department.getContactsList().size() != 0) {
+					List<Contacts> listContacts=new ArrayList<Contacts>();
+					for (Contacts contacts : department.getContactsList()) {
+						if (contacts.getRealName().indexOf(keyword) > -1) {
+							tagcFlag = true;
+						}
+						else if (contacts.getContactsType()!=null&&contacts.getContactsType().getTypeName()!=null) {
+							if (contacts.getContactsType().getTypeName().indexOf(keyword)>-1) {
+								tagcFlag=true;
+							}
+						}
+						else {
+							listContacts.add(contacts);
+						}
+					}
+					for(Contacts c:listContacts)
+					{
+						department.getContactsList().remove(c);
+					}
+				}
+    		}
+    		if (tagcFlag) {
+				tagFlag=true;
+			}
+    		else
+    		{
+    			listInt.add(department);
+    		}
+    	}
+    	for(Department k:listInt)
+    	{
+    		departmentList.remove(k);
+    	}
+    	return tagFlag;
     }
 
     @RequestMapping("/getMyCustomers")

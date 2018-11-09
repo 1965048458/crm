@@ -16,7 +16,11 @@ jQuery(document).ready(function () {
             show: 'myCompany',
             title: '',
             type: '',
+            tag1:'',
+            tag2:'',
+            tag3:'',
             myCompany: '',
+            myACompany:'',
             name: '杭州浙大旭日科技开发有限公司',
             companyList: [],
             applyStaffList: [],
@@ -35,6 +39,9 @@ jQuery(document).ready(function () {
                 }).done(function (result) {
                     if (result.successFlg) {
                         thisVue.$set(thisVue, 'myCompany', result.myCompany);
+                        thisVue.$set(thisVue, 'tag1', result.tag1);
+                        thisVue.$set(thisVue, 'tag2', result.tag2);
+                        thisVue.$set(thisVue, 'tag3', result.tag3);
                         thisVue.show = 'myCompany';
                     }
 
@@ -206,6 +213,37 @@ jQuery(document).ready(function () {
                 if (thisVue.name == '') {
                     thisVue.$set(thisVue, 'companyList', '');
                 }
+            }
+        }
+    });
+    Vue.component('company', {
+        template: '#company3',
+        props: ['company'],
+        data: function () {
+            return {
+                showSub: false,
+                imgPath:"/images/customer/fold.svg",
+
+            };
+        },
+        methods: {
+
+            'changeSubFold' : function () {
+                 this.showSub = !this.showSub;
+                 this.setImgPath();
+            },
+            'setImgPath':function () {
+                if(this.showSub == false){
+                    this.imgPath = "/images/customer/fold.svg";
+                }else {
+                    this.imgPath = "/images/customer/unfold.svg";
+                }
+            },
+            'staffAudit': function (id) {
+                window.location.href = "/staffAudit?companyId="+id;
+            },
+            'toMessage':function (id) {
+                window.location="message/showApplyList?companyId="+id;
             }
         }
     });

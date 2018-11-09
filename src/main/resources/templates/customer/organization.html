@@ -95,7 +95,7 @@
                         <div class="weui-search-bar__box">
                             <i class="weui-icon-search"></i>
                             <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索"
-                                   @keyup.enter="search" v-model="searchWord" required="">
+                                    v-model="searchWord" required="">
                             <a href="javascript:" class="weui-icon-clear" id="searchClear" @click="clear"></a>
                         </div>
                         <label class="weui-search-bar__label" id="searchText" @click="text"
@@ -108,7 +108,7 @@
                 </div>
 
                 <div class="weui-cells searchbar-result" id="searchResult" style="display: none">
-                    <div class="weui-cells weui-cells_radio">
+                   <!--  <div class="weui-cells weui-cells_radio">
                         <label class="weui-cell weui-check__label" v-for="searchItem in searchList.filter(filterList)">
                             <div class="weui-cell__bd">
                                 <p v-text="searchItem"></p>
@@ -117,14 +117,15 @@
                                 <input type="radio" class="weui-check" :value="searchItem" v-model="searchWord">
                             </div>
                         </label>
-                    </div>
+                    </div> -->
+                    <customer v-for="customer in scustomerList" :customer2="customer"></customer>
                 </div>
             </div>
             <div style="padding-top: 130px" >
                 <div v-show="showOrganization">
                     <div class="customer-item">
                         <div v-if="customerList.length != 0">
-                            <customer v-for="customer in customerList" :customer="customer"></customer>
+                            <customer v-for="customer in customerList" :customer2="customer"></customer>
                         </div>
                         <div v-else>
                             <div style=" text-align: center; background-color: #F8F8F8; padding: 40px 0px;">
@@ -301,34 +302,34 @@
 
 </body>
 
-<template id="customer">
+<template id="customer3">
     <div class="weui-cells">
         <div class="weui-cell">
-            <div class="weui-cell__bd"  :id="customer.deptName" >
-                <span class="pull-left" @click="changeSubFold(customer.enclosureStatus)" style="padding-right: 10px;">
+            <div class="weui-cell__bd"  :id="customer2.deptName" >
+                <span class="pull-left" @click="changeSubFold(customer2.enclosureStatus)" style="padding-right: 10px;">
                     <img :src="imgPath">
                 </span>
-                <span class="pull-left" @click="changeSubFold(customer.enclosureStatus)" v-text="customer.deptName"
+                <span class="pull-left" @click="changeSubFold(customer2.enclosureStatus)" v-text="customer2.deptName"
                       style="padding-right: 5px;color: #333333;font-size: 16px" ></span>
-                <span class="pull-left" v-text="addNumBrackets(customer.contactNumber,customer.enclosureStatus)"
+                <span class="pull-left" v-text="addNumBrackets(customer2.contactNumber,customer2.enclosureStatus)"
                       style="color: #333333;font-size: 16px" ></span>
-                <span class="pull-left" v-text="addMineBrackets(customer.enclosureStatus,customer.applyName)"
+                <span class="pull-left" v-text="addMineBrackets(customer2.enclosureStatus,customer2.applyName)"
                       style="padding-left:5px;color:#38A4F2;font-size:14px;"></span>
-                <span class="pull-left" v-text="addApplyingBrackets(customer.enclosureStatus,customer.applyName)"
+                <span class="pull-left" v-text="addApplyingBrackets(customer2.enclosureStatus,customer2.applyName)"
                       style="padding-left:5px;color:#38A4F2;font-size:14px;"></span>
-                <span class="pull-left" v-text="addEnclosureBrackets(customer.enclosureStatus)"
+                <span class="pull-left" v-text="addEnclosureBrackets(customer2.enclosureStatus)"
                       style="padding-left:5px;color:#999999;font-size:14px;"></span>
-                <span class="pull-left" v-text="addNormalBrackets(customer.enclosureStatus)"
+                <span class="pull-left" v-text="addNormalBrackets(customer2.enclosureStatus)"
                       style="padding-left:5px;color:#38A4F2;font-size:14px;"
-                      @click="apply(customer.deptName, customer.deptId)"></span>
-                <span class="pull-left" v-text="addOpenSeaWarning(customer.openSeaWarning)"
+                      @click="apply(customer2.deptName, customer2.deptId)"></span>
+                <span class="pull-left" v-text="addOpenSeaWarning(customer2.openSeaWarning)"
                       style="color: #FF0000;padding-left: 5px;font-size: 13px"
-                      @click="openSeaWarning(customer.openSeaWarning)"></span>
+                      @click="openSeaWarning(customer2.openSeaWarning)"></span>
             </div>
 
         </div>
-        <div class="weui-cells" v-show="showSub" v-if="customer.enclosureStatus!='ENCLOSURE'">
-            <div class="weui-cell" v-for="contact in customer.contactsList" :id="contact.realName"
+        <div class="weui-cells" v-show="showSub" v-if="customer2.enclosureStatus!='ENCLOSURE'">
+            <div class="weui-cell" v-for="contact in customer2.contactsList" :id="contact.realName"
                  @click="toContactDetail(contact.contactsId)">
                 <div class="weui-cell__hd" >
                     <img :src="checkGender(contact.gender)" style="width: 18px;height: 19px" class="usr-img">
@@ -340,7 +341,7 @@
                 </div>
             </div>
             <div class="weui-cells" style="padding-left: 30px">
-                <customer v-for="subCustomer in customer.departmentList" :customer="subCustomer"></customer>
+                <customer v-for="subCustomer in customer2.departmentList" :customer2="subCustomer"></customer>
             </div>
         </div>
     </div>
