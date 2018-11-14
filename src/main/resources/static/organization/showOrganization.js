@@ -12,7 +12,6 @@ jQuery(document).ready(function () {
             showPage:'showCustomerOrganization',
             showOrganization: false,
             showApplyDialog: false,
-            showXiala:false,
             customerList: '',
             scustomerList: '',
             departmentList:'',
@@ -195,7 +194,6 @@ jQuery(document).ready(function () {
                 $('#searchText').focus();
                 $('#searchResult').show();
                 this.showOrganization = false;
-                this.showXiala=true;
             },
             filterList:function (searchItem) {
                 return searchItem.indexOf(this.searchWord) != -1;
@@ -217,7 +215,6 @@ jQuery(document).ready(function () {
             cancel:function () {
                 this.cancelSearch();
                 this.showOrganization = true;
-                this.showXiala=false;
                 $('#searchInput').blur();
             },
             
@@ -262,10 +259,122 @@ jQuery(document).ready(function () {
             }
         }
     });
+    Vue.component('customerB', {
+        template: '#customerB3',
+        props: ['customerB2'],
+        data: function () {
+            return {
+                showSub: true,
+                showCustomerOrganization:true,
+                showOrganization: false,
+                showApplyDialog: false,
+                showApply: false,
+                imgPath:"/images/customer/unfold.svg",
 
+            };
+        },
+        methods: {
+
+            'changeSubFold' : function (status) {
+                if(status == 'MINE'|| (status == '' || status == undefined)){
+
+                    this.showSub=!this.showSub;
+                    this.setImgPath();
+                } else {
+                    this.showSub = false;
+                    this.setImgPath();
+                }
+
+            },
+            'setImgPath':function () {
+                if(this.showSub == false){
+                    this.imgPath = "/images/customer/fold.svg";
+                }else {
+                    this.imgPath = "/images/customer/unfold.svg";
+                }
+            },
+            'checkGender':function(gender){
+                if(gender == 'FEMALE'){
+                    return "/images/customer/FEMALE.svg";
+                }else{
+                    return "/images/customer/MALE.svg";
+                }
+            },
+            'addNumBrackets':function (number,status) {
+                if(status == 'ENCLOSURE' || number == '0'){
+                    return '';
+                }else{
+                    return "( "+number+" )";
+                }
+            },
+            'addMineBrackets':function (status,applyName) {
+                if (status == 'MINE' ){
+                    if(applyName == '' || applyName == undefined){
+                        return "[ 我的 ]"
+                    }else {
+                        return "[ "+ applyName + "]"
+                    }
+
+                }
+            },
+            'addEnclosureBrackets':function (status) {
+                if(status == 'ENCLOSURE'){
+                    return "[ 别人正在申请 ]"
+                }
+            },
+            'addNormalBrackets':function (status) {
+                if(status == 'NORMAL'){
+                    return "[ 未圈 ]"
+                }
+            },
+            'addApplyingBrackets':function (status,applyName) {
+                if(status == 'APPLYING'){
+                    if(applyName == '' || applyName == undefined){
+                        return "[ 待审核 ]";
+                    }else {
+                        return "["+applyName+"] [ 待审核 ]";
+                    }
+
+                }
+            },
+            'addOpenSeaWarning':function (warning) {
+                if(warning != null){
+                    if(warning.isDelayApplied == true){
+                        return "!!已申请延期";
+                    }else {
+                        return "!!即将进入公海";
+                    }
+                }
+                else {
+                    return '';
+                }
+            },
+            'apply':function (name,id) {
+                organizationVue.apply(name,id);
+                console.log(name,id);
+            },
+            'openSeaWarning':function (warning) {
+                console.log("component.warning")
+                organizationVue.openSeaWarningDetail(warning);
+                
+            },
+            'toContactDetail':function (contactsId) {
+                window.location = '/customer/contactsInfo?contactsId='+contactsId;
+            },
+            'addTypeName':function (contact) {
+                if(contact.typeName == undefined || contact.typeName==''){
+                    $("#type_name_label_"+contact.contactsId).css("border","hidden");
+                    return '';
+                }else {
+                    return contact.typeName;
+                }
+                
+            }
+        }
+    });
     Vue.component('customer', {
         template: '#customer3',
-        props: ['customer2','showxiala'],
+        props: ['customer2'],
         data: function () {
             return {
                 showSub: false,
@@ -281,15 +390,8 @@ jQuery(document).ready(function () {
 
             'changeSubFold' : function (status) {
                 if(status == 'MINE'|| (status == '' || status == undefined)){
-                    if(this.showSub||this.showxiala)
-                    {
-                    	this.showSub=false;
-                        this.showxiala=false;
-                    }
-                    else
-                    {
-                    	this.showSub=true;
-                    }
+
+                   this.showSub= !this.showSub;
                     
                     this.setImgPath();
                 } else {
@@ -384,7 +486,6 @@ jQuery(document).ready(function () {
             }
         }
     });
-
     var customerId = $("#customerId").val();
     var customerName = $("#customerName").val();
     organizationVue.init(customerId,customerName);

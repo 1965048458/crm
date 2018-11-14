@@ -164,14 +164,14 @@ public class JournalController {
         gsonView.addStaticAttribute("colleagues", colleagues);
         gsonView.addStaticAttribute("customer", customerList);
         gsonView.addStaticAttribute("opportunities", opportunitySet);
-         for(JournalCustomer j:customerList)
+/*         for(JournalCustomer j:customerList)
          {
         	 System.out.println(j.getName());
         	 for(Contacts c:j.getContactsGroup())
         	 {
         		 System.out.println(c.getDepartmentName()+"--"+c.getRealName());
         	 }
-         }
+         }*/
         return gsonView;
     }
 

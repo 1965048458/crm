@@ -68,7 +68,7 @@ jQuery(document).ready(function () {
                //jQuery('#draftDiv').show();
            },
            'modifBack2': function () {
-        	   thisVue.showPage = 'selectOpportunity';
+        	   this.showPage = 'selectOpportunity';
            },
            'showDatePicker': function () {
                var thisVue = this;
