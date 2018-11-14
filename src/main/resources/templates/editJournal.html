@@ -157,14 +157,17 @@
             <div v-for="(customer, index) in customers" :key="'customers_' + index">
                 <div class="weui-cell" @click="changeContactsFold(index)">
                     <div class="weui-cell__bd">
-                       <!--  <label v-text="customer.name"></label> -->
+                        <label v-text="customer.name"></label>
                     </div>
                     <div >
                         <img :src="setImgPath(index)" id="customer.name+'_img'"/>
                     </div>
                 </div>
                 <div v-show="!customer.contactsFold" class="weui-cells_checkbox" style="padding-left: 10px">
-                    <label v-for="(contacts, index_2) in customer.contactsGroup"
+                      <div>
+                            <customer v-on:transfer_value="onTransferValue" v-for="cc in customer.depts"  v-bind:customer2="cc"></customer>
+                        </div>
+<!--                     <label v-for="(contacts, index_2) in customer.depts"
                            class="weui-cell weui-check__label">
                         <div class="weui-cell__bd">
                             <p v-text="contacts.realName"></p>
@@ -175,7 +178,7 @@
                                    :value="contacts"/>
                             <i class="weui-icon-checked"></i>
                         </div>
-                    </label>
+                    </label> -->
                 </div>
             </div>
         </div>
@@ -425,9 +428,8 @@
             </div>
 
         </div>
-        <div class="weui-cells" v-show="showxiala||showSub" v-if="customer2.enclosureStatus!='ENCLOSURE'">
-            <div class="weui-cell" v-for="contact in customer2.contactsList" :id="contact.realName"
-                 @click="toContactDetail(contact.contactsId)">
+        <div class="weui-cells" v-show="showSub" v-if="customer2.enclosureStatus!='ENCLOSURE'">
+            <div class="weui-cell" v-for="contact in customer2.contactsList" :id="contact.realName">
                 <div class="weui-cell__hd" >
                     <img :src="checkGender(contact.gender)" style="width: 18px;height: 19px" class="usr-img">
                 </div>        <!-- 男女头像标记 -->
@@ -436,9 +438,12 @@
                     <span v-text="addTypeName(contact)" :id="'type_name_label_'+contact.contactsId"
                         style="color: #B2B2B2;font-size: 13px;border:solid thin"></span>  <!-- 职位 -->
                 </div>
+                <div class="weui-cell__ft">
+                            <input type="checkbox" v-model="chosenContactsTmp":value="contact"/>
+                 </div>
             </div>
             <div class="weui-cells" style="padding-left: 30px">
-                <customer v-for="subCustomer in customer2.departmentList" :customer2="subCustomer" showxiala="showxiala"></customer>
+                <customer v-on:transfer_value="onTransferValue"_value v-for="subCustomer in customer2.departmentList" :customer2="subCustomer"></customer>
             </div>
         </div>
     </div>

@@ -364,7 +364,7 @@ jQuery(document).ready(function () {
                this.showPage = 'journalPage';
            },
            'onTransferValue': function (contactsInfo) {
-               this.chosenContactsTmp=this.chosenContactsTmp.concat(contactsInfo);
+               this.chosenContactsTmp=contactsInfo;
            },
            'start':function(){
         	   if (journalId === '0') {
@@ -432,7 +432,7 @@ jQuery(document).ready(function () {
            }
        },
        components:{
-           'customer':{
+/*           'customer':{
                template:'#customer',
                props:['customer','index'],
                data:function () {
@@ -461,9 +461,134 @@ jQuery(document).ready(function () {
                        this.$emit('transfer_value', this.chosenContactsTmp);
                    }
                }
+           },*/
+           'customer':{
+               template: '#customer3',
+               props: ['customer2'],
+               data: function () {
+                   return {
+                       showSub: false,
+                       chosenContactsTmp:[],
+                       showCustomerOrganization:true,
+                       showOrganization: false,
+                       showApplyDialog: false,
+                       showApply: false,
+                       imgPath:"/images/customer/fold.svg",
+
+                   };
+               },
+               methods: {
+
+                   'changeSubFold' : function (status) {
+                       if(status == 'MINE'|| (status == '' || status == undefined)){
+
+                          this.showSub= !this.showSub;
+                           
+                           this.setImgPath();
+                       } else {
+                           this.showSub = false;
+                           this.setImgPath();
+                       }
+
+                   },
+                   'onTransferValue': function (contactsInfo) {
+                       this.chosenContactsTmp=contactsInfo;
+                   },
+                   'setImgPath':function () {
+                       if(this.showSub == false){
+                           this.imgPath = "/images/customer/fold.svg";
+                       }else {
+                           this.imgPath = "/images/customer/unfold.svg";
+                       }
+                   },
+                   'checkGender':function(gender){
+                       if(gender == 'FEMALE'){
+                           return "/images/customer/FEMALE.svg";
+                       }else{
+                           return "/images/customer/MALE.svg";
+                       }
+                   },
+                   'addNumBrackets':function (number,status) {
+                       if(status == 'ENCLOSURE' || number == '0'){
+                           return '';
+                       }else{
+                           return "( "+number+" )";
+                       }
+                   },
+                   'addMineBrackets':function (status,applyName) {
+                       if (status == 'MINE' ){
+                           if(applyName == '' || applyName == undefined){
+                               return "[ 我的 ]"
+                           }else {
+                               return "[ "+ applyName + "]"
+                           }
+
+                       }
+                   },
+                   'addEnclosureBrackets':function (status) {
+                       if(status == 'ENCLOSURE'){
+                           return "[ 别人正在申请 ]"
+                       }
+                   },
+                   'addNormalBrackets':function (status) {
+                       if(status == 'NORMAL'){
+                           return "[ 未圈 ]"
+                       }
+                   },
+                   'addApplyingBrackets':function (status,applyName) {
+                       if(status == 'APPLYING'){
+                           if(applyName == '' || applyName == undefined){
+                               return "[ 待审核 ]";
+                           }else {
+                               return "["+applyName+"] [ 待审核 ]";
+                           }
+
+                       }
+                   },
+                   'addOpenSeaWarning':function (warning) {
+                       if(warning != null){
+                           if(warning.isDelayApplied == true){
+                               return "!!已申请延期";
+                           }else {
+                               return "!!即将进入公海";
+                           }
+                       }
+                       else {
+                           return '';
+                       }
+                   },
+                   'apply':function (name,id) {
+                       organizationVue.apply(name,id);
+                       console.log(name,id);
+                   },
+                   'openSeaWarning':function (warning) {
+                       console.log("component.warning")
+                       organizationVue.openSeaWarningDetail(warning);
+                       
+                   },
+                   'toContactDetail':function (contactsId) {
+                       window.location = '/customer/contactsInfo?contactsId='+contactsId;
+                   },
+                   'addTypeName':function (contact) {
+                       if(contact.typeName == undefined || contact.typeName==''){
+                           $("#type_name_label_"+contact.contactsId).css("border","hidden");
+                           return '';
+                       }else {
+                           return contact.typeName;
+                       }
+                       
+                   }
+               },
+               watch: {
+                   'chosenContactsTmp': function () {
+
+                       this.$emit('transfer_value', this.chosenContactsTmp);
+                   }
+               }
            }
        }
    });
+
    editJournalVue.start();
     window.onbeforeunload = function() {
         editJournalVue.saveDraft();

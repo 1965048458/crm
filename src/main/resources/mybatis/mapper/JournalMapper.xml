@@ -17,7 +17,22 @@
             <result column="real_nm" property="realName"/>
         </association>
     </resultMap>
-
+    <resultMap id="deptMap" type="com.xuebei.crm.customer.Department">
+        <id property="deptId" column="customer_dept_id"/>
+        <result property="deptName" column="department_nm"/>
+        <result property="statusCd" column="status_cd"/>
+        <result property="applyByOthers" column="ap_by_others"/>
+        <association property="enclosureApply" javaType="com.xuebei.crm.customer.EnclosureApply">
+            <id property="enclosureApplyId" column="enclosure_apply_id"/>
+            <result property="userId" column="user_id"/>
+            <result property="startTime" column="apply_start_ts"/>
+            <result property="endTime" column="apply_end_ts"/>
+            <result property="statusCd" column="status_cd"/>
+            <result property="updateTime" column="update_ts"/>
+            <result property="enclosureByOthers" column="en_by_others"/>
+            <result property="applyByOthers" column="ap_by_others"/>
+        </association>
+    </resultMap>
     <resultMap id="visitMap" type="com.xuebei.crm.journal.VisitRecord">
         <id property="visitId" column="visit_log_id"/>
         <result property="visitType" column="visit_type"/>
@@ -281,8 +296,7 @@
         SELECT * FROM contacts_view
 		WHERE customer_dept_id=#{deptId};
     </select>
-
-    <!--  <select id="searchDepts" resultMap="deptMap">
+     <select id="searchDepts" resultMap="deptMap">
         select r2.* from
             (select r.* from
                 (select d.prt_id,d.department_nm,d.customer_id,a.*,
@@ -303,7 +317,7 @@
                  order by a.update_ts desc) as r
             group by r.customer_dept_id) as r2
          where r2.en_by_others=0;
-    </select> -->
+    </select>
     <select id="queryJournalPatch" resultMap="journalPatchMap">
         SELECT *
 		FROM journal_patch

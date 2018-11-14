@@ -1,6 +1,7 @@
 package com.xuebei.crm.journal;
 
 import com.xuebei.crm.company.CompanyMapper;
+import com.xuebei.crm.customer.BigCustomer;
 import com.xuebei.crm.customer.Contacts;
 import com.xuebei.crm.customer.CustomerMapper;
 import com.xuebei.crm.customer.Department;
@@ -59,7 +60,7 @@ public class JournalController {
         } catch (AuthenticationException e) {
             return GsonView.createErrorView(e.getMessage());
         }
-
+     
         try {
             if (journal.getJournalId() != null) {
                 // 更新日志内容
@@ -76,7 +77,7 @@ public class JournalController {
             }
         } catch (InformationNotCompleteException | AuthenticationException e) {
             GsonView failedView = new GsonView();
-            failedView.addStaticAttribute("successFlg", false);
+            failedView.addStaticAttribute("successFlg", true);
             failedView.addStaticAttribute("errMsg", e.getMessage());
             return failedView;
         }
@@ -147,14 +148,14 @@ public class JournalController {
 
     @RequestMapping("/action/getColleagueList")
     public GsonView getColleagueList(HttpServletRequest request) {
-        List<JournalCustomer> customerList;
+        List<BigCustomer> customerList;
         List<User> colleagues;
         Set<Opportunity> opportunitySet;
         String userId = (String)request.getSession().getAttribute("userId");
         try {
             colleagues = journalMapper.queryColleagues(acquireUserId(request));
             String companyId = companyMapper.queryCompanyIdByUserId(acquireUserId(request));
-            customerList = journalService.getAllContacts(companyId,userId);
+            customerList = journalService.getAllCustomers(companyId,userId);
             Set<String> userGroup = journalService.getAllSubordinatesUserId(acquireUserId(request));
             opportunitySet = journalService.getAllSubordinatesOpportunity(userGroup);
         } catch (AuthenticationException e) {

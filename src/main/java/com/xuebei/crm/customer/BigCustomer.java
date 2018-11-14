@@ -6,20 +6,34 @@ import com.google.gson.annotations.Expose;
 
 public class BigCustomer {
 
+	public BigCustomer(String name,List<Department> d)
+	{
+		this.name=name;
+		this.depts=d;
+	}
 	@Expose
-	private String realname;
+	private String name;
 	@Expose
-	private List<Customer> depts;
+	private List<Department> depts;
+    @Expose
+    private boolean contactsFold = true;
+    
+	public boolean isContactsFold() {
+		return contactsFold;
+	}
+	public void setContactsFold(boolean contactsFold) {
+		this.contactsFold = contactsFold;
+	}
 	public String getRealname() {
-		return realname;
+		return name;
 	}
 	public void setRealname(String realname) {
-		this.realname = realname;
+		this.name = realname;
 	}
-	public List<Customer> getDepts() {
+	public List<Department> getDepts() {
 		return depts;
 	}
-	public void setDepts(List<Customer> depts) {
+	public void setDepts(List<Department> depts) {
 		this.depts = depts;
 	}
 }

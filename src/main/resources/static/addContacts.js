@@ -145,6 +145,38 @@ jQuery(document).ready(function () {
                     return this.curContactsType.typeName;
                 }
             }
+        },
+        watch : {
+        	'phone':function(val) {
+  
+				var l=val.charAt(val.length-1);
+				if (val != "" && val != null&&isNaN(l)) {
+					val=val.substring(0,val.length-1);
+				}
+				else if(val.length===13)
+				{
+					val=val.substring(0,val.length-1);
+				}
+				else
+				{
+					if(val.startsWith("01")||val.startsWith("02")||val.startsWith("85"))
+					{
+						if(val.length===4 && l!='-')
+						{
+							val=val.substring(0,val.length-1)+"-"+l;
+						}
+					}
+					else
+					{
+						if(val.length===5 && l!='-')
+						{
+							val=val.substring(0,val.length-1)+"-"+l;
+						}
+					}
+				}
+				this.phone=val;
+
+               }
         }
     });
 

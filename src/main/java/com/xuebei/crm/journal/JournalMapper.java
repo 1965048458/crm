@@ -1,6 +1,7 @@
 package com.xuebei.crm.journal;
 
 import com.xuebei.crm.customer.Contacts;
+import com.xuebei.crm.customer.Department;
 import com.xuebei.crm.user.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -84,6 +85,10 @@ public interface JournalMapper {
 
     List<String> queryDeptId(@Param("userId") String userId,
                              @Param("customerId")String customerId);
+    
+    //客户组织机构列表中显示的机构
+    List<Department> searchDepts(@Param("customerId") String customerId,
+                                 @Param("userId") String userId);
 
 
 }

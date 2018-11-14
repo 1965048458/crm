@@ -1,5 +1,6 @@
 package com.xuebei.crm.journal;
 
+import com.xuebei.crm.customer.BigCustomer;
 import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
 import com.xuebei.crm.opportunity.Opportunity;
@@ -23,6 +24,8 @@ public interface JournalService {
     List  searchDatail(String journalId);
 
     List<JournalCustomer> getAllContacts(String companyId,String userId);
+    
+    List<BigCustomer> getAllCustomers(String companyId,String userId);
 
     Set<String> getAllSubordinatesUserId(String userId);
 
