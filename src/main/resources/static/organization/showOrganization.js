@@ -259,9 +259,9 @@ jQuery(document).ready(function () {
             }
         }
     });
-    Vue.component('customerB', {
+    Vue.component('bbb', {
         template: '#customerB3',
-        props: ['customerB2'],
+        props: ['bbb'],
         data: function () {
             return {
                 showSub: true,

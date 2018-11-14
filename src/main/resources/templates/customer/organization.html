@@ -118,7 +118,7 @@
                             </div>
                         </label>
                     </div> -->
-                    <customer v-for="customer in scustomerList" v-bind:customer2="customer"></customer>
+                    <bbb v-for="customerB in scustomerList" v-bind:bbb="customerB"></bbb>
                 </div>
             </div>
             <div style="padding-top: 130px" >
@@ -304,32 +304,31 @@
 <template id="customerB3">
     <div class="weui-cells">
         <div class="weui-cell">
-            <div class="weui-cell__bd"  :id="customerB2.deptName" >
-            <p>hello</p>
-                <span class="pull-left" @click="changeSubFold(customerB2.enclosureStatus)" style="padding-right: 10px;">
+            <div class="weui-cell__bd"  :id="bbb.deptName" >
+                <span class="pull-left" @click="changeSubFold(bbb.enclosureStatus)" style="padding-right: 10px;">
                     <img :src="imgPath">
                 </span>
-                <span class="pull-left" @click="changeSubFold(customerB2.enclosureStatus)" v-text="customerB2.deptName"
+                <span class="pull-left" @click="changeSubFold(bbb.enclosureStatus)" v-text="bbb.deptName"
                       style="padding-right: 5px;color: #333333;font-size: 16px" ></span>   <!-- 机构名字 -->
-                <span class="pull-left" v-text="addNumBrackets(customerB2.contactNumber,customerB2.enclosureStatus)"
+                <span class="pull-left" v-text="addNumBrackets(bbb.contactNumber,bbb.enclosureStatus)"
                       style="color: #333333;font-size: 16px" ></span>                     <!--  机构人员个数 -->
-                <span class="pull-left" v-text="addMineBrackets(customerB2.enclosureStatus,customerB2.applyName)"
+                <span class="pull-left" v-text="addMineBrackets(bbb.enclosureStatus,bbb.applyName)"
                       style="padding-left:5px;color:#38A4F2;font-size:14px;"></span>     <!-- 机构所属 是不是我的 -->
-                <span class="pull-left" v-text="addApplyingBrackets(customerB2.enclosureStatus,customerB2.applyName)"
+                <span class="pull-left" v-text="addApplyingBrackets(bbb.enclosureStatus,bbb.applyName)"
                       style="padding-left:5px;color:#38A4F2;font-size:14px;"></span>
-                <span class="pull-left" v-text="addEnclosureBrackets(customerB2.enclosureStatus)"
+                <span class="pull-left" v-text="addEnclosureBrackets(bbb.enclosureStatus)"
                       style="padding-left:5px;color:#999999;font-size:14px;"></span>
-                <span class="pull-left" v-text="addNormalBrackets(customerB2.enclosureStatus)"
+                <span class="pull-left" v-text="addNormalBrackets(bbb.enclosureStatus)"
                       style="padding-left:5px;color:#38A4F2;font-size:14px;"
-                      @click="apply(customerB2.deptName, customerB2.deptId)"></span>
-                <span class="pull-left" v-text="addOpenSeaWarning(customerB2.openSeaWarning)"
+                      @click="apply(bbb.deptName, bbb.deptId)"></span>
+                <span class="pull-left" v-text="addOpenSeaWarning(bbb.openSeaWarning)"
                       style="color: #FF0000;padding-left: 5px;font-size: 13px"
-                      @click="openSeaWarning(customerB2.openSeaWarning)"></span>
+                      @click="openSeaWarning(bbb.openSeaWarning)"></span>
             </div>
 
         </div>
-        <div class="weui-cells" v-show="showSub" v-if="customerB2.enclosureStatus!='ENCLOSURE'">
-            <div class="weui-cell" v-for="contact in customerB2.contactsList" :id="contact.realName"
+        <div class="weui-cells" v-show="showSub" v-if="bbb.enclosureStatus!='ENCLOSURE'">
+            <div class="weui-cell" v-for="contact in bbb.contactsList" :id="contact.realName"
                  @click="toContactDetail(contact.contactsId)">
                 <div class="weui-cell__hd" >
                     <img :src="checkGender(contact.gender)" style="width: 18px;height: 19px" class="usr-img">
@@ -341,7 +340,7 @@
                 </div>
             </div>
             <div class="weui-cells" style="padding-left: 30px">
-                <customerB v-for="subCustomer in customerB2.departmentList" :customerB2="subCustomer"></customerB>
+                <bbb v-for="subCustomer in bbb.departmentList" :bbb="subCustomer"></bbb>
             </div>
         </div>
     </div>
