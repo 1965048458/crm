@@ -40,7 +40,7 @@ public class DeptServiceImpl implements DeptService {
         setSubDeptAndContacts(departmentList);
         //按圈地状态分类dept
         EnumMap<EnclosureStatusEnum,List> deptMap = getDeptMap(departmentList);
-
+        setEnclosureStatus(departmentList);
         //下属人员
         List<Member> subMemberList = memberService.searchSubMemberList(userId);
         for(Member member:subMemberList){
@@ -69,6 +69,7 @@ public class DeptServiceImpl implements DeptService {
         rltList.addAll(deptMap.get(EnclosureStatusEnum.APPLYING));
         rltList.addAll(deptMap.get(EnclosureStatusEnum.ENCLOSURE));
         rltList.addAll(deptMap.get(EnclosureStatusEnum.NORMAL));
+
         return rltList;
 
     }

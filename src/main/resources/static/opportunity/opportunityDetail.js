@@ -20,6 +20,7 @@ $(document).ready(function () {
             opportunity: '',
             contact: '',
             currentOppoId: '',
+            tagflag:0,
 
             ind: ['A', 'B', 'C', 'D'],
             stages: ['拿到老师手机及微信号', '提交方案', '以我方提供参数挂标', '中标'],
@@ -37,6 +38,7 @@ $(document).ready(function () {
         },
         methods: {
             'showDetailResult': function () {
+            	console.log(123);
                 var thisVue = this;
                 $.ajax({
                     type: 'get',
@@ -203,6 +205,11 @@ $(document).ready(function () {
                 this.saleStage = this.selStage;
                 this.show = 'modif';
             },
+            getParams:function(){
+            	
+            	console.log(id);
+            	
+              }
 
         },
         watch: {
@@ -210,9 +217,10 @@ $(document).ready(function () {
                 $("#" + this.filterValue).css('background-color', '#FFFFFF');
                 $("#" + this.filterCondition).css('background-color', 'gainsboro');
                 this.filterValue = this.filterCondition;
-            },
+            }
         }
     });
     opportunityDetailVue.showDetailResult();
+    opportunityDetailVue.getParams();
 
 });

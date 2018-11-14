@@ -109,10 +109,10 @@
                         </div>
                     </a>
                 </div>
-                <div class="weui-cells weui-cells_form" v-if="tag2">
+                <div  v-if="tag2">
                             <div class="weui-cell" style="height: 10px">
                                 <div class="weui-cell__bd">
-                                    <label class="weui-label" style="float: left;color: grey;font-size:small ;width:120px">已加入</label>
+                                    <label class="weui-label" style="float: left;color: grey;font-size:large ;width:120px">已加入</label>
                                 </div>
                             </div>
                  </div>
@@ -137,13 +137,13 @@
                       </div>
                   </div>
                   </div>
-                                  <div class="weui-cells weui-cells_form" v-if="tag3">
+                        <div v-if="tag3">
                             <div class="weui-cell" style="height: 10px">
                                 <div class="weui-cell__bd">
-                                    <label class="weui-label" style="float: left;color: grey;font-size:small ;width:120px">待审核</label>
+                                    <label class="weui-label" style="float: left;color: grey;font-size:large ;width:120px">待审核</label>
                                 </div>
-                            </div>
-                 </div>
+                             </div>
+                        </div>
                   <div v-for="company in myCompany">
                  <div v-if="!company.isAdmin">
                     <div class="weui-media-box weui-media-box_small-appmsg" v-if="company.status==='PENDING'">
@@ -249,20 +249,20 @@
 <div class="weui-media-box weui-media-box_small-appmsg" v-if="company.isAdmin">
 
 	<div class="weui-cells" style="border-top: solid 2px gainsboro">
-		<span class="pull-left" @click="intoCompany(company.companyId)">
-			<span class="pull-left"></span><img src="/images/公司.svg" alt=""
-			style="width: 40px; margin-right: 5px; display: block">
-		</span> 
-		<span class="pull-left">
+		<a class="pull-left" href="javascript:;" @click="into22(company.companyId)">
+			<span class="pull-left"><img src="/images/公司.svg" alt=""
+			style="width: 40px; margin-right: 5px; display: block"></span>
+		<div class="weui-cell__bd weui-cell_primary">
 			<h4>{{company.companyName}}</h4>
 			<p>&nbsp;</p>
-		</span>
-		 <span class="pull-right" @click="changeSubFold()" style="padding-right: 10px;">
+		</div>
+		</a> 
+		 <span class="pull-right" @click="changeSubFold()">
                     <img :src="imgPath">
          </span>
 	</div>
 	<div v-show="showSub">
-		<div class="weui-cells">
+		<div class="weui-cells weui-cell_access">
 			<a class="weui-cell weui-cell_access" href="javascript:;"
 				@click="staffAudit(company.companyId)">
 				<div class="weui-cell__bd">

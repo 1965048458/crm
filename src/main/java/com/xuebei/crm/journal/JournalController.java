@@ -1,7 +1,9 @@
 package com.xuebei.crm.journal;
 
 import com.xuebei.crm.company.CompanyMapper;
+import com.xuebei.crm.customer.Contacts;
 import com.xuebei.crm.customer.CustomerMapper;
+import com.xuebei.crm.customer.Department;
 import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.exception.AuthenticationException;
 import com.xuebei.crm.exception.InformationNotCompleteException;
@@ -162,7 +164,14 @@ public class JournalController {
         gsonView.addStaticAttribute("colleagues", colleagues);
         gsonView.addStaticAttribute("customer", customerList);
         gsonView.addStaticAttribute("opportunities", opportunitySet);
-
+         for(JournalCustomer j:customerList)
+         {
+        	 System.out.println(j.getName());
+        	 for(Contacts c:j.getContactsGroup())
+        	 {
+        		 System.out.println(c.getDepartmentName()+"--"+c.getRealName());
+        	 }
+         }
         return gsonView;
     }
 
@@ -213,7 +222,14 @@ public class JournalController {
 
     @RequestMapping("/toList")
     public String toJournalList(HttpServletRequest request, ModelMap modelMap) {
+    	
         return "journalList";
+    }
+    
+    @RequestMapping("/tooppor")
+    public String toOppor(HttpServletRequest request, ModelMap modelMap) {
+    	modelMap.addAttribute("tagflag", 1);
+        return "opportunityDetail";
     }
 
     @RequestMapping("/list")

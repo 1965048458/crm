@@ -227,7 +227,25 @@ jQuery(document).ready(function () {
             };
         },
         methods: {
-
+        	'into22' : function(companyId)
+            {
+        		jQuery.ajax({
+                    type: 'post',
+                    url: '/chooseCompany',
+                    data: {
+                        companyId: companyId
+                    },
+                    dataType: 'json',
+                    cache: false,
+                    success: function (result) {
+                        if (result.successFlg) {
+                            window.location = '/journal/toList';
+                        } else {
+                            alert(result.errMsg);
+                        }
+                    }
+                });
+            },
             'changeSubFold' : function () {
                  this.showSub = !this.showSub;
                  this.setImgPath();
@@ -244,7 +262,7 @@ jQuery(document).ready(function () {
             },
             'toMessage':function (id) {
                 window.location="message/showApplyList?companyId="+id;
-            }
+            },
         }
     });
     mineVue.myCompany1();

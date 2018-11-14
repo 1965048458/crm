@@ -1,4 +1,9 @@
-
+function handleTime(time) {
+    if (time < 10)
+        return "0" + time;
+    else
+        return time;
+}
 var editTitleMap = {
     'DAILY': '填写日报',
     'WEEKLY': '填写周报',
@@ -14,11 +19,11 @@ var planLabels = {
     'WEEKLY': '下周总结',
     'MONTHLY': '下月总结'
 };
-
 jQuery(document).ready(function () {
 
     var journalId = jQuery('#journalId').val();
     var journalType = jQuery('#journalType').val();
+
 
    var editJournalVue = new Vue({
        el: "#editJournalVue",
@@ -29,12 +34,24 @@ jQuery(document).ready(function () {
            journalId: journalId,
            showPage: 'journalPage',
            summary: '',
+           content:'',
+           preDate:'',
+           lastStage:'',
+           selStage: '',
+           deliverDate:'',
+           saleStage:'',
            plan: '',
+           opportunityName:'',
+           contact:'',
+           amount:'',
            visits: [],
            curVisit: {},
            receivers: [],
            opportunityTmp: '',
            opportunities: [],
+           stages: ['拿到老师手机及微信号', '提交方案', '以我方提供参数挂标', '中标'],
+           ind: ['A', 'B', 'C', 'D'],
+           opportunity:'',
            receiversTmp: [],
            customers: [{name: '浙江大学', contactsFold: true, contactsGroup:[{realName: '李四'}, {realName: '李五'}, {realName: '李六'}]},
                {name: '浙江工商大学', contactsFold: true, contactsGroup:[{realName:'张三'}, {realName: '张斯'}, {realName: '张武'}]}],
@@ -49,6 +66,123 @@ jQuery(document).ready(function () {
            'backToList': function () {
                window.location = "/journal/toList";
                //jQuery('#draftDiv').show();
+           },
+           'modifBack2': function () {
+        	   thisVue.showPage = 'selectOpportunity';
+           },
+           'showDatePicker': function () {
+               var thisVue = this;
+               const nowDate = new Date();
+               weui.datePicker({
+                   start: 1990,
+                   end: 2030,
+                   defaultValue: [nowDate.getFullYear(), nowDate.getMonth() + 1, nowDate.getDate()],
+                   onChange: function (result) {
+
+                   },
+                   onConfirm: function (result) {
+                       thisVue.preDate = result[0] + '-' + handleTime(result[1]) + '-' + handleTime(result[2]);
+                   }
+               });
+           },
+           'detailSubmit': function () {
+        	   var thisVue = this;
+               var postData = {
+                   opportunityId: thisVue.opportunity.opportunityId,
+                   opportunityName: this.opportunityName,
+                   salesStatus: this.lastStage,
+                   amount: this.amount,
+                   checkDate: this.preDate,
+                   clinchDate: this.deliverDate,
+                   content: this.content,
+               };
+               $.ajax({
+                   type: 'post',
+                   url: '/opportunity/modification',
+                   data: JSON.stringify(postData),
+                   dataType: 'json',
+                   contentType: 'application/json',
+                   cache: false
+               }).done(function (result) {
+                   if (result.successFlg) {
+                       setTimeout(function () {
+                           //thisVue.showDetailResult();
+                           thisVue.start();
+                           thisVue.showPage = 'selectOpportunity';
+
+                       }, 1000);
+                   }
+               });
+
+
+           },
+           'deliverDatePicker':function (){
+        	   var thisVue = this;
+               const nowDate = new Date();
+               weui.datePicker({
+                   start: 1990,
+                   end: 2030,
+                   defaultValue: [nowDate.getFullYear(), nowDate.getMonth() + 1, nowDate.getDate()],
+                   onChange: function (result) {
+                   },
+                   onConfirm: function (result) {
+                       thisVue.deliverDate = result[0] + '-' + handleTime(result[1]) + '-' + handleTime(result[2]);
+                   }
+               });
+           },
+           'selSaleStage':function (){
+        	   this.showPage = 'saleStage';
+           },
+           'chooseBack': function () {
+               this.showPage = 'modif';
+           },
+           'done1': function () {
+               if (this.selStage === "") {
+                   alert("销售阶段不能为空！");
+                   return;
+               } else if (this.selStage === 'F') {
+                   this.saleStage = '输单';
+               } else {
+                   this.saleStage = this.selStage + '阶段';
+               }
+               this.lastStage = this.selStage;
+               this.showPage = 'modif';
+           },
+           'modif': function () {
+        	   this.showPage = 'modif';
+               this.preDate = this.opportunity.checkDateString;
+               this.deliverDate = this.opportunity.clinchDateString;
+               if (this.opportunity.salesStatus == 'F') {
+                   this.saleStage = '输单';
+               } else {
+                   this.saleStage = this.opportunity.salesStatus + '阶段';
+               }
+               this.content = this.opportunity.content;
+               this.opportunityName=this.opportunity.opportunityName;
+               this.amount=this.opportunity.amount;
+           },
+           'showDetailResult': function (index) {
+               var thisVue = this;
+               $.ajax({
+                   type: 'get',
+                   url: '/opportunity/opportunityDetail',
+                   data: {
+                       opportunityId: thisVue.opportunities[index].opportunityId,
+                   },
+                   dataType: 'json',
+                   cache: false
+               }).done(function (result) {
+                   if (result.successFlg) {
+                       thisVue.$set(thisVue, 'opportunity', result.opportunity);
+                       thisVue.$set(thisVue, 'lastStage', result.opportunity.salesStatus);
+                       if (result.contact != null) {
+                           thisVue.$set(thisVue, 'contact', result.contact);
+                       } else {
+                           thisVue.$set(thisVue, 'contact', '');
+                       }
+                       thisVue.modif();
+                   }
+               })
            },
            'cancelBackToList': function () {
                jQuery('#draftDiv').hide();
@@ -231,6 +365,53 @@ jQuery(document).ready(function () {
            },
            'onTransferValue': function (contactsInfo) {
                this.chosenContactsTmp=this.chosenContactsTmp.concat(contactsInfo);
+           },
+           'start':function(){
+        	   if (journalId === '0') {
+        	        jQuery.ajax({
+        	            type: 'get',
+        	            url: '/journal/action/getColleagueList',
+        	            dataType: 'json',
+        	            cache: false,
+        	            success: function(result) {
+        	                editJournalVue.$set(editJournalVue, 'colleagues', result.colleagues);
+        	                editJournalVue.$set(editJournalVue, 'customers', result.customer);
+        	                editJournalVue.$set(editJournalVue, 'opportunities', result.opportunities);
+        	            }
+        	        });
+        	    } else {
+        	        jQuery.ajax({
+        	            type: 'get',
+        	            url: '/journal/query?journalId='+journalId,
+        	            dataType: 'json',
+        	            cache: false,
+        	            success: function(result) {
+        	                editJournalVue.$set(editJournalVue, 'summary', result.journal.summary);
+        	                editJournalVue.$set(editJournalVue, 'plan', result.journal.plan);
+        	                editJournalVue.$set(editJournalVue, 'visits', result.journal.visitRecords);
+        	                editJournalVue.$set(editJournalVue, 'colleagues', result.colleagues);
+        	                editJournalVue.$set(editJournalVue, 'customers', result.customer);
+        	                editJournalVue.$set(editJournalVue, 'opportunities', result.opportunities);
+        	                console.log(editJournalVue.customers);
+        	                console.log(result.journal.receivers);
+        	                console.log(result.colleagues);
+        	                for (var revId in result.journal.receivers) {
+        	                    for (var colId in result.colleagues) {
+        	                        if (result.journal.receivers[revId].userId === result.colleagues[colId].userId) {
+        	                            editJournalVue.receivers.push(result.colleagues[colId]);
+        	                        }
+        	                    }
+        	                }
+        	                for (var visitId in editJournalVue.visits) {
+        	                    var visit = editJournalVue.visits[visitId];
+        	                    var chosenContacts = visit.chosenContacts;
+        	                    for (var ind in chosenContacts) {
+        	                        chosenContacts[ind] = editJournalVue.queryContacts(chosenContacts[ind].contactsId);
+        	                    }
+        	                }
+        	            }
+        	        });
+        	    }
            }
        },
        computed: {
@@ -283,53 +464,7 @@ jQuery(document).ready(function () {
            }
        }
    });
-
-    if (journalId === '0') {
-        jQuery.ajax({
-            type: 'get',
-            url: '/journal/action/getColleagueList',
-            dataType: 'json',
-            cache: false,
-            success: function(result) {
-                editJournalVue.$set(editJournalVue, 'colleagues', result.colleagues);
-                editJournalVue.$set(editJournalVue, 'customers', result.customer);
-                editJournalVue.$set(editJournalVue, 'opportunities', result.opportunities);
-            }
-        });
-    } else {
-        jQuery.ajax({
-            type: 'get',
-            url: '/journal/query?journalId='+journalId,
-            dataType: 'json',
-            cache: false,
-            success: function(result) {
-                editJournalVue.$set(editJournalVue, 'summary', result.journal.summary);
-                editJournalVue.$set(editJournalVue, 'plan', result.journal.plan);
-                editJournalVue.$set(editJournalVue, 'visits', result.journal.visitRecords);
-                editJournalVue.$set(editJournalVue, 'colleagues', result.colleagues);
-                editJournalVue.$set(editJournalVue, 'customers', result.customer);
-                editJournalVue.$set(editJournalVue, 'opportunities', result.opportunities);
-                console.log(editJournalVue.customers);
-                console.log(result.journal.receivers);
-                console.log(result.colleagues);
-                for (var revId in result.journal.receivers) {
-                    for (var colId in result.colleagues) {
-                        if (result.journal.receivers[revId].userId === result.colleagues[colId].userId) {
-                            editJournalVue.receivers.push(result.colleagues[colId]);
-                        }
-                    }
-                }
-                for (var visitId in editJournalVue.visits) {
-                    var visit = editJournalVue.visits[visitId];
-                    var chosenContacts = visit.chosenContacts;
-                    for (var ind in chosenContacts) {
-                        chosenContacts[ind] = editJournalVue.queryContacts(chosenContacts[ind].contactsId);
-                    }
-                }
-            }
-        });
-    }
-
+   editJournalVue.start();
     window.onbeforeunload = function() {
         editJournalVue.saveDraft();
     }

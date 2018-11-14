@@ -469,10 +469,8 @@ public class CustomerController {
 						if (contacts.getRealName().indexOf(keyword) > -1) {
 							tagcFlag = true;
 						}
-						else if (contacts.getContactsType()!=null&&contacts.getContactsType().getTypeName()!=null) {
-							if (contacts.getContactsType().getTypeName().indexOf(keyword)>-1) {
-								tagcFlag=true;
-							}
+						else if (contacts.getTypeName()!=null&&contacts.getTypeName().indexOf(keyword)>-1) {
+								tagcFlag=true;								
 						}
 						else {
 							listContacts.add(contacts);

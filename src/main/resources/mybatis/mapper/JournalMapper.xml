@@ -282,6 +282,28 @@
 		WHERE customer_dept_id=#{deptId};
     </select>
 
+    <!--  <select id="searchDepts" resultMap="deptMap">
+        select r2.* from
+            (select r.* from
+                (select d.prt_id,d.department_nm,d.customer_id,a.*,
+                     (select count(*) from enclosure_apply b
+                     where b.customer_dept_id = d.customer_dept_id
+                           and b.user_id  != #{userId}
+                           and b.status_cd = "PERMITTED"
+                           and b.apply_end_ts &gt; NOW() ) as en_by_others,
+                     (select count(*) from enclosure_apply b
+                     where b.customer_dept_id = d.customer_dept_id
+                           and b.user_id  != #{userId}
+                           and b.status_cd = "APPLYING"
+                           and b.apply_end_ts &gt; NOW()) as ap_by_others
+                 from customer_dept d
+                     inner join enclosure_apply a on d.customer_dept_id = a.customer_dept_id
+                 where d.customer_id= #{customerId}
+                       and a.user_id = #{userId}
+                 order by a.update_ts desc) as r
+            group by r.customer_dept_id) as r2
+         where r2.en_by_others=0;
+    </select> -->
     <select id="queryJournalPatch" resultMap="journalPatchMap">
         SELECT *
 		FROM journal_patch

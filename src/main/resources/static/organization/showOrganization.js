@@ -12,6 +12,7 @@ jQuery(document).ready(function () {
             showPage:'showCustomerOrganization',
             showOrganization: false,
             showApplyDialog: false,
+            showXiala:false,
             customerList: '',
             scustomerList: '',
             departmentList:'',
@@ -194,6 +195,7 @@ jQuery(document).ready(function () {
                 $('#searchText').focus();
                 $('#searchResult').show();
                 this.showOrganization = false;
+                this.showXiala=true;
             },
             filterList:function (searchItem) {
                 return searchItem.indexOf(this.searchWord) != -1;
@@ -215,6 +217,7 @@ jQuery(document).ready(function () {
             cancel:function () {
                 this.cancelSearch();
                 this.showOrganization = true;
+                this.showXiala=false;
                 $('#searchInput').blur();
             },
             
@@ -262,7 +265,7 @@ jQuery(document).ready(function () {
 
     Vue.component('customer', {
         template: '#customer3',
-        props: ['customer2'],
+        props: ['customer2','showxiala'],
         data: function () {
             return {
                 showSub: false,
@@ -278,7 +281,16 @@ jQuery(document).ready(function () {
 
             'changeSubFold' : function (status) {
                 if(status == 'MINE'|| (status == '' || status == undefined)){
-                    this.showSub = !this.showSub;
+                    if(this.showSub||this.showxiala)
+                    {
+                    	this.showSub=false;
+                        this.showxiala=false;
+                    }
+                    else
+                    {
+                    	this.showSub=true;
+                    }
+                    
                     this.setImgPath();
                 } else {
                     this.showSub = false;
