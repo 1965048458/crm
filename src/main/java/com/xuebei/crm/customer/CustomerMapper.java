@@ -48,6 +48,7 @@ public interface CustomerMapper {
     Contacts queryContactsById(@Param("contactsId") String contactsId);
 
     void insertContacts(Contacts contacts);
+    void updateContacts(Contacts contacts);
 
     List<Customer> queryCustomerInfo(@Param("searchWord") String searchWord, @Param("userId") String userId);
 
@@ -60,7 +61,7 @@ public interface CustomerMapper {
 
 
     List<Contacts> queryContacts(@Param("customerId") String customerId);
-
+    Contacts queryContact(@Param("contactsId") String contactsId);
     void updateEnclosureApply(@Param("deptId") String deptId,
                               @Param("userId") String userId);
 

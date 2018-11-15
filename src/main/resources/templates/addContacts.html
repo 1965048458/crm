@@ -38,12 +38,13 @@
 
     <input type="hidden" id="customerId" th:value="${customerId}"/>
     <input id="deptId" type="hidden" th:value="${deptId}">
+     <input type="hidden" id="contactsId" th:value="${contactsId}"/>
     <input id="isTopDept" type="hidden" th:value="${isTopDept}">
 
     <div v-show="showPage === 'addContactsPage'" id="addContactsPage">
         <div class="top-bar">
             <span class="pull-left" @Click="cancelAddContacts">取消</span>
-            <span>添加联系人</span>
+            <span>{{title}}</span>
             <span class="pull-right" @Click="confirmAddContacts">完成</span>
         </div>
 

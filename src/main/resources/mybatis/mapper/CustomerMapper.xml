@@ -268,7 +268,22 @@
                 #{contactsType.contactsTypeId}
             );
     </insert>
-
+    <update id="updateContacts" parameterType="com.xuebei.crm.customer.Contacts">
+      UPDATE `contacts`
+       SET  `customer_dept_id`=#{department.deptId},
+            `real_nm`=#{realName},
+            `gender`=#{gender},
+            `phone`=#{phone},
+            `wechat`=#{wechat},
+            `tel`=#{tel},
+            `QQ`=#{QQ},
+            `email`=#{email},
+            `office_address`=#{officeAddr},
+            `profile`=#{profile},
+            `special_relationship`=#{specialRelationship},
+            `contacts_type_id`=#{contactsType.contactsTypeId}
+        WHERE `contacts_id`= #{contactsId}
+    </update>
     <select id="queryContactsTypeById" resultMap="contactsTypeMap">
         SELECT *
         FROM contacts_type
@@ -281,7 +296,18 @@
             LEFT JOIN contacts c ON c.customer_dept_id = cd.customer_dept_id
         WHERE cd.customer_id = #{customerId}
     </select>
-
+    <select id="queryContact" resultMap="contactsMap">
+        SELECT
+            c.*,
+            ct.type_name,
+            cu.customer_nm,
+            cu.customer_id
+        FROM contacts c
+            LEFT JOIN customer_dept cd ON c.customer_dept_id = cd.customer_dept_id
+            LEFT JOIN contacts_type ct ON ct.contacts_type_id = c.contacts_type_id
+            LEFT JOIN crm_customer cu ON cd.customer_id = cu.customer_id
+        WHERE c.contacts_id = #{contactsId}
+    </select>
     <select id="queryContacts" resultMap="contactsMap">
         SELECT
             c.*,

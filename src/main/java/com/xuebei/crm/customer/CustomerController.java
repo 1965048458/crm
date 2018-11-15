@@ -290,7 +290,7 @@ public class CustomerController {
     @RequestMapping("/action/addContacts")
     public GsonView addContacts(@RequestParam("deptId") String deptId,
                                 @RequestParam(value = "contactsTypeId", required = false) String contactsTypeId,
-                                Contacts contacts,
+                                Contacts contacts,@RequestParam("title") String title,
                                 HttpServletRequest request) {
         //final String TOP_DEPT_CONTACTS_TYPE_NOT_NULL_ERROR_MSG = "顶级机构中联系人不允许有职位";
         final String SUB_DEPT_CONTACTS_NULL_ERROR_MSG = "机构中联系人需要有职位信息";
@@ -309,9 +309,10 @@ public class CustomerController {
 ////                return GsonView.createErrorView(TOP_DEPT_CONTACTS_TYPE_NOT_NULL_ERROR_MSG);
 ////            }
 //        } else {
-            if (contactsTypeId == null) {
+            if (contactsTypeId == null||contactsTypeId.equals("")) {
                 return GsonView.createErrorView(SUB_DEPT_CONTACTS_NULL_ERROR_MSG);
             }
+        	System.out.println(contactsTypeId);
             ContactsType type = customerMapper.queryContactsTypeById(contactsTypeId);
             if (type == null || !type.getCustomerId().equals(dept.getCustomer().getCustomerId())) {
                 return GsonView.createErrorView(AUTHENTICATION_ERROR_MSG + ", 机构类型错误");
@@ -335,10 +336,19 @@ public class CustomerController {
         ContactsType contactsType = new ContactsType();
         contactsType.setContactsTypeId(contactsTypeId);
 
-        contacts.setContactsId(UUIDGenerator.genUUID());
         contacts.setDepartment(dept);
         contacts.setContactsType(contactsType);
-        customerMapper.insertContacts(contacts);
+        if (title.equals("添加联系人")) {
+        	System.out.println("插入");
+        	contacts.setContactsId(UUIDGenerator.genUUID());
+        	customerMapper.insertContacts(contacts);
+		}
+        else
+        {
+        	System.out.println(contacts.getDepartment().getDeptId()+","+contacts.getContactsId());
+        	customerMapper.updateContacts(contacts);
+        	
+        }
 
         return GsonView.createSuccessView();
     }
@@ -511,6 +521,29 @@ public class CustomerController {
     public GsonView lastTime(@RequestParam("customerId") String customerId){
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("lastTime", customerService.lastFollowTs(customerId));
+        return gsonView;
+    }
+    
+    @RequestMapping("/editContactsPage")
+    public String editContactsPage(@RequestParam("contactsId") String contactsId,@RequestParam("deptId") String deptId,@RequestParam("customerId") String customerId,
+                               ModelMap modelMap){
+    	 modelMap.addAttribute("contactsId", contactsId);
+    	 modelMap.addAttribute("customerId", customerId);
+    	 modelMap.addAttribute("deptId", deptId);
+        return "addContacts";
+    }
+    @RequestMapping("/action/getContacts")
+    public GsonView getContacts(@RequestParam("contactsId") String contactsId){
+    	GsonView gsonView = new GsonView();
+    	try
+    	{
+    	   Contacts contacts=customerMapper.queryContactsById(contactsId);
+    	   gsonView.addStaticAttribute("successFlg", true);
+    	   gsonView.addStaticAttribute("contacts",contacts);
+    	}
+    	catch (Exception e) {
+    		gsonView.addStaticAttribute("successFlg", false);
+		}
         return gsonView;
     }
 

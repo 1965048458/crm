@@ -127,15 +127,16 @@
                 <span class="pull-right">
                     <a th:href="'/customer/addContactsPage?deptId=' + ${department.getDeptId()}">
                         <img src="/images/customer/addContacts.svg" class="add-contacts-image">
-                    </a>
+                    </a><!-- 加人 -->
                     <a th:href="'/customer/addSubDepartment?deptId=' + ${department.getDeptId()}">
                         <img src="/images/customer/addSubOrg.svg" class="add-contacts-image"/>
-                    </a>
+                    </a><!-- 加部门 -->
                 </span>
             </div>
         </div>
         <div class="weui-cells" th:id="'dept_' + ${department.getDeptId()}" style="display:none;">
-            <div class="weui-cell" th:each="contacts: ${department.getContactsList()}">
+            <div th:each="contacts: ${department.getContactsList()}">
+            <a class="weui-cell" th:href="'/customer/editContactsPage?contactsId=' + ${contacts.getContactsId()}+'&deptId='+${department.getDeptId()}+'&customerId='+${customerId}">
                 <div class="weui-cell__hd" >
                     <img th:if="${contacts.isMale()}" src="/images/customer/MALE.svg"
                          style="width: 18px;height: 19px" class="usr-img">
@@ -145,6 +146,8 @@
                 <div class="weui-cell__bd">
                     <span th:text="${contacts.getRealName()}" style="color: #333333;font-size: 16px" ></span>
                 </div>
+                
+               </a>
             </div>
             <div class="weui-cells" style="padding-left: 30px;">
                 <div class="weui-cells" th:each="subDepartment: ${department.getDepartmentList()}">
@@ -163,12 +166,13 @@
                                 <a th:href="'/customer/addContactsPage?deptId=' + ${subDepartment.getDeptId()}">
                                     <img src="/images/customer/addContacts.svg" class="add-contacts-image">
                                 </a>
-                            </span>
+                            </span><!-- 加人 -->
                         </div>
                     </div>
                     <div class="weui-cells" th:id="'dept_' + ${subDepartment.getDeptId()}" style="display: none;">
-                        <div class="weui-cell"  th:each="contacts: ${subDepartment.getContactsList()}">
-                            <div class="weui-cell__hd" >
+                        <div  th:each="contacts: ${subDepartment.getContactsList()}">
+                        <a class="weui-cell" th:href="'/customer/editContactsPage?contactsId=' + ${contacts.getContactsId()}+'&deptId='+${subDepartment.getDeptId()}+'&customerId='+${customerId}">
+                            <div class="weui-cell__hd">
                                 <img th:if="${contacts.isMale()}" src="/images/customer/MALE.svg"
                                      style="width: 18px;height: 19px" class="usr-img">
                                 <img th:if="${contacts.isMale()==false}" src="/images/customer/FEMALE.svg"
@@ -177,6 +181,7 @@
                             <div class="weui-cell__bd">
                                 <span th:text="${contacts.getRealName()}" style="color: #333333;font-size: 16px" ></span>
                             </div>
+                            </a>
                         </div>
                     </div>
                 </div>
