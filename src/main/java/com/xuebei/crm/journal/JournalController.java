@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -130,6 +132,7 @@ public class JournalController {
     public GsonView getJournalInfoById(@RequestParam("journalId") String journalId,
                                        HttpServletRequest request) throws AuthenticationException {
         GsonView gsonView = new GsonView();
+        System.out.println("this");
         String userId = (String)request.getSession().getAttribute("userId");
         Journal journal = journalService.queryJournalById(acquireUserId(request), journalId);
         List<User> colleagues = journalMapper.queryColleagues(acquireUserId(request));
@@ -165,17 +168,90 @@ public class JournalController {
         gsonView.addStaticAttribute("colleagues", colleagues);
         gsonView.addStaticAttribute("customer", customerList);
         gsonView.addStaticAttribute("opportunities", opportunitySet);
-/*         for(JournalCustomer j:customerList)
-         {
-        	 System.out.println(j.getName());
-        	 for(Contacts c:j.getContactsGroup())
-        	 {
-        		 System.out.println(c.getDepartmentName()+"--"+c.getRealName());
-        	 }
-         }*/
         return gsonView;
     }
-
+    
+    @RequestMapping("/searchCompany")
+    public GsonView searchCompany(@RequestParam("searchWord") String keyword,HttpServletRequest request) {
+        List<BigCustomer> customerList;       
+        String userId = (String)request.getSession().getAttribute("userId");
+        try {
+            String companyId = companyMapper.queryCompanyIdByUserId(acquireUserId(request));
+            customerList = journalService.getAllCustomers(companyId,userId);
+        } catch (AuthenticationException e) {
+            return GsonView.createErrorView(e.getMessage());
+        }
+        for(int i=0;i<customerList.size();i++)
+        {
+        	if (customerList.get(i).getRealname().indexOf(keyword)>-1) {
+				
+			}
+        	else
+        	{
+        		if (!recursionCompany(customerList.get(i).getDepts(),keyword)) {
+        			customerList.remove(i);
+        			i--;
+				}
+        	}
+        }
+        GsonView gsonView = new GsonView();;
+        gsonView.addStaticAttribute("successFlg", true);
+        gsonView.addStaticAttribute("ccustomer", customerList);
+        return gsonView;
+    }
+   
+    
+    @SuppressWarnings("unused")
+   	private boolean recursionCompany(List<Department> departmentList,String keyword)
+       {
+       	boolean tagFlag=false;
+       	List<Department> listInt=new ArrayList<Department>();
+       	for(Department department:departmentList)
+       	{
+       		boolean tagcFlag=false;
+       		if (department.getDeptName().indexOf(keyword)>-1) {
+       			tagcFlag=true;
+   			}
+       		else
+       		{
+   				if (department.getDepartmentList() != null && department.getDepartmentList().size() != 0) {
+   					if (recursionCompany(department.getDepartmentList(), keyword)) {
+   						tagcFlag = true;
+   					}
+   				}
+   				if (department.getContactsList() != null && department.getContactsList().size() != 0) {
+   					List<Contacts> listContacts=new ArrayList<Contacts>();
+   					for (Contacts contacts : department.getContactsList()) {
+   						if (contacts.getRealName().indexOf(keyword) > -1) {
+   							tagcFlag = true;
+   						}
+   						else if (contacts.getTypeName()!=null&&contacts.getTypeName().indexOf(keyword)>-1) {
+   								tagcFlag=true;								
+   						}
+   						else {
+   							listContacts.add(contacts);
+   						}
+   					}
+   					for(Contacts c:listContacts)
+   					{
+   						department.getContactsList().remove(c);
+   					}
+   				}
+       		}
+       		if (tagcFlag) {
+   				tagFlag=true;
+   			}
+       		else
+       		{
+       			listInt.add(department);
+       		}
+       	}
+       	for(Department k:listInt)
+       	{
+       		departmentList.remove(k);
+       	}
+       	return tagFlag;
+       }
     @RequestMapping("/edit")
     public String editJournalPage(@RequestParam(value="type", required = false) String type,
                               @RequestParam(value="journalId", required = false) String journalId,

@@ -25,7 +25,6 @@ public class CrmApplication {
     public CrmErrorController getCrmErrorController(ApplicationContext context) {
 		List<ErrorViewResolver> errorViewResolvers = new ArrayList<>();
 		errorViewResolvers.add(new DefaultErrorViewResolver(context, new ResourceProperties()));
-	    return new CrmErrorController(new DefaultErrorAttributes(false),
-				new ErrorProperties(), errorViewResolvers);
+	    return new CrmErrorController(new DefaultErrorAttributes(false), new ErrorProperties(), errorViewResolvers);
     }
 }

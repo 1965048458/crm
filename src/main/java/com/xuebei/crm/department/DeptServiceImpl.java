@@ -69,11 +69,35 @@ public class DeptServiceImpl implements DeptService {
         rltList.addAll(deptMap.get(EnclosureStatusEnum.APPLYING));
         rltList.addAll(deptMap.get(EnclosureStatusEnum.ENCLOSURE));
         rltList.addAll(deptMap.get(EnclosureStatusEnum.NORMAL));
-
+//        Debug(rltList);
         return rltList;
 
     }
-
+    private void Debug(List<Department> rltList)
+    {
+    	for(Department department:rltList)
+    	{
+    		System.out.println(department.getDeptName());
+    		if (department.getContactsList()!=null) {
+				for(Contacts contacts:department.getContactsList())
+				{
+					System.out.println(contacts.getRealName());
+				}
+			}
+    		if (department.getDepartmentList()!=null) {
+    	    	for(Department cdepartment:department.getDepartmentList())
+    	    	{
+    	    		System.out.println(cdepartment.getDeptName());
+    	    		if (cdepartment.getContactsList()!=null) {
+    					for(Contacts ccontacts:cdepartment.getContactsList())
+    					{
+    						System.out.println(ccontacts.getRealName());
+    					}
+    				}
+    	    	}
+			}
+    	}
+    }
     /**
      * 添加二级机构页面中显示我的二级机构
      *

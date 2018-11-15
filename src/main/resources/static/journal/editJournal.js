@@ -36,7 +36,9 @@ jQuery(document).ready(function () {
            summary: '',
            content:'',
            preDate:'',
+           searchWord:' ',
            lastStage:'',
+           showOrganization: true,
            selStage: '',
            deliverDate:'',
            saleStage:'',
@@ -55,6 +57,7 @@ jQuery(document).ready(function () {
            receiversTmp: [],
            customers: [{name: '浙江大学', contactsFold: true, contactsGroup:[{realName: '李四'}, {realName: '李五'}, {realName: '李六'}]},
                {name: '浙江工商大学', contactsFold: true, contactsGroup:[{realName:'张三'}, {realName: '张斯'}, {realName: '张武'}]}],
+           ccustomers: [{name: '浙江大', contactsFold: true, contactsGroup:[{realName: '李四'}]}],
            chosenContactsTmp: [],
            visitTypeTmp: 'VISIT',
            colleagues: [{userId: "userId1", realName: '用户1',avatarUrl: '/images/journal/defaultUserIcon.png'},
@@ -113,7 +116,23 @@ jQuery(document).ready(function () {
                        }, 1000);
                    }
                });
-
+           },
+           searchCompany: function () {
+               var thisVue = this;
+               jQuery.ajax({
+                   type: 'get',
+                   url: '/journal/searchCompany',
+                   data: {
+                   	searchWord:this.searchWord,
+                   },
+                   dataType: 'json',
+                   cache: false
+               }).done(function (result) {
+                   if (result.successFlg) {
+                           thisVue.$set(thisVue, 'ccustomers', result.ccustomer);
+   
+                   }
+               });
 
            },
            'deliverDatePicker':function (){
@@ -135,6 +154,32 @@ jQuery(document).ready(function () {
            },
            'chooseBack': function () {
                this.showPage = 'modif';
+           },
+           clear:function () {
+               this.searchWord="";
+               $('#searchInput').focus();
+           },
+           text:function () {
+               $('#searchBar').addClass('weui-search-bar_focusing');
+               $('#searchText').focus();
+               $('#searchResult').show();
+               this.searchWord='';
+               this.showOrganization = false;
+           },
+           cancel:function () {
+               this.cancelSearch();
+               this.showOrganization = true;
+               $('#searchInput').blur();
+           },
+           cancelSearch:function () {
+               this.hideSearchResult();
+               $('#searchBar').removeClass('weui-search-bar_focusing');
+               $('#searchText').show();
+
+           },
+           hideSearchResult:function () {
+               $('#searchResult').hide();
+               this.searchWord = "";
            },
            'done1': function () {
                if (this.selStage === "") {
@@ -241,8 +286,18 @@ jQuery(document).ready(function () {
            'changeContactsFold': function (index) {
                this.customers[index].contactsFold = !this.customers[index].contactsFold;
            },
+           'changeContactsFold2': function (index) {
+               this.ccustomers[index].contactsFold = !this.ccustomers[index].contactsFold;
+           },
            'setImgPath':function (index) {
                if(this.customers[index].contactsFold){
+                   return "/images/customer/fold.svg";
+               }else {
+                   return"/images/customer/unfold.svg";
+               }
+           },
+           'setImgPath2':function (index) {
+               if(!this.customers[index].contactsFold){
                    return "/images/customer/fold.svg";
                }else {
                    return"/images/customer/unfold.svg";
@@ -363,8 +418,8 @@ jQuery(document).ready(function () {
                this.opportunityTmp = '';
                this.showPage = 'journalPage';
            },
-           'onTransferValue': function (contactsInfo) {
-               this.chosenContactsTmp=contactsInfo;
+           'onTransferValue': function (contactsInfo,contactsInfo2) {
+        	   this.chosenContactsTmp=contactsInfo.concat(contactsInfo2);
            },
            'start':function(){
         	   if (journalId === '0') {
@@ -461,134 +516,290 @@ jQuery(document).ready(function () {
                        this.$emit('transfer_value', this.chosenContactsTmp);
                    }
                }
-           },*/
-           'customer':{
-               template: '#customer3',
-               props: ['customer2'],
-               data: function () {
-                   return {
-                       showSub: false,
-                       chosenContactsTmp:[],
-                       showCustomerOrganization:true,
-                       showOrganization: false,
-                       showApplyDialog: false,
-                       showApply: false,
-                       imgPath:"/images/customer/fold.svg",
+           },*/           
+        },
+        watch:{
+        	'searchWord': function () {
+                var thisVue = this;
+                this.searchCompany();
+            },
+            'chosenContactsTmp': function () {
 
-                   };
-               },
-               methods: {
+                this.$emit('transfer_value', this.chosenContactsTmp,this.chosenContactsTmp1);
+            }
+        }
+   });
+   Vue.component('ddd',{
+	   template: '#customer3',
+       props: ['ccc'],
+       data: function () {
+           return {
+               showSub: false,
+               chosenContactsTmp:[],
+               chosenContactsTmp1:[],
+               showCustomerOrganization:true,
+               showOrganization: false,
+               showApplyDialog: false,
+               showApply: true,
+               imgPath:"/images/customer/fold.svg",
 
-                   'changeSubFold' : function (status) {
-                       if(status == 'MINE'|| (status == '' || status == undefined)){
+           };
+       },
+       methods: {
 
-                          this.showSub= !this.showSub;
-                           
-                           this.setImgPath();
-                       } else {
-                           this.showSub = false;
-                           this.setImgPath();
-                       }
+           'changeSubFold' : function (status) {
+               if(status == 'MINE'|| (status == '' || status == undefined)){
 
-                   },
-                   'onTransferValue': function (contactsInfo) {
-                       this.chosenContactsTmp=contactsInfo;
-                   },
-                   'setImgPath':function () {
-                       if(this.showSub == false){
-                           this.imgPath = "/images/customer/fold.svg";
-                       }else {
-                           this.imgPath = "/images/customer/unfold.svg";
-                       }
-                   },
-                   'checkGender':function(gender){
-                       if(gender == 'FEMALE'){
-                           return "/images/customer/FEMALE.svg";
-                       }else{
-                           return "/images/customer/MALE.svg";
-                       }
-                   },
-                   'addNumBrackets':function (number,status) {
-                       if(status == 'ENCLOSURE' || number == '0'){
-                           return '';
-                       }else{
-                           return "( "+number+" )";
-                       }
-                   },
-                   'addMineBrackets':function (status,applyName) {
-                       if (status == 'MINE' ){
-                           if(applyName == '' || applyName == undefined){
-                               return "[ 我的 ]"
-                           }else {
-                               return "[ "+ applyName + "]"
-                           }
+                  this.showSub= !this.showSub;
+                   
+                   this.setImgPath();
+               } else {
+                   this.showSub = false;
+                   this.setImgPath();
+               }
 
-                       }
-                   },
-                   'addEnclosureBrackets':function (status) {
-                       if(status == 'ENCLOSURE'){
-                           return "[ 别人正在申请 ]"
-                       }
-                   },
-                   'addNormalBrackets':function (status) {
-                       if(status == 'NORMAL'){
-                           return "[ 未圈 ]"
-                       }
-                   },
-                   'addApplyingBrackets':function (status,applyName) {
-                       if(status == 'APPLYING'){
-                           if(applyName == '' || applyName == undefined){
-                               return "[ 待审核 ]";
-                           }else {
-                               return "["+applyName+"] [ 待审核 ]";
-                           }
-
-                       }
-                   },
-                   'addOpenSeaWarning':function (warning) {
-                       if(warning != null){
-                           if(warning.isDelayApplied == true){
-                               return "!!已申请延期";
-                           }else {
-                               return "!!即将进入公海";
-                           }
-                       }
-                       else {
-                           return '';
-                       }
-                   },
-                   'apply':function (name,id) {
-                       organizationVue.apply(name,id);
-                       console.log(name,id);
-                   },
-                   'openSeaWarning':function (warning) {
-                       console.log("component.warning")
-                       organizationVue.openSeaWarningDetail(warning);
-                       
-                   },
-                   'toContactDetail':function (contactsId) {
-                       window.location = '/customer/contactsInfo?contactsId='+contactsId;
-                   },
-                   'addTypeName':function (contact) {
-                       if(contact.typeName == undefined || contact.typeName==''){
-                           $("#type_name_label_"+contact.contactsId).css("border","hidden");
-                           return '';
-                       }else {
-                           return contact.typeName;
-                       }
-                       
+           },
+           'onTransferValue': function (contactsInfo,contactsInfo2) {
+        	   if(contactsInfo2==null||contactsInfo2.length==0)
+        		{
+        		   this.chosenContactsTmp1=contactsInfo;
+        		}
+        	    else
+        	    {
+        	    	this.chosenContactsTmp1=contactsInfo.concat(contactsInfo2);
+        	    }
+           },
+           'setImgPath':function () {
+               if(this.showSub == false){
+                   this.imgPath = "/images/customer/fold.svg";
+               }else {
+                   this.imgPath = "/images/customer/unfold.svg";
+               }
+           },
+           'checkGender':function(gender){
+               if(gender == 'FEMALE'){
+                   return "/images/customer/FEMALE.svg";
+               }else{
+                   return "/images/customer/MALE.svg";
+               }
+           },
+           'addNumBrackets':function (number,status) {
+               if(status == 'ENCLOSURE' || number == '0'){
+                   return '';
+               }else{
+                   return "( "+number+" )";
+               }
+           },
+           'addMineBrackets':function (status,applyName) {
+               if (status == 'MINE' ){
+                   if(applyName == '' || applyName == undefined){
+                       return "[ 我的 ]"
+                   }else {
+                       return "[ "+ applyName + "]"
                    }
-               },
-               watch: {
-                   'chosenContactsTmp': function () {
 
-                       this.$emit('transfer_value', this.chosenContactsTmp);
+               }
+           },
+           'addEnclosureBrackets':function (status) {
+               if(status == 'ENCLOSURE'){
+                   return "[ 别人正在申请 ]"
+               }
+           },
+           'addNormalBrackets':function (status) {
+               if(status == 'NORMAL'){
+                   return "[ 未圈 ]"
+               }
+           },
+           'addApplyingBrackets':function (status,applyName) {
+               if(status == 'APPLYING'){
+                   if(applyName == '' || applyName == undefined){
+                       return "[ 待审核 ]";
+                   }else {
+                       return "["+applyName+"] [ 待审核 ]";
+                   }
+
+               }
+           },
+           'addOpenSeaWarning':function (warning) {
+               if(warning != null){
+                   if(warning.isDelayApplied == true){
+                       return "!!已申请延期";
+                   }else {
+                       return "!!即将进入公海";
                    }
                }
+               else {
+                   return '';
+               }
+           },
+           'apply':function (name,id) {
+               organizationVue.apply(name,id);
+               console.log(name,id);
+           },
+           'openSeaWarning':function (warning) {
+               console.log("component.warning")
+               organizationVue.openSeaWarningDetail(warning);
+               
+           },
+           'toContactDetail':function (contactsId) {
+               window.location = '/customer/contactsInfo?contactsId='+contactsId;
+           },
+           'addTypeName':function (contact) {
+               if(contact.typeName == undefined || contact.typeName==''){
+                   $("#type_name_label_"+contact.contactsId).css("border","hidden");
+                   return '';
+               }else {
+                   return contact.typeName;
+               }
+               
            }
-       }
-   });
+     },
+     watch: {
+         'chosenContactsTmp': function () {
 
+             this.$emit('transfer_value', this.chosenContactsTmp,this.chosenContactsTmp1);
+         },
+         'chosenContactsTmp1': function () {
+
+             this.$emit('transfer_value', this.chosenContactsTmp,this.chosenContactsTmp1);
+         }
+     }
+   });
+   Vue.component('bbb',{
+	   template: '#customer3',
+       props: ['ccc'],
+       data: function () {
+           return {
+               showSub: true,
+               chosenContactsTmp:[],
+               chosenContactsTmp1:[],
+               showCustomerOrganization:true,
+               showOrganization: false,
+               showApplyDialog: false,
+               showApply: false,
+               imgPath:"/images/customer/unfold.svg",
+
+           };
+       },
+       methods: {
+           'changeSubFold' : function (status) {
+               if(status == 'MINE'|| (status == '' || status == undefined)){
+
+                  this.showSub= !this.showSub;
+                   
+                   this.setImgPath();
+               } else {
+                   this.showSub = false;
+                   this.setImgPath();
+               }
+
+           },
+           'onTransferValue': function (contactsInfo,contactsInfo2) {
+        	   if(contactsInfo2==null||contactsInfo2.length==0)
+        		{
+        		   this.chosenContactsTmp1=contactsInfo;
+        		}
+        	    else
+        	    {
+        	    	this.chosenContactsTmp1=contactsInfo.concat(contactsInfo2);
+        	    }
+           },
+           'setImgPath':function () {
+               if(this.showSub == false){
+                   this.imgPath = "/images/customer/fold.svg";
+               }else {
+                   this.imgPath = "/images/customer/unfold.svg";
+               }
+           },
+           'checkGender':function(gender){
+               if(gender == 'FEMALE'){
+                   return "/images/customer/FEMALE.svg";
+               }else{
+                   return "/images/customer/MALE.svg";
+               }
+           },
+           'addNumBrackets':function (number,status) {
+               if(status == 'ENCLOSURE' || number == '0'){
+                   return '';
+               }else{
+                   return "( "+number+" )";
+               }
+           },
+           'addMineBrackets':function (status,applyName) {
+               if (status == 'MINE' ){
+                   if(applyName == '' || applyName == undefined){
+                       return "[ 我的 ]"
+                   }else {
+                       return "[ "+ applyName + "]"
+                   }
+
+               }
+           },
+           'addEnclosureBrackets':function (status) {
+               if(status == 'ENCLOSURE'){
+                   return "[ 别人正在申请 ]"
+               }
+           },
+           'addNormalBrackets':function (status) {
+               if(status == 'NORMAL'){
+                   return "[ 未圈 ]"
+               }
+           },
+           'addApplyingBrackets':function (status,applyName) {
+               if(status == 'APPLYING'){
+                   if(applyName == '' || applyName == undefined){
+                       return "[ 待审核 ]";
+                   }else {
+                       return "["+applyName+"] [ 待审核 ]";
+                   }
+
+               }
+           },
+           'addOpenSeaWarning':function (warning) {
+               if(warning != null){
+                   if(warning.isDelayApplied == true){
+                       return "!!已申请延期";
+                   }else {
+                       return "!!即将进入公海";
+                   }
+               }
+               else {
+                   return '';
+               }
+           },
+           'apply':function (name,id) {
+               organizationVue.apply(name,id);
+               console.log(name,id);
+           },
+           'openSeaWarning':function (warning) {
+               console.log("component.warning")
+               organizationVue.openSeaWarningDetail(warning);
+               
+           },
+           'toContactDetail':function (contactsId) {
+               window.location = '/customer/contactsInfo?contactsId='+contactsId;
+           },
+           'addTypeName':function (contact) {
+               if(contact.typeName == undefined || contact.typeName==''){
+                   $("#type_name_label_"+contact.contactsId).css("border","hidden");
+                   return '';
+               }else {
+                   return contact.typeName;
+               }
+               
+           }
+     },
+     watch: {
+         'chosenContactsTmp': function () {
+
+             this.$emit('transfer_value', this.chosenContactsTmp,this.chosenContactsTmp1);
+         },
+         'chosenContactsTmp1': function () {
+
+             this.$emit('transfer_value', this.chosenContactsTmp,this.chosenContactsTmp1);
+         }
+     }
+   });
    editJournalVue.start();
     window.onbeforeunload = function() {
         editJournalVue.saveDraft();

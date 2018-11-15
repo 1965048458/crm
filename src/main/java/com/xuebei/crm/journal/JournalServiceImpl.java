@@ -275,6 +275,7 @@ public class JournalServiceImpl implements JournalService {
 
     	        List<Department> rltList = new ArrayList<>();
     	        rltList.addAll(deptMap.get(EnclosureStatusEnum.MINE));
+    	        //Debug(rltList);
     	        if (rltList.size()!=0) {
         			bigCustomers.add(new BigCustomer(customer.getName(), rltList));
 				}
@@ -284,6 +285,7 @@ public class JournalServiceImpl implements JournalService {
     	}
     	return bigCustomers;
     }
+    
     
     private EnumMap<EnclosureStatusEnum, List> getDeptMap(List<Department> departmentList) {
         List<Department> mineDept = new ArrayList<>();
