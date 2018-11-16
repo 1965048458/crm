@@ -204,6 +204,19 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div v-for="(visitRecord, ind) in journal.visitRecords">
+                                        <div class="weui-form-preview__item" v-if="visitRecord.opportunity!=null">
+                                            <label class="weui-form-preview__label"
+                                                   style="float:left;color: #555555;font-size: 14px"
+                                                   v-text="'商机' + ':'"></label>
+                                            <div class="weui-form-preview__value">
+              
+                                                    <span style="float: left;text-align:left;color: #555555;font-size: 14px"
+                                                          v-text="visitRecord.opportunity.totalName + '\n'"></span>
+          
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -336,7 +349,19 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                 <div v-for="(visitRecord, ind) in curJournal.visitRecords">
+                                        <div class="weui-form-preview__item" v-if="visitRecord.opportunity!=null">
+                                            <label class="weui-form-preview__label"
+                                                   style="float:left;color: #555555;font-size: 14px"
+                                                   v-text="'商机' + ':'"></label>
+                                            <div class="weui-form-preview__value">
+              
+                                                    <span style="float: left;text-align:left;color: #555555;font-size: 14px"
+                                                          v-text="visitRecord.opportunity.totalName + '\n'"></span>
+          
+                                            </div>
+                                        </div>
+                                 </div>
                                 <div class="weui-form-preview" v-for="patch in curJournal.journalPatches">
                                     <div class="weui-form-preview__bd" style="padding: 5px 0px">
                                         <div class="weui-form-preview__item" style="font-size: 12px;line-height: 17px">

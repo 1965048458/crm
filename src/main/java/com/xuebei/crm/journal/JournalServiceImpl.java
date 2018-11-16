@@ -36,7 +36,7 @@ public class JournalServiceImpl implements JournalService {
 
     @Autowired
     private ProjectMapper projectMapper;
-
+    
     @Autowired
     private MemberMapper memberMapper;
     
@@ -206,8 +206,14 @@ public class JournalServiceImpl implements JournalService {
             jn.setVisitRecords(journalMapper.queryVisitLogs(jn.getJournalId()));
             for (VisitRecord visitRecord: jn.getVisitRecords()) {
                 visitRecord.setChosenContacts(journalMapper.queryVisitContacts(visitRecord.getVisitId()));
-                visitRecord.setOpportunityName(projectMapper.queryOpportunityNameByOpportunityId(
-                        visitRecord.getOpportunityId()));
+                String opportunityid=projectMapper.queryOpportunityNameByOpportunityId(visitRecord.getOpportunityId());
+                visitRecord.setOpportunityName(opportunityid);
+                //System.out.println(projectMapper.queryOpportunity(visitRecord.getOpportunityId()));
+                Opportunity ssaa=projectMapper.queryOpportunity(visitRecord.getOpportunityId());
+                if (ssaa!=null) {
+                    visitRecord.setOpportunity(projectMapper.queryOpportunity(visitRecord.getOpportunityId()));
+                    visitRecord.getOpportunity().setTotalName("");
+				}
                 for (Contacts contacts: visitRecord.getChosenContacts()) {
                     ContactsDept contactsDept = customerMapper.queryContactsDept(contacts.getContactsId());
                     contacts.setTotalName(contactsDept.toString());

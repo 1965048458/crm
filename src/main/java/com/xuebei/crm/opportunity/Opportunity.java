@@ -56,8 +56,44 @@ public class Opportunity {
     private String clinchDateString;
     @Expose
     private String agent;
+    @Expose
+    private String totalName;
+    
+    
+    public String getTotalName() {
+		return totalName;
+	}
 
-    public String getAgent() {
+	public void setTotalName(String totalName) {
+		String bsd="";
+		if (salesStatus.equals("A")) {
+			bsd="拿到老师手机及微信号";
+		}
+		else if (salesStatus.equals("B")) {
+			bsd="提交方案";
+		}
+		else if (salesStatus.equals("C")) {
+			bsd="以我方提供参数挂标";
+		}
+		else if (salesStatus.equals("D")) {
+			bsd="中标";
+		}
+		else if (salesStatus.equals("F")) {
+			bsd="输单";
+		}
+		else {
+			bsd=salesStatus+"阶段";
+		}
+		if (customerId!=null) {
+			this.totalName = this.opportunityName+"-"+"用户:"+customerName+"-"+customerId+"-"+failReason+"-"+userId+"-金额:"+amount+"-"+bsd;
+		}
+		else
+		{
+			this.totalName = this.opportunityName+"-"+"用户:"+customerName+"-"+failReason+"-"+userId+"-金额:"+amount+"-"+bsd;
+		}
+	}
+
+	public String getAgent() {
         return agent;
     }
 

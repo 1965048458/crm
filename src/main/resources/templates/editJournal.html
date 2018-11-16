@@ -146,67 +146,74 @@
         <button @click="submitJournal" class="weui-btn weui-btn_primary">提交</button>
     </div>
 
-    <div v-show="showPage === 'selectContacts'" id="selectContacts">
-        <div class="top-bar">
-            <span @click="cancelSelectContacts" style="color: rgb(61, 168, 244); font-size: 16px;" class="pull-left">取消</span>
-            <span>选择拜访客户</span>
-            <span @click="confirmSelectContacts" style="color: rgb(61, 168, 244); font-size: 16px;" class="pull-right">完成</span>
-        </div>
+		<div v-show="showPage === 'selectContacts'" id="selectContacts">
+			<div class="top-bar">
+				<span @click="cancelSelectContacts"
+					style="color: rgb(61, 168, 244); font-size: 16px;"
+					class="pull-left">取消</span> <span>选择拜访客户</span> <span
+					@click="confirmSelectContacts"
+					style="color: rgb(61, 168, 244); font-size: 16px;"
+					class="pull-right">完成</span>
+			</div>
 
-        <div class="weui-cells weui-cells_form">
-              <div class="weui-search-bar" id="searchBar" >
-                    <div class="weui-search-bar__form">
-                        <div class="weui-search-bar__box">
-                            <i class="weui-icon-search"></i>
-                            <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索"
-                                    v-model="searchWord" required="">
-                            <a href="javascript:" class="weui-icon-clear" id="searchClear" @click="clear"></a>
-                        </div>
-                        <label class="weui-search-bar__label" id="searchText" @click="text"
-                               style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            <i class="weui-icon-search"></i>
-                            <span>搜索</span>
-                        </label>
-                    </div>
-                    <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel" @click="cancel">取消</a>
-                </div>
+			<div class="weui-cells weui-cells_form">
+				<div class="weui-search-bar" id="searchBar">
+					<div class="weui-search-bar__form">
+						<div class="weui-search-bar__box">
+							<i class="weui-icon-search"></i> <input type="search"
+								class="weui-search-bar__input" id="searchInput" placeholder="搜索"
+								v-model="searchWord" required=""> <a href="javascript:"
+								class="weui-icon-clear" id="searchClear" @click="clear"></a>
+						</div>
+						<label class="weui-search-bar__label" id="searchText"
+							@click="text"
+							style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+							<i class="weui-icon-search"></i> <span>搜索</span>
+						</label>
+					</div>
+					<a href="javascript:" class="weui-search-bar__cancel-btn"
+						id="searchCancel" @click="cancel">取消</a>
+				</div>
 
-				<div class="weui-cells searchbar-result" id="searchResult" style="display: none">
+				<div class="weui-cells searchbar-result"
+					id="searchResult" style="display: none">
 					<div v-for="(customer, index) in ccustomers" :key="'scustomers_' + index">
 						<div class="weui-cell" @click="changeContactsFold2(index)">
-							<div class="weui-cell__bd">
-								<label v-text="customer.name"></label>
-							</div>
-							<div>
+							<span class="pull-left" style="padding-right: 10px;">
 								<img :src="setImgPath2(index)" id="customer.name+'_simg'" />
-							</div>
+							</span>
+							<span class="pull-left" v-text="customer.name"></span>
 						</div>
 						<div v-show="customer.contactsFold" class="weui-cells_checkbox"
 							style="padding-left: 10px">
-							<bbb v-on:transfer_value="onTransferValue" v-for="cc in customer.depts" v-bind:ccc="cc"></bbb>
+							<bbb v-on:transfer_value="onTransferValue"
+								v-for="cc in customer.depts" v-bind:ccc="cc"></bbb>
 						</div>
 					</div>
 				</div>
 				<div v-show="showOrganization">
-				<div v-for="(customer, index) in customers" :key="'customers_' + index">
-                <div class="weui-cell" @click="changeContactsFold(index)">
-                    <div class="weui-cell__bd">
-                        <label v-text="customer.name"></label>
-                    </div>
-                    <div >
-                        <img :src="setImgPath(index)" id="customer.name+'_img'"/>
-                    </div>
-                </div>
-                <div v-show="!customer.contactsFold" class="weui-cells_checkbox" style="padding-left: 10px">
-                         <ddd  v-on:transfer_value="onTransferValue" v-for="cc in customer.depts"  v-bind:ccc="cc"></ddd>
-                </div>
-            </div>
-            </div>
-        </div>
+					<div class="weui-cells" v-for="(customer, index) in customers"
+						:key="'customers_' + index">
+						<div class="weui-cell" @click="changeContactsFold(index)">
+							<div class="weui-cell__bd">
+								<label v-text="customer.name"></label>
+							</div>
+							<div>
+								<img :src="setImgPath(index)" id="customer.name+'_img'" />
+							</div>
+						</div>
+						<div v-show="!customer.contactsFold" class="weui-cells_checkbox"
+							style="padding-left: 10px">
+							<ddd v-on:transfer_value="onTransferValue"
+								v-for="cc in customer.depts" v-bind:ccc="cc"></ddd>
+						</div>
+					</div>
+				</div>
+			</div>
 
-    </div>
+		</div>
 
-    <div v-show="showPage === 'selectVisitType'" id="selectVisitType">
+		<div v-show="showPage === 'selectVisitType'" id="selectVisitType">
         <div class="top-bar">
             <span @click="cancelSelectVisitType" style="color: rgb(61, 168, 244); font-size: 16px;" class="pull-left">取消</span>
             <span>选择拜访类型</span>
@@ -425,7 +432,8 @@
 </body>
 <template id="customer3">
     <div class="weui-cells">
-        <div class="weui-cell">
+            <div class="weui-cell">
+    <div class="weui-cell__bd">
             <div class="weui-cell__bd"  :id="ccc.deptName" >
                 <span class="pull-left" @click="changeSubFold(ccc.enclosureStatus)" style="padding-right: 10px;">
                     <img :src="imgPath">
@@ -434,19 +442,9 @@
                       style="padding-right: 5px;color: #333333;font-size: 16px" ></span>   <!-- 机构名字 -->
                 <span class="pull-left" v-text="addNumBrackets(ccc.contactNumber,ccc.enclosureStatus)"
                       style="color: #333333;font-size: 16px" ></span>                     <!--  机构人员个数 -->
-                <span class="pull-left" v-text="addMineBrackets(ccc.enclosureStatus,ccc.applyName)"
-                      style="padding-left:5px;color:#38A4F2;font-size:14px;"></span>     <!-- 机构所属 是不是我的 -->
-                <span class="pull-left" v-text="addApplyingBrackets(ccc.enclosureStatus,ccc.applyName)"
-                      style="padding-left:5px;color:#38A4F2;font-size:14px;"></span>
-                <span class="pull-left" v-text="addEnclosureBrackets(ccc.enclosureStatus)"
-                      style="padding-left:5px;color:#999999;font-size:14px;"></span>
-                <span class="pull-left" v-text="addNormalBrackets(ccc.enclosureStatus)"
-                      style="padding-left:5px;color:#38A4F2;font-size:14px;"
-                      @click="apply(ccc.deptName, ccc.deptId)"></span>
-                <span class="pull-left" v-text="addOpenSeaWarning(ccc.openSeaWarning)"
-                      style="color: #FF0000;padding-left: 5px;font-size: 13px"
-                      @click="openSeaWarning(ccc.openSeaWarning)"></span>
+               
             </div>
+        </div>
         </div>
         <div class="weui-cells" v-show="showSub" v-if="ccc.enclosureStatus!='ENCLOSURE'">
             <div class="weui-cell" v-for="contact in ccc.contactsList" :id="contact.realName">

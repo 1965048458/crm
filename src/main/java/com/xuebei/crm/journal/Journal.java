@@ -1,6 +1,7 @@
 package com.xuebei.crm.journal;
 
 import com.google.gson.annotations.Expose;
+import com.xuebei.crm.opportunity.Opportunity;
 import com.xuebei.crm.user.User;
 
 import java.util.Date;
@@ -26,7 +27,8 @@ public class Journal {
     private Boolean hasSubmitted;
     @Expose
     private List<VisitRecord> visitRecords;
-    @Expose
+
+	@Expose
     private User user;
 
     @Expose

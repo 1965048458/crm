@@ -52,7 +52,7 @@ public interface ProjectMapper {
     List<Project> queryProjectsByUserId(String userId);
 
     List<Opportunity> queryOpportunitiesByUserId(String userId);
-
+    Opportunity queryOpportunity(@Param("opportunityid") Integer opportunityid);
     String queryOpportunityNameByOpportunityId(Integer opportunityId);
 
     List<Project> searchProject(ProjectSearchParam param);

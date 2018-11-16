@@ -378,8 +378,7 @@ public class JournalController {
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("userId");
         String companyId = companyMapper.queryCompanyIdByUserId(userId);
-        Set<String> userSet = new HashSet<>();
-        userSet.add(userId);
+        Set<String> userSet = journalService.getAllSubordinatesUserId(userId);
         GsonView gsonView = new GsonView();
         List<JournalCustomer> customers = journalService.getAllContacts(companyId,userId);
         Set<Opportunity> opportunities = journalService.getAllSubordinatesOpportunity(userSet);

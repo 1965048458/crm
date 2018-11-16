@@ -23,8 +23,17 @@ public class VisitRecord {
     private Integer opportunityId;
     @Expose
     private String opportunityName;
-
     @Expose
+    private Opportunity opportunity;
+    public Opportunity getOpportunity() {
+		return opportunity;
+	}
+
+	public void setOpportunity(Opportunity opportunity) {
+		this.opportunity = opportunity;
+	}
+
+	@Expose
     private String realName;
     @Expose
     private Date updateTime;
