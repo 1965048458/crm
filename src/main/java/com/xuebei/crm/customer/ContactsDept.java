@@ -11,8 +11,18 @@ public class ContactsDept {
     private String deptName;
 
     private String realName;
+    
+    private String contactsType;
 
-    public String getCustomerName() {
+    public String getContactsType() {
+		return contactsType;
+	}
+
+	public void setContactsType(String contactsType) {
+		this.contactsType = contactsType;
+	}
+
+	public String getCustomerName() {
         return customerName;
     }
 
@@ -48,9 +58,21 @@ public class ContactsDept {
 
     public String toString() {
         if (prtDeptName == null) {
-            return customerName + "-" + deptName + '-' + realName;
+        	if (contactsType==null) {
+                return customerName + "-" + deptName + '-' + realName;
+			}
+        	else
+        	{
+        		return customerName + "-" + deptName + '-' + realName+"("+contactsType+")";
+        	}
         } else {
-            return customerName + '-' + prtDeptName + "-" + deptName + '-' + realName;
+        	if (contactsType==null) {
+                return customerName + '-' + prtDeptName + "-" + deptName + '-' + realName;
+			}
+        	else
+        	{
+        		return customerName + '-' + prtDeptName + "-" + deptName + '-' + realName+"("+contactsType+")";
+        	}
         }
     }
 

@@ -89,8 +89,9 @@
         <id property="contactsId" column="contacts_id"/>
         <result property="customerName" column="customer_nm"/>
         <result property="deptName" column="department_nm"/>
-        <result property="prtDeptName" column="prt_dept_nm"/>
+        <result property="prtDeptName" column="prt_dept_name"/>
         <result property="realName" column="real_nm"/>
+        <result property="contactsType" column="type_name"/>
     </resultMap>
 
     <resultMap id="opportunityDetailMap" type="com.xuebei.crm.customer.Contacts">
@@ -516,7 +517,8 @@
         SELECT
             ta.contacts_id,
             ta.real_nm,
-            tb.*
+            tb.*,
+            tc.type_name
         FROM contacts AS ta LEFT JOIN
             (SELECT
                  A.customer_dept_id,
@@ -529,6 +531,8 @@
                  LEFT JOIN crm_customer AS U ON A.customer_id = U.customer_id
             ) AS tb
                 ON ta.customer_dept_id = tb.customer_dept_id
+            LEFT JOIN contacts_type AS tc
+                ON ta.contacts_type_id=tc.contacts_type_id
         WHERE contacts_id = #{contactsId};
     </select>
 
