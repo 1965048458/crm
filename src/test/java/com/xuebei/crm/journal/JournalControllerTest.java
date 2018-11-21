@@ -10,7 +10,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.ModelMap;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -64,13 +68,23 @@ public class JournalControllerTest {
 
     @Test
     public void editJournalPage() throws Exception {
-        String type = null;
-        String journalId = null;
-        ModelMap modelMap;
-        mockMvc.perform(get("/journal/edit")
-                .param("type", type)
-                .param("journalId",journalId))
-                .andExpect(view().name("error/500"));
+    	Date dNow=new Date();
+//    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//    	Calendar calendar = Calendar.getInstance(); //得到日历
+//    	calendar.setTime(dNow);
+//    	calendar.set(Calendar.HOUR, -15); // 设置小时 
+//    	calendar.set(Calendar.MINUTE, 0); // 设置小时 
+//    	calendar.set(Calendar.SECOND, 0); // 设置小时 
+//    	dNow=calendar.getTime();
+    	dNow.setHours(32);
+    	System.out.println(dNow);
+//        String type = null;
+//        String journalId = null;
+//        ModelMap modelMap;
+//        mockMvc.perform(get("/journal/edit")
+//                .param("type", type)
+//                .param("journalId",journalId))
+//                .andExpect(view().name("error/500"));
 
     }
 

@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+
 @Service
 public class JournalServiceImpl implements JournalService {
 
@@ -167,7 +168,29 @@ public class JournalServiceImpl implements JournalService {
         journalMapper.deleteVisitLog(journalId);
     }
 
-    @Override
+    public List<Journal> searchJournal2(String journalId)
+    {
+    	Journal myJournal = journalMapper.searchJournal(journalId);
+    	String userName=myJournal.getUserId();
+    	JournalSearchParam param=new JournalSearchParam();
+    	param.setUserId(userName);
+    	Date tmpDate=new Date(myJournal.getCreateTs().getTime());
+    	if (tmpDate.getHours()<9&&tmpDate.getMinutes()<30) {
+			tmpDate.setDate(tmpDate.getDate()-1);
+		}
+		tmpDate.setHours(8);
+		tmpDate.setMinutes(30);
+		tmpDate.setSeconds(0);
+		Date tmpDate2=new Date(tmpDate.getTime());
+		tmpDate2.setDate(tmpDate.getDate()+1);
+		param.setStartTime(tmpDate);
+		param.setEndTime(tmpDate2);
+		List<Journal> testJ=journalMapper.searchMyJournal(param);
+		return testJ;
+    }
+    
+    @SuppressWarnings("deprecation")
+	@Override
     public List<Journal> searchJournal(JournalSearchParam param) {
         ///分解发送人字符串
         if (param.getSenderIds() != null && !param.getSenderIds().equals("")){
@@ -226,7 +249,58 @@ public class JournalServiceImpl implements JournalService {
             // 跟新是否是自己
             jn.setIsMine(jn.getUserId().equals(param.getUserId()));
         }
-        return allJournalList;
+        List<Journal> allJournalList2 = new ArrayList<>();
+        Map<String, Date> reocrd=new HashMap<String, Date>();
+        Map<String, Date> dateDawn=new HashMap<String,Date>();
+        Map<String, Journal> tmpJ=new HashMap<String,Journal>();
+        for(Journal jn:allJournalList)
+        {
+        	String playName=jn.getUserId();
+        	if (!reocrd.containsKey(playName)) {
+        		Date tmpDate=new Date(jn.getCreateTs().getTime());
+        		reocrd.put(playName, jn.getCreateTs());
+        		if (jn.getCreateTs().getHours()<9&&jn.getCreateTs().getMinutes()<30) {
+					tmpDate.setDate(tmpDate.getDate()-1);
+				}
+        		tmpDate.setHours(8);
+        		tmpDate.setMinutes(30);
+        		tmpDate.setSeconds(0);
+        		dateDawn.put(playName, tmpDate);
+        		tmpJ.put(playName, jn);
+        		Date sss=new Date();
+        		if (sss.getHours()<9&&sss.getMinutes()<30) {
+        			sss.setDate(sss.getDate()-1);
+				}
+        		sss.setHours(8);
+        		sss.setMinutes(30);
+        		sss.setSeconds(0);
+        		if (jn.getCreateTs().after(sss)) {
+					jn.setIsToday(true);
+				}
+			}
+        	else
+        	{
+        		Date tmpDate=jn.getCreateTs();
+        		if (tmpDate.before(dateDawn.get(playName))) {
+        			allJournalList2.add(tmpJ.get(playName));
+	        		Date tmpDate2=new Date(jn.getCreateTs().getTime());
+	        		reocrd.put(playName, jn.getCreateTs());
+	        		if (jn.getCreateTs().getHours()<9&&jn.getCreateTs().getMinutes()<30) {
+						tmpDate2.setDate(tmpDate2.getDate()-1);
+					}
+	        		tmpDate2.setHours(8);
+	        		tmpDate2.setMinutes(30);
+	        		tmpDate2.setSeconds(0);
+	        		dateDawn.put(playName, tmpDate2);
+	        		tmpJ.put(playName, jn);
+				}
+        	}
+        }
+        for(Journal sss:tmpJ.values())
+        {
+        	allJournalList2.add(sss);
+        }
+        return allJournalList2;
     }
 
     @SuppressWarnings("unchecked")

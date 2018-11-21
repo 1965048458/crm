@@ -177,7 +177,50 @@
                                 </a>
                             </div>
 
-                            <div class="weui-form-preview" @click="loadDetail(journal)">
+                            <div v-if="!journal.isToday" class="weui-form-preview" @click="loadDetail(journal)">
+                                <div class="weui-form-preview__bd"
+                                     style="padding-top: 20px;padding-left:5px;line-height: 20px;">
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label" style="color: #555555;font-size: 14px;">今日总结:</label>
+                                        <span class="weui-form-preview__value"
+                                              style="text-align:left;color: #555555;font-size: 14px">{{journal.summary}}</span>
+                                    </div>
+                                    <div class="weui-form-preview__item">
+                                        <label class="weui-form-preview__label" style="color: #555555;font-size: 14px">明日计划:</label>
+                                        <span class="weui-form-preview__value"
+                                              style="text-align:left;color: #555555;font-size: 14px">{{journal.plan}}</span>
+                                    </div>
+
+                                    <div v-for="(visitRecord, ind) in journal.visitRecords">
+                                        <div class="weui-form-preview__item">
+                                            <label class="weui-form-preview__label"
+                                                   style="float:left;color: #555555;font-size: 14px"
+                                                   v-text="'今日拜访' + (ind+1) + ':'"></label>
+                                            <div class="weui-form-preview__value">
+                                                <div v-for="contacts in visitRecord.chosenContacts">
+                                                    <span style="float: left;text-align:left;color: #555555;font-size: 14px"
+                                                          v-text="contacts.totalName + '、'"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div v-for="(visitRecord, ind) in journal.visitRecords">
+                                        <div class="weui-form-preview__item" v-if="visitRecord.opportunity!=null">
+                                            <label class="weui-form-preview__label"
+                                                   style="float:left;color: #555555;font-size: 14px"
+                                                   v-text="'商机' + ':'"></label>
+                                            <div class="weui-form-preview__value">
+              
+                                                    <span style="float: left;text-align:left;color: #555555;font-size: 14px"
+                                                          v-text="visitRecord.opportunity.totalName + '\n'"></span>
+          
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                              <div v-else class="weui-form-preview" @click="loadDetail2(journal.journalId)">
                                 <div class="weui-form-preview__bd"
                                      style="padding-top: 20px;padding-left:5px;line-height: 20px;">
                                     <div class="weui-form-preview__item">
@@ -220,7 +263,6 @@
                                 </div>
                             </div>
 
-
                             <div class="weui-form-preview" v-for="patch in journal.journalPatches">
                                 <div class="weui-form-preview__bd" style="padding: 5px">
                                     <div class="weui-form-preview__item" style="font-size: 12px;line-height: 20px">
@@ -232,8 +274,12 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div v-show="journal.isMine">
+                            <div v-show="journal.isMine&&journal.isToday">
+                                <div style="display:block" :id="'patchButtonDiv_'+journal.journalId">
+                                    <a style="font-size:14px" class="weui-btn weui-btn_default"> 今日日志信息 </a>
+                                </div>
+                            </div>
+                            <div v-show="journal.isMine&&!journal.isToday">
                                 <div style="display:block" :id="'patchButtonDiv_'+journal.journalId">
                                     <a style="font-size:14px" class="weui-btn weui-btn_default"
                                        @click="patchAction(journal.journalId)"> 补充日志信息 </a>
@@ -279,14 +325,14 @@
                 <div id="journalDetail" v-show="showPage === 'journalDetail'">
 
 
-                        <div class="top-bar" style="height: 40px;padding: 0px 0px;">
-                            <span @click="backToList" class="pull-left" style="margin-top: 4px;"><img
-                                    src="/images/back_icon.svg"
-                                    style="margin-top:3px"/></span>
-                            <span style="display:block;padding-top:3px" v-text="journalName(curJournal)"></span>
-                        </div>
+                   <div class="top-bar" style="height: 40px;padding: 0px 0px;">
+                      <span @click="backToList" class="pull-left" style="margin-top: 4px;"><img
+                            src="/images/back_icon.svg"
+                            style="margin-top:3px"/></span>
+                      <span style="display:block;padding-top:3px" v-text="journalName(curJournal)"></span>
+                    </div>
 
-                    <div id="journalContent">
+                    <div v-for="userJournal in journalLists" id="journalContent">
                         <div class="weui-panel__bd" style=" height: 40px;margin-top: 10px">
                             <a href="javascript:;" class="weui-media-box weui-media-box_appmsg"
                                style=" height: 40px; padding: 0px ;">
@@ -297,9 +343,9 @@
                                          class="weui-tabbar__icon">
                                 </div>
                                 <div class="weui-media-box__bd">
-                                    <label class="weui-media-box__title" style="color: #333333;font-size: 16px">{{curJournal.user.realName}}</label>
+                                    <label class="weui-media-box__title" style="color: #333333;font-size: 16px">{{userJournal.user.realName}}</label>
                                     <p class="weui-media-box__desc" style="color: #999999;font-size: 12px">
-                                        {{curJournal.createTs}}</p>
+                                        {{userJournal.createTs}}</p>
 
                                 </div>
                             </a>
@@ -311,16 +357,16 @@
                                 <div class="weui-form-preview__item">
                                     <label class="weui-form-preview__label" style="color: #555555;font-size: 14px;">今日总结:</label>
                                     <span class="weui-form-preview__value"
-                                          style="text-align:left;color: #555555;font-size: 14px">{{curJournal.summary}}</span>
+                                          style="text-align:left;color: #555555;font-size: 14px">{{userJournal.summary}}</span>
                                 </div>
                                 <div class="weui-form-preview__item">
                                     <label class="weui-form-preview__label"
                                            style="color: #555555;font-size: 14px">明日计划:</label>
                                     <span class="weui-form-preview__value"
-                                          style="text-align:left;color: #555555;font-size: 14px">{{curJournal.plan}}</span>
+                                          style="text-align:left;color: #555555;font-size: 14px">{{userJournal.plan}}</span>
                                 </div>
 
-                                <div class="weui-form-preview" v-for="(visitRecord, ind) in curJournal.visitRecords">
+                                <div class="weui-form-preview" v-for="(visitRecord, ind) in userJournal.visitRecords">
                                     <div class="weui-form-preview__bd" style="padding: 5px 0px">
                                         <div class="weui-form-preview__item" style="font-size: .8em;">
                                             <label class="weui-form-preview__label"
@@ -349,7 +395,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                 <div v-for="(visitRecord, ind) in curJournal.visitRecords">
+                                 <div v-for="(visitRecord, ind) in userJournal.visitRecords">
                                         <div class="weui-form-preview__item" v-if="visitRecord.opportunity!=null">
                                             <label class="weui-form-preview__label"
                                                    style="float:left;color: #555555;font-size: 14px"
@@ -362,7 +408,7 @@
                                             </div>
                                         </div>
                                  </div>
-                                <div class="weui-form-preview" v-for="patch in curJournal.journalPatches">
+                                <div class="weui-form-preview" v-for="patch in userJournal.journalPatches">
                                     <div class="weui-form-preview__bd" style="padding: 5px 0px">
                                         <div class="weui-form-preview__item" style="font-size: 12px;line-height: 17px">
                                         <span class="weui-form-preview__value" style="text-align: left;">

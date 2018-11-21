@@ -18,6 +18,7 @@ jQuery(document).ready(function () {
             projects: [],
             subMemberList: [],
             sendersId: [],
+            journalLists:[],
             sendersName: [],
             tempSenders: [],
             showRead: true,
@@ -172,9 +173,30 @@ jQuery(document).ready(function () {
                 this.showPage = 'filterDiv';
             },
             'loadDetail': function (journalId) {
-                this.curJournal = journalId;
-                this.showPage = 'journalDetail';
+            	var thisVue = this;
+                jQuery.ajax({
+                    type: 'get',
+                    url: '/journal/userJournal',
+                    data: {
+                        journalId: journalId.journalId
+                    },
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        thisVue.$set(thisVue, 'journalLists', result.journalLists);
+                        thisVue.curJournal = journalId;
+                        thisVue.showPage = 'journalDetail';
+                    } else {
+                        thisVue.errMsg = result.errMsg;
+                        thisVue.showErrMsg = true;
+                    }
+                });
             },
+            'loadDetail2': function(journalId){
+                window.location="/journal/edit?journalId="+journalId;
+            },
+            
             'backToList': function () {
                 this.showPage = 'journalList';
             },

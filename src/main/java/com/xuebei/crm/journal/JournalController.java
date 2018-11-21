@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -321,7 +322,16 @@ public class JournalController {
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;
     }
-
+ 
+    @RequestMapping("/userJournal")
+    public GsonView userJournal(String journalId)
+    {
+         GsonView gsonView = new GsonView();
+         gsonView.addStaticAttribute("journalLists", journalService.searchJournal2(journalId));
+         gsonView.addStaticAttribute("successFlg", true);
+         return gsonView;
+    }
+    
     @RequestMapping("/detail")
     public GsonView detail(String journalId){
         List journal = journalService.searchDatail(journalId);

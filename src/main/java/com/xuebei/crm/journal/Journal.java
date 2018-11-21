@@ -39,8 +39,19 @@ public class Journal {
 
     @Expose
     private Boolean isMine;
+    
+    @Expose
+    private Boolean isToday=false;
 
-    public User getUser() {
+    public Boolean getIsToday() {
+		return isToday;
+	}
+
+	public void setIsToday(Boolean isToday) {
+		this.isToday = isToday;
+	}
+
+	public User getUser() {
         return user;
     }
 
