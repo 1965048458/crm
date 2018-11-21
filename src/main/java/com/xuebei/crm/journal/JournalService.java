@@ -20,6 +20,8 @@ public interface JournalService {
     Journal queryJournalById(String userId, String journalId) throws AuthenticationException;
 
     List<Journal> searchJournal(JournalSearchParam param);
+    
+    List<Journal> searchJournal2(String journalId);
 
     List  searchDatail(String journalId);
 
