@@ -58,6 +58,18 @@ jQuery(document).ready(function () {
                     }
                 });
             },
+            'searchRepair':function () {
+                var thisVue = this;
+                jQuery.ajax({
+                    type: 'get',
+                    url: '/journal/repair',
+                    data: data,
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+
+                });
+            },
             'searchAll': function () {
                 this.searchList();
             },

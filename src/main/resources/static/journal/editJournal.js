@@ -396,10 +396,24 @@ jQuery(document).ready(function () {
            'queryContacts': function (contactsId) {
                for (var i in this.customers) {
                    var customer = this.customers[i];
-                   var contactsGroup = customer.contactsGroup;
-                   for (var j in contactsGroup) {
-                       if (contactsGroup[j].contactsId === contactsId)
-                           return contactsGroup[j];
+                   var depts = customer.depts;
+                   for (var j in depts) {
+                       var  a1=depts[j].contactsList;
+                       for (var k in a1)
+                       {
+                           if (a1[k].contactsId === contactsId)
+                               return a1[k];
+                       }
+                       var  d1=depts[j].departmentList;
+                       for (var n in d1)
+                       {
+                           var a2=d1[n].contactsList;
+                           for (var m in a2)
+                           {
+                               if (a2[m].contactsId === contactsId)
+                                   return a2[m];
+                           }
+                       }
                    }
                }
                return null;

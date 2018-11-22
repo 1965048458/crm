@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
@@ -40,22 +41,32 @@ public class CustomerControllerTest {
 
 
     @Test
-    @Ignore
     public void queryCustomerInfo() throws Exception {
-
-        String searchWord = "张三";
-        String userId = "23959345";
-        String url = "/customer/queryCustomer";
-        List<Customer> customerList = new ArrayList<>();
-
-        when(customerService.queryCustomerInfo(searchWord, userId)).thenReturn(customerList);
-
-        mockMvc.perform(get(url)
-                .param("searchWord", searchWord))
-                .andExpect(jsonPath("successFlg").value(true))
-                .andExpect(jsonPath("customerList").exists());
-
-        verify(customerService).queryCustomerInfo(searchWord, userId);
+        Date tmpDate=new Date();
+        if (tmpDate.getHours()<9&&tmpDate.getMinutes()<30) {
+            tmpDate.setDate(tmpDate.getDate()-1);
+        }
+        tmpDate.setHours(8);
+        tmpDate.setMinutes(30);
+        tmpDate.setSeconds(0);
+        Date tmpDate2=new Date(tmpDate.getTime());
+        tmpDate2.setDate(tmpDate.getDate()-3);
+        tmpDate2.setHours(0);
+        tmpDate2.setMinutes(0);
+        System.out.println(tmpDate2+"\n"+tmpDate);
+//        String searchWord = "张三";
+//        String userId = "23959345";
+//        String url = "/customer/queryCustomer";
+//        List<Customer> customerList = new ArrayList<>();
+//
+//        when(customerService.queryCustomerInfo(searchWord, userId)).thenReturn(customerList);
+//
+//        mockMvc.perform(get(url)
+//                .param("searchWord", searchWord))
+//                .andExpect(jsonPath("successFlg").value(true))
+//                .andExpect(jsonPath("customerList").exists());
+//
+//        verify(customerService).queryCustomerInfo(searchWord, userId);
 
     }
 

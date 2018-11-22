@@ -128,6 +128,61 @@ public class JournalController {
         }
         return GsonView.createSuccessView();
     }
+    @RequestMapping("/repair")
+    public GsonView getRepairJournal(HttpServletRequest request)
+    {
+        GsonView gsonView = new GsonView();
+        String userId = (String)request.getSession().getAttribute("userId");
+        JournalSearchParam param=new JournalSearchParam();
+        param.setUserId(userId);
+        Date tmpDate=new Date();
+        if (tmpDate.getHours()<9&&tmpDate.getMinutes()<30) {
+            tmpDate.setDate(tmpDate.getDate()-1);
+        }
+        tmpDate.setHours(8);
+        tmpDate.setMinutes(30);
+        tmpDate.setSeconds(0);
+        Date tmpDate2=new Date(tmpDate.getTime());
+        tmpDate2.setDate(tmpDate.getDate()-3);
+        tmpDate2.setHours(0);
+        tmpDate2.setMinutes(0);
+        param.setStartTime(tmpDate2);
+        param.setEndTime(tmpDate);
+        List<Journal> testJ=journalMapper.searchMyJournal(param);
+        //testJ.sort((journal1, journal2)-> journal1.getCreateTs().after(journal2.getCreateTs())?1:-1);
+        Date firstD=new Date(tmpDate2.getTime());
+        firstD.setDate(firstD.getDay()+1);
+        Date secondD=new Date(firstD.getTime());
+        secondD.setDate(secondD.getDay()+1);
+        List<String> showDate=new ArrayList<String>();
+        boolean tagF=false;
+        boolean tagS=false;
+        boolean tagT=false;
+        for (Journal jj:testJ)
+        {
+            if (!tagF&&jj.getCreateTs().before(firstD))
+            {
+                tagF=true;
+            }
+            if(!tagS&&jj.getCreateTs().after(firstD)&&jj.getCreateTs().before(secondD))
+            {
+                tagS=true;
+            }
+            if (!tagT&&jj.getCreateTs().after(secondD))
+            {
+                tagT=true;
+            }
+        }
+        if (!tagF)
+        {
+            showDate.add(firstD.getMonth()+"月"+firstD.getDay()+"日");
+        }
+        if(!tagS)
+        {
+            showDate.add(secondD.getMonth()+"月"+secondD.getDay()+"日");
+        }
+        return  gsonView;
+    }
 
     @RequestMapping("/query")
     public GsonView getJournalInfoById(@RequestParam("journalId") String journalId,
@@ -137,20 +192,21 @@ public class JournalController {
         Journal journal = journalService.queryJournalById(acquireUserId(request), journalId);
         List<User> colleagues = journalMapper.queryColleagues(acquireUserId(request));
         String companyId = companyMapper.queryCompanyIdByUserId(acquireUserId(request));
-        List<JournalCustomer> customerList = journalService.getAllContacts(companyId,userId);
+        //List<JournalCustomer> customerList = journalService.getAllContacts(companyId,userId);
+        List<BigCustomer> bigCu=journalService.getAllCustomers(companyId,userId);
         Set<String> userGroup = journalService.getAllSubordinatesUserId(acquireUserId(request));
 //        Set<Project> projectList = journalService.getAllSubordinatesProjects(userGroup);
         Set<Opportunity> opportunitySet = journalService.getAllSubordinatesOpportunity(userGroup);
         gsonView.addStaticAttribute("journal", journal);
         gsonView.addStaticAttribute("colleagues", colleagues);
-        gsonView.addStaticAttribute("customer", customerList);
-//        for (JournalCustomer dd:customerList)
-//        {
-//            for (Contacts cc:dd.getContactsGroup())
-//            {
-//                System.out.println(cc.getRealName());
-//            }
-//        }
+        gsonView.addStaticAttribute("customer", bigCu);
+/*        for (JournalCustomer dd:customerList)
+        {
+            for (Contacts cc:dd.getContactsGroup())
+            {
+                System.out.println(cc.getRealName());
+            }
+        }*/
 //        gsonView.addStaticAttribute("projects", projectList);
         gsonView.addStaticAttribute("opportunities", opportunitySet);
         return gsonView;
