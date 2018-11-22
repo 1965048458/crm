@@ -233,11 +233,11 @@ jQuery(document).ready(function () {
                jQuery('#draftDiv').hide();
            },
            'saveDraft': function () {
-               if (!this.isJournalSubmitted) {
+               /*if (!this.isJournalSubmitted) {
                    var result = this.prepareData();
-                   result.hasSubmitted = false;
+                   result.hasSubmitted = true;
                    this.doSaveJournal(result);
-               }
+               }*/
            },
            'modifBack': function () {
         	   this.showPage = 'selectOpportunity';

@@ -175,8 +175,7 @@
 						id="searchCancel" @click="cancel">取消</a>
 				</div>
 
-				<div class="weui-cells searchbar-result"
-					id="searchResult" style="display: none">
+				<div class="weui-cells searchbar-result" id="searchResult" style="display: none">
 					<div v-for="(customer, index) in ccustomers" :key="'scustomers_' + index">
 						<div class="weui-cell" @click="changeContactsFold2(index)">
 							<span class="pull-left" style="padding-right: 10px;">
@@ -202,8 +201,7 @@
 								<img :src="setImgPath(index)" id="customer.name+'_img'" />
 							</div>
 						</div>
-						<div v-show="!customer.contactsFold" class="weui-cells_checkbox"
-							style="padding-left: 10px">
+						<div v-show="!customer.contactsFold" class="weui-cells_checkbox" style="padding-left: 10px">
 							<ddd v-on:transfer_value="onTransferValue"
 								v-for="cc in customer.depts" v-bind:ccc="cc"></ddd>
 						</div>
@@ -433,6 +431,7 @@
 <template id="customer3">
     <div class="weui-cells">
             <div class="weui-cell">
+                <p>asdasd</p>
     <div class="weui-cell__bd">
             <div class="weui-cell__bd"  :id="ccc.deptName" >
                 <span class="pull-left" @click="changeSubFold(ccc.enclosureStatus)" style="padding-right: 10px;">

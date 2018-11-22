@@ -133,7 +133,6 @@ public class JournalController {
     public GsonView getJournalInfoById(@RequestParam("journalId") String journalId,
                                        HttpServletRequest request) throws AuthenticationException {
         GsonView gsonView = new GsonView();
-        System.out.println("this");
         String userId = (String)request.getSession().getAttribute("userId");
         Journal journal = journalService.queryJournalById(acquireUserId(request), journalId);
         List<User> colleagues = journalMapper.queryColleagues(acquireUserId(request));
@@ -145,6 +144,13 @@ public class JournalController {
         gsonView.addStaticAttribute("journal", journal);
         gsonView.addStaticAttribute("colleagues", colleagues);
         gsonView.addStaticAttribute("customer", customerList);
+//        for (JournalCustomer dd:customerList)
+//        {
+//            for (Contacts cc:dd.getContactsGroup())
+//            {
+//                System.out.println(cc.getRealName());
+//            }
+//        }
 //        gsonView.addStaticAttribute("projects", projectList);
         gsonView.addStaticAttribute("opportunities", opportunitySet);
         return gsonView;
@@ -168,6 +174,7 @@ public class JournalController {
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("colleagues", colleagues);
         gsonView.addStaticAttribute("customer", customerList);
+        System.out.println(customerList.size());
         gsonView.addStaticAttribute("opportunities", opportunitySet);
         return gsonView;
     }
@@ -260,6 +267,31 @@ public class JournalController {
 
         if (journalId == null && type == null) {
             return "error/500";
+        }
+        if (journalId==null) {
+            try {
+                JournalSearchParam param=new JournalSearchParam();
+                param.setUserId(acquireUserId(request));
+                Date tmpDate=new Date();
+                if (tmpDate.getHours()<9&&tmpDate.getMinutes()<30) {
+                    tmpDate.setDate(tmpDate.getDate()-1);
+                }
+                tmpDate.setHours(8);
+                tmpDate.setMinutes(30);
+                tmpDate.setSeconds(0);
+                Date tmpDate2=new Date(tmpDate.getTime());
+                tmpDate2.setDate(tmpDate.getDate()+1);
+                param.setStartTime(tmpDate);
+                param.setEndTime(tmpDate2);
+                List<Journal> testJ=journalMapper.searchMyJournal(param);
+                if (testJ.size()>0)
+                {
+                    testJ.sort((journal1, journal2)-> journal1.getCreateTs().before(journal2.getCreateTs())?1:-1);
+                    journalId=testJ.get(0).getJournalId();
+                }
+            } catch (AuthenticationException e) {
+                return "error/500";
+            }
         }
 
         try {
