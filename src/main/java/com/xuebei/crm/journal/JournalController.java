@@ -65,10 +65,10 @@ public class JournalController {
         }
      
         try {
-            if (journal.getJournalId() != null) {
+/*            if (journal.getJournalId() != null) {
                 // 更新日志内容
                 journalService.modifyJournal(journal);
-            } else {
+            } else*/ {
                 // 插入新日志
                 journalService.createJournal(journal);
                 List<String> deptIdList = journalMapper.queryDeptIdByJournalId(journal.getJournalId());

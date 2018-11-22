@@ -194,7 +194,7 @@ jQuery(document).ready(function () {
                 });
             },
             'loadDetail2': function(journalId){
-                window.location="/journal/edit?journalId="+journalId;
+                window.location="/journal/edit?journalId="+journalId+"&type=DAILY";
             },
             
             'backToList': function () {

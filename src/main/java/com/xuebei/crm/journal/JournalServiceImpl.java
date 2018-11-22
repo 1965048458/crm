@@ -77,7 +77,6 @@ public class JournalServiceImpl implements JournalService {
             throw new AuthenticationException("日志已提交");
         }
         checkVisitRecords(journal.getVisitRecords());
-
         journalMapper.updateJournal(journal);
         deleteVisitRecords(journal.getJournalId());
         insertVisitRecords(journal.getJournalId(), journal.getVisitRecords());
