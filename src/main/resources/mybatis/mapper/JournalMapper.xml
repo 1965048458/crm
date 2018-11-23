@@ -66,7 +66,19 @@
         <result property="content" column="content"/>
         <result property="createTs" column="create_ts"/>
     </resultMap>
-    
+    <insert id="insertRepairDate" parameterType="map">
+           INSERT INTO repair_journal
+                 (journal_id, repair_ts)
+            VALUES
+                  (#{journalId}, NOW())
+    </insert>
+
+    <select id="queryRepairDate" resultType="java.util.Date">
+      SELECT repair_ts
+      FROM repair_journal
+      WHERE journal_id = #{journalId}
+    </select>
+
     <insert id="createJournal" parameterType="com.xuebei.crm.journal.Journal" useGeneratedKeys="true" keyColumn="journal_id" keyProperty="journalId">
       INSERT INTO journal (
         user_id,
@@ -82,10 +94,20 @@
         #{type},
         #{plan},
         #{summary},
-        NOW(),
+        <choose>
+            <when test="createTs != null">
+                #{createTs},
+            </when>
+            <otherwise>
+                NOW(),
+            </otherwise>
+        </choose>
         NOW(),
         #{hasSubmitted}
       );
+        <selectKey resultType="java.lang.String" keyProperty="journalId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
     <select id="queryJournalById" resultMap="journalMap">

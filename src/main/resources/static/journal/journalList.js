@@ -24,6 +24,7 @@ jQuery(document).ready(function () {
             showRead: true,
             journalType: "",
             client: "",
+            repairDate:[],
             project: "",
             startTime: "",
             endTime: "",
@@ -63,12 +64,14 @@ jQuery(document).ready(function () {
                 jQuery.ajax({
                     type: 'get',
                     url: '/journal/repair',
-                    data: data,
                     dataType: 'json',
                     cache: false
                 }).done(function (result) {
-
+                    thisVue.$set(thisVue, 'repairDate', result.repairDate);
                 });
+            },
+            'repairJournal':function (date) {
+                window.location="/journal/edit?repairDate="+date+"&type=DAILY";
             },
             'searchAll': function () {
                 this.searchList();
@@ -220,6 +223,7 @@ jQuery(document).ready(function () {
                 return prefixName + '的' + TYPE_NAMES[journal.type];
             },
             'clickAddJournalButton': function () {
+                this.searchRepair();
                 this.showAddJournalDialog = true;
             },
             'cancelAddJournalEvent': function () {

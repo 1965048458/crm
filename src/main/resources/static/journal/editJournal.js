@@ -23,6 +23,7 @@ jQuery(document).ready(function () {
 
     var journalId = jQuery('#journalId').val();
     var journalType = jQuery('#journalType').val();
+    var repairDate=jQuery('#repairDate').val();
 
 
    var editJournalVue = new Vue({
@@ -32,6 +33,8 @@ jQuery(document).ready(function () {
            errMsg: '',
            journalType: journalType,
            journalId: journalId,
+           repairDate:repairDate,
+           createTs:'',
            showPage: 'journalPage',
            summary: '',
            content:'',
@@ -350,6 +353,7 @@ jQuery(document).ready(function () {
                    summary: this.summary,
                    plan: this.plan,
                    hasSubmitted: false,
+                   createTs:this.createTs,
                    visitRecords: this.visits,
                    receivers: this.receivers
                };
@@ -440,10 +444,15 @@ jQuery(document).ready(function () {
         	        jQuery.ajax({
         	            type: 'get',
         	            url: '/journal/action/getColleagueList',
+                        data:
+                            {
+                                repairDate:this.repairDate
+                            },
         	            dataType: 'json',
         	            cache: false,
         	            success: function(result) {
-        	                editJournalVue.$set(editJournalVue, 'colleagues', result.colleagues);
+        	                editJournalVue.$set(editJournalVue, 'createTs', result.createTs);
+                            editJournalVue.$set(editJournalVue, 'colleagues', result.colleagues);
         	                editJournalVue.$set(editJournalVue, 'customers', result.customer);
         	                editJournalVue.$set(editJournalVue, 'opportunities', result.opportunities);
         	            }

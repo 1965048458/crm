@@ -10,6 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,17 +44,21 @@ public class CustomerControllerTest {
     @Test
     public void queryCustomerInfo() throws Exception {
         Date tmpDate=new Date();
-        if (tmpDate.getHours()<9&&tmpDate.getMinutes()<30) {
+        if (tmpDate.getHours()<8||(tmpDate.getHours()<9&&tmpDate.getMinutes()<30)) {
             tmpDate.setDate(tmpDate.getDate()-1);
         }
         tmpDate.setHours(8);
         tmpDate.setMinutes(30);
         tmpDate.setSeconds(0);
-        Date tmpDate2=new Date(tmpDate.getTime());
-        tmpDate2.setDate(tmpDate.getDate()-3);
+        Date tmpDate2=new Date(tmpDate.getTime()-259200000);
         tmpDate2.setHours(0);
         tmpDate2.setMinutes(0);
-        System.out.println(tmpDate2+"\n"+tmpDate);
+        Date firstD=new Date(tmpDate2.getTime()+86400000);
+        Date secondD=new Date(firstD.getTime()+86400000);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String ddd=sdf.format(new Date());
+         System.out.println(ddd);
+         System.out.println(sdf.parse(ddd));
 //        String searchWord = "张三";
 //        String userId = "23959345";
 //        String url = "/customer/queryCustomer";

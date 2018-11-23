@@ -1,8 +1,12 @@
 package com.xuebei.crm.journal;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.gson.annotations.Expose;
 import com.xuebei.crm.opportunity.Opportunity;
 import com.xuebei.crm.user.User;
+import com.xuebei.crm.utils.CustomJsonDateDeserializer;
+import com.xuebei.crm.utils.DateJsonSerializer;
 
 import java.util.Date;
 import java.util.List;
@@ -20,9 +24,22 @@ public class Journal {
     @Expose
     private String plan;
     @Expose
+    @JsonDeserialize(using= CustomJsonDateDeserializer.class)
+    @JsonSerialize(using= DateJsonSerializer.class)
     private Date createTs;
     @Expose
     private Date modifyTs;
+
+    public Date getRepairTs() {
+        return repairTs;
+    }
+
+    public void setRepairTs(Date repairTs) {
+        this.repairTs = repairTs;
+    }
+
+    @Expose
+    private Date repairTs;
     @Expose
     private Boolean hasSubmitted;
     @Expose

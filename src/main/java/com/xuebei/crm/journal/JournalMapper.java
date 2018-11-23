@@ -6,6 +6,7 @@ import com.xuebei.crm.user.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -27,6 +28,10 @@ public interface JournalMapper {
     List<Journal> findJournalDraft(@Param("userId") String userId);
 
     // functions for table visit_log
+    Integer insertRepairDate(@Param("journalId") String journalId);
+
+    Date queryRepairDate(@Param("journalId")String journalId);
+
     Integer deleteVisitLog(@Param("journalId") String journalId);
 
     Integer insertVisitLog(VisitRecord visitRecord);

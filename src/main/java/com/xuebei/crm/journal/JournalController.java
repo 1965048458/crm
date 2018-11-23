@@ -12,6 +12,7 @@ import com.xuebei.crm.member.Member;
 import com.xuebei.crm.member.MemberService;
 import com.xuebei.crm.opportunity.Opportunity;
 import com.xuebei.crm.user.User;
+import com.xuebei.crm.utils.Hoilday;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -71,6 +73,10 @@ public class JournalController {
             } else*/ {
                 // 插入新日志
                 journalService.createJournal(journal);
+                if (journal.getCreateTs()!=null)
+                {
+                    journalMapper.insertRepairDate(journal.getJournalId());
+                }
                 List<String> deptIdList = journalMapper.queryDeptIdByJournalId(journal.getJournalId());
                 String userId = (String)request.getSession().getAttribute("userId");
                 for(String deptId:deptIdList){
@@ -135,26 +141,24 @@ public class JournalController {
         String userId = (String)request.getSession().getAttribute("userId");
         JournalSearchParam param=new JournalSearchParam();
         param.setUserId(userId);
-        Date tmpDate=new Date();
-        if (tmpDate.getHours()<9&&tmpDate.getMinutes()<30) {
+        Date tmpDate=new Date(); Date tmpDate2=new Date();
+        if (tmpDate.getHours()<8||(tmpDate.getHours()<9&&tmpDate.getMinutes()<30)) {
             tmpDate.setDate(tmpDate.getDate()-1);
         }
-        tmpDate.setHours(8);
-        tmpDate.setMinutes(30);
+        tmpDate.setHours(0);
+        tmpDate.setMinutes(0);
         tmpDate.setSeconds(0);
-        Date tmpDate2=new Date(tmpDate.getTime());
-        tmpDate2.setDate(tmpDate.getDate()-3);
+        tmpDate2.setDate(tmpDate2.getDate()-3);
         tmpDate2.setHours(0);
         tmpDate2.setMinutes(0);
+        tmpDate2.setSeconds(0);
         param.setStartTime(tmpDate2);
         param.setEndTime(tmpDate);
         List<Journal> testJ=journalMapper.searchMyJournal(param);
         //testJ.sort((journal1, journal2)-> journal1.getCreateTs().after(journal2.getCreateTs())?1:-1);
-        Date firstD=new Date(tmpDate2.getTime());
-        firstD.setDate(firstD.getDay()+1);
-        Date secondD=new Date(firstD.getTime());
-        secondD.setDate(secondD.getDay()+1);
-        List<String> showDate=new ArrayList<String>();
+        Date firstD=new Date(tmpDate2.getTime()+86400000);
+        Date secondD=new Date(firstD.getTime()+86400000);
+        List<ShowDate> showDate=new ArrayList<>();
         boolean tagF=false;
         boolean tagS=false;
         boolean tagT=false;
@@ -173,13 +177,21 @@ public class JournalController {
                 tagT=true;
             }
         }
-        if (!tagF)
-        {
-            showDate.add(firstD.getMonth()+"月"+firstD.getDay()+"日");
+        try {
+            if (!tagF && !Hoilday.isHoliday(tmpDate2)) {
+                showDate.add(new ShowDate(tmpDate2));
+            }
+            if (!tagS && !Hoilday.isHoliday(firstD)) {
+                showDate.add(new ShowDate(firstD));
+            }
+            if (!tagT && !Hoilday.isHoliday(secondD)) {
+                showDate.add(new ShowDate(secondD));
+            }
+            gsonView.addStaticAttribute("repairDate", showDate);
         }
-        if(!tagS)
+        catch (Exception e)
         {
-            showDate.add(secondD.getMonth()+"月"+secondD.getDay()+"日");
+
         }
         return  gsonView;
     }
@@ -213,7 +225,7 @@ public class JournalController {
     }
 
     @RequestMapping("/action/getColleagueList")
-    public GsonView getColleagueList(HttpServletRequest request) {
+    public GsonView getColleagueList(HttpServletRequest request,@RequestParam(value="repairDate") String repairDate) {
         List<BigCustomer> customerList;
         List<User> colleagues;
         Set<Opportunity> opportunitySet;
@@ -230,8 +242,16 @@ public class JournalController {
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("colleagues", colleagues);
         gsonView.addStaticAttribute("customer", customerList);
-        System.out.println(customerList.size());
         gsonView.addStaticAttribute("opportunities", opportunitySet);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        if (repairDate!=null) {
+            System.out.println(repairDate);
+            try {
+                gsonView.addStaticAttribute("createTs", sdf.parse(repairDate));
+            } catch (Exception e) {
+                gsonView.addStaticAttribute("createTs", null);
+            }
+        }
         return gsonView;
     }
     
@@ -318,25 +338,24 @@ public class JournalController {
        }
     @RequestMapping("/edit")
     public String editJournalPage(@RequestParam(value="type", required = false) String type,
-                              @RequestParam(value="journalId", required = false) String journalId,
+                              @RequestParam(value="journalId", required = false) String journalId,@RequestParam(value="repairDate", required = false) String repairDate,
                               ModelMap modelMap, HttpServletRequest request) {
 
         if (journalId == null && type == null) {
             return "error/500";
         }
-        if (journalId==null) {
+        if (journalId==null&&repairDate==null) {
             try {
                 JournalSearchParam param=new JournalSearchParam();
                 param.setUserId(acquireUserId(request));
                 Date tmpDate=new Date();
-                if (tmpDate.getHours()<9&&tmpDate.getMinutes()<30) {
+                if (tmpDate.getHours()<8||(tmpDate.getHours()<9&&tmpDate.getMinutes()<30)) {
                     tmpDate.setDate(tmpDate.getDate()-1);
                 }
                 tmpDate.setHours(8);
                 tmpDate.setMinutes(30);
                 tmpDate.setSeconds(0);
-                Date tmpDate2=new Date(tmpDate.getTime());
-                tmpDate2.setDate(tmpDate.getDate()+1);
+                Date tmpDate2=new Date(tmpDate.getTime()+86400000);
                 param.setStartTime(tmpDate);
                 param.setEndTime(tmpDate2);
                 List<Journal> testJ=journalMapper.searchMyJournal(param);
@@ -381,6 +400,8 @@ public class JournalController {
         } catch (AuthenticationException e) {
             return "error/500";
         }
+        if (repairDate!=null)
+            modelMap.addAttribute("repairDate", repairDate);
 
 
         return "editJournal";

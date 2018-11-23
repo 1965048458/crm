@@ -115,11 +115,13 @@
                                          style="border-top: 1px solid #e5e5e5;">填写月报
                                     </div>
                                 </a>
-                                <a @click="">
+                                <div  v-for="showDate in repairDate" @click="repairJournal(showDate.date)">
                                     <div class="weui-actionsheet__cell add-journal-item"
-                                         style="border-top: 1px solid #e5e5e5;">补交日志
+                                         style="border-top: 1px solid #e5e5e5;">
+                                       {{showDate.dateStr}}
                                     </div>
-                                </a>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -175,8 +177,11 @@
                                     </div>
                                     <div class="weui-media-box__bd">
                                         <label class="weui-media-box__title" style="color: #333333;font-size: 16px">{{journalName(journal)}}</label> <!-- 我的日报 于剑的日报 -->
-                                        <p class="weui-media-box__desc" style="color: #999999;font-size: 12px">
-                                            {{journal.createTs}}</p><!-- 日期 -->
+                                        <p v-if="journal.repairTs!=null" class="weui-media-box__desc" style="color: #999999;font-size: 12px">
+                                            {{journal.createTs}}----补于{{journal.repairTs}}</p><!-- 日期 -->
+                                        <p v-else class="weui-media-box__desc" style="color: #999999;font-size: 12px">
+                                            {{journal.createTs}}
+                                        </p>
 
                                     </div>
                                 </a>

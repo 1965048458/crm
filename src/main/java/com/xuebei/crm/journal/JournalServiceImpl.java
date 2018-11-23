@@ -258,7 +258,7 @@ public class JournalServiceImpl implements JournalService {
         	if (!reocrd.containsKey(playName)) {
         		Date tmpDate=new Date(jn.getCreateTs().getTime());
         		reocrd.put(playName, jn.getCreateTs());
-        		if (jn.getCreateTs().getHours()<9&&jn.getCreateTs().getMinutes()<30) {
+        		if (jn.getCreateTs().getHours()<8||(jn.getCreateTs().getHours()<9&&jn.getCreateTs().getMinutes()<30)) {
 					tmpDate.setDate(tmpDate.getDate()-1);
 				}
         		tmpDate.setHours(8);
@@ -267,7 +267,7 @@ public class JournalServiceImpl implements JournalService {
         		dateDawn.put(playName, tmpDate);
         		tmpJ.put(playName, jn);
         		Date sss=new Date();
-        		if (sss.getHours()<9&&sss.getMinutes()<30) {
+        		if (sss.getHours()<8||(sss.getHours()<9&&sss.getMinutes()<30)) {
         			sss.setDate(sss.getDate()-1);
 				}
         		sss.setHours(8);
@@ -284,7 +284,7 @@ public class JournalServiceImpl implements JournalService {
         			allJournalList2.add(tmpJ.get(playName));
 	        		Date tmpDate2=new Date(jn.getCreateTs().getTime());
 	        		reocrd.put(playName, jn.getCreateTs());
-	        		if (jn.getCreateTs().getHours()<9&&jn.getCreateTs().getMinutes()<30) {
+	        		if (jn.getCreateTs().getHours()<8||(jn.getCreateTs().getHours()<9&&jn.getCreateTs().getMinutes()<30)) {
 						tmpDate2.setDate(tmpDate2.getDate()-1);
 					}
 	        		tmpDate2.setHours(8);
@@ -298,6 +298,14 @@ public class JournalServiceImpl implements JournalService {
         for(Journal sss:tmpJ.values())
         {
         	allJournalList2.add(sss);
+        }
+        for (Journal journal:allJournalList2)
+        {
+            Date repairTs=journalMapper.queryRepairDate(journal.getJournalId());
+              if (repairTs!=null)
+              {
+                  journal.setRepairTs(repairTs);
+              }
         }
         return allJournalList2;
     }
