@@ -115,6 +115,11 @@
                                          style="border-top: 1px solid #e5e5e5;">填写月报
                                     </div>
                                 </a>
+                                <div @click="managerJournal">
+                                    <div class="weui-actionsheet__cell add-journal-item"
+                                         style="border-top: 1px solid #e5e5e5;">日志迟交情况
+                                    </div>
+                                </div>
                                 <div  v-for="showDate in repairDate" @click="repairJournal(showDate.date)">
                                     <div class="weui-actionsheet__cell add-journal-item"
                                          style="border-top: 1px solid #e5e5e5;">
@@ -616,7 +621,33 @@
                         <!--</div>-->
                     </div>
                 </div>
-
+                <div v-show="showPage === 'showManager'">
+                     <span class="pull-left" @click="backToList"
+                           style="color: rgb(61, 168, 244); font-size: 16px;">取消</span>
+                    <table border="1">
+                        <tr >
+                            <td>日期</td>
+                            <td>补交/30元</td>
+                            <td>漏交/100元</td>
+                        </tr>
+                        <tr v-for="ma in manager">
+                            <td>{{ma.showDate}}</td>
+                            <td v-if="ma.repairDate!=null">一</td>
+                            <td v-else>&nbsp;</td>
+                            <td v-if="!ma.tagertDate">一</td>
+                            <td v-else>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>统计</td>
+                            <td>{{repairC}}</td>
+                            <td>{{loseC}}</td>
+                        </tr>
+                        <tr>
+                            <td>总罚款金额</td>
+                            <td>{{totalC}}</td>
+                        </tr>
+                    </table>
+                </div>
                 <div id="selSender" v-show="showPage === 'selSender'">
                     <div class="top-bar center-box" style="border: hidden; padding: 8px 8px;">
                         <span class="pull-left" @click="backToFilter"

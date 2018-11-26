@@ -56,7 +56,7 @@
 <div id="editJournalVue">
     <input id="journalType" type="hidden" th:value="${journalType}">
     <input id="journalId" type="hidden" th:value="${journalId}">
-    <input id="repairDate" type="hidden" th:value="${repairDate}">
+    <input id="repairDate"  th:value="${repairDate}">
     <div v-show="showPage === 'journalPage'" id="journalPage">
         <div class="top-bar">
             <span @click="backToList" class="pull-left"><img src="/images/back_icon.svg" style="margin-top:3px"/></span>

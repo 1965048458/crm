@@ -26,6 +26,8 @@ public interface JournalService {
     List  searchDatail(String journalId);
 
     List<JournalCustomer> getAllContacts(String companyId,String userId);
+
+    List<ManageJournal> getJournalState(String userId);
     
     List<BigCustomer> getAllCustomers(String companyId,String userId);
 

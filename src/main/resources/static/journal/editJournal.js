@@ -24,7 +24,7 @@ jQuery(document).ready(function () {
     var journalId = jQuery('#journalId').val();
     var journalType = jQuery('#journalType').val();
     var repairDate=jQuery('#repairDate').val();
-
+    console.log(repairDate);
 
    var editJournalVue = new Vue({
        el: "#editJournalVue",
@@ -34,7 +34,7 @@ jQuery(document).ready(function () {
            journalType: journalType,
            journalId: journalId,
            repairDate:repairDate,
-           createTs:'',
+           createTs:null,
            showPage: 'journalPage',
            summary: '',
            content:'',
@@ -353,12 +353,16 @@ jQuery(document).ready(function () {
                    summary: this.summary,
                    plan: this.plan,
                    hasSubmitted: false,
-                   createTs:this.createTs,
+
                    visitRecords: this.visits,
                    receivers: this.receivers
                };
                if (this.journalId !== '0') {
                    result['journalId'] = this.journalId;
+               }
+               if (this.createTs!==null)
+               {
+                   result['createTs']=this.createTs;
                }
                return result;
            },

@@ -27,6 +27,8 @@ public interface JournalMapper {
 
     List<Journal> findJournalDraft(@Param("userId") String userId);
 
+    List<ManageJournal> getJournalState(@Param("userId") String userId,@Param("monthStart") Date monthStart);
+
     // functions for table visit_log
     Integer insertRepairDate(@Param("journalId") String journalId);
 

@@ -27,10 +27,14 @@ jQuery(document).ready(function () {
             repairDate:[],
             project: "",
             startTime: "",
+            manager:'',
             endTime: "",
             isRead: "",
             tip: '',
             errMsg: "",
+            repairC:'0',
+            loseC:'0',
+            totalC:'0',
             showErrMsg: false,
         },
         methods: {
@@ -68,6 +72,21 @@ jQuery(document).ready(function () {
                     cache: false
                 }).done(function (result) {
                     thisVue.$set(thisVue, 'repairDate', result.repairDate);
+                });
+            },
+            'managerJournal':function (){
+                var thisVue = this;
+                jQuery.ajax({
+                    type: 'get',
+                    url: '/journal/manager',
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    thisVue.$set(thisVue, 'repairC', result.repairC);
+                    thisVue.$set(thisVue, 'loseC', result.loseC);
+                    thisVue.$set(thisVue, 'totalC', result.totalC);
+                    thisVue.$set(thisVue, 'manager', result.manager);
+                    thisVue.showPage = 'showManager';
                 });
             },
             'repairJournal':function (date) {
@@ -214,6 +233,7 @@ jQuery(document).ready(function () {
             
             'backToList': function () {
                 this.showPage = 'journalList';
+                this.cancelAddJournalEvent();
             },
             'journalName': function (journal) {
                 var prefixName = journal.user.realName;

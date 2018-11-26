@@ -17,10 +17,14 @@ public class CustomJsonDateDeserializer extends JsonDeserializer<Date> {
     public Date deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException{
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = jp.getText();
-        try {
-            return format.parse(date);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+        /*if (date!=null&&!date.equals(""))*/ {
+            try {
+                return format.parse(date);
+            } catch (ParseException e) {
+                System.out.println(date);
+                throw new RuntimeException(e);
+            }
         }
+       // return  null;
     }
 }

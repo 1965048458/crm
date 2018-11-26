@@ -45,6 +45,9 @@ public class CompanyControllerTest {
     @Test
     public void testToChooseCompanyPage() throws Exception {
 
+        long a=1000;
+        long b=600;
+        System.out.println(a/b);
 //        String url = "/company/chooseCompany";
 //        mockMvc.perform(get(url))
 //                .andExpect(view().name("chooseCompany"));

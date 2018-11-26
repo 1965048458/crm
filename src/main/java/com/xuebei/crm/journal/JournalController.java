@@ -244,8 +244,7 @@ public class JournalController {
         gsonView.addStaticAttribute("customer", customerList);
         gsonView.addStaticAttribute("opportunities", opportunitySet);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        if (repairDate!=null) {
-            System.out.println(repairDate);
+        if (repairDate!=null&&!repairDate.equals("")) {
             try {
                 gsonView.addStaticAttribute("createTs", sdf.parse(repairDate));
             } catch (Exception e) {
@@ -407,6 +406,37 @@ public class JournalController {
         return "editJournal";
     }
 
+    @RequestMapping("/manager")
+    public  GsonView manager(HttpServletRequest request)
+    {
+        GsonView gsonView=new GsonView();
+        try {
+            String userId = acquireUserId(request);
+            List<ManageJournal> reportJ=journalService.getJournalState(userId);
+            gsonView.addStaticAttribute("manager",reportJ);
+            int repairCount=0;
+            int loseCount=0;
+            for (ManageJournal manageJournal:reportJ)
+            {
+                if (manageJournal.getRepairDate()!=null)
+                {
+                    repairCount++;
+                }
+                else if (manageJournal.getTagertDate()==null)
+                {
+                    loseCount++;
+                }
+            }
+            gsonView.addStaticAttribute("repairC",repairCount);
+            gsonView.addStaticAttribute("loseC",loseCount);
+            gsonView.addStaticAttribute("totalC",loseCount*100+repairCount*30);
+        }
+        catch (Exception e)
+        {
+
+        }
+        return gsonView;
+    }
     @RequestMapping("/toList")
     public String toJournalList(HttpServletRequest request, ModelMap modelMap) {
     	

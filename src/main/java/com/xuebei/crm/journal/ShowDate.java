@@ -9,6 +9,8 @@ public class ShowDate {
     @Expose
     private String date;
 
+
+
     public String getDateStr() {
         return dateStr;
     }

@@ -93,6 +93,58 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
+    public  List<ManageJournal> getJournalState(String userId)
+    {
+           Date monthStart=new Date();
+           monthStart.setHours(8);
+           monthStart.setMinutes(30);
+           monthStart.setSeconds(0);
+           int date=monthStart.getDate();
+           if (date<4)
+           {
+               monthStart.setDate(date-4);
+           }
+           else
+           {
+               monthStart.setDate(0);
+           }
+           List<ManageJournal> manageJournals=journalMapper.getJournalState(userId,monthStart);
+          manageJournals.sort((journal1, journal2)-> journal1.getTagertDate().after(journal2.getTagertDate())?1:-1);
+           List<ManageJournal> manageJournals2=new ArrayList<ManageJournal>();
+           ManageJournal recordJournal=null;
+           monthStart.setDate(monthStart.getDate()+1);
+           for (ManageJournal manageJournal :manageJournals)
+           {
+               if (manageJournal.getTagertDate().before(monthStart))
+               {
+                      recordJournal=manageJournal;
+               }
+               else
+               {
+                   if(recordJournal!=null&&recordJournal.getRepairDate()!=null) {
+                       recordJournal.setShowDate();
+                       manageJournals2.add(recordJournal);
+                   }
+                   recordJournal = manageJournal;
+                   long subDay=(recordJournal.getTagertDate().getTime()-monthStart.getTime())/86400000;
+                   monthStart.setDate(monthStart.getDate()+1);
+                   for(int i=0;i<subDay;i++)
+                   {
+                       ManageJournal tmpManageJ=new ManageJournal();
+                       tmpManageJ.setShowDate(monthStart.getDate()-1);
+                       manageJournals2.add(tmpManageJ);
+                       monthStart.setDate(monthStart.getDate()+1);
+                   }
+               }
+           }
+           if (recordJournal!=null) {
+               recordJournal.setShowDate();
+               manageJournals2.add(recordJournal);
+           }
+           return  manageJournals2;
+    }
+
+    @Override
     public Journal queryJournalById(String userId, String journalId) throws AuthenticationException {
         if (!journalMapper.userHasJournal(userId, journalId))
             throw new AuthenticationException("用户不拥有此日志");

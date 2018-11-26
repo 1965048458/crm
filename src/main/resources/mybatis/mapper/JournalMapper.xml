@@ -60,6 +60,11 @@
         <result property="realName" column="real_nm"/>
     </resultMap>
 
+    <resultMap id="manageJournalMap" type="com.xuebei.crm.journal.ManageJournal">
+        <id property="tagertDate" column="create_ts"/>
+        <result property="repairDate" column="repair_ts"/>
+    </resultMap>
+
     <resultMap id="journalPatchMap" type="com.xuebei.crm.journal.JournalPatch">
         <id property="journalPatchId" column="journal_patch_id"/>
         <result property="journalId" column="journal_id"/>
@@ -77,6 +82,15 @@
       SELECT repair_ts
       FROM repair_journal
       WHERE journal_id = #{journalId}
+    </select>
+
+    <select id="getJournalState" resultMap="manageJournalMap">
+      SELECT a.create_ts,b.repair_ts
+      FROM journal a Left JOIN  repair_journal b
+      ON a.journal_id=b.journal_id
+      WHERE a.user_id= #{userId}
+      AND a.create_ts &gt; #{monthStart}
+      AND a.create_ts &lt; NOW()
     </select>
 
     <insert id="createJournal" parameterType="com.xuebei.crm.journal.Journal" useGeneratedKeys="true" keyColumn="journal_id" keyProperty="journalId">
