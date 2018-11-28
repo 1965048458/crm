@@ -19,6 +19,8 @@ import com.xuebei.crm.opportunity.Opportunity;
 import com.xuebei.crm.project.Project;
 import com.xuebei.crm.project.ProjectMapper;
 import com.xuebei.crm.user.User;
+import com.xuebei.crm.utils.Hoilday;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -106,16 +108,24 @@ public class JournalServiceImpl implements JournalService {
            }
            else
            {
-               monthStart.setDate(0);
+               monthStart.setDate(1);
            }
-           List<ManageJournal> manageJournals=journalMapper.getJournalState(userId,monthStart);
+
+           List<ManageJournal> manageJournals=journalMapper.getJournalState(userId,monthStart,null);
+
+               Date tmp=new Date();
+               //tmp.setDate(tmp.getDate()+1);
+               tmp.setHours(9);
+               ManageJournal tmpM=new ManageJournal();
+               tmpM.setTagertDate(tmp);
+               manageJournals.add(tmpM);
           manageJournals.sort((journal1, journal2)-> journal1.getTagertDate().after(journal2.getTagertDate())?1:-1);
            List<ManageJournal> manageJournals2=new ArrayList<ManageJournal>();
            ManageJournal recordJournal=null;
-           monthStart.setDate(monthStart.getDate()+1);
+           //monthStart.setDate(monthStart.getDate()+1);
            for (ManageJournal manageJournal :manageJournals)
            {
-               if (manageJournal.getTagertDate().before(monthStart))
+               if (manageJournal.getTagertDate().before(new Date(monthStart.getTime())))
                {
                       recordJournal=manageJournal;
                }
@@ -126,22 +136,183 @@ public class JournalServiceImpl implements JournalService {
                        manageJournals2.add(recordJournal);
                    }
                    recordJournal = manageJournal;
+
                    long subDay=(recordJournal.getTagertDate().getTime()-monthStart.getTime())/86400000;
                    monthStart.setDate(monthStart.getDate()+1);
+
                    for(int i=0;i<subDay;i++)
                    {
-                       ManageJournal tmpManageJ=new ManageJournal();
-                       tmpManageJ.setShowDate(monthStart.getDate()-1);
-                       manageJournals2.add(tmpManageJ);
-                       monthStart.setDate(monthStart.getDate()+1);
+                       Date tmpHoilday=new Date(monthStart.getTime()-86400000);
+                       try {
+                           if (!Hoilday.isHoliday(tmpHoilday)) {
+                               ManageJournal tmpManageJ = new ManageJournal();
+                               tmpManageJ.setShowDate(new Date(monthStart.getTime()-86400000));
+                               manageJournals2.add(tmpManageJ);
+                           }
+                       }
+                       catch (Exception e)
+                       {
+
+                       }
+                       monthStart.setDate(monthStart.getDate() + 1);
                    }
                }
            }
-           if (recordJournal!=null) {
-               recordJournal.setShowDate();
-               manageJournals2.add(recordJournal);
-           }
            return  manageJournals2;
+    }
+
+
+    @Override
+    public List<FollowJournal> getJournalFollow(String userId) {
+        List<String> userIDs = journalMapper.queryFollowUserId(userId);
+        List<FollowJournal> followJournals=new ArrayList<>();
+        for (String user : userIDs) {
+            Date monthStart = new Date();
+            monthStart.setHours(8);
+            monthStart.setMinutes(30);
+            monthStart.setSeconds(0);
+            monthStart.setDate(1);
+            List<ManageJournal> manageJournals=journalMapper.getJournalState(user,monthStart,null);
+            Date tmp=new Date();
+            //tmp.setDate(tmp.getDate()+1);
+            tmp.setHours(9);
+
+            ManageJournal tmpM=new ManageJournal();
+            tmpM.setTagertDate(tmp);
+            manageJournals.add(tmpM);
+            manageJournals.sort((journal1, journal2)-> journal1.getTagertDate().after(journal2.getTagertDate())?1:-1);
+            List<ManageJournal> manageJournals2=new ArrayList<ManageJournal>();
+            ManageJournal recordJournal=null;
+
+            for (ManageJournal manageJournal :manageJournals)
+            {
+                if (manageJournal.getTagertDate().before(monthStart))
+                {
+                    recordJournal=manageJournal;
+                }
+                else
+                {
+                    if(recordJournal!=null&&recordJournal.getRepairDate()!=null) {
+                        manageJournals2.add(recordJournal);
+
+                    }
+                    recordJournal = manageJournal;
+                    long subDay2=(recordJournal.getTagertDate().getTime()-monthStart.getTime())/86400000;
+                    monthStart.setDate(monthStart.getDate() + 1);
+                    for(int i=0;i<subDay2;i++)
+                    {
+                        Date tmpHoilday=new Date(monthStart.getTime()-86400000);
+                        try {
+                            if (!Hoilday.isHoliday(tmpHoilday)) {
+                                ManageJournal tmpManageJ = new ManageJournal();
+                                tmpManageJ.setShowDate(new Date(monthStart.getTime()-86400000));
+                                manageJournals2.add(tmpManageJ);
+
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                                   System.out.println("error4");
+                                   break;
+                        }
+                        monthStart.setDate(monthStart.getDate()+1);
+                    }
+
+                }
+            }
+            int repairCount=0;
+            int loseCount=0;
+            for (ManageJournal manageJournal:manageJournals2)
+            {
+                if (manageJournal.getRepairDate()!=null)
+                {
+                    repairCount++;
+                }
+                else if (manageJournal.getTagertDate()==null)
+                {
+                    loseCount++;
+                }
+            }
+           followJournals.add(new FollowJournal(journalMapper.queryNameById(user),repairCount,loseCount,30,100));
+        }
+        return followJournals;
+    }
+    public List<FollowJournal> getJournalFollow(String userId,int index) {
+        List<String> userIDs = journalMapper.queryFollowUserId(userId);
+        List<FollowJournal> followJournals=new ArrayList<>();
+        for (String user : userIDs) {
+            Date monthStart = new Date();
+            monthStart.setHours(8);
+            monthStart.setMinutes(30);
+            monthStart.setSeconds(0);
+            monthStart.setDate(1);
+            Date monthEnd=new Date(monthStart.getTime());
+            monthStart.setMonth(monthStart.getMonth()-index);
+            monthEnd.setMonth(monthStart.getMonth()+1);
+            List<ManageJournal> manageJournals=journalMapper.getJournalState(user,monthStart,monthEnd);
+            monthEnd.setDate(1);
+            monthEnd.setHours(9);
+
+            ManageJournal tmpM=new ManageJournal();
+            tmpM.setTagertDate(monthEnd);
+            manageJournals.add(tmpM);
+            manageJournals.sort((journal1, journal2)-> journal1.getTagertDate().after(journal2.getTagertDate())?1:-1);
+            List<ManageJournal> manageJournals2=new ArrayList<ManageJournal>();
+            ManageJournal recordJournal=null;
+            //monthStart.setDate(monthStart.getDate()+1);
+            for (ManageJournal manageJournal :manageJournals)
+            {
+                if (manageJournal.getTagertDate().before(monthStart))
+                {
+                    recordJournal=manageJournal;
+                }
+                else
+                {
+                    if(recordJournal!=null&&recordJournal.getRepairDate()!=null) {
+                        manageJournals2.add(recordJournal);
+                    }
+                    recordJournal = manageJournal;
+                    long subDay2=(recordJournal.getTagertDate().getTime()-monthStart.getTime())/86400000;
+                    monthStart.setDate(monthStart.getDate()+1);
+
+                    for(int i=0;i<subDay2;i++)
+                    {
+                        Date tmpHoilday=new Date(monthStart.getTime()-86400000);
+                        try {
+                            if (!Hoilday.isHoliday(tmpHoilday)) {
+                                ManageJournal tmpManageJ = new ManageJournal();
+                                tmpManageJ.setShowDate(new Date(monthStart.getTime()-86400000));
+
+                                manageJournals2.add(tmpManageJ);
+
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            System.out.println("error2");
+                            break;
+                        }
+                        monthStart.setDate(monthStart.getDate() + 1);
+                    }
+
+                }
+            }
+            int repairCount=0;
+            int loseCount=0;
+            for (ManageJournal manageJournal:manageJournals2)
+            {
+                if (manageJournal.getRepairDate()!=null)
+                {
+                    repairCount++;
+                }
+                else if (manageJournal.getTagertDate()==null)
+                {
+                    loseCount++;
+                }
+            }
+            followJournals.add(new FollowJournal(journalMapper.queryNameById(user),repairCount,loseCount,30,100));
+        }
+        return followJournals;
     }
 
     @Override

@@ -28,6 +28,10 @@ public interface JournalService {
     List<JournalCustomer> getAllContacts(String companyId,String userId);
 
     List<ManageJournal> getJournalState(String userId);
+
+    List<FollowJournal> getJournalFollow(String userId);
+
+    List<FollowJournal> getJournalFollow(String userId,int index);
     
     List<BigCustomer> getAllCustomers(String companyId,String userId);
 

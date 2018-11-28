@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:style="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>工作日志</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
@@ -90,8 +90,6 @@
     </style>
 </head>
 <body>
-
-
 <div class="page tabbar js_show">
     <div class="weui-tab">
         <div class="weui-tab__panel" style="background: #FFFFFF">
@@ -119,6 +117,13 @@
                                     <div class="weui-actionsheet__cell add-journal-item"
                                          style="border-top: 1px solid #e5e5e5;">日志迟交情况
                                     </div>
+                                </div>
+                                <div v-if="isAdmin===true">
+                                <div  @click="follow">
+                                    <div class="weui-actionsheet__cell add-journal-item"
+                                         style="border-top: 1px solid #e5e5e5;">日志统计情况
+                                    </div>
+                                </div>
                                 </div>
                                 <div  v-for="showDate in repairDate" @click="repairJournal(showDate.date)">
                                     <div class="weui-actionsheet__cell add-journal-item"
@@ -621,32 +626,54 @@
                         <!--</div>-->
                     </div>
                 </div>
+
                 <div v-show="showPage === 'showManager'">
                      <span class="pull-left" @click="backToList"
                            style="color: rgb(61, 168, 244); font-size: 16px;">取消</span>
                     <table border="1">
                         <tr >
-                            <td>日期</td>
-                            <td>补交/30元</td>
-                            <td>漏交/100元</td>
+                            <td >日期</td>
+                            <td>补交扣款</td>
+                            <td>漏交扣款</td>
                         </tr>
                         <tr v-for="ma in manager">
                             <td>{{ma.showDate}}</td>
-                            <td v-if="ma.repairDate!=null">一</td>
-                            <td v-else>&nbsp;</td>
-                            <td v-if="!ma.tagertDate">一</td>
-                            <td v-else>&nbsp;</td>
+                            <td v-if="ma.repairDate!=null">-30</td>
+                            <td v-else>0</td>
+                            <td v-if="!ma.tagertDate">-100</td>
+                            <td v-else>0</td>
                         </tr>
                         <tr>
-                            <td>统计</td>
-                            <td>{{repairC}}</td>
-                            <td>{{loseC}}</td>
-                        </tr>
-                        <tr>
-                            <td>总罚款金额</td>
+                            <td>合计扣款</td>
                             <td>{{totalC}}</td>
                         </tr>
                     </table>
+                </div>
+                <div v-show="showPage === 'showFollow'">
+                     <span class="pull-left" @click="backToList"
+                           style="color: rgb(61, 168, 244); font-size: 16px;">取消</span>
+                    <table border="1">
+                        <tr >
+                            <td >姓名</td>
+                            <td>补交次数/30</td>
+                            <td>漏交次数/100</td>
+                            <td>总罚款金额</td>
+                        </tr>
+                        <tr v-for="ma in followJournal">
+                            <td>{{ma.name}}</td>
+                            <td>{{ma.delayCount}}</td>
+                            <td>{{ma.dropCount}}</td>
+                            <td>{{ma.toalMoney}}</td>
+                        </tr>
+                    </table>
+                    <p>
+                        <div v-for="je in journalExcel">
+                        <span @click="CreateExcel(je.monthIndex)">
+                            {{je.showJournalMonth}}
+                        </span>
+                    &nbsp;&nbsp;&nbsp;
+                         </div>
+                    </p>
                 </div>
                 <div id="selSender" v-show="showPage === 'selSender'">
                     <div class="top-bar center-box" style="border: hidden; padding: 8px 8px;">

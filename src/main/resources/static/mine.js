@@ -239,7 +239,7 @@ jQuery(document).ready(function () {
                     cache: false,
                     success: function (result) {
                         if (result.successFlg) {
-                            window.location = '/journal/toList';
+                            window.location = '/journal/toList2';
                         } else {
                             alert(result.errMsg);
                         }

@@ -16,7 +16,7 @@ public class ShowDate {
     }
     public  ShowDate(Date date)
     {
-        date=new Date(date.getTime()+86399000);
+        date=new Date(date.getTime()+55799000);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         this.date=sdf.format(date);
         this.dateStr="补:"+(date.getMonth()+1)+"-"+date.getDate();

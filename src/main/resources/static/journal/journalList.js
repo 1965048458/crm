@@ -14,6 +14,7 @@ jQuery(document).ready(function () {
             curJournal: {
                 user: {}
             },
+            isAdmin:false,
             customers: [],
             projects: [],
             subMemberList: [],
@@ -21,6 +22,8 @@ jQuery(document).ready(function () {
             journalLists:[],
             sendersName: [],
             tempSenders: [],
+            followJournal:[],
+            journalExcel:[],
             showRead: true,
             journalType: "",
             client: "",
@@ -72,6 +75,7 @@ jQuery(document).ready(function () {
                     cache: false
                 }).done(function (result) {
                     thisVue.$set(thisVue, 'repairDate', result.repairDate);
+                    thisVue.$set(thisVue,'isAdmin',result.isAdmin);
                 });
             },
             'managerJournal':function (){
@@ -88,6 +92,23 @@ jQuery(document).ready(function () {
                     thisVue.$set(thisVue, 'manager', result.manager);
                     thisVue.showPage = 'showManager';
                 });
+            },
+            'follow':function () {
+                //window.location="/journal/info";
+                var thisVue = this;
+                jQuery.ajax({
+                    type: "post",
+                    url: '/journal/follow',
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    thisVue.$set(thisVue, 'followJournal', result.followJournal);
+                    thisVue.$set(thisVue,'journalExcel',result.journalExcel);
+                    thisVue.showPage = 'showFollow';
+                });
+            },
+            'CreateExcel':function (index) {
+                window.location="/journal/info?index="+index;
             },
             'repairJournal':function (date) {
                 window.location="/journal/edit?repairDate="+date+"&type=DAILY";

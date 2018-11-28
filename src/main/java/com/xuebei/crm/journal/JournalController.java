@@ -13,22 +13,29 @@ import com.xuebei.crm.member.MemberService;
 import com.xuebei.crm.opportunity.Opportunity;
 import com.xuebei.crm.user.User;
 import com.xuebei.crm.utils.Hoilday;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/journal")
@@ -145,12 +152,12 @@ public class JournalController {
         if (tmpDate.getHours()<8||(tmpDate.getHours()<9&&tmpDate.getMinutes()<30)) {
             tmpDate.setDate(tmpDate.getDate()-1);
         }
-        tmpDate.setHours(0);
-        tmpDate.setMinutes(0);
+        tmpDate.setHours(8);
+        tmpDate.setMinutes(30);
         tmpDate.setSeconds(0);
         tmpDate2.setDate(tmpDate2.getDate()-3);
-        tmpDate2.setHours(0);
-        tmpDate2.setMinutes(0);
+        tmpDate2.setHours(8);
+        tmpDate2.setMinutes(30);
         tmpDate2.setSeconds(0);
         param.setStartTime(tmpDate2);
         param.setEndTime(tmpDate);
@@ -192,6 +199,15 @@ public class JournalController {
         catch (Exception e)
         {
 
+        }
+        String type=companyMapper.queryUserType(userId);
+        if (type.equals("ADMIN"))
+        {
+            gsonView.addStaticAttribute("isAdmin",true);
+        }
+        else
+        {
+            gsonView.addStaticAttribute("isAdmin",false);
         }
         return  gsonView;
     }
@@ -437,12 +453,98 @@ public class JournalController {
         }
         return gsonView;
     }
+    @RequestMapping("/info")
+    public void info(HttpServletRequest request, HttpServletResponse response,@RequestParam("index") int index){
+        String userId = (String) request.getSession().getAttribute("userId");
+        if (userId==null)
+                return;
+        List<FollowJournal> followJournals = journalService.getJournalFollow(userId,index);
+        List<String> map=new ArrayList<>();
+        map.add("姓名");
+        map.add("本月补交次数/30元");
+        map.add("本月漏交次数/100元");
+        map.add("本月罚款总额");
+        HSSFWorkbook wb = new HSSFWorkbook();
+        Sheet sheet = wb.createSheet("日志明细表");
+        int j=1;
+        Row row = sheet.createRow(0);
+        int i = 0;
+        for(String key : map){
+            Cell cell = row.createCell(i);
+            cell.setCellValue( key);
+            i++;
+        }
+        for (FollowJournal followJournal :followJournals)
+        {
+            Row tmpRow = sheet.createRow(j);
+            Cell cell0 = tmpRow.createCell(0);
+            cell0.setCellValue(followJournal.getName());
+            Cell cell1 = tmpRow.createCell(1);
+            cell1.setCellValue(followJournal.getDelayCount());
+            Cell cell2 = tmpRow.createCell(2);
+            cell2.setCellValue(followJournal.getDropCount());
+            Cell cell3 = tmpRow.createCell(3);
+            cell3.setCellValue(followJournal.getToalMoney());
+            j++;
+        }
+        OutputStream fos = null;
+        try {
+            fos = response.getOutputStream();
+            String userAgent = request.getHeader("USER-AGENT");
+            String fileName = (new Date().getMonth()-index+1)+"月日志明细表";
+            try {
+                if(StringUtils.contains(userAgent, "Mozilla")){
+                    fileName = new String(fileName.getBytes(), "ISO8859-1");
+                }else {
+                    fileName = URLEncoder.encode(fileName, "utf8");
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/vnd.ms-excel;charset=utf-8");// 设置contentType为excel格式
+            response.setHeader("Content-Disposition", "Attachment;Filename="+ fileName+".xls");
+            wb.write(fos);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping("/follow")
+    public  GsonView follow(HttpServletRequest request)
+    {
+        GsonView gsonView=new GsonView();
+        try {
+            String userId = acquireUserId(request);
+            List<FollowJournal> followJournals=journalService.getJournalFollow(userId);
+            List<JournalExcel> journalExcels=new ArrayList<>();
+            int month=new Date().getMonth();
+            journalExcels.add(new JournalExcel(month,1));
+            journalExcels.add(new JournalExcel(month,2));
+            journalExcels.add(new JournalExcel(month,3));
+            gsonView.addStaticAttribute("followJournal",followJournals);
+            gsonView.addStaticAttribute("journalExcel",journalExcels);
+        }
+        catch (Exception e)
+        {
+
+        }
+        return  gsonView;
+    }
     @RequestMapping("/toList")
     public String toJournalList(HttpServletRequest request, ModelMap modelMap) {
-    	
+        modelMap.addAttribute("isAdmin",false);
         return "journalList";
     }
-    
+    @RequestMapping("/toList2")
+    public String toJournalList2(HttpServletRequest request, ModelMap modelMap) {
+        modelMap.addAttribute("isAdmin",true);
+        return "journalList";
+    }
     @RequestMapping("/tooppor")
     public String toOppor(HttpServletRequest request, ModelMap modelMap) {
     	modelMap.addAttribute("tagflag", 1);

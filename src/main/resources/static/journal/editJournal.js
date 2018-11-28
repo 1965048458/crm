@@ -24,7 +24,6 @@ jQuery(document).ready(function () {
     var journalId = jQuery('#journalId').val();
     var journalType = jQuery('#journalType').val();
     var repairDate=jQuery('#repairDate').val();
-    console.log(repairDate);
 
    var editJournalVue = new Vue({
        el: "#editJournalVue",

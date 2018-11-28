@@ -27,10 +27,14 @@ public interface JournalMapper {
 
     List<Journal> findJournalDraft(@Param("userId") String userId);
 
-    List<ManageJournal> getJournalState(@Param("userId") String userId,@Param("monthStart") Date monthStart);
+    List<ManageJournal> getJournalState(@Param("userId") String userId,@Param("monthStart") Date monthStart,@Param("endTs") Date endTs);
 
     // functions for table visit_log
     Integer insertRepairDate(@Param("journalId") String journalId);
+
+    List<String> queryFollowUserId(@Param("userId") String userId);
+
+    String queryNameById(@Param("userId") String userId);
 
     Date queryRepairDate(@Param("journalId")String journalId);
 

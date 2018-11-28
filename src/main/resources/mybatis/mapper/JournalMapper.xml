@@ -90,7 +90,15 @@
       ON a.journal_id=b.journal_id
       WHERE a.user_id= #{userId}
       AND a.create_ts &gt; #{monthStart}
-      AND a.create_ts &lt; NOW()
+      AND a.create_ts &lt;
+        <choose>
+            <when test="endTs != null">
+                #{endTs}
+            </when>
+            <otherwise>
+                NOW()
+            </otherwise>
+        </choose>
     </select>
 
     <insert id="createJournal" parameterType="com.xuebei.crm.journal.Journal" useGeneratedKeys="true" keyColumn="journal_id" keyProperty="journalId">
@@ -364,7 +372,21 @@
         SELECT user_id FROM company_user
 		WHERE leader_id = #{userId};
     </select>
-    
+
+    <select id="queryFollowUserId" resultType="java.lang.String">
+        SELECT a.user_id FROM company_user a
+        INNER JOIN
+        (SELECT b.company_id FROM company_user b
+        WHERE b.user_id=#{userId}) as c
+        ON a.company_id=c.company_id
+    </select>
+
+    <select id="queryNameById" resultType="java.lang.String">
+        SELECT a.real_nm FROM crm_user a
+        INNER JOIN company_user b
+        ON a.crm_user_id=b.crm_user_id
+        WHERE b.user_id=#{userId}
+    </select>
     <select id="queryDeptIdByJournalId" resultType="java.lang.String">
         select p2.des_id from
             (select t2.contacts_id from
