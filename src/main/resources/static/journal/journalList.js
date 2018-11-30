@@ -20,6 +20,8 @@ jQuery(document).ready(function () {
             subMemberList: [],
             sendersId: [],
             journalLists:[],
+            delay:30,
+            miss:100,
             sendersName: [],
             tempSenders: [],
             followJournal:[],
@@ -78,6 +80,34 @@ jQuery(document).ready(function () {
                     thisVue.$set(thisVue,'isAdmin',result.isAdmin);
                 });
             },
+            'change':function () {
+                var thisVue = this;
+                jQuery.ajax({
+                    type: 'get',
+                    url: '/journal/money',
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    thisVue.$set(thisVue,'delay',result.delay);
+                    thisVue.$set(thisVue,'miss',result.miss);
+                    thisVue.showPage = 'money';
+                });
+            },
+            'changemoney':function () {
+                var thisVue = this;
+                jQuery.ajax({
+                    type: 'get',
+                    url: '/journal/changemoney',
+                    data: {
+                        delay: thisVue.delay ,
+                        miss:thisVue.miss
+                    },
+                    dataType: 'json',
+                    cache: false
+                }).done(function (result) {
+                    alert("修改成功");
+                });
+            },
             'managerJournal':function (){
                 var thisVue = this;
                 jQuery.ajax({
@@ -90,6 +120,8 @@ jQuery(document).ready(function () {
                     thisVue.$set(thisVue, 'loseC', result.loseC);
                     thisVue.$set(thisVue, 'totalC', result.totalC);
                     thisVue.$set(thisVue, 'manager', result.manager);
+                    thisVue.$set(thisVue,'delay',result.delay);
+                    thisVue.$set(thisVue,'miss',result.miss);
                     thisVue.showPage = 'showManager';
                 });
             },
@@ -104,6 +136,8 @@ jQuery(document).ready(function () {
                 }).done(function (result) {
                     thisVue.$set(thisVue, 'followJournal', result.followJournal);
                     thisVue.$set(thisVue,'journalExcel',result.journalExcel);
+                    thisVue.$set(thisVue,'delay',result.delay);
+                    thisVue.$set(thisVue,'miss',result.miss);
                     thisVue.showPage = 'showFollow';
                 });
             },

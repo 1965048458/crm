@@ -29,9 +29,9 @@ public interface JournalService {
 
     List<ManageJournal> getJournalState(String userId);
 
-    List<FollowJournal> getJournalFollow(String userId);
+    List<FollowJournal> getJournalFollow(String userId,float delay,float miss);
 
-    List<FollowJournal> getJournalFollow(String userId,int index);
+    List<FollowJournal> getJournalFollow(String userId,int index,float delay,float miss);
     
     List<BigCustomer> getAllCustomers(String companyId,String userId);
 

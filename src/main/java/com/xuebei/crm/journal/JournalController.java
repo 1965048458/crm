@@ -443,9 +443,13 @@ public class JournalController {
                     loseCount++;
                 }
             }
+            float delay=(float)request.getSession().getAttribute("delay");
+            float miss=(float)request.getSession().getAttribute("miss");
             gsonView.addStaticAttribute("repairC",repairCount);
             gsonView.addStaticAttribute("loseC",loseCount);
-            gsonView.addStaticAttribute("totalC",loseCount*100+repairCount*30);
+            gsonView.addStaticAttribute("delay",delay);
+            gsonView.addStaticAttribute("miss",miss);
+            gsonView.addStaticAttribute("totalC",loseCount*miss+repairCount*delay);
         }
         catch (Exception e)
         {
@@ -453,16 +457,41 @@ public class JournalController {
         }
         return gsonView;
     }
+    @RequestMapping("/money")
+    public GsonView money(HttpServletRequest request)
+    {
+        GsonView gsonView=new GsonView();
+        float delay=(float)request.getSession().getAttribute("delay");
+        float miss=(float)request.getSession().getAttribute("miss");
+        gsonView.addStaticAttribute("delay",delay);
+        gsonView.addStaticAttribute("miss",miss);
+        return  gsonView;
+    }
+
+    @RequestMapping("/changemoney")
+    public GsonView changemoney(HttpServletRequest request,@RequestParam("delay") float delay,@RequestParam("miss") float miss)
+    {
+        request.getSession().setAttribute("delay",delay);
+        request.getSession().setAttribute("miss",miss);
+        String compandId=(String)request.getSession().getAttribute("companyId");
+        companyMapper.changemoney(delay,miss,compandId);
+        return new GsonView();
+    }
+
+
+
     @RequestMapping("/info")
     public void info(HttpServletRequest request, HttpServletResponse response,@RequestParam("index") int index){
         String userId = (String) request.getSession().getAttribute("userId");
+        float delay=(float)request.getSession().getAttribute("delay");
+        float miss=(float)request.getSession().getAttribute("miss");
         if (userId==null)
                 return;
-        List<FollowJournal> followJournals = journalService.getJournalFollow(userId,index);
+        List<FollowJournal> followJournals = journalService.getJournalFollow(userId,index,delay,miss);
         List<String> map=new ArrayList<>();
         map.add("姓名");
-        map.add("本月补交次数/30元");
-        map.add("本月漏交次数/100元");
+        map.add("本月补交次数/"+delay+"元");
+        map.add("本月漏交次数/"+miss+"元");
         map.add("本月罚款总额");
         HSSFWorkbook wb = new HSSFWorkbook();
         Sheet sheet = wb.createSheet("日志明细表");
@@ -520,7 +549,9 @@ public class JournalController {
         GsonView gsonView=new GsonView();
         try {
             String userId = acquireUserId(request);
-            List<FollowJournal> followJournals=journalService.getJournalFollow(userId);
+            float delay=(float)request.getSession().getAttribute("delay");
+            float miss=(float)request.getSession().getAttribute("miss");
+            List<FollowJournal> followJournals=journalService.getJournalFollow(userId,delay,miss);
             List<JournalExcel> journalExcels=new ArrayList<>();
             int month=new Date().getMonth();
             journalExcels.add(new JournalExcel(month,1));
@@ -528,6 +559,8 @@ public class JournalController {
             journalExcels.add(new JournalExcel(month,3));
             gsonView.addStaticAttribute("followJournal",followJournals);
             gsonView.addStaticAttribute("journalExcel",journalExcels);
+            gsonView.addStaticAttribute("delay",delay);
+            gsonView.addStaticAttribute("miss",miss);
         }
         catch (Exception e)
         {

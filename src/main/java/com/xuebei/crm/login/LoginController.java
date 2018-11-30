@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -425,6 +426,13 @@ public class LoginController {
             return GsonView.createErrorView("用户未加入公司或审核未通过");
         } else {
             request.getSession().setAttribute("userId", userId);
+            HashMap<String,Float> money=companyMapper.queryJournalFine(companyId);
+            if (money.size()==2) {
+                request.getSession().setAttribute("delay",money.get("delay"));
+                request.getSession().setAttribute("miss",money.get("miss"));
+                request.getSession().setAttribute("companyId",companyId);
+            }
+
             String userType = companyMapper.queryUserType(userId);
             if (userType.equals("ADMIN")) {
                 gsonView.addStaticAttribute("ADMIN", true);

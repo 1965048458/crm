@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -53,7 +54,7 @@ public interface CompanyMapper {
 
     void applyAgain(@Param("crmUserId")String crmUserId,@Param("companyId")String companyId);
 
+    HashMap<String,Float> queryJournalFine(@Param("companyId")String companyId);
 
-
-
+    void changemoney(@Param("delay")Float delay,@Param("miss")Float miss,@Param("compandId")String compandId);
 }

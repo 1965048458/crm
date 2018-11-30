@@ -163,7 +163,7 @@ public class JournalServiceImpl implements JournalService {
 
 
     @Override
-    public List<FollowJournal> getJournalFollow(String userId) {
+    public List<FollowJournal> getJournalFollow(String userId,float delay,float miss) {
         List<String> userIDs = journalMapper.queryFollowUserId(userId);
         List<FollowJournal> followJournals=new ArrayList<>();
         for (String user : userIDs) {
@@ -233,11 +233,11 @@ public class JournalServiceImpl implements JournalService {
                     loseCount++;
                 }
             }
-           followJournals.add(new FollowJournal(journalMapper.queryNameById(user),repairCount,loseCount,30,100));
+           followJournals.add(new FollowJournal(journalMapper.queryNameById(user),repairCount,loseCount,delay,miss));
         }
         return followJournals;
     }
-    public List<FollowJournal> getJournalFollow(String userId,int index) {
+    public List<FollowJournal> getJournalFollow(String userId,int index,float delay,float miss) {
         List<String> userIDs = journalMapper.queryFollowUserId(userId);
         List<FollowJournal> followJournals=new ArrayList<>();
         for (String user : userIDs) {
@@ -310,7 +310,7 @@ public class JournalServiceImpl implements JournalService {
                     loseCount++;
                 }
             }
-            followJournals.add(new FollowJournal(journalMapper.queryNameById(user),repairCount,loseCount,30,100));
+            followJournals.add(new FollowJournal(journalMapper.queryNameById(user),repairCount,loseCount,delay,miss));
         }
         return followJournals;
     }

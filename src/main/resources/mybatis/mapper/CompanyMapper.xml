@@ -68,6 +68,17 @@
         WHERE user_id = #{userId};
     </select>
 
+    <select id="queryJournalFine" resultType="java.util.HashMap">
+        SELECT  delay,miss
+        FROM journal_fine
+        where company_id=#{companyId}
+    </select>
+    <update id="changemoney">
+        update journal_fine
+        SET delay=#{delay},
+        miss=#{miss}
+        where company_id=#{compandId}
+    </update>
     <insert id="joinCompany">
         INSERT INTO `company_user` (
             `user_id`,

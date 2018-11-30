@@ -14,4 +14,5 @@ public interface CompanyService {
     CompanyUser getUserInfo(String crmUserId);
 
     List<Company> queryCompany(String word);
+
 }

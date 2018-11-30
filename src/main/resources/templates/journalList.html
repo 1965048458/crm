@@ -124,6 +124,11 @@
                                          style="border-top: 1px solid #e5e5e5;">日志统计情况
                                     </div>
                                 </div>
+                                    <div  @click="change">
+                                        <div class="weui-actionsheet__cell add-journal-item"
+                                             style="border-top: 1px solid #e5e5e5;">日志罚款金额
+                                        </div>
+                                    </div>
                                 </div>
                                 <div  v-for="showDate in repairDate" @click="repairJournal(showDate.date)">
                                     <div class="weui-actionsheet__cell add-journal-item"
@@ -626,7 +631,14 @@
                         <!--</div>-->
                     </div>
                 </div>
-
+                <div v-show="showPage === 'money'">
+                     <span class="pull-left" @click="backToList"
+                           style="color: rgb(61, 168, 244); font-size: 16px;">取消</span>
+                    <input v-model="delay">
+                    <input v-model="miss">
+                    <span  @click="changemoney"
+                          style="color: rgb(61, 168, 244); font-size: 16px;">修改</span>
+                </div>
                 <div v-show="showPage === 'showManager'">
                      <span class="pull-left" @click="backToList"
                            style="color: rgb(61, 168, 244); font-size: 16px;">取消</span>
@@ -638,9 +650,9 @@
                         </tr>
                         <tr v-for="ma in manager">
                             <td>{{ma.showDate}}</td>
-                            <td v-if="ma.repairDate!=null">-30</td>
+                            <td v-if="ma.repairDate!=null">-{{delay}}</td>
                             <td v-else>0</td>
-                            <td v-if="!ma.tagertDate">-100</td>
+                            <td v-if="!ma.tagertDate">-{{miss}}</td>
                             <td v-else>0</td>
                         </tr>
                         <tr>
@@ -655,8 +667,8 @@
                     <table border="1">
                         <tr >
                             <td >姓名</td>
-                            <td>补交次数/30</td>
-                            <td>漏交次数/100</td>
+                            <td>补交次数/{{delay}}</td>
+                            <td>漏交次数/{{miss}}</td>
                             <td>总罚款金额</td>
                         </tr>
                         <tr v-for="ma in followJournal">
