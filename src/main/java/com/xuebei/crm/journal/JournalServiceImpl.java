@@ -408,6 +408,31 @@ public class JournalServiceImpl implements JournalService {
 		param.setStartTime(tmpDate);
 		param.setEndTime(tmpDate2);
 		List<Journal> testJ=journalMapper.searchMyJournal(param);
+        //统计日志有多少人已读
+        for (Journal jn : testJ  ) {
+            jn.setVisitRecords(journalMapper.queryVisitLogs(jn.getJournalId()));
+            for (VisitRecord visitRecord: jn.getVisitRecords()) {
+                visitRecord.setChosenContacts(journalMapper.queryVisitContacts(visitRecord.getVisitId()));
+                String opportunityid=projectMapper.queryOpportunityNameByOpportunityId(visitRecord.getOpportunityId());
+                visitRecord.setOpportunityName(opportunityid);
+                //System.out.println(projectMapper.queryOpportunity(visitRecord.getOpportunityId()));
+                Opportunity ssaa=projectMapper.queryOpportunity(visitRecord.getOpportunityId());
+                if (ssaa!=null) {
+                    visitRecord.setOpportunity(projectMapper.queryOpportunity(visitRecord.getOpportunityId()));
+                    visitRecord.getOpportunity().setTotalName("");
+                }
+                for (Contacts contacts: visitRecord.getChosenContacts()) {
+                    ContactsDept contactsDept = customerMapper.queryContactsDept(contacts.getContactsId());
+                    contacts.setTotalName(contactsDept.toString());
+                }
+            }
+            List<User> journalRead = journalMapper.searchRead(jn.getJournalId());
+            jn.setReadNum(journalRead.size());
+            // 查询日志补丁
+            jn.setJournalPatches(journalMapper.queryJournalPatch(jn.getJournalId()));
+            // 跟新是否是自己
+            jn.setIsMine(jn.getUserId().equals(param.getUserId()));
+        }
 		return testJ;
     }
     

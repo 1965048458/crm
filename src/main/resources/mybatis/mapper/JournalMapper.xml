@@ -229,7 +229,13 @@
         LEFT JOIN visit_contacts vc ON vl.visit_log_id = vc.visit_log_id
         LEFT JOIN contacts c ON vc.contacts_id = c.contacts_id
         LEFT JOIN contacts_type ct ON c.contacts_type_id = ct.contacts_type_id
-        WHERE has_submitted = 1 AND j.user_id = #{userId}
+        WHERE has_submitted = 1
+        <if test="userId != null">
+            AND j.user_id = #{userId}
+        </if>
+        <if test="contactsId != null">
+            AND c.contacts_id = #{contactsId}
+        </if>
         <if test="journalType != null">
             AND j.type_cd = #{journalType}
         </if>

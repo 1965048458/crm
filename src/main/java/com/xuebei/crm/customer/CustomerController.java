@@ -6,8 +6,13 @@ import com.xuebei.crm.department.DeptMapper;
 import com.xuebei.crm.department.DeptService;
 import com.xuebei.crm.department.WarningBeforeCreateEnum;
 import com.xuebei.crm.dto.GsonView;
+import com.xuebei.crm.journal.Journal;
+import com.xuebei.crm.journal.JournalSearchParam;
+import com.xuebei.crm.journal.JournalService;
 import com.xuebei.crm.member.Member;
 import com.xuebei.crm.member.MemberService;
+import com.xuebei.crm.opportunity.Opportunity;
+import com.xuebei.crm.project.ProjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.xuebei.crm.utils.UUIDGenerator;
 import com.xuebei.crm.exception.DepartmentNameDuplicatedException;
@@ -30,15 +35,15 @@ public class CustomerController {
 
     @Autowired
     private CompanyMapper companyMapper;
-
     @Autowired
-    private MemberService memberService;
+    private ProjectMapper projectMapper;
+
 
     @Autowired
     private DeptService deptService;
 
     @Autowired
-    private DeptMapper deptMapper;
+    private JournalService journalService;
 
     @RequestMapping("searchCustInfo")
     public String searchInfo(){
@@ -560,9 +565,18 @@ public class CustomerController {
     public String contactsInfoPage(@RequestParam("contactsId")String contactsId,
                                    ModelMap modelMap) {
         Contacts contacts = customerMapper.queryContactsById(contactsId);
-        List<FollowUpRecord> followUpRecords = customerMapper.queryFollowUpRecordsByContactsId(contactsId);
-        modelMap.addAttribute("followUpRecords", followUpRecords);
+        JournalSearchParam param=new JournalSearchParam();
+        param.setContactsId(contactsId);
+        List<Journal> journals =journalService.searchJournal(param);
+        List<Opportunity> opportunities=projectMapper.queryOpportunity2(contactsId);
+        for (Opportunity opportunity : opportunities)
+        {
+            opportunity.setTotalName("");
+        }
+        //List<FollowUpRecord> followUpRecords = customerMapper.queryFollowUpRecordsByContactsId(contactsId);
+        modelMap.addAttribute("followUpRecords", journals);
         modelMap.addAttribute("contacts", contacts);
+        modelMap.addAttribute("opportunities", opportunities);
         return "contactsInfo";
     }
 

@@ -27,6 +27,7 @@
         <result property="customerName" column="customer_nm"/>
         <result property="customerId" column="prt_nm"/>
         <result property="failReason" column="department_nm"/>
+        <result property="agent" column="type_name"/>
         <result property="userId" column="real_nm"/>
         <result property="amount" column="amount"/>
         <result property="salesStatus" column="sales_status"/>
@@ -337,11 +338,12 @@
     </select>
     
 <select id="queryOpportunity" resultMap="testMap">
-        SELECT a.opportunity_nm,a.sales_status,a.amount,b.*
+        SELECT a.opportunity_nm,a.sales_status,a.amount,b.*,qq.type_name
         FROM sales_opportunity AS a LEFT JOIN
         (
            SELECT
               c.sales_opportunity_id,
+              d.contacts_type_id,
               d.real_nm,
               e.department_nm,
               f.department_nm as prt_nm,
@@ -355,9 +357,36 @@
            LEFT JOIN  crm_customer AS g ON  g.customer_id=e.customer_id
         ) AS b
            ON a.sales_opportunity_id=b.sales_opportunity_id
-        WHERE a.sales_opportunity_id=#{opportunityid}; 
+        LEFT  JOIN  contacts_type qq
+          ON qq.contacts_type_id=b.contacts_type_id
+        WHERE a.sales_opportunity_id=#{opportunityid}
     </select>
-    
+    <select id="queryOpportunity2" resultMap="testMap">
+        SELECT a.opportunity_nm,a.sales_status,a.amount,b.*,qq.type_name
+        FROM sales_opportunity AS a LEFT JOIN
+        (
+        SELECT
+        c.sales_opportunity_id,
+        c.contacts_id,
+        d.contacts_type_id,
+        d.real_nm,
+        e.department_nm,
+        f.department_nm as prt_nm,
+        g.customer_nm
+        FROM
+        opportunity_contacts AS c LEFT JOIN contacts AS d
+        ON
+        c.contacts_id=d.contacts_id
+        LEFT JOIN  customer_dept AS e ON d.customer_dept_id=e.customer_dept_id
+        LEFT JOIN  customer_dept AS f ON e.prt_id=f.customer_dept_id
+        LEFT JOIN  crm_customer AS g ON  g.customer_id=e.customer_id
+        ) AS b
+        ON a.sales_opportunity_id=b.sales_opportunity_id
+        LEFT  JOIN  contacts_type qq
+        ON qq.contacts_type_id=b.contacts_type_id
+        WHERE b.contacts_id=#{contactsId}
+    </select>
+
     <select id="queryProjectDetailById" resultMap="projectDetailMap">
         SELECT A.sales_opportunity_id AS project_id, A.opportunity_nm AS project_nm, A.amount, A.content,A.agent, A.clinch_date, A.sales_status,
 						U.real_nm AS creator, A.create_ts, A.leader,A.progress, A.user_id, p.status,

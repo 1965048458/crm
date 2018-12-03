@@ -52,7 +52,8 @@ public interface ProjectMapper {
     List<Project> queryProjectsByUserId(String userId);
 
     List<Opportunity> queryOpportunitiesByUserId(String userId);
-    Opportunity queryOpportunity(@Param("opportunityid") Integer opportunityid);
+    Opportunity queryOpportunity(@Param( "opportunityid" ) Integer opportunityid);
+    List<Opportunity> queryOpportunity2(@Param( "contactsId" ) String contactsId);
     String queryOpportunityNameByOpportunityId(Integer opportunityId);
 
     List<Project> searchProject(ProjectSearchParam param);

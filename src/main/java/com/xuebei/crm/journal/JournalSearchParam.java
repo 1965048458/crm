@@ -16,6 +16,16 @@ public class JournalSearchParam {
     private String customer;
     private String project;
 
+    public String getContactsId() {
+        return contactsId;
+    }
+
+    public void setContactsId(String contactsId) {
+        this.contactsId = contactsId;
+    }
+
+    private String contactsId;
+
     public String getProject() {
         return project;
     }

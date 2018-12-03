@@ -95,6 +95,9 @@
         <div class="weui-navbar__item" style="padding: 10px 0px;" id="followUpPageBtn" @click="switch2FollowUpPage">
             跟进记录
         </div>
+        <div class="weui-navbar__item" style="padding: 10px 0px;" id="followUpPageBtn2" @click="switch2FollowUpPage2">
+            关联商机/项目
+        </div>
     </div>
 
     <div v-show="showPage == 'infoPage'" id="infoPageDiv">
@@ -151,24 +154,106 @@
             <p class="detail" th:text="${contacts.showSpecialRelationship()}"></p>
         </div>
     </div>
-
-    <div v-show="showPage == 'followUpPage'" id="followUpPageDiv">
-
-        <div class="weui-panel weui-panel_access" style="margin-top: 10px;" th:each="item : ${followUpRecords}">
+    <div v-show="showPage == 'followUpPage2'" id="followUpPageDiv2">
+        <div style="height: 35px"></div>
+        <div class="weui-panel weui-panel_access" th:each="opportunity : ${opportunities}">
             <div class="weui-panel__bd">
-                <p class="project" th:text="'虚拟仿真中心建设'">虚拟仿真中心建设</p>
-                <p class="visitor" th:text="'拜访人：'+${item.getFollowUpPersonRealName()}">拜访人：刘晓婷</p>
-                <p class="visit_result" th:text="'跟进结果：'+${item.getFollowUpResult()}">跟进结果：梁院长对我们
-                    的虚拟仿真资源和双创空间形式非常认可，表示要安排
-                    时间我们的虚拟仿真资源和双创空间形式非常认
-                    可，表示要安排时间到我们现在</p>
+                <div class="weui-media-box weui-media-box_text">
+                    <h4 class="weui-media-box__title" th:text="${opportunity.getOpportunityName()}"></h4>
+                    <p class="weui-media-box__desc" style="padding: 3px;font-weight: bold">客户名称&nbsp;
+                        <span style="font-weight: 100" th:text="${opportunity.getCustomerName()}"></span>
+                    </p>
+                    <p class="weui-media-box__desc" style="padding: 3px;font-weight: bold">二级学院&nbsp;
+                        <span style="font-weight: 100" th:if="${opportunity.getCustomerId()}" th:text="${opportunity.getCustomerId()}+'-'+${opportunity.getFailReason()}"></span>
+                        <span style="font-weight: 100" th:if="!${opportunity.getCustomerId()}" th:text="${opportunity.getFailReason()}"></span>
+                    </p>
+                    <p class="weui-media-box__desc" style="padding: 3px;font-weight: bold">客户联系人&nbsp;
+                        <span style="font-weight: 100" th:if="${opportunity.getAgent()}" th:text="${opportunity.getAgent()}+'-'+${opportunity.getUserId()}"></span>
+                        <span style="font-weight: 100" th:if="!${opportunity.getAgent()}" th:text="${opportunity.getUserId()}"></span>
+                    </p>
+                    <p class="weui-media-box__desc" style="padding: 3px;font-weight: bold">金额（元）&nbsp;
+                        <span style="font-weight: 100" th:text="${opportunity.getAmount()}"></span>
+                    </p>
+                    <p class="weui-media-box__desc" style="padding: 3px;font-weight: bold">状态&nbsp;
+                        <span style="font-weight: 100" th:text="${opportunity.getSalesStatus()}"></span>
+                    </p>
+                </div>
             </div>
-            <div class="weui-panel__ft" style="display: block;">
-                <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link"
-                   style="padding: 0px 15px; height: 30px;">
-                    <span class="follow-up-time" th:text="${item.getFollowUpTimeStr()}">2018年6月23日</span>
-                    <span class="follow-up-detail-btn">查看详情<span class="weui-cell__ft"></span></span>
+        </div>
+    </div>
+    <div v-show="showPage == 'followUpPage'" id="followUpPageDiv">
+        <div th:each="userJournal : ${followUpRecords}" id="journalContent">
+            <div class="weui-panel__bd" style=" height: 40px;margin-top: 10px">
+                <a href="javascript:;" class="weui-media-box weui-media-box_appmsg"
+                   style=" height: 40px; padding: 0px ;">
+                    <div class="weui-media-box__hd" style=" height: 40px;width: 40px; margin-right: 0px; ">
+                        <img src="/images/journal/defaultUserIcon.png"
+                             style="width: 34px;height: 34px; margin-right: 1em; line-height: 5px"
+                             alt=""
+                             class="weui-tabbar__icon">
+                    </div>
+                    <div class="weui-media-box__bd">
+                        <label class="weui-media-box__title" style="color: #333333;font-size: 16px" th:text="${userJournal.getUser().getRealName()}"></label>
+                        <p class="weui-media-box__desc" style="color: #999999;font-size: 12px" th:text="${userJournal.getCreateTs()}"></p>
+
+                    </div>
                 </a>
+            </div>
+
+            <div class="weui-form-preview">
+                <div class="weui-form-preview__bd"
+                     style="padding-top: 20px;padding-left:5px;line-height: 20px;">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label" style="color: #555555;font-size: 14px;">今日总结:</label>
+                        <span class="weui-form-preview__value"
+                              style="text-align:left;color: #555555;font-size: 14px" th:text="${userJournal.getSummary()}"></span>
+                    </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label"
+                               style="color: #555555;font-size: 14px">明日计划:</label>
+                        <span class="weui-form-preview__value"
+                              style="text-align:left;color: #555555;font-size: 14px" th:text="${userJournal.getPlan()}"></span>
+                    </div>
+
+                    <div class="weui-form-preview" th:each="visitRecord,visitStat : ${userJournal.getVisitRecords()}">
+                        <div class="weui-form-preview__bd" style="padding: 5px 0px">
+                            <div class="weui-form-preview__item" style="font-size: .8em;">
+                                <label class="weui-form-preview__label"
+                                       style="float:left;color: #555555;font-size: 14px" th:text="'今日拜访'+(${visitStat.index}+1)+':'"></label>
+
+                                <div class="weui-form-preview__value">
+                                    <div th:each="contacts : ${visitRecord.getChosenContacts()}">
+                                                    <span style="float: left;text-align:left;color: #555555;font-size: 14px" th:text="${contacts.getTotalName()}+'、'"></span>
+                                    </div>
+                                </div>
+                                <p style="text-align: left;color: #555555;font-size: 14px" th:if="${visitRecord.getVisitType()=='VISIT'}">拜访类型:拜访 </p>
+                                <p style="text-align: left;color: #555555;font-size: 14px" th:if="${visitRecord.getVisitType()!='VISIT'}">&nbsp;&nbsp;拜访类型:电话</p>
+                                <p style="text-align: left;color: #555555;font-size: 14px" th:text="'拜访结果:'+${visitRecord.getVisitResult()}"></p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div th:each="visitRecord,visitStat : ${userJournal.getVisitRecords()}">
+                        <div class="weui-form-preview__item" th:if="${visitRecord.getOpportunity()}">
+                            <label class="weui-form-preview__label"
+                                   style="float:left;color: #555555;font-size: 14px" th:text="'商机'+(${visitStat.index}+1)+':'"></label>
+                            <div class="weui-form-preview__value">
+                                <span style="float: left;text-align:left;color: #555555;font-size: 14px" th:text="${visitRecord.getOpportunity().getTotalName()}"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-form-preview" th:each="patch : ${userJournal.getJournalPatches()}" >
+                        <div class="weui-form-preview__bd" style="padding: 5px 0px">
+                            <div class="weui-form-preview__item" style="font-size: 12px;line-height: 17px">
+                                        <span class="weui-form-preview__value" style="text-align: left;">
+                                             <label th:text="${patch.getCreateTs()}+' 补充'"
+                                                    style="font-size: 12px;color: #BBBBBB">2018-07-26 13:01:59 补充</label>
+                                            <label th:text="${patch.getContent()}" style="font-size: 12px;color: #101010">这是我的补充信息</label>
+                                        </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

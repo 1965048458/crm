@@ -233,7 +233,7 @@
                                         <div class="weui-form-preview__item" v-if="visitRecord.opportunity!=null">
                                             <label class="weui-form-preview__label"
                                                    style="float:left;color: #555555;font-size: 14px"
-                                                   v-text="'商机' + ':'"></label>
+                                                   v-text="'商机'+(ind+1) + ':'"></label>
                                             <div class="weui-form-preview__value">
               
                                                     <span style="float: left;text-align:left;color: #555555;font-size: 14px"
@@ -276,7 +276,7 @@
                                         <div class="weui-form-preview__item" v-if="visitRecord.opportunity!=null">
                                             <label class="weui-form-preview__label"
                                                    style="float:left;color: #555555;font-size: 14px"
-                                                   v-text="'商机' + ':'"></label>
+                                                   v-text="'商机'+(ind+1) + ':'"></label>
                                             <div class="weui-form-preview__value">
               
                                                     <span style="float: left;text-align:left;color: #555555;font-size: 14px"
@@ -354,7 +354,7 @@
                       <span @click="backToList" class="pull-left" style="margin-top: 4px;"><img
                             src="/images/back_icon.svg"
                             style="margin-top:3px"/></span>
-                      <span style="display:block;padding-top:3px" v-text="journalName(curJournal)"></span>
+                      <span style="display:block;padding-top:3px" v-text="journalName2(curJournal)"></span>
                     </div>
 
                     <div v-for="userJournal in journalLists" id="journalContent">
@@ -409,14 +409,6 @@
                                             <p style="text-align: left;color: #555555;font-size: 14px"
                                                v-text="'拜访结果'+':'+' '+visitRecord.visitResult"></p>
 
-                                            <!--<span class="weui-form-preview__value" style="text-align: left;">-->
-                                            <!--&lt;!&ndash;<p v-text="'今日拜访' + (ind+1) + ':'"></p>&ndash;&gt;-->
-                                            <!--<p v-for="contacts in visitRecord.chosenContacts">-->
-                                            <!--<span v-text="contacts.totalName"></span>-->
-                                            <!--</p>-->
-                                            <!--<p v-text="'拜访类型'+':'+' '+convertVisitType(visitRecord.visitType)"></p>-->
-                                            <!--<p v-text="'拜访结果'+':'+' '+visitRecord.visitResult"></p>-->
-                                            <!--</span>-->
                                         </div>
                                     </div>
                                 </div>
@@ -424,7 +416,7 @@
                                         <div class="weui-form-preview__item" v-if="visitRecord.opportunity!=null">
                                             <label class="weui-form-preview__label"
                                                    style="float:left;color: #555555;font-size: 14px"
-                                                   v-text="'商机' + ':'"></label>
+                                                   v-text="'商机'+(ind+1) + ':'"></label>
                                             <div class="weui-form-preview__value">
               
                                                     <span style="float: left;text-align:left;color: #555555;font-size: 14px"

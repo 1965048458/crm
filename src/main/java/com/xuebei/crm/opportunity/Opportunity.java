@@ -65,31 +65,39 @@ public class Opportunity {
 	}
 
 	public void setTotalName(String totalName) {
-		String bsd="";
 		if (salesStatus.equals("A")) {
-			bsd="拿到老师手机及微信号";
+            salesStatus="拿到老师手机及微信号";
 		}
 		else if (salesStatus.equals("B")) {
-			bsd="提交方案";
+            salesStatus="提交方案";
 		}
 		else if (salesStatus.equals("C")) {
-			bsd="以我方提供参数挂标";
+            salesStatus="以我方提供参数挂标";
 		}
 		else if (salesStatus.equals("D")) {
-			bsd="中标";
+            salesStatus="中标";
 		}
 		else if (salesStatus.equals("F")) {
-			bsd="输单";
+            salesStatus="输单";
 		}
+        else if (salesStatus.equals("0")) {
+            salesStatus="未开始";
+        }
+        else if (salesStatus.equals("1")) {
+            salesStatus="进行中";
+        }
+        else if (salesStatus.equals("2")) {
+            salesStatus="交付及回款";
+        }
 		else {
-			bsd=salesStatus+"阶段";
+            salesStatus=salesStatus+"阶段";
 		}
 		if (customerId!=null) {
-			this.totalName = this.opportunityName+"-"+"用户:"+customerName+"-"+customerId+"-"+failReason+"-"+userId+"-金额:"+amount+"-"+bsd;
+			this.totalName = this.opportunityName+"   "+"用户:"+customerName+"-"+customerId+"-"+failReason+"-"+userId+"   金额:"+amount+"   阶段:"+salesStatus;
 		}
 		else
 		{
-			this.totalName = this.opportunityName+"-"+"用户:"+customerName+"-"+failReason+"-"+userId+"-金额:"+amount+"-"+bsd;
+			this.totalName = this.opportunityName+"   "+"用户:"+customerName+"-"+failReason+"-"+userId+"   金额:"+amount+"   阶段:"+salesStatus;
 		}
 	}
 

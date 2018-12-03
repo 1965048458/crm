@@ -297,6 +297,13 @@ jQuery(document).ready(function () {
                 }
                 return prefixName + '的' + TYPE_NAMES[journal.type];
             },
+            'journalName2': function (journal) {
+                var prefixName = journal.user.realName;
+                if (journal.isMine) {
+                    prefixName = '我';
+                }
+                return prefixName + '的' + TYPE_NAMES[journal.type]+'修改记录';
+            },
             'clickAddJournalButton': function () {
                 this.searchRepair();
                 this.showAddJournalDialog = true;
