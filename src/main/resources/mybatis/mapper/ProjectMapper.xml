@@ -252,6 +252,8 @@
         SELECT s.sales_opportunity_id, s.opportunity_nm, s.customer_id, s.sales_status, s.amount, s.clinch_date, uv.real_nm AS leader_nm,
             s.agent, s.leader,s.progress, s.content, s.user_id, s.create_ts, s.updater_id, s.update_ts FROM sales_opportunity s
         INNER JOIN crm_customer v ON s.customer_id = v.customer_id
+        LEFT JOIN opportunity_contacts oc ON s.sales_opportunity_id=oc.sales_opportunity_id
+        LEFT JOIN contacts conts ON  oc.contacts_id=conts.contacts_id
         LEFT JOIN project_start ps ON ps.sales_opportunity_id = s.sales_opportunity_id
         Left JOIN user_view uv ON s.leader = uv.user_id
         WHERE s.sales_status in ( '0' , '1', '2', '3')
@@ -292,7 +294,8 @@
         </if>
 
         <if test="customerName != null and customerName != ''">
-            AND v.customer_nm LIKE CONCAT('%', #{customerName}, '%')
+            AND (v.customer_nm LIKE CONCAT('%', #{customerName}, '%')
+            OR  conts.real_nm LIKE CONCAT('%', #{customerName}, '%'))
         </if>
         <if test="before != null and before != ''">
             AND s.sales_status in ('0', '1')

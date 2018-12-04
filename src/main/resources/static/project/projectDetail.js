@@ -123,15 +123,15 @@ jQuery(document).ready(function () {
             },
             'clear': function () {
                 this.keyWord = '';
-                $('#searchInput').focus();
+                $('#searchInputd').focus();
             },
             'text': function () {
-                $('#searchBar').addClass('weui-search-bar_focusing');
-                $('#searchInput').focus();
+                $('#searchBard').addClass('weui-search-bar_focusing');
+                $('#searchInputd').focus();
             },
             'cancel': function () {
                 this.keyWord = '';
-                $('#searchInput').blur();
+                $('#searchInputd').blur();
                 this.searchBar = false;
             },
             'search': function () {

@@ -92,6 +92,8 @@
         (select cu.company_id from company_user cu where cu.user_id =#{scene})
         ) and cu.user_id = s.user_id
         LEFT JOIN crm_customer c ON c.customer_id = s.customer_id
+        LEFT JOIN opportunity_contacts oc ON s.sales_opportunity_id=oc.sales_opportunity_id
+        LEFT JOIN contacts conts ON  oc.contacts_id=conts.contacts_id
         WHERE s.sales_status IN ('A','B','C','D','F') AND  s.has_delete = 0
 
 
@@ -115,7 +117,8 @@
             AND s.sales_status = #{salesStatus}
         </if>
         <if test="customerName != null and customerName != ''">
-            AND c.customer_nm LIKE CONCAT('%', #{customerName}, '%')
+            AND (c.customer_nm LIKE CONCAT('%', #{customerName}, '%')
+            OR  conts.real_nm LIKE CONCAT('%', #{customerName}, '%'))
         </if>
         <if test="userId != null and userId != 'all' and userId !=''">
             AND s.user_id = #{userId}

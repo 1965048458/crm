@@ -3,11 +3,30 @@ package com.xuebei.crm.project;
 import com.google.gson.annotations.Expose;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class ProjectSearchParam {
 
     private String creator;
+
+    @Override
+    public String toString() {
+        return "ProjectSearchParam{" +
+                "creator='" + creator + '\'' +
+                ", subMember=" + Arrays.toString(subMember) +
+                ", subUsers='" + subUsers + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", status='" + status + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", userId='" + userId + '\'' +
+                ", before=" + before +
+                ", after=" + after +
+                ", isAdmin='" + isAdmin + '\'' +
+                '}';
+    }
+
     private String[] subMember;
     private String subUsers;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

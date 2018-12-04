@@ -50,20 +50,24 @@ public class ProjectController {
     private MemberService memberService;
 
     @RequestMapping("/projectDetail")
-    public String projectDetail(@RequestParam("projectId") String projectId,HttpServletRequest request,
-                                ModelMap modelMap) {
+    public GsonView projectDetailMore(@RequestParam("projectId") String projectId,HttpServletRequest request) {
         String userId = (String) request.getSession().getAttribute("userId");
         ProjectDetail projectDetail = projectService.getProjectDetail(projectId);
         String userType = companyMapper.queryUserType(userId);
         projectDetail.setIsAdmin(userType);
         projectDetail.setUserId(userId);
-        modelMap.addAttribute("projectDetail", projectDetail);
+        GsonView gsonView=new GsonView();
+        gsonView.addStaticAttribute("projectDetail", projectDetail);
 
         if (projectDetail == null) {
-            return "error/404";
+            gsonView.addStaticAttribute("successFlg", false);
+        }
+        else
+        {
+            gsonView.addStaticAttribute("successFlg", true);
         }
 
-        return "projectDetail";
+        return gsonView;
     }
 
     @RequestMapping("/modifyProject")
@@ -145,7 +149,6 @@ public class ProjectController {
             childs.toArray(childsArray);
             param.setSubMember(childsArray);
         }
-
         List<Project> projectList = projectService.searchProject(param);
         Iterator<Project> it = projectList.iterator();
         while (it.hasNext()){

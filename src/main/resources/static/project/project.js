@@ -12,6 +12,7 @@ $(document).ready(function () {
             filterCondition: '',
             dateValueStart: '',
             newDate: 'all',
+            projectDetail:[],
             dateValueEnd: '',
             subMemberList: [],
             tempSub: [],
@@ -50,6 +51,28 @@ $(document).ready(function () {
             },
             'back': function () {
                 //
+            },
+            'detail':function (id) {
+                var thisVue = this;
+                $.ajax({
+                    type: 'get',
+                    url: '/project/projectDetail',
+                    data:
+                        {
+                            projectId:id
+                        },
+                    dataType: 'json',
+                    //contentType: 'application/json',
+                    cache: false
+                }).done(function (result) {
+                    if (result.successFlg) {
+                        thisVue.$set(thisVue, 'projectDetail', result.projectDetail);
+                        thisVue.showPage='projectDetail';
+                    } else {
+                        thisVue.errMsg = "404";
+                        thisVue.showErrMsg = true;
+                    }
+                })
             },
             'add': function () {
                 window.location = '/project/new';

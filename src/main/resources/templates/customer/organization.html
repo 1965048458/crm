@@ -107,9 +107,9 @@
                     <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel" @click="cancel">取消</a>
                 </div>
 
-                <div class="weui-cells searchbar-result" id="searchResult" style="display: none">
-                    <bbb v-for="customerB in scustomerList" v-bind:bbb="customerB"></bbb>
-                </div>
+            </div>
+            <div class="weui-cells searchbar-result"  id="searchResult" style="display: none;padding-top: 130px">
+                <bbb v-for="customerB in scustomerList" v-bind:bbb="customerB"></bbb>
             </div>
             <div style="padding-top: 130px" >
                 <div v-show="showOrganization">
