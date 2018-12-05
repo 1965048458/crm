@@ -299,7 +299,7 @@ jQuery(document).ready(function () {
                }
            },
            'setImgPath2':function (index) {
-               if(!this.customers[index].contactsFold){
+               if(!this.ccustomers[index].contactsFold){
                    return "/images/customer/fold.svg";
                }else {
                    return"/images/customer/unfold.svg";
@@ -473,9 +473,6 @@ jQuery(document).ready(function () {
         	                editJournalVue.$set(editJournalVue, 'colleagues', result.colleagues);
         	                editJournalVue.$set(editJournalVue, 'customers', result.customer);
         	                editJournalVue.$set(editJournalVue, 'opportunities', result.opportunities);
-        	                console.log(editJournalVue.customers);
-        	                console.log(result.journal.receivers);
-        	                console.log(result.colleagues);
         	                for (var revId in result.journal.receivers) {
         	                    for (var colId in result.colleagues) {
         	                        if (result.journal.receivers[revId].userId === result.colleagues[colId].userId) {
@@ -513,36 +510,7 @@ jQuery(document).ready(function () {
            }
        },
        components:{
-/*           'customer':{
-               template:'#customer',
-               props:['customer','index'],
-               data:function () {
-                   return{
-                       chosenContactsTmp:[],
-                       showSub:false,
-                       imgPath:"/images/customer/fold.svg"
-                   }
-               },
-               methods:{
-                   'changeSubFold' : function () {
-                       this.showSub = !this.showSub;
-                       this.setImgPath();
-                   },
-                   'setImgPath':function () {
-                       if(this.showSub == false){
-                           this.imgPath = "/images/customer/fold.svg";
-                       }else {
-                           this.imgPath = "/images/customer/unfold.svg";
-                       }
-                   }
-               },
-               watch: {
-                   'chosenContactsTmp': function () {
 
-                       this.$emit('transfer_value', this.chosenContactsTmp);
-                   }
-               }
-           },*/           
         },
         watch:{
         	'searchWord': function () {

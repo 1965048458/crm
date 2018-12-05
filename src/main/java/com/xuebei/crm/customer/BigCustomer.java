@@ -18,7 +18,7 @@ public class BigCustomer {
     @Expose
     private boolean contactsFold = true;
     
-	public boolean isContactsFold() {
+	public boolean getContactsFold() {
 		return contactsFold;
 	}
 	public void setContactsFold(boolean contactsFold) {
