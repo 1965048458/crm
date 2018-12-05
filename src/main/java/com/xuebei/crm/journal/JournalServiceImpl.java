@@ -102,14 +102,9 @@ public class JournalServiceImpl implements JournalService {
            monthStart.setMinutes(30);
            monthStart.setSeconds(0);
            int date=monthStart.getDate();
-           if (date<4)
-           {
-               monthStart.setDate(date-4);
-           }
-           else
-           {
-               monthStart.setDate(1);
-           }
+
+               monthStart.setDate(date-30);
+
 
            List<ManageJournal> manageJournals=journalMapper.getJournalState(userId,monthStart,null);
 

@@ -115,18 +115,18 @@
                                 </a>
                                 <div @click="managerJournal">
                                     <div class="weui-actionsheet__cell add-journal-item"
-                                         style="border-top: 1px solid #e5e5e5;">日志迟交情况
+                                         style="border-top: 1px solid #e5e5e5;">日志迟交
                                     </div>
                                 </div>
                                 <div v-if="isAdmin===true">
                                 <div  @click="follow">
                                     <div class="weui-actionsheet__cell add-journal-item"
-                                         style="border-top: 1px solid #e5e5e5;">日志统计情况
+                                         style="border-top: 1px solid #e5e5e5;">统计日志
                                     </div>
                                 </div>
                                     <div  @click="change">
                                         <div class="weui-actionsheet__cell add-journal-item"
-                                             style="border-top: 1px solid #e5e5e5;">日志罚款金额
+                                             style="border-top: 1px solid #e5e5e5;">罚款金额
                                         </div>
                                     </div>
                                 </div>
@@ -624,10 +624,11 @@
                     </div>
                 </div>
                 <div v-show="showPage === 'money'">
-                     <span class="pull-left" @click="backToList"
-                           style="color: rgb(61, 168, 244); font-size: 16px;">取消</span>
-                    <input v-model="delay">
-                    <input v-model="miss">
+                     <p><span  @click="backToList" style="color: rgb(61, 168, 244); font-size: 16px;">取消</span></p>
+                    <p></p>
+                    <p><span>补交罚款</span> <input v-model="delay"></p>
+                    <p></p>
+                    <p><span>迟交罚款</span> <input v-model="miss"></p>
                     <span  @click="changemoney"
                           style="color: rgb(61, 168, 244); font-size: 16px;">修改</span>
                 </div>
