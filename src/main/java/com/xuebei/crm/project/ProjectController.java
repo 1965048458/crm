@@ -50,24 +50,24 @@ public class ProjectController {
     private MemberService memberService;
 
     @RequestMapping("/projectDetail")
-    public GsonView projectDetailMore(@RequestParam("projectId") String projectId,HttpServletRequest request) {
+    public String projectDetailMore(@RequestParam("projectId") String projectId,HttpServletRequest request,ModelMap model) {
         String userId = (String) request.getSession().getAttribute("userId");
         ProjectDetail projectDetail = projectService.getProjectDetail(projectId);
         String userType = companyMapper.queryUserType(userId);
         projectDetail.setIsAdmin(userType);
         projectDetail.setUserId(userId);
-        GsonView gsonView=new GsonView();
-        gsonView.addStaticAttribute("projectDetail", projectDetail);
+        //GsonView gsonView=new GsonView();
+        model.addAttribute("projectDetail", projectDetail);
 
         if (projectDetail == null) {
-            gsonView.addStaticAttribute("successFlg", false);
+            model.addAttribute("successFlg", false);
         }
         else
         {
-            gsonView.addStaticAttribute("successFlg", true);
+            model.addAttribute("successFlg", true);
         }
 
-        return gsonView;
+        return "projectDetail";
     }
 
     @RequestMapping("/modifyProject")
