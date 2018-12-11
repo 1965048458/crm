@@ -58,8 +58,17 @@ public class Opportunity {
     private String agent;
     @Expose
     private String totalName;
-    
-    
+    @Expose
+    private String lastStatus;
+
+    public String getLastStatus() {
+        return lastStatus;
+    }
+
+    public void setLastStatus(String lastStatus) {
+        this.lastStatus = lastStatus;
+    }
+
     public String getTotalName() {
 		return totalName;
 	}

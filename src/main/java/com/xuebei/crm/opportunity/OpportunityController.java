@@ -194,7 +194,7 @@ public class OpportunityController {
         String userId = (String) request.getSession().getAttribute("userId");
         opportunity.setUserId(userId);
         opportunityService.modifyOpportunity(opportunity);
-        opportunityService.addModificationRecord(opportunity.getOpportunityId(),userId);
+        opportunityService.addModificationRecord(opportunity.getOpportunityId(),userId,opportunity.getLastStatus(),opportunity.getSalesStatus());
         GsonView gsonView = new GsonView();
         gsonView.addStaticAttribute("successFlg", true);
         return gsonView;

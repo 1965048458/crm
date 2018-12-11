@@ -1166,7 +1166,7 @@
                       @click="done1"> 完成 &nbsp; </span>
             </div>
             <div class="weui-cells weui-cells_radio">
-                <label class="weui-cell weui-check__label" v-for="(stage, index) in stages">
+                <label class="weui-cell weui-check__label" v-for="(stage, index) in stages" v-if="convertNumber<=index">
                     <div class="weui-cell__hd">
                         <img :src="'/images/opportunity/'+ ind[index] +'Stage.svg' " style="margin-right: 10px"/>
                     </div>

@@ -66,16 +66,43 @@
             </div>
             <div class="weui-tab__panel"  style="background: #FFFFFF">
 
-                <div style="text-align: center; margin:3% auto auto auto;">
-                    <img src="/images/customer/develop.svg">
-                    <p style="color: #CCCCCC; font-size: small">正在开发中......</p>
-                </div>
-
                 <div id="tab1" class="weui-tab__content" style="display: block;">
                     <div class="center-ele">
                         <div class="weui-media-box weui-media-box_text">
                             <h1 class="weui-media-box__title">数据信息</h1>
-                            <div class="weui-grids">
+                            <table border="1">
+                                <tr >
+                                    <td >项目级别</td>
+                                    <td>项目数量</td>
+                                    <td>转化率</td>
+                                    <td>流失率</td>
+                                </tr>
+                                <tr>
+                                    <td>A级项目</td>
+                                    <td>{{companyData.successRateA}}</td>
+                                    <td>{{companyData.coverageRateA}}</td>
+                                    <td>{{companyData.permeabilityA}}</td>
+                                </tr>
+                                <tr>
+                                    <td>B级项目</td>
+                                    <td>{{companyData.successRateB}}</td>
+                                    <td>{{companyData.coverageRateB}}</td>
+                                    <td>{{companyData.permeabilityB}}</td>
+                                </tr>
+                                <tr>
+                                    <td>C级项目</td>
+                                    <td>{{companyData.successRateC}}</td>
+                                    <td>{{companyData.coverageRateC}}</td>
+                                    <td>{{companyData.permeabilityC}}</td>
+                                </tr>
+                                <tr>
+                                    <td>D级项目</td>
+                                    <td>{{companyData.successRateD}}</td>
+                                    <td>{{companyData.coverageRateD}}</td>
+                                    <td>{{companyData.permeabilityD}}</td>
+                                </tr>
+                            </table>
+                            <!--<div class="weui-grids">
                                 <a class="weui-grid">
                                     <canvas id="canvas1" width="80" height="80"
                                             style="background:rgba(0,0,0,0);"></canvas>
@@ -90,40 +117,49 @@
                                     <canvas id="canvas3" width="80" height="80"
                                             style="background:rgba(0,0,0,0);"></canvas>
                                     <p class="weui-grid__label">渗透率</p>
-                                </a>
+                                </a>-->
                             </div>
                         </div>
 
-                        <div class="weui-cells">
-                            <a class="weui-cell weui-cell_access" href="javascript:;">
-                                <div class="weui-cell__bd">
-                                    <p>拜访次数</p>
-                                </div>
-                                <div class="weui-cell__ft">10</div>
+                    <div class="weui-media-box weui-media-box_text">
+                        <h1 class="weui-media-box__title">拜访信息</h1>
+                        <div class="weui-grids" style="text-align: center">
+                            <a class="weui-grid">
+                                <p class="weui-grid__label">
+                                <p>{{visitCount}}</p>
+                                <p> 拜访次数
+                                <p/>
+                                </p>
                             </a>
-
+                            <a class="weui-grid">
+                                <p class="weui-grid__label">
+                                <p>{{a}}</p>
+                                <p>A级人员数量</p>
+                                </p>
+                            </a>
+                            <a class="weui-grid">
+                                <p class="weui-grid__label">
+                                <p>{{aRate}}</p>
+                                <p>A级人员覆盖率</p>
+                                </p>
+                            </a>
                         </div>
+                    </div>
 
                         <div class="weui-media-box weui-media-box_text">
-                            <h1 class="weui-media-box__title">项目信息</h1>
+                            <h1 class="weui-media-box__title">D级项目信息</h1>
                             <div class="weui-grids" style="text-align: center">
                                 <a class="weui-grid">
                                     <p class="weui-grid__label">
-                                    <p>5个</p>
-                                    <p> 商机/项目
+                                    <p>{{companyData.dCount}}</p>
+                                    <p> 项目数量
                                     <p/>
                                     </p>
                                 </a>
                                 <a class="weui-grid">
                                     <p class="weui-grid__label">
-                                    <p>20次</p>
-                                    <p>项目支持</p>
-                                    </p>
-                                </a>
-                                <a class="weui-grid">
-                                    <p class="weui-grid__label">
-                                    <p>10.5万</p>
-                                    <p>回款金额</p>
+                                    <p>{{companyData.amount}}</p>
+                                    <p>应收金额</p>
                                     </p>
                                 </a>
                             </div>
@@ -131,13 +167,13 @@
 
                         <div class="weui-media-box weui-media-box_text">
                             <h1 class="weui-media-box__title">简介（选填）</h1>
-                            <p class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</p>
+                            <p class="weui-media-box__desc" th:text="${profile}"></p>
                         </div>
 
                         <div class="weui-cells">
                             <a class="weui-cell weui-cell_access" href="javascript:hLink();">
                                 <div class="weui-cell__bd">
-                                    <p>官网: <span style="color:#00FFFF">www.zju.edu.cn</span></p>
+                                    <p>官网: <span style="color:#00FFFF" th:text="${website}"></span></p>
                                 </div>
                                 <div class="weui-cell__ft">
                                 </div>

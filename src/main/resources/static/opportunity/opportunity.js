@@ -78,6 +78,7 @@ $(document).ready(function () {
             saleStage: '请选择',
             selStage: '',
             lastStage: '',
+            lastlastStage: '',
             content: '',
             opportunityName: '',
             amount: '',
@@ -478,6 +479,7 @@ $(document).ready(function () {
                     checkDate: this.preDate,
                     clinchDate: this.deliverDate,
                     content: this.content,
+                    lastStatus:this.lastlastStage,
                 };
                 $.ajax({
                     type: 'post',
@@ -551,6 +553,7 @@ $(document).ready(function () {
                 } else {
                     this.saleStage = this.selStage + '阶段';
                 }
+                this.lastlastStage=this.lastStage;
                 this.lastStage = this.selStage;
                 this.show = 'modif';
             },
@@ -631,6 +634,23 @@ $(document).ready(function () {
             }
 
 
+        },
+        computed: {
+            'convertNumber':function () {
+                if (this.lastStage=='A')
+                    return 0;
+                else if (this.lastStage=='B')
+                    return 1;
+                else if (this.lastStage=='C')
+                    return 2;
+                else if (this.lastStage=='D')
+                    return 3;
+                else if (this.lastStage=='F')
+                    return 4;
+                else
+                    return -1;
+
+            }
         },
         watch: {
             'filterCondition': function () {

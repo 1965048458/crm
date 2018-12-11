@@ -15,6 +15,13 @@
         <result property="companyName" column="com_nm"/>
         <result property="status" column="status"/>
     </resultMap>
+    
+    <resultMap id="companyDataMap" type="com.xuebei.crm.company.TmpCompanyData">
+        <result property="id" column="sales_opportunity_id"/>
+        <result property="amount" column="amount"/>
+        <result property="status" column="sales_status"/>
+        <result property="newStatus" column="new_status"/>
+    </resultMap>
 
     <resultMap id="companyApplyMap" type="com.xuebei.crm.company.CompanyUser">
         <id property="userId" column="user_id"/>
@@ -28,6 +35,13 @@
         <id property="crmUserId" column="crm_user_id"/>
         <result property="crmUserName" column="real_nm"/>
         <result property="tel" column="TEL"/>
+    </resultMap>
+
+    <resultMap id="useraMap" type="com.xuebei.crm.customer.Contacts">
+        <id property="contactsId" column="contacts_id"/>
+        <result property="tel" column="tel"/>
+        <result property="wechat" column="wechat"/>
+        <result property="QQ" column="QQ"/>
     </resultMap>
 
     <select id="queryCompanyList" resultMap="companyListMap">
@@ -188,6 +202,46 @@
         SET  status ='PENDING', updater_id = #{crmUserId}, update_ts= NOW()
         where crm_user_id = #{crmUserId} and company_id = #{companyId}
     </update>
+    <select id="searchOpportunityId" resultMap="companyDataMap">
+        select  sales_opportunity_id,sales_status,amount from  sales_opportunity
+        where
+        (user_id IN
+        <foreach collection="childs" item="sender" index="i" open="(" close=")" separator=",">
+            #{sender}
+        </foreach>)
+        AND customer_id=#{customerId}
+    </select>
+    
+    <select id="searchOppStatus" resultMap="companyDataMap">
+        select sales_status,new_status from opportunity_change
+        where
+        (sales_opportunity_id in
+        <foreach collection="oppIds" item="sender" open="(" close=")" separator=",">
+            #{sender}
+        </foreach>
+        )
+    </select>
+
+    <select id="searVisitCount" resultType="java.lang.Integer">
+        SELECT COUNT(v.visit_contacts_id)
+        FROM visit_contacts as v
+            left join contacts as c ON v.contacts_id=c.contacts_id
+            left join customer_dept as d ON  c.customer_dept_id=d.customer_dept_id
+            left join visit_log as l ON v.visit_log_id=l.visit_log_id
+            left join  journal as j ON l.journal_id=j.journal_id
+        WHERE d.customer_id=#{customerId}
+         AND (j.user_id IN
+        <foreach collection="childs" item="sender" index="i" open="(" close=")" separator=",">
+            #{sender}
+        </foreach>)
+    </select>
+
+    <select id="searContactsACount" resultMap="useraMap">
+        SELECT c.contacts_id,c.tel,c.wechat,c.QQ
+        FROM contacts as c
+        left join customer_dept as d ON  c.customer_dept_id=d.customer_dept_id
+        WHERE d.customer_id=#{customerId}
+    </select>
 
 
 </mapper>

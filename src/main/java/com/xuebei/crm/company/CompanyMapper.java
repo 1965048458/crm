@@ -1,5 +1,6 @@
 package com.xuebei.crm.company;
 
+import com.xuebei.crm.customer.Contacts;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,5 +57,11 @@ public interface CompanyMapper {
 
     HashMap<String,Float> queryJournalFine(@Param("companyId")String companyId);
 
+    List<TmpCompanyData> searchOpportunityId(@Param("childs")List<String> childs,@Param("customerId") String customerId);
+    List<TmpCompanyData> searchOppStatus(@Param("oppIds")List<Integer> oppIds);
     void changemoney(@Param("delay")Float delay,@Param("miss")Float miss,@Param("compandId")String compandId);
+
+    Integer searVisitCount(@Param("childs")List<String> childs,@Param("customerId") String customerId);
+
+    List<Contacts> searContactsACount(@Param("customerId") String customerId);
 }

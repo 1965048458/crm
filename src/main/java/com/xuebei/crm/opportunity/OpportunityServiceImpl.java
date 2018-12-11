@@ -72,8 +72,13 @@ public class OpportunityServiceImpl implements OpportunityService {
     }
 
     @Override
-    public void addModificationRecord(int opportunityId, String userId) {
+    public void addModificationRecord(int opportunityId, String userId,String oldStatus,String newStatus) {
         opportunityMapper.addModificationRecord(opportunityId, userId);
+        System.out.println(oldStatus);
+        if (oldStatus!=null&&!oldStatus.equals(""))
+        {
+           opportunityMapper.addStatusRecord(opportunityId,oldStatus,newStatus);
+        }
     }
 
     @Override

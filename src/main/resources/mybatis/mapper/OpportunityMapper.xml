@@ -188,6 +188,15 @@
             NULL
         )
     </insert>
+    <insert id="addStatusRecord">
+        INSERT INTO opportunity_change (
+            sales_opportunity_id, sales_status, new_status
+        ) VALUES (
+            #{opportunityId},
+            #{oldStatus},
+            #{newStatus}
+        )
+    </insert>
 
     <select id="queryModifyRecord" resultMap="modifyRecord">
         select om.sales_opportunity_id,so.opportunity_nm,cu.real_nm,cc.customer_nm,om.time_stamp

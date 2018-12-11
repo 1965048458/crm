@@ -558,8 +558,10 @@ public class CustomerController {
         Customer customer = customerMapper.queryCustomer(customerId);
         modelMap.addAttribute("customerId", customerId);
         modelMap.addAttribute("customerName", customer.getCustomerName());
+        modelMap.addAttribute("profile",customer.getProfile());
+        modelMap.addAttribute("website",customer.getWebsite());
         return "customerInfo";
-    }
+    } 
 
     @RequestMapping("/contactsInfo")
     public String contactsInfoPage(@RequestParam("contactsId")String contactsId,

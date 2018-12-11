@@ -23,7 +23,7 @@ public interface OpportunityService
 
     void modifyOpportunity(Opportunity opportunity);
 
-    void addModificationRecord(int opportunityId, String userId);
+    void addModificationRecord(int opportunityId, String userId,String oldStatus,String newStatus);
 
     List<OpportunityModify> queryModifyRecord(int opportunityId);
 

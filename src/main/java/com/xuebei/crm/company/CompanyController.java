@@ -1,6 +1,8 @@
 package com.xuebei.crm.company;
 
+import com.xuebei.crm.customer.Contacts;
 import com.xuebei.crm.dto.GsonView;
+import com.xuebei.crm.journal.JournalMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,11 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/company")
 public class CompanyController {
+
+    @Autowired
+    private JournalMapper journalMapper;
 
     @Autowired
     private CompanyService companyService;
@@ -101,5 +108,61 @@ public class CompanyController {
         return "memberDetail";
     }
 
+    @RequestMapping("/oppData")
+    public GsonView oppData(@RequestParam("customerId")String customerId,HttpServletRequest request)
+    {
+        String userId = (String) request.getSession().getAttribute("userId");
+        List<String> userIds=getAllSubordinatesUserId(userId);
+          GsonView gsonView=new GsonView();
+          CompanyData companyData=companyService.queryCompanyData(userIds,customerId);
+          int visitCount=companyMapper.searVisitCount(userIds,customerId);
+          List<Contacts> contacts=companyMapper.searContactsACount(customerId);
+          int a=0;
+          for (Contacts contacts1:contacts)
+          {
+              if (contacts1.getTel()!=null&&!contacts1.getTel().equals(""))
+              {
+                  if ((contacts1.getQQ()!=null&&!contacts1.getQQ().equals(""))||(contacts1.getWechat()!=null&&!contacts1.getWechat().equals("")))
+                  {
+                      System.out.println(contacts1.getContactsId());
+                      a++;
+                  }
+              }
+          }
+          DecimalFormat df=new DecimalFormat("0.00");
+          gsonView.addStaticAttribute("companyData",companyData);
+        gsonView.addStaticAttribute("visitCount",visitCount);
+        gsonView.addStaticAttribute("a",a);
+        if (contacts.size()==0)
+        {
+            gsonView.addStaticAttribute("aRate","0.00");
+        }
+        else {
+            gsonView.addStaticAttribute("aRate", df.format(a * 1.0 / contacts.size()));
+        }
+          return  gsonView;
+    }
+
+    private List<String> getAllSubordinatesUserId(String userId) {
+        List<String> userSet = new ArrayList<>();
+        List<String> tSet = new ArrayList<>();
+        tSet.add(userId);
+
+        while (!tSet.isEmpty()) {
+            List<String> childsSet = new ArrayList<>();
+            for (String si: tSet) {
+                List<String> childs = journalMapper.querySubordinatesByUserId(si);
+                for (String child: childs) {
+                    if (!userSet.contains(child) && !tSet.contains(child)) {
+                        childsSet.add(child);
+                    }
+                }
+            }
+            userSet.addAll(tSet);
+            tSet = childsSet;
+        }
+
+        return userSet;
+    }
 
 }

@@ -62,7 +62,6 @@ jQuery(document).ready(function () {
                     dataType: 'json',
                     cache: false
                 }).done(function (result) {
-                    console.log(result);
                     if (result.successFlg) {
                         thisVue.showPage='showCustomerOrganization';
                         thisVue.showOrganization = true;

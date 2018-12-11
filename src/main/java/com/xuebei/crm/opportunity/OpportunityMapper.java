@@ -41,4 +41,6 @@ public interface OpportunityMapper {
     void deleteOpportunity(@Param("opportunityId")int opportunityId);
 
     void convertOpportunity(@Param("opportunityId")int opportunityId);
+
+    void addStatusRecord(@Param("opportunityId")int opportunityId,@Param("oldStatus")String oldStatus,@Param("newStatus")String newStatus);
 }
