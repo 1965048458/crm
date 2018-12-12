@@ -3,8 +3,10 @@ package com.xuebei.crm.company;
 import com.xuebei.crm.customer.Contacts;
 import com.xuebei.crm.dto.GsonView;
 import com.xuebei.crm.journal.JournalMapper;
+import com.xuebei.crm.login.LoginRegisterMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +20,8 @@ import java.util.List;
 @RequestMapping("/company")
 public class CompanyController {
 
+    @Autowired
+    private LoginRegisterMapper loginRegisterMapper;
     @Autowired
     private JournalMapper journalMapper;
 
@@ -108,6 +112,15 @@ public class CompanyController {
         return "memberDetail";
     }
 
+    @RequestMapping("/adminCustomerInfo")
+    public  String adminCustomerInfo(@RequestParam("companyId") String companyId, HttpServletRequest request, ModelMap modelMap)
+    {
+        String crmUserId = (String) request.getSession().getAttribute("crmUserId");
+        String userId = loginRegisterMapper.queryUserIdByCompanyId(crmUserId, companyId);
+        request.getSession().setAttribute("userId", userId);
+        modelMap.addAttribute("companyId",companyId);
+        return "/adminCustomerInfo";
+    }
     @RequestMapping("/oppData")
     public GsonView oppData(@RequestParam(value = "customerId",required = false)String customerId,@RequestParam(value = "companyId",required = false)String companyId,HttpServletRequest request)
     {

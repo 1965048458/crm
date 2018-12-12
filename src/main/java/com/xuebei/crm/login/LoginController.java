@@ -454,14 +454,4 @@ public class LoginController {
         }
     }
 
-    @RequestMapping("/adminCustomerInfo")
-    public  String admincustomerInfo(@RequestParam("companyId") String companyId,HttpServletRequest request,ModelMap modelMap)
-    {
-        String crmUserId = (String) request.getSession().getAttribute("crmUserId");
-        String userId = loginRegisterMapper.queryUserIdByCompanyId(crmUserId, companyId);
-        request.getSession().setAttribute("userId", userId);
-        modelMap.addAttribute("companyId",companyId);
-        return "/admincustomerInfo";
-    }
-
 }
