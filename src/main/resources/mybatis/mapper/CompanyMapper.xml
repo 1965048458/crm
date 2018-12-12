@@ -212,11 +212,12 @@
         <if test="customerId != null and customerId != ''">
             AND customer_id=#{customerId}
         </if>
+            AND has_delete=0
         </where>
     </select>
     
     <select id="searchOppStatus" resultMap="companyDataMap">
-        select sales_status,new_status from opportunity_change
+        select sales_opportunity_id,sales_status,new_status from opportunity_change
         where
         (sales_opportunity_id in
         <foreach collection="oppIds" item="sender" open="(" close=")" separator=",">
