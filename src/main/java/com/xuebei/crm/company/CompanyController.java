@@ -121,6 +121,15 @@ public class CompanyController {
         modelMap.addAttribute("companyId",companyId);
         return "adminCustomerInfo";
     }
+
+    @RequestMapping("/adminCustomerInfo2")
+    public  String adminCustomerInfo2(@RequestParam("companyId") String companyId, HttpServletRequest request, ModelMap modelMap)
+    {
+        String crmUserId = (String) request.getSession().getAttribute("crmUserId");
+        String userId = loginRegisterMapper.queryUserIdByCompanyId(crmUserId, companyId);
+        request.getSession().setAttribute("userId", userId);
+        return "adminCustomerInfo";
+    }
     @RequestMapping("/oppData")
     public GsonView oppData(@RequestParam(value = "customerId",required = false)String customerId,@RequestParam(value = "companyId",required = false)String companyId,HttpServletRequest request)
     {
