@@ -454,7 +454,7 @@ public class LoginController {
         }
     }
 
-    @RequestMapping("/admincustomerInfo")
+    @RequestMapping("/adminCustomerInfo")
     public  String admincustomerInfo(@RequestParam("companyId") String companyId,HttpServletRequest request,ModelMap modelMap)
     {
         String crmUserId = (String) request.getSession().getAttribute("crmUserId");
