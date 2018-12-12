@@ -119,7 +119,7 @@ public class CompanyController {
         String userId = loginRegisterMapper.queryUserIdByCompanyId(crmUserId, companyId);
         request.getSession().setAttribute("userId", userId);
         modelMap.addAttribute("companyId",companyId);
-        return "/adminCustomerInfo";
+        return "adminCustomerInfo";
     }
     @RequestMapping("/oppData")
     public GsonView oppData(@RequestParam(value = "customerId",required = false)String customerId,@RequestParam(value = "companyId",required = false)String companyId,HttpServletRequest request)
