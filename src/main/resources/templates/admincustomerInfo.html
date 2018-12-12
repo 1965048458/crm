@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
@@ -49,21 +49,11 @@
         <div class="top-bar">
             <span onclick="backToList()" class="pull-left">
                 <img src="/images/back_icon.svg" /></span>
-            <span class="center" style="padding-left: 4px" th:text="${customerName}"></span>
-            <input type="hidden" id="customerId" th:value="${customerId}">
-            <span class="pull-right" style="color: rgb(61, 168, 244); font-size: 16px;opacity: 0">编辑</span>
-            <!--<input type="hidden" id="customerName" th:value="${customerName}">-->
+            <span class="center" style="padding-left: 4px" >销售统计</span>
+            <input type="hidden" id="companyId" th:value="${companyId}">
         </div>
         <div class="weui-tab" style="margin-top: 0px;">
-            <div class="weui-navbar" style="height: 40px;font-size: 15px; background: #FFFFFF">
-                <div href="#tab1" class="weui-navbar__item weui-bar__item_on">
-                    <span class="center-ele">客户信息</span>
-                </div>
-                <div href="#tab2" class="weui-navbar__item" @click="orgDisplay()">
-                    <span class="center-ele">组织机构</span>
-                </div>
 
-            </div>
             <div class="weui-tab__panel"  style="background: #FFFFFF">
 
                 <div id="tab1" class="weui-tab__content" style="display: block;">
@@ -102,24 +92,8 @@
                                     <td>{{companyData.permeabilityD}}</td>
                                 </tr>
                             </table>
-                            <!--<div class="weui-grids">
-                                <a class="weui-grid">
-                                    <canvas id="canvas1" width="80" height="80"
-                                            style="background:rgba(0,0,0,0);"></canvas>
-                                    <p class="weui-grid__label">成功率</p>
-                                </a>
-                                <a class="weui-grid">
-                                    <canvas id="canvas2" width="80" height="80"
-                                            style="background:rgba(0,0,0,0);"></canvas>
-                                    <p class="weui-grid__label">覆盖率</p>
-                                </a>
-                                <a class="weui-grid">
-                                    <canvas id="canvas3" width="80" height="80"
-                                            style="background:rgba(0,0,0,0);"></canvas>
-                                    <p class="weui-grid__label">渗透率</p>
-                                </a>-->
-                            </div>
                         </div>
+                    </div>
 
                     <div class="weui-media-box weui-media-box_text">
                         <h1 class="weui-media-box__title">拜访信息</h1>
@@ -153,55 +127,33 @@
                         </div>
                     </div>
 
-                        <div class="weui-media-box weui-media-box_text">
-                            <h1 class="weui-media-box__title">D级项目信息</h1>
-                            <div class="weui-grids" style="text-align: center">
-                                <a class="weui-grid">
-                                    <p class="weui-grid__label">
-                                    <p>{{companyData.dCount}}</p>
-                                    <p> 项目数量
-                                    <p/>
-                                    </p>
-                                </a>
-                                <a class="weui-grid">
-                                    <p class="weui-grid__label">
-                                    <p>{{companyData.amount}}</p>
-                                    <p>应收金额</p>
-                                    </p>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="weui-media-box weui-media-box_text">
-                            <h1 class="weui-media-box__title">简介（选填）</h1>
-                            <p class="weui-media-box__desc" th:text="${profile}"></p>
-                        </div>
-
-                        <div class="weui-cells">
-                            <a class="weui-cell weui-cell_access" href="javascript:hLink();">
-                                <div class="weui-cell__bd">
-                                    <p>官网: <span style="color:#00FFFF" th:text="${website}"></span></p>
-                                </div>
-                                <div class="weui-cell__ft">
-                                </div>
+                    <div class="weui-media-box weui-media-box_text">
+                        <h1 class="weui-media-box__title">D级项目信息</h1>
+                        <div class="weui-grids" style="text-align: center">
+                            <a class="weui-grid">
+                                <p class="weui-grid__label">
+                                <p>{{companyData.dCount}}</p>
+                                <p> 项目数量
+                                <p/>
+                                </p>
+                            </a>
+                            <a class="weui-grid">
+                                <p class="weui-grid__label">
+                                <p>{{companyData.amount}}</p>
+                                <p>应收金额</p>
+                                </p>
                             </a>
                         </div>
                     </div>
-                </div>
-                <div id="tab2" class="weui-tab__content">
-                </div>
 
-                <!-- loading toast -->
-                <div id="loadingToast" style="display:none;">
-                    <div class="weui-mask_transparent"></div>
-                    <div class="weui-toast">
-                        <i class="weui-loading weui-icon_toast"></i>
-                        <p class="weui-toast__content">数据加载中</p>
-                    </div>
+
                 </div>
+            </div>
+            <div id="tab2" class="weui-tab__content">
             </div>
         </div>
     </div>
+</div>
 </div>
 
 </body>
@@ -219,7 +171,7 @@
     }
 
     function backToList() {
-        location.href = '/customer/customerList';
+        location.href = '/myAccountInfor';
     }
 </script>
 

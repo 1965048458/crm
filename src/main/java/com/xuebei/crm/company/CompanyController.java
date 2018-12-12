@@ -109,36 +109,45 @@ public class CompanyController {
     }
 
     @RequestMapping("/oppData")
-    public GsonView oppData(@RequestParam("customerId")String customerId,HttpServletRequest request)
+    public GsonView oppData(@RequestParam(value = "customerId",required = false)String customerId,@RequestParam(value = "companyId",required = false)String companyId,HttpServletRequest request)
     {
+
         String userId = (String) request.getSession().getAttribute("userId");
-        List<String> userIds=getAllSubordinatesUserId(userId);
+        List<String> userIds=new ArrayList<>();
+        if (companyId!=null&&!companyId.equals("")) {
+            userIds=companyMapper.queryUser(companyId);
+        }
+        else
+        {
+            userIds = getAllSubordinatesUserId(userId);
+        }
           GsonView gsonView=new GsonView();
           CompanyData companyData=companyService.queryCompanyData(userIds,customerId);
-          int visitCount=companyMapper.searVisitCount(userIds,customerId);
-          List<Contacts> contacts=companyMapper.searContactsACount(customerId);
+        List<Contacts> visitCount=companyMapper.searVisitCount(userIds,customerId);
           int a=0;
-          for (Contacts contacts1:contacts)
+          List<String> contactId=new ArrayList<>();
+          for (Contacts contacts1:visitCount)
           {
-              if (contacts1.getTel()!=null&&!contacts1.getTel().equals(""))
-              {
-                  if ((contacts1.getQQ()!=null&&!contacts1.getQQ().equals(""))||(contacts1.getWechat()!=null&&!contacts1.getWechat().equals("")))
-                  {
-                      System.out.println(contacts1.getContactsId());
-                      a++;
+              if (!contactId.contains(contacts1.getContactsId())) {
+                  if (contacts1.getTel() != null && !contacts1.getTel().equals("")) {
+                      if ((contacts1.getQQ() != null && !contacts1.getQQ().equals("")) || (contacts1.getWechat() != null && !contacts1.getWechat().equals(""))) {
+                          a++;
+                      }
                   }
+                  contactId.add(contacts1.getContactsId());
               }
           }
           DecimalFormat df=new DecimalFormat("0.00");
           gsonView.addStaticAttribute("companyData",companyData);
-        gsonView.addStaticAttribute("visitCount",visitCount);
+        gsonView.addStaticAttribute("visitCount",visitCount.size());
+        gsonView.addStaticAttribute("personCount",contactId.size());
         gsonView.addStaticAttribute("a",a);
-        if (contacts.size()==0)
+        if (contactId.size()==0)
         {
             gsonView.addStaticAttribute("aRate","0.00");
         }
         else {
-            gsonView.addStaticAttribute("aRate", df.format(a * 1.0 / contacts.size()));
+            gsonView.addStaticAttribute("aRate", df.format(a * 1.0 / contactId.size()));
         }
           return  gsonView;
     }

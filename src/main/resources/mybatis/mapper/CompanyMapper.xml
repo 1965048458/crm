@@ -204,12 +204,15 @@
     </update>
     <select id="searchOpportunityId" resultMap="companyDataMap">
         select  sales_opportunity_id,sales_status,amount from  sales_opportunity
-        where
+        <where>
         (user_id IN
         <foreach collection="childs" item="sender" index="i" open="(" close=")" separator=",">
             #{sender}
         </foreach>)
-        AND customer_id=#{customerId}
+        <if test="customerId != null and customerId != ''">
+            AND customer_id=#{customerId}
+        </if>
+        </where>
     </select>
     
     <select id="searchOppStatus" resultMap="companyDataMap">
@@ -222,26 +225,34 @@
         )
     </select>
 
-    <select id="searVisitCount" resultType="java.lang.Integer">
-        SELECT COUNT(v.visit_contacts_id)
+    <select id="searVisitCount" resultMap="useraMap">
+        SELECT c.contacts_id,c.tel,c.wechat,c.QQ
         FROM visit_contacts as v
             left join contacts as c ON v.contacts_id=c.contacts_id
             left join customer_dept as d ON  c.customer_dept_id=d.customer_dept_id
             left join visit_log as l ON v.visit_log_id=l.visit_log_id
             left join  journal as j ON l.journal_id=j.journal_id
-        WHERE d.customer_id=#{customerId}
-         AND (j.user_id IN
+        <where>
+         (j.user_id IN
         <foreach collection="childs" item="sender" index="i" open="(" close=")" separator=",">
             #{sender}
         </foreach>)
+        <if test="customerId != null and customerId != ''">
+            AND d.customer_id=#{customerId}
+        </if>
+        </where>
     </select>
-
-    <select id="searContactsACount" resultMap="useraMap">
-        SELECT c.contacts_id,c.tel,c.wechat,c.QQ
-        FROM contacts as c
-        left join customer_dept as d ON  c.customer_dept_id=d.customer_dept_id
-        WHERE d.customer_id=#{customerId}
-    </select>
+<select id="queryUser" resultType="java.lang.String">
+    select user_id
+    from  company_user
+    where company_id=#{companyId}
+</select>
+    <!--<select id="searContactsACount" resultMap="useraMap">-->
+        <!--SELECT c.contacts_id,c.tel,c.wechat,c.QQ-->
+        <!--FROM contacts as c-->
+        <!--left join customer_dept as d ON  c.customer_dept_id=d.customer_dept_id-->
+        <!--WHERE d.customer_id=#{customerId}-->
+    <!--</select>-->
 
 
 </mapper>

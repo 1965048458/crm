@@ -11,22 +11,26 @@ $(document).ready(function ()  {
         data: {
             customerName: '',
             customerId:'',
+            companyId:'',
             visitCount:0,
             a:0,
             aRate:'0.00',
             companyData:'',
+            personCount:0
         },
         methods: {
-            'init':function (customerId, customerName) {
+            'init':function (customerId, customerName,companyId) {
               this.customerId = customerId;
               this.customerName = customerName;
+              this.companyId=companyId;
                 var thisVue = this;
                 jQuery.ajax({
                     type: 'get',
                     url: '/company/oppData',
                     data:
                         {
-                            customerId:this.customerId
+                            customerId:this.customerId,
+                            companyId:this.companyId
                         },
                     dataType: 'json',
                     cache: false
@@ -34,6 +38,7 @@ $(document).ready(function ()  {
                     thisVue.$set(thisVue, 'companyData', result.companyData);
                     thisVue.$set(thisVue, 'visitCount', result.visitCount);
                     thisVue.$set(thisVue, 'a', result.a);
+                    thisVue.$set(thisVue, 'personCount', result.personCount);
                     thisVue.$set(thisVue, 'aRate', result.aRate);
                 });
             },
@@ -61,8 +66,9 @@ $(document).ready(function ()  {
 
     var customerId = $("#customerId").val();
     var customerName = $("#customerName").val();
+    var companyId=$("#companyId").val();
 
-    customerVue.init(customerId,customerName);
+    customerVue.init(customerId,customerName,companyId);
 
     // for (var i = 1; i <= 3; i++) {
     //     var canvas = document.getElementById('canvas' + i),  //获取canvas元素

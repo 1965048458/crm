@@ -15,6 +15,7 @@ public interface CompanyMapper {
     String queryUserId(@Param("crmUserId") String crmUserId,
                        @Param("companyId") String companyId);
 
+    List<String> queryUser(@Param("companyId") String companyId);
     void joinCompany(@Param("crmUserId") String crmUserId,
                      @Param("userId") String userId,
                      @Param("companyId") String companyId);
@@ -61,7 +62,6 @@ public interface CompanyMapper {
     List<TmpCompanyData> searchOppStatus(@Param("oppIds")List<Integer> oppIds);
     void changemoney(@Param("delay")Float delay,@Param("miss")Float miss,@Param("compandId")String compandId);
 
-    Integer searVisitCount(@Param("childs")List<String> childs,@Param("customerId") String customerId);
+    List<Contacts> searVisitCount(@Param("childs")List<String> childs,@Param("customerId") String customerId);
 
-    List<Contacts> searContactsACount(@Param("customerId") String customerId);
 }
