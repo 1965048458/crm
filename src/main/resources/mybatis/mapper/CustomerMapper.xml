@@ -355,7 +355,7 @@
             #{reasons},
             NOW(),
             date_add(NOW(), INTERVAL 3 MONTH),
-            'APPLYING',
+            'PERMITTED',
             #{userId},
             NOW()
         );

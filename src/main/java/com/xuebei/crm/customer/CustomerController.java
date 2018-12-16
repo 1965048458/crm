@@ -176,7 +176,7 @@ public class CustomerController {
             dept.setDeptName(deptName);
             dept.setWebsite(website);
             dept.setProfile(profile);
-            dept.setEnclosureStatus(EnclosureStatusEnum.APPLYING);
+            dept.setEnclosureStatus(EnclosureStatusEnum.NORMAL);
             dept.setCustomer(customer);
             dept.setParent(new Department());
 
