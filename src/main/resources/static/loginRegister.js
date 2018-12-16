@@ -27,7 +27,7 @@ jQuery(document).ready(function () {
             pwd: '',
             captcha: '',
             showPage: 'telRegister',
-            gender: '男',
+            gender: '',
             mail: '',
             time: 60,
             flag: true,
