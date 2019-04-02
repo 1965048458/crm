@@ -73,7 +73,11 @@
 			<artifactId>taobao-sdk-alidayu</artifactId>
 			<version>1.20160607</version>
 		</dependency>
-
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.2</version>
+		</dependency>
 
 	</dependencies>
 
